@@ -31,7 +31,7 @@ const reset = css`
   }
 `;
 
-const history = createBrowserHistory({ basename: '/' });
+const history = createBrowserHistory({ basename: '/floom' });
 
 const App = () => {
   return (
