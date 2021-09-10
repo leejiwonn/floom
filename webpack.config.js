@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: ['./src/index.tsx'],
-  output: { filename: 'bundle.js', path: __dirname + '/dist' },
+  output: { filename: 'bundle.js', path: __dirname + '/dist', publicPath: '/' },
   module: {
     rules: [
       {
@@ -11,6 +11,9 @@ module.exports = {
         use: ['babel-loader'],
       },
     ],
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
   plugins: [
