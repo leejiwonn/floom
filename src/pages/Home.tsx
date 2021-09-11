@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 import { Canvas } from '@react-three/fiber';
 
 import Mesh from '../components/Mesh';

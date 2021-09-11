@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
 interface Props {

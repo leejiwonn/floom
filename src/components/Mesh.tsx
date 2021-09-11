@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 
 interface Props {
@@ -11,7 +11,7 @@ const Mesh = ({ position, scale }: Props) => {
   const mesh = useRef<THREE.Mesh>();
   const [hovered, setHover] = useState(false);
 
-  useFrame(() => (mesh.current!.rotation.x = mesh.current!.rotation.y += 0.01));
+  useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
 
   return (
     <mesh
@@ -19,8 +19,8 @@ const Mesh = ({ position, scale }: Props) => {
       position={position}
       scale={scale}
       onClick={(e) => console.log(e)}
-      onPointerOver={(e) => setHover(true)}
-      onPointerOut={(e) => setHover(false)}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
     >
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
       <meshStandardMaterial
