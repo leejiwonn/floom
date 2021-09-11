@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const Login = () => {
   return (
     <LoginStyled>
-      <Link to="/home">
+      <Link href="/home">
         <LoginButton>로그인</LoginButton>
       </Link>
     </LoginStyled>
