@@ -1,12 +1,21 @@
 {
-  "presets": ["next/babel", "@emotion/babel-preset-css-prop"],
+  "presets": [
+    "next/babel",
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic",
+        "importSource": "@emotion/react"
+      }
+    ]
+  ],
   "plugins": [
     [
       "@babel/plugin-proposal-decorators",
       {
         "legacy": true
       },
-      "emotion"
+      "@emotion/babel-plugin"
     ]
   ]
 }
