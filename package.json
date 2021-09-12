@@ -19,7 +19,6 @@
     "@emotion/styled": "^11.3.0",
     "@react-three/drei": "^7.7.0",
     "@react-three/fiber": "^7.0.6",
-    "emotion-reset": "^3.0.1",
     "next": "^11.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
