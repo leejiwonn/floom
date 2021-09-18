@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Canvas } from '@react-three/fiber';
 
@@ -8,16 +8,29 @@ import Obj from '../components/Obj';
 
 const Home = () => {
   const [user, setUser] = useState('');
+  const [textInput, setTextInput] = useState(user);
 
   useEffect(() => {
+    axios.get(`/api/user?token=user`).then((res) => {
+      console.log(res.data);
+      setUser(res.data.name);
+    });
+  }, []);
+
+  const handleChangeInput = useCallback((e) => {
+    setTextInput(e.target.value);
+  }, []);
+
+  const handleSubmitButtonClick = () => {
     axios
-      .get('/api/user')
+      .post(`/api/user?token=user`, {
+        name: textInput,
+      })
       .then((res) => {
         console.log(res.data);
         setUser(res.data.name);
-      })
-      .catch((e) => console.warn(e));
-  }, []);
+      });
+  };
 
   return (
     <>
@@ -37,6 +50,17 @@ const Home = () => {
       <HomeStyled>
         <UserTitle>Hi, {user}!</UserTitle>
         <HomeTitle>Floom</HomeTitle>
+        <TextInputStyled>
+          <TextInput
+            type="text"
+            placeholder="변경할 닉네임을 입력해주세요."
+            value={textInput}
+            onChange={handleChangeInput}
+          />
+          <SubmitButton onClick={handleSubmitButtonClick}>
+            변경하기
+          </SubmitButton>
+        </TextInputStyled>
       </HomeStyled>
     </>
   );
@@ -50,16 +74,28 @@ const HomeStyled = styled.div`
   align-items: center;
 `;
 
+const HomeTitle = styled.p`
+  font-size: 120px;
+  font-weight: bold;
+  z-index: 2;
+`;
+
 const UserTitle = styled.p`
   position: absolute;
   top: 50px;
   left: 50px;
 `;
 
-const HomeTitle = styled.p`
-  font-size: 120px;
-  font-weight: bold;
-  z-index: 2;
+const TextInputStyled = styled.div`
+  position: absolute;
+  top: 50px;
+  left: 200px;
 `;
+
+const TextInput = styled.input`
+  width: 200px;
+`;
+
+const SubmitButton = styled.button``;
 
 export default Home;
