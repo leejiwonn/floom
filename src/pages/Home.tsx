@@ -1,10 +1,24 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Canvas } from '@react-three/fiber';
 
 import Mesh from '../components/Mesh';
 import Obj from '../components/Obj';
 
 const Home = () => {
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    axios
+      .get('/api/user')
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data.name);
+      })
+      .catch((e) => console.warn(e));
+  }, []);
+
   return (
     <>
       <Canvas
@@ -21,6 +35,7 @@ const Home = () => {
         <Obj url="/assets/objs/desk.obj" position={[0, -14, -20]} />
       </Canvas>
       <HomeStyled>
+        <UserTitle>Hi, {user}!</UserTitle>
         <HomeTitle>Floom</HomeTitle>
       </HomeStyled>
     </>
@@ -33,6 +48,12 @@ const HomeStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const UserTitle = styled.p`
+  position: absolute;
+  top: 50px;
+  left: 50px;
 `;
 
 const HomeTitle = styled.p`
