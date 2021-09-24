@@ -1,66 +1,39 @@
 import styled from '@emotion/styled';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Canvas } from '@react-three/fiber';
 
-import Mesh from '../components/Mesh';
-import Obj from '../components/Obj';
+import Header from '../components/Header';
+import { Room } from '../types/Room';
 
 const Home = () => {
-  const [user, setUser] = useState('');
-  const [textInput, setTextInput] = useState(user);
+  const [category, setCategory] = useState('work');
+  const [rooms, setRooms] = useState<Room[]>();
 
   useEffect(() => {
-    axios.get(`/api/user?token=user`).then((res) => {
-      console.log(res.data);
-      setUser(res.data.name);
+    axios.get(`/api/rooms?category=${category}`).then((res) => {
+      setRooms(res.data);
     });
-  }, []);
-
-  const handleChangeInput = useCallback((e) => {
-    setTextInput(e.target.value);
-  }, []);
-
-  const handleSubmitButtonClick = () => {
-    axios
-      .post(`/api/user?token=user`, {
-        name: textInput,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data.name);
-      });
-  };
+  }, [category]);
 
   return (
     <>
-      <Canvas
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <pointLight intensity={1.5} position={[2, 3, 5]} />
-        <Mesh position={[-1.2, 0, 0]} scale={[1, 1, 1]} />
-        <Obj url="/assets/objs/desk.obj" position={[0, -14, -20]} />
-      </Canvas>
+      <Header />
       <HomeStyled>
-        <UserTitle>Hi, {user}!</UserTitle>
-        <HomeTitle>Floom</HomeTitle>
-        <TextInputStyled>
-          <TextInput
-            type="text"
-            placeholder="변경할 닉네임을 입력해주세요."
-            value={textInput}
-            onChange={handleChangeInput}
-          />
-          <SubmitButton onClick={handleSubmitButtonClick}>
-            변경하기
-          </SubmitButton>
-        </TextInputStyled>
+        <CategoryStyled>
+          <Category onClick={() => setCategory('work')}>업무</Category>
+          <Category onClick={() => setCategory('study')}>학습</Category>
+          <Category onClick={() => setCategory('rest')}>휴식</Category>
+        </CategoryStyled>
+        <RoomsStyled>
+          {rooms?.map((room, i) => (
+            <RoomStyled
+              href={`/detail?category=${category}&id=${room.id}`}
+              key={i}
+            >
+              <p>{room.title}</p>
+            </RoomStyled>
+          ))}
+        </RoomsStyled>
       </HomeStyled>
     </>
   );
@@ -70,32 +43,37 @@ const HomeStyled = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 `;
 
-const HomeTitle = styled.p`
-  font-size: 120px;
-  font-weight: bold;
-  z-index: 2;
+const CategoryStyled = styled.div`
+  margin: 50px 0;
 `;
 
-const UserTitle = styled.p`
-  position: absolute;
-  top: 50px;
-  left: 50px;
+const Category = styled.button`
+  padding: 10px 20px;
+  border: 1px solid #000;
+  margin: 0 10px;
 `;
 
-const TextInputStyled = styled.div`
-  position: absolute;
-  top: 50px;
-  left: 200px;
+const RoomsStyled = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 0 20px;
 `;
 
-const TextInput = styled.input`
-  width: 200px;
+const RoomStyled = styled.a`
+  width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  cursor: pointer;
+  margin: 0 10px;
 `;
-
-const SubmitButton = styled.button``;
 
 export default Home;
