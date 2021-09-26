@@ -1,37 +1,26 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import { Canvas } from '@react-three/fiber';
+import { GetServerSideProps } from 'next';
 
 import Header from '../components/Header';
 import Obj from '../components/Obj';
-import { Room } from '../types/Room';
+import { useRoom } from '../hooks/useRoom';
 
-const Detail = () => {
-  const router = useRouter();
-  const [roomData, setRoomData] = useState<Room>();
+interface Props {
+  category: string;
+  id: string;
+}
 
-  useEffect(() => {
-    const getRooms = async (id: string, category: string) => {
-      const { data } = await axios.get<Room>(
-        `/api/rooms?category=${category}&id=${id}`,
-      );
-      setRoomData(data);
-    };
-
-    if (router.isReady && router.query.id != null) {
-      getRooms(router.query.id as string, router.query.category as string);
-    }
-  }, [router]);
+const Detail = ({ category, id }: Props) => {
+  const { data } = useRoom(category, id);
 
   return (
     <>
-      <Header title={router.query.category as string} />
+      <Header title={category} />
       <DetailStyled>
         <TitleStyled>
-          <Title>{roomData?.title}</Title>
-          <Creator>{roomData?.creator}</Creator>
+          <Title>{data?.title}</Title>
+          <Creator>{data?.creator}</Creator>
         </TitleStyled>
         <ObjectStyled>
           <Canvas
@@ -49,10 +38,35 @@ const Detail = () => {
             <Obj url="/assets/objs/photo.obj" position={[220, -50, 0]} />
           </Canvas>
         </ObjectStyled>
-        <PlayButton>체험하기</PlayButton>
+        <PlayButton href={`/play?category=${category}&id=${id}`}>
+          체험하기
+        </PlayButton>
       </DetailStyled>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  query,
+}) => {
+  const category = query.category as string;
+  const id = query.id as string;
+
+  if (category == null || id == null) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      category,
+      id,
+    },
+  };
 };
 
 const DetailStyled = styled.div`
@@ -84,7 +98,7 @@ const ObjectStyled = styled.div`
   height: 400px;
 `;
 
-const PlayButton = styled.button`
+const PlayButton = styled.a`
   padding: 15px 100px;
   border: 1px solid #000;
 `;

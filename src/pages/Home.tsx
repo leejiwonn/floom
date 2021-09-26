@@ -1,19 +1,12 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 
 import Header from '../components/Header';
-import { Room } from '../types/Room';
+import { useCategoryRooms } from '../hooks/useRoom';
 
 const Home = () => {
   const [category, setCategory] = useState('work');
-  const [rooms, setRooms] = useState<Room[]>();
-
-  useEffect(() => {
-    axios.get(`/api/rooms?category=${category}`).then((res) => {
-      setRooms(res.data);
-    });
-  }, [category]);
+  const { data } = useCategoryRooms(category);
 
   return (
     <>
@@ -25,7 +18,7 @@ const Home = () => {
           <Category onClick={() => setCategory('rest')}>휴식</Category>
         </CategoryStyled>
         <RoomsStyled>
-          {rooms?.map((room, i) => (
+          {data?.map((room, i) => (
             <RoomStyled
               href={`/detail?category=${category}&id=${room.id}`}
               key={i}

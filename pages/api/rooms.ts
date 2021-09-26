@@ -18,7 +18,7 @@ const getRoom = async (req: NextApiRequest, res: NextApiResponse) => {
     .collection(`${req.query.category}`)
     .doc(`${req.query.id}`)
     .get();
-  console.log(room);
+
   res.status(200).json(room.data());
 };
 
