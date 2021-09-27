@@ -1,7 +1,17 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
+import ReactPlayer from 'react-player';
+
 import { useRoom } from '../hooks/useRoom';
 import { GetServerSideProps } from 'next';
 import Header from '../components/Header';
+import Slider from '../components/Slider';
+
+import StepA from '../components/Guide/StepA';
+import StepB from '../components/Guide/StepB';
+import StepC from '../components/Guide/StepC';
+import StepD from '../components/Guide/StepD';
+import StepE from '../components/Guide/StepE';
 
 interface Props {
   category: string;
@@ -9,15 +19,88 @@ interface Props {
 }
 
 const Play = ({ category, id }: Props) => {
-  const { data } = useRoom(category, id);
-  console.log(data);
+  const { data, isLoading } = useRoom(category, id);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [sliderShow, setSliderShow] = useState(true);
+  const [goal, setGoal] = useState('');
+  const [time, setTime] = useState(10);
+  const [play, setPlay] = useState(false);
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  if (isLoading) {
+    return <p>...</p>;
+  }
+
   return (
-    <>
-      <Header title={data?.title} />
-      <PlayStyled>play</PlayStyled>
-    </>
+    <PlayStyled>
+      <Header title={data.title} />
+      <PlayView>
+        <ObjectStyled>
+          {currentPage > 0 && <p>목표는 {goal}!</p>}
+          {currentPage > 1 && <p>{time}분 동안 할래요 :)</p>}
+          {currentPage >= 2 && (
+            <ReactPlayer
+              url={[...data.music]}
+              width="300px"
+              height="100px"
+              playing={play}
+            />
+          )}
+        </ObjectStyled>
+        <Slider currentPage={currentPage} sliderShow={sliderShow}>
+          <StepA
+            goal={goal}
+            onChangeGoalText={setGoal}
+            placeholderInfo="목표를 입력해주세요"
+            onNextPage={handleNextPage}
+          />
+          <StepB
+            time={time}
+            onChangeTime={setTime}
+            onNextPage={handleNextPage}
+          />
+          <StepC onChangePlay={setPlay} onNextPage={handleNextPage} />
+          <StepD light={data.light} onNextPage={handleNextPage} />
+          <StepE onSliderShow={setSliderShow} onNextPage={handleNextPage} />
+        </Slider>
+      </PlayView>
+      {currentPage >= 5 && (
+        <EndButton href={`/detail?category=${category}&id=${id}`}>
+          종료하기
+        </EndButton>
+      )}
+    </PlayStyled>
   );
 };
+
+const PlayStyled = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+`;
+
+const PlayView = styled.div`
+  width: 100%;
+  height: calc(100% - 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+`;
+
+const ObjectStyled = styled.div``;
+
+const EndButton = styled.a`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  border: 1px solid #000;
+  padding: 10px 30px;
+`;
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
@@ -41,7 +124,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     },
   };
 };
-
-const PlayStyled = styled.div``;
 
 export default Play;
