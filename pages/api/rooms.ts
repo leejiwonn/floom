@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
+import { authorizeMiddleware } from '../../src/server/auth';
 import database from '../../firebase/app';
 
 const getCategoryRooms = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -32,8 +33,10 @@ const getRooms = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-const handler = nc<NextApiRequest, NextApiResponse>().get(async (req, res) => {
-  return await getRooms(req, res);
-});
+const handler = nc<NextApiRequest, NextApiResponse>()
+  .use(authorizeMiddleware)
+  .get(async (req, res) => {
+    return await getRooms(req, res);
+  });
 
 export default handler;
