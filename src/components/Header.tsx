@@ -32,7 +32,7 @@ const Logo = styled.a`
 `;
 
 const Title = styled.p`
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   margin: 0 auto;
 `;
