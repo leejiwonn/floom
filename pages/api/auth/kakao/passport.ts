@@ -11,7 +11,7 @@ const callbackURL =
     ? 'https://floom.vercel.app/api/auth/kakao/callback'
     : 'http://localhost:3000/api/auth/kakao/callback';
 
-passport.use(ㄴ
+passport.use(
   new KakaoStrategy(
     {
       clientID: process.env.KAKAO_CLIENT_ID,
