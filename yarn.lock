@@ -1263,7 +1263,15 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/passport@^1.0.7":
+"@types/passport-kakao@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@types/passport-kakao/-/passport-kakao-0.2.1.tgz#e3aa906caa9355c51d66fe5fe743c897add7fdd1"
+  integrity sha512-BezdDVFW0KrP7CJGtQzMfxw9RgmgKZe9TPhd5nBGoPCAmakFhO8p6Numn1oYU5kwjvK3gS8pqDLWmLBhBBERwQ==
+  dependencies:
+    "@types/express" "*"
+    "@types/passport" "*"
+
+"@types/passport@*", "@types/passport@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@types/passport/-/passport-1.0.7.tgz#85892f14932168158c86aecafd06b12f5439467a"
   integrity sha512-JtswU8N3kxBYgo+n9of7C97YQBT+AYPP2aBfNGTzABqPAZnK/WOAaKfh3XesUYMZRrXFuoPc2Hv0/G/nQFveHw==

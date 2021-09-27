@@ -1,5 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { Request, Response } from 'express';
 import nc from 'next-connect';
+import { User } from '../../../../src/types/User';
 import passport from './passport';
 
 const handler = nc()
@@ -7,10 +8,13 @@ const handler = nc()
   .get(
     passport.authenticate('kakao', {
       session: false,
-      failureRedirect: '/',
+      // TODO
+      // failureRedirect: '/'
     }),
-    (req: NextApiRequest, res: NextApiResponse) => {
-      console.log(req, res);
+    (req: Request, res: Response) => {
+      console.log(req.user);
+
+      res.redirect(`/login-success?authToken=${(req.user as User).authToken}`);
     },
   );
 
