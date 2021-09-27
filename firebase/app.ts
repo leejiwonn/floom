@@ -7,6 +7,9 @@ if (!admin.apps.length) {
     credential: admin.credential.cert(credentials),
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
   });
+  admin.firestore().settings({
+    ignoreUndefinedProperties: true,
+  });
 }
 
 const database = admin.firestore();
