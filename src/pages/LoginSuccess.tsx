@@ -26,4 +26,3 @@ function LoginSuccess() {
 }
 
 export default LoginSuccess;
-
