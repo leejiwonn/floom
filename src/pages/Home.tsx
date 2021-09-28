@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import Header from '../components/Header';
 import { useCategoryRooms } from '../hooks/useRoom';
 
 const Home = () => {
@@ -9,26 +8,23 @@ const Home = () => {
   const { data } = useCategoryRooms(category);
 
   return (
-    <>
-      <Header />
-      <HomeStyled>
-        <CategoryStyled>
-          <Category onClick={() => setCategory('work')}>업무</Category>
-          <Category onClick={() => setCategory('study')}>학습</Category>
-          <Category onClick={() => setCategory('rest')}>휴식</Category>
-        </CategoryStyled>
-        <RoomsStyled>
-          {data?.map((room, i) => (
-            <RoomStyled
-              href={`/detail?category=${category}&id=${room.id}`}
-              key={i}
-            >
-              <p>{room.title}</p>
-            </RoomStyled>
-          ))}
-        </RoomsStyled>
-      </HomeStyled>
-    </>
+    <HomeStyled>
+      <CategoryStyled>
+        <Category onClick={() => setCategory('work')}>업무</Category>
+        <Category onClick={() => setCategory('study')}>학습</Category>
+        <Category onClick={() => setCategory('rest')}>휴식</Category>
+      </CategoryStyled>
+      <RoomsStyled>
+        {data?.map((room, i) => (
+          <RoomStyled
+            href={`/detail?category=${category}&id=${room.id}`}
+            key={i}
+          >
+            <p>{room.title}</p>
+          </RoomStyled>
+        ))}
+      </RoomsStyled>
+    </HomeStyled>
   );
 };
 

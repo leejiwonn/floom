@@ -4,7 +4,6 @@ import ReactPlayer from 'react-player';
 
 import { useRoom } from '../hooks/useRoom';
 import { GetServerSideProps } from 'next';
-import Header from '../components/Header';
 import Slider from '../components/Slider';
 
 import StepA from '../components/Guide/StepA';
@@ -36,7 +35,6 @@ const Play = ({ category, id }: Props) => {
 
   return (
     <PlayStyled>
-      <Header title={data.title} />
       <PlayView>
         <ObjectStyled>
           {currentPage > 0 && <p>목표는 {goal}!</p>}
@@ -45,7 +43,7 @@ const Play = ({ category, id }: Props) => {
             <ReactPlayer
               url={[...data.music]}
               width="300px"
-              height="100px"
+              height="200px"
               playing={play}
             />
           )}
@@ -59,10 +57,11 @@ const Play = ({ category, id }: Props) => {
           />
           <StepB
             time={time}
+            onChangePlay={setPlay}
             onChangeTime={setTime}
             onNextPage={handleNextPage}
           />
-          <StepC onChangePlay={setPlay} onNextPage={handleNextPage} />
+          <StepC onNextPage={handleNextPage} />
           <StepD light={data.light} onNextPage={handleNextPage} />
           <StepE onSliderShow={setSliderShow} onNextPage={handleNextPage} />
         </Slider>
@@ -78,13 +77,13 @@ const Play = ({ category, id }: Props) => {
 
 const PlayStyled = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 50px);
   position: relative;
 `;
 
 const PlayView = styled.div`
   width: 100%;
-  height: calc(100% - 80px);
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

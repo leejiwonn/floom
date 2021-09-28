@@ -2,14 +2,12 @@ import styled from '@emotion/styled';
 import StepTemplate from './StepTemplate';
 
 interface Props {
-  onChangePlay?: (value: boolean) => void;
   onNextPage?: () => void;
 }
 
-const StepC = ({ onChangePlay, onNextPage }: Props) => {
+const StepC = ({ onNextPage }: Props) => {
   const handleNextStepButtonClick = () => {
     onNextPage();
-    onChangePlay(true);
   };
 
   return (

@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { Canvas } from '@react-three/fiber';
 import { GetServerSideProps } from 'next';
 
-import Header from '../components/Header';
 import Obj from '../components/Obj';
 import { useRoom } from '../hooks/useRoom';
 
@@ -15,34 +14,31 @@ const Detail = ({ category, id }: Props) => {
   const { data } = useRoom(category, id);
 
   return (
-    <>
-      <Header title={category} />
-      <DetailStyled>
-        <TitleStyled>
-          <Title>{data?.title}</Title>
-          <Creator>{data?.creator}</Creator>
-        </TitleStyled>
-        <ObjectStyled>
-          <Canvas
-            camera={{ position: [0, 0, 240], fov: 80 }}
-            style={{
-              width: '100%',
-              height: '100%',
-              top: 40,
-            }}
-          >
-            <ambientLight />
-            <pointLight intensity={1.5} position={[200, 250, 50]} />
-            <Obj url="/assets/objs/speaker.obj" position={[-240, -60, 0]} />
-            <Obj url="/assets/objs/light.obj" position={[0, 0, 0]} />
-            <Obj url="/assets/objs/photo.obj" position={[220, -50, 0]} />
-          </Canvas>
-        </ObjectStyled>
-        <PlayButton href={`/play?category=${category}&id=${id}`}>
-          체험하기
-        </PlayButton>
-      </DetailStyled>
-    </>
+    <DetailStyled>
+      <TitleStyled>
+        <Title>{data?.title}</Title>
+        <Creator>{data?.creator}</Creator>
+      </TitleStyled>
+      <ObjectStyled>
+        <Canvas
+          camera={{ position: [0, 0, 240], fov: 80 }}
+          style={{
+            width: '100%',
+            height: '100%',
+            top: 40,
+          }}
+        >
+          <ambientLight />
+          <pointLight intensity={1.5} position={[200, 250, 50]} />
+          <Obj url="/assets/objs/speaker.obj" position={[-240, -60, 0]} />
+          <Obj url="/assets/objs/light.obj" position={[0, 0, 0]} />
+          <Obj url="/assets/objs/photo.obj" position={[220, -50, 0]} />
+        </Canvas>
+      </ObjectStyled>
+      <PlayButton href={`/play?category=${category}&id=${id}`}>
+        체험하기
+      </PlayButton>
+    </DetailStyled>
   );
 };
 
@@ -71,7 +67,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
 const DetailStyled = styled.div`
   width: 100%;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   align-items: center;

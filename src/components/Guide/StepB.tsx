@@ -5,11 +5,12 @@ import StepTemplate from './StepTemplate';
 
 interface Props {
   time: number;
-  onChangeTime: (value: number) => void;
+  onChangePlay?: (value: boolean) => void;
+  onChangeTime?: (value: number) => void;
   onNextPage?: () => void;
 }
 
-const StepB = ({ time, onChangeTime, onNextPage }: Props) => {
+const StepB = ({ time, onChangePlay, onChangeTime, onNextPage }: Props) => {
   const [currentTime, setCurrentTime] = useState(time);
 
   const handleChangeTime = (type: '-' | '+') => {
@@ -26,7 +27,8 @@ const StepB = ({ time, onChangeTime, onNextPage }: Props) => {
 
   const handleNextStepButtonClick = () => {
     onNextPage();
-    onChangeTime(currentTime);
+    onChangePlay?.(true);
+    onChangeTime?.(currentTime);
   };
 
   return (
