@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
 
-import Header from '../components/Header';
-
 const Login = () => {
   return (
-    <>
-      <Header />
-      <LoginStyled>
-        <LoginButton href="/api/auth/kakao">로그인</LoginButton>
-      </LoginStyled>
-    </>
+    <LoginStyled>
+      <LoginButton href="/api/auth/kakao">로그인</LoginButton>
+    </LoginStyled>
   );
 };
 
