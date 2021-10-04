@@ -8,31 +8,41 @@ const Header = () => {
 
   return (
     <HeaderStyled>
-      <LeftStyled>Dark Mode</LeftStyled>
-      <Logo href="/home">Floom</Logo>
-      <RightStyled>
+      <Logo href="/home">LOGO</Logo>
+      <NoiseStyled>
         <NoiseButton onClick={() => setShow((prev) => !prev)}>
           Noise
         </NoiseButton>
         <NoiseController show={show}>
-          <Player url="/audio/wood-fire.mp3" />
-          <Player url="/audio/ocean.mp3" />
-          <Player url="/audio/rain.mp3" />
-          <Player url="/audio/people.mp3" />
+          <NoiseItem>
+            <NoiseTitle>장작소리</NoiseTitle>
+            <Player url="/audio/wood-fire.mp3" />
+          </NoiseItem>
+          <NoiseItem>
+            <NoiseTitle>파도소리</NoiseTitle>
+            <Player url="/audio/ocean.mp3" />
+          </NoiseItem>
+          <NoiseItem>
+            <NoiseTitle>빗소리</NoiseTitle>
+            <Player url="/audio/rain.mp3" />
+          </NoiseItem>
+          <NoiseItem>
+            <NoiseTitle>사람소리</NoiseTitle>
+            <Player url="/audio/people.mp3" />
+          </NoiseItem>
         </NoiseController>
-      </RightStyled>
+      </NoiseStyled>
     </HeaderStyled>
   );
 };
 
 const HeaderStyled = styled.div`
-  width: 100%;
-  height: 50px;
-  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #000;
+  align-items: center;
+  position: fixed;
+  top: 44px;
+  left: 48px;
   z-index: 999;
 `;
 
@@ -41,35 +51,34 @@ const Logo = styled.a`
   font-weight: bold;
 `;
 
-const LeftStyled = styled.div`
-  position: absolute;
-  left: 20px;
-`;
-
-const RightStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 20px;
+const NoiseStyled = styled.div`
+  margin-left: 32px;
 `;
 
 const NoiseButton = styled.button``;
 
 const NoiseController = styled.div<{ show: boolean }>`
-  width: 200px;
+  width: 240px;
   height: 200px;
   position: fixed;
-  top: 30px;
+  top: 48px;
+  left: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid #000;
-  background-color: #fff;
+  background-color: #f1f3f4;
   margin-top: ${({ show }) => (show ? '0px' : '-300px')};
   padding: 10px;
+  border-radius: 30px;
 `;
+
+const NoiseItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const NoiseTitle = styled.span``;
 
 export default Header;

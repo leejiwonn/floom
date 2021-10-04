@@ -5,7 +5,21 @@ interface Props {
 }
 
 const Player = ({ url }: Props) => {
-  return <ReactPlayer width="100%" height="40px" controls url={url} />;
+  return (
+    <ReactPlayer
+      width="140px"
+      height="40px"
+      controls
+      url={url}
+      config={{
+        file: {
+          attributes: {
+            controlsList: 'nodownload',
+          },
+        },
+      }}
+    />
+  );
 };
 
 export default Player;
