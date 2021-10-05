@@ -3,22 +3,24 @@ import styled from '@emotion/styled';
 const Login = () => {
   return (
     <LoginStyled>
-      <LoginButton href="/api/auth/kakao">로그인</LoginButton>
+      <LoginButton href="/api/auth/kakao">카카오 로그인</LoginButton>
     </LoginStyled>
   );
 };
 
 const LoginStyled = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const LoginButton = styled.a`
-  font-size: 24px;
+  font-size: 18px;
   padding: 10px 20px;
+  background-color: #fee502;
+  border-radius: 10px;
   cursor: pointer;
 `;
 

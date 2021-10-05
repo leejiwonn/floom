@@ -58,7 +58,7 @@ const NoiseStyled = styled.div`
 const NoiseButton = styled.button``;
 
 const NoiseController = styled.div<{ show: boolean }>`
-  width: 240px;
+  width: 260px;
   height: 200px;
   position: fixed;
   top: 48px;

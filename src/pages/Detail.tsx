@@ -16,6 +16,7 @@ const Detail = ({ category, id }: Props) => {
   return (
     <DetailStyled>
       <TitleStyled>
+        <TitleDecoration />
         <Title>{data?.title}</Title>
         <Creator>{data?.creator}</Creator>
       </TitleStyled>
@@ -36,7 +37,7 @@ const Detail = ({ category, id }: Props) => {
         </Canvas>
       </ObjectStyled>
       <PlayButton href={`/play?category=${category}&id=${id}`}>
-        체험하기
+        체험해볼래요!
       </PlayButton>
     </DetailStyled>
   );
@@ -67,26 +68,47 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
 const DetailStyled = styled.div`
   width: 100%;
-  height: calc(100vh - 50px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 40px 0;
+  background-color: #f5f2ed;
 `;
 
 const TitleStyled = styled.div`
-  text-align: center;
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 20px;
+`;
+
+const TitleDecoration = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  background-color: #5ce8a4;
+  border-radius: 10px;
 `;
 
 const Title = styled.p`
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
+  color: #333;
 `;
 
 const Creator = styled.p`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
+  color: #777;
 `;
 
 const ObjectStyled = styled.div`
@@ -95,8 +117,12 @@ const ObjectStyled = styled.div`
 `;
 
 const PlayButton = styled.a`
-  padding: 15px 100px;
-  border: 1px solid #000;
+  padding: 15px 60px;
+  background-color: #587bfa;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
 `;
 
 export default Detail;
