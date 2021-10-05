@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import Dropdown from '../Dropdown';
 
 import StepTemplate from './StepTemplate';
 
@@ -20,16 +21,8 @@ const StepB = ({
 }: Props) => {
   const [currentTime, setCurrentTime] = useState(time);
 
-  const handleChangeTime = (type: '-' | '+') => {
-    if (
-      (currentTime <= 0 && type === '-') ||
-      (currentTime === 160 && type === '+')
-    ) {
-      return;
-    }
-    setCurrentTime((prev) => {
-      return type === '-' ? prev - 10 : prev + 10;
-    });
+  const handleChangeTime = (value: any) => {
+    setCurrentTime(value);
   };
 
   const handlePrevStepButtonClick = () => {
@@ -57,7 +50,9 @@ const StepB = ({
         </Title>
         <ResultStyled>
           딱<br />
-          <span>{currentTime}분 동안</span>
+          <span>
+            <Dropdown onChangeTime={handleChangeTime} /> 분 동안
+          </span>
           <br />
           몰입할래요!
         </ResultStyled>
