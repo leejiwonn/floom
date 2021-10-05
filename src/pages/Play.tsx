@@ -11,6 +11,7 @@ import StepB from '../components/Guide/StepB';
 import StepC from '../components/Guide/StepC';
 import StepD from '../components/Guide/StepD';
 import StepE from '../components/Guide/StepE';
+import StepF from '../components/Guide/StepF';
 
 interface Props {
   category: string;
@@ -52,7 +53,7 @@ const Play = ({ category, id }: Props) => {
         )}
       </ObjectStyled>
       <PlayView>
-        {currentPage < 5 && (
+        {currentPage < 6 && (
           <RoomInfo>
             <TitleDecoration />
             <Title>{data.title}</Title>
@@ -79,10 +80,11 @@ const Play = ({ category, id }: Props) => {
             onPrevPage={handlePrevPage}
             onNextPage={handleNextPage}
           />
-          <StepE onSliderShow={setSliderShow} onNextPage={handleNextPage} />
+          <StepE onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
+          <StepF onSliderShow={setSliderShow} onNextPage={handleNextPage} />
         </Slider>
       </PlayView>
-      {currentPage >= 5 && (
+      {currentPage >= 6 && (
         <EndButton href={`/detail?category=${category}&id=${id}`}>
           체험 종료
         </EndButton>
