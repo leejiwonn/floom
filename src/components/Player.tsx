@@ -7,7 +7,7 @@ interface Props {
 const Player = ({ url }: Props) => {
   return (
     <ReactPlayer
-      width="140px"
+      width="160px"
       height="40px"
       controls
       url={url}

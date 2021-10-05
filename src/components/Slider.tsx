@@ -23,9 +23,9 @@ const Slider = ({ children, sliderShow, currentPage = 0 }: Props) => {
   return (
     sliderShow && (
       <SliderStyled>
-        <p>
-          {currentPage + 1} / {totalPage}
-        </p>
+        <SliderTitle>
+          STEP {currentPage + 1} / {totalPage}
+        </SliderTitle>
         <SliderBox count={totalPage} currentPage={currentPage}>
           {childComponents}
         </SliderBox>
@@ -36,28 +36,32 @@ const Slider = ({ children, sliderShow, currentPage = 0 }: Props) => {
 
 const SliderStyled = styled.div`
   width: 500px;
-  height: auto;
+  height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  border: 1px solid #000;
-  padding: 20px;
+  justify-content: space-between;
+  border-radius: 20px;
+  padding: 40px 20px;
+  background-color: #fff;
+`;
+
+const SliderTitle = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  color: #ccc;
 `;
 
 const SliderBox = styled.div<{ count: number; currentPage: number }>`
   width: ${({ count }) => `${500 * count}px`};
-  height: 400px;
   display: flex;
   flex-direction: row;
-  margin: 20px 0;
   margin-left: ${({ currentPage }) => `-${500 * currentPage}px`};
 `;
 
 const PageStyled = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
   margin-right: 40px;
 `;
 

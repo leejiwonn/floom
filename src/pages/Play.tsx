@@ -25,6 +25,10 @@ const Play = ({ category, id }: Props) => {
   const [time, setTime] = useState(10);
   const [play, setPlay] = useState(false);
 
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
+
   const handleNextPage = () => {
     setCurrentPage((prev) => prev + 1);
   };
@@ -35,19 +39,26 @@ const Play = ({ category, id }: Props) => {
 
   return (
     <PlayStyled>
+      <ObjectStyled>
+        {currentPage > 0 && <p>목표는 {goal}!</p>}
+        {currentPage > 1 && <p>{time}분 동안 할래요 :)</p>}
+        {currentPage >= 2 && (
+          <ReactPlayer
+            url={[...data.music]}
+            width="300px"
+            height="200px"
+            playing={play}
+          />
+        )}
+      </ObjectStyled>
       <PlayView>
-        <ObjectStyled>
-          {currentPage > 0 && <p>목표는 {goal}!</p>}
-          {currentPage > 1 && <p>{time}분 동안 할래요 :)</p>}
-          {currentPage >= 2 && (
-            <ReactPlayer
-              url={[...data.music]}
-              width="300px"
-              height="200px"
-              playing={play}
-            />
-          )}
-        </ObjectStyled>
+        {currentPage < 5 && (
+          <RoomInfo>
+            <TitleDecoration />
+            <Title>{data.title}</Title>
+            <Creator>{data.creator}</Creator>
+          </RoomInfo>
+        )}
         <Slider currentPage={currentPage} sliderShow={sliderShow}>
           <StepA
             goal={goal}
@@ -59,16 +70,21 @@ const Play = ({ category, id }: Props) => {
             time={time}
             onChangePlay={setPlay}
             onChangeTime={setTime}
+            onPrevPage={handlePrevPage}
             onNextPage={handleNextPage}
           />
-          <StepC onNextPage={handleNextPage} />
-          <StepD light={data.light} onNextPage={handleNextPage} />
+          <StepC onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
+          <StepD
+            light={data.light}
+            onPrevPage={handlePrevPage}
+            onNextPage={handleNextPage}
+          />
           <StepE onSliderShow={setSliderShow} onNextPage={handleNextPage} />
         </Slider>
       </PlayView>
       {currentPage >= 5 && (
         <EndButton href={`/detail?category=${category}&id=${id}`}>
-          종료하기
+          체험 종료
         </EndButton>
       )}
     </PlayStyled>
@@ -77,28 +93,79 @@ const Play = ({ category, id }: Props) => {
 
 const PlayStyled = styled.div`
   width: 100vw;
-  height: calc(100vh - 50px);
+  height: 100vh;
   position: relative;
+  display: flex;
+  background-color: #f5f2ed;
+`;
+
+const ObjectStyled = styled.div`
+  width: 100%;
+  height: auto;
+  margin-top: 100px;
+  margin-left: 40px;
+
+  p {
+    margin-bottom: 10px;
+  }
 `;
 
 const PlayView = styled.div`
-  width: 100%;
+  width: 500px;
   height: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-right: 60px;
+  padding: 40px 0;
 `;
 
-const ObjectStyled = styled.div``;
+const RoomInfo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+`;
+
+const TitleDecoration = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  background-color: #5ce8a4;
+  border-radius: 10px;
+`;
+
+const Title = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+`;
+
+const Creator = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+  color: #777;
+`;
 
 const EndButton = styled.a`
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20px;
-  border: 1px solid #000;
-  padding: 10px 30px;
+  right: 30px;
+  bottom: 30px;
+  padding: 15px 60px;
+  border-radius: 20px;
+  background-color: #4f75ee;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
 `;
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({

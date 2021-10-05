@@ -2,18 +2,15 @@ import styled from '@emotion/styled';
 import StepTemplate from './StepTemplate';
 
 interface Props {
+  onPrevPage?: () => void;
   onNextPage?: () => void;
 }
 
-const StepC = ({ onNextPage }: Props) => {
-  const handleNextStepButtonClick = () => {
-    onNextPage();
-  };
-
+const StepC = ({ onPrevPage, onNextPage }: Props) => {
   return (
-    <StepTemplate onNextPage={handleNextStepButtonClick}>
+    <StepTemplate onPrevPage={onPrevPage} onNextPage={onNextPage}>
       <StepCStyled>
-        <Title>몰입하는 동안 이 음악이 재생될 거에요!</Title>
+        <Title>이 방에서 재생될 음악이예요.</Title>
         <SubTitle>몰입할 때의 볼륨은 50~60 정도가 적당해요 :D</SubTitle>
       </StepCStyled>
     </StepTemplate>
