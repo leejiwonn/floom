@@ -2,18 +2,13 @@ import styled from '@emotion/styled';
 import StepTemplate from './StepTemplate';
 
 interface Props {
-  onSliderShow: (value: boolean) => void;
+  onPrevPage?: () => void;
   onNextPage?: () => void;
 }
 
-const StepE = ({ onSliderShow, onNextPage }: Props) => {
-  const handleNextStepButtonClick = () => {
-    onNextPage();
-    onSliderShow(false);
-  };
-
+const StepE = ({ onPrevPage, onNextPage }: Props) => {
   return (
-    <StepTemplate onNextPage={handleNextStepButtonClick}>
+    <StepTemplate onPrevPage={onPrevPage} onNextPage={onNextPage}>
       <StepEStyled>
         <Title>
           적절한 백색소음은 <br /> 몰입에 도움이 됩니다 :)
