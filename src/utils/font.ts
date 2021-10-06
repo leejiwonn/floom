@@ -61,6 +61,10 @@ namespace Font {
         return FontSize.SIZE_HEAD_02;
       }
 
+      case FontType.EXTRA_BOLD_HEAD_03: {
+        return FontSize.SIZE_HEAD_03;
+      }
+
       case FontType.BOLD_TITLE_01:
       case FontType.REGULAR_TITLE_01: {
         return FontSize.SIZE_TITLE_01;

@@ -13,6 +13,7 @@ interface Props {
   marginBottom?: number;
   marginLeft?: number;
   marginRight?: number;
+  lineHeight?: number;
 }
 
 const Typography = ({
@@ -25,6 +26,7 @@ const Typography = ({
   marginBottom,
   marginLeft,
   marginRight,
+  lineHeight = 1.5,
 }: Props) => {
   const TagComponent = tag as TypographyTag;
   const style = Font.getStyle(font);
@@ -40,6 +42,7 @@ const Typography = ({
         marginBottom: marginBottom,
         marginLeft: marginLeft,
         marginRight: marginRight,
+        lineHeight: lineHeight,
       }}
     >
       {children}

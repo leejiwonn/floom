@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import ReactPlayer from 'react-player';
 
-import { useRoom } from '../hooks/useRoom';
-import Slider from '../components/Slider';
-
-import StepA from '../components/Guide/StepA';
-import StepB from '../components/Guide/StepB';
-import StepC from '../components/Guide/StepC';
-import StepD from '../components/Guide/StepD';
-import StepE from '../components/Guide/StepE';
-import StepF from '../components/Guide/StepF';
+import { useRoom } from '~/hooks/useRoom';
+import StepA from '~/components/Guide/StepA';
+import StepB from '~/components/Guide/StepB';
+import StepC from '~/components/Guide/StepC';
+import Typography from '~/components/Typography';
+import { FontType } from '~/utils/font';
+import { TextColor } from '~/utils/color';
 
 interface Props {
   category: string;
@@ -18,12 +15,11 @@ interface Props {
 }
 
 const Play = ({ category, id }: Props) => {
-  const { data, isLoading } = useRoom(category, id);
+  const { data } = useRoom(category, id);
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
   const [goal, setGoal] = useState('');
   const [time, setTime] = useState(10);
-  const [play, setPlay] = useState(false);
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => prev - 1);
@@ -33,59 +29,65 @@ const Play = ({ category, id }: Props) => {
     setCurrentPage((prev) => prev + 1);
   };
 
-  if (isLoading) {
-    return <p>...</p>;
-  }
-
   return (
     <PlayStyled>
-      <ObjectStyled>
-        {currentPage > 0 && <p>목표는 {goal}!</p>}
-        {currentPage > 1 && <p>{time}분 동안 할래요 :)</p>}
-        {currentPage >= 2 && (
-          <ReactPlayer
-            url={[...data.music]}
-            width="300px"
-            height="200px"
-            playing={play}
-          />
+      <ObjectView>
+        {currentPage > 0 && (
+          <Typography marginBottom={10}>목표는 {goal}!</Typography>
         )}
-      </ObjectStyled>
+        {currentPage > 1 && <Typography>{time}분 동안 할래요 :)</Typography>}
+      </ObjectView>
       <PlayView>
-        {currentPage < 6 && (
+        {currentPage < 3 && (
+          // TODO : 방 정보 부분 컴포넌트로 변경 필요
           <RoomInfo>
             <TitleDecoration />
-            <Title>{data.title}</Title>
-            <Creator>{data.creator}</Creator>
+            <Typography font={FontType.BOLD_BODY}>{data?.title}</Typography>
+            <Typography
+              font={FontType.REGULAR_BODY}
+              color={TextColor.SECONDARY}
+            >
+              {data?.creator}
+            </Typography>
           </RoomInfo>
         )}
-        <Slider currentPage={currentPage} sliderShow={sliderShow}>
-          <StepA
-            goal={goal}
-            onChangeGoalText={setGoal}
-            placeholderInfo="목표를 입력해주세요"
-            onNextPage={handleNextPage}
-          />
-          <StepB
-            time={time}
-            onChangePlay={setPlay}
-            onChangeTime={setTime}
-            onPrevPage={handlePrevPage}
-            onNextPage={handleNextPage}
-          />
-          <StepC onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
-          <StepD
-            light={data.light}
-            onPrevPage={handlePrevPage}
-            onNextPage={handleNextPage}
-          />
-          <StepE onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
-          <StepF onSliderShow={setSliderShow} onNextPage={handleNextPage} />
-        </Slider>
+        {sliderShow && (
+          <StepStyled>
+            <Typography font={FontType.BOLD_BODY} color={TextColor.SECONDARY}>
+              STEP {currentPage + 1} / 3
+            </Typography>
+            {currentPage === 0 && (
+              <StepA
+                onChangeGoalText={setGoal}
+                placeholderInfo="목표를 입력해주세요"
+                onNextPage={handleNextPage}
+              />
+            )}
+            {currentPage === 1 && (
+              <StepB
+                goal={goal}
+                time={time}
+                onChangeTime={setTime}
+                onPrevPage={handlePrevPage}
+                onNextPage={handleNextPage}
+              />
+            )}
+            {currentPage === 2 && (
+              <StepC
+                goal={goal}
+                onSliderShow={setSliderShow}
+                onPrevPage={handlePrevPage}
+                onNextPage={handleNextPage}
+              />
+            )}
+          </StepStyled>
+        )}
       </PlayView>
-      {currentPage >= 6 && (
+      {currentPage >= 3 && (
         <EndButton href={`/detail?category=${category}&id=${id}`}>
-          체험 종료
+          <Typography font={FontType.BOLD_TITLE_02} color={TextColor.WHITE}>
+            체험 종료
+          </Typography>
         </EndButton>
       )}
     </PlayStyled>
@@ -100,15 +102,11 @@ const PlayStyled = styled.div`
   background-color: #f5f2ed;
 `;
 
-const ObjectStyled = styled.div`
+const ObjectView = styled.div`
   width: 100%;
   height: auto;
   margin-top: 100px;
   margin-left: 40px;
-
-  p {
-    margin-bottom: 10px;
-  }
 `;
 
 const PlayView = styled.div`
@@ -145,16 +143,16 @@ const TitleDecoration = styled.div`
   border-radius: 10px;
 `;
 
-const Title = styled.p`
-  font-size: 16px;
-  font-weight: 700;
-  color: #333;
-`;
-
-const Creator = styled.p`
-  font-size: 16px;
-  font-weight: 400;
-  color: #777;
+const StepStyled = styled.div`
+  width: 500px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 20px;
+  padding: 40px 20px;
+  background-color: #fff;
 `;
 
 const EndButton = styled.a`
@@ -164,9 +162,6 @@ const EndButton = styled.a`
   padding: 15px 60px;
   border-radius: 20px;
   background-color: #4f75ee;
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
 `;
 
 export default Play;
