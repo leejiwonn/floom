@@ -1,8 +1,9 @@
 import passport from 'passport';
 import { Strategy as KakaoStrategy } from 'passport-kakao';
-import { createAuthToken } from '../../../../src/server/auth';
-import { User, UserProvider } from '../../../../src/types/User';
+
 import database from '../../../../firebase/app';
+import { createAuthToken } from '~/server/auth';
+import { User, UserProvider } from '~/types/User';
 
 const userRef = database.collection('users');
 

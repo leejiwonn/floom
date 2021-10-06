@@ -1,3 +1,3 @@
-import LoginSuccess from '../src/pages/LoginSuccess';
+import LoginSuccess from '~/pages/LoginSuccess';
 
 export default LoginSuccess;

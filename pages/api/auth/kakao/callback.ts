@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import nc from 'next-connect';
-import { User } from '../../../../src/types/User';
+
 import passport from './passport';
+import { User } from '~/types/User';
 
 const handler = nc()
   .use(passport.initialize())

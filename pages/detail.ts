@@ -1,5 +1,5 @@
-import Detail from '../src/pages/Detail';
+import Detail from '~/pages/Detail';
 
 export default Detail;
 
-export { getServerSideProps } from '../src/utils/server';
+export { getServerSideProps } from '~/utils/server';
