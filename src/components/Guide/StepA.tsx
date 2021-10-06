@@ -1,16 +1,19 @@
 import styled from '@emotion/styled';
 import { useState, useCallback } from 'react';
 
+import Typography from '~/components/Typography';
+import { TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
+
 import StepTemplate from './StepTemplate';
 
 interface Props {
-  goal: string;
-  onChangeGoalText: (value: string) => void;
   placeholderInfo?: string;
+  onChangeGoalText: (value: string) => void;
   onNextPage?: () => void;
 }
 
-const StepA = ({ onChangeGoalText, placeholderInfo, onNextPage }: Props) => {
+const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
   const [textInput, setTextInput] = useState('');
 
   const handleChangeInput = useCallback(
@@ -26,15 +29,24 @@ const StepA = ({ onChangeGoalText, placeholderInfo, onNextPage }: Props) => {
   };
 
   return (
-    <StepTemplate onNextPage={handleNextStepButtonClick}>
-      <StepAStyled>
-        <SubTitle>처음에는 가볍게 목표부터 설정해볼까요?</SubTitle>
-        <Title>
+    <StepTemplate
+      subTitle="처음에는 가볍게 목표부터 설정해볼까요?"
+      title={
+        <>
           방을 체험할 동안
           <br />
-          <span>어떤 학습</span>을 하실 건가요?
-        </Title>
-        <ResultStyled>
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            color={TextColor.SECONDARY}
+          >
+            어떤 목표
+          </Typography>
+          를 이루실 건가요?
+        </>
+      }
+      content={
+        <>
           저는,
           <br />
           <TextInputStyled
@@ -44,55 +56,24 @@ const StepA = ({ onChangeGoalText, placeholderInfo, onNextPage }: Props) => {
             onChange={handleChangeInput}
           />
           <br />
-          을(를) 할래요.
-        </ResultStyled>
-      </StepAStyled>
-    </StepTemplate>
+          할래요.
+        </>
+      }
+      nextButtonText="다 적었어요!"
+      onNextPage={handleNextStepButtonClick}
+    />
   );
 };
 
-const StepAStyled = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const SubTitle = styled.p`
-  font-size: 14px;
-  font-weight: 300;
-  color: #333;
-  margin-bottom: 5px;
-`;
-
-const Title = styled.p`
-  font-size: 21px;
-  font-weight: 800;
-  color: #343434;
-
-  span {
-    color: #587bfa;
-  }
-`;
-
-const ResultStyled = styled.p`
-  font-size: 16px;
-  font-weight: 400;
-  color: #333;
-  margin-top: 60px;
-  padding-left: 10px;
-  line-height: 2.5;
-  margin-bottom: 60px;
-`;
-
+// TODO : TextInput 커스텀 컴포넌트 생성 필요
 const TextInputStyled = styled.input`
   width: 300px;
   padding: 10px;
+  border-radius: 10px;
+  margin-left: -5px;
   font-size: 18px;
   color: #587bfa;
   background-color: #f6f6f6;
-  border-radius: 10px;
-  margin-left: -10px;
 `;
 
 export default StepA;

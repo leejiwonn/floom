@@ -1,10 +1,14 @@
-import styled from '@emotion/styled';
 import { useState } from 'react';
-import Dropdown from '../Dropdown';
+
+import Dropdown from '~/components/Dropdown';
+import Typography from '~/components/Typography';
+import { TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 import StepTemplate from './StepTemplate';
 
 interface Props {
+  goal: string;
   time: number;
   onChangePlay?: (value: boolean) => void;
   onChangeTime?: (value: number) => void;
@@ -13,6 +17,7 @@ interface Props {
 }
 
 const StepB = ({
+  goal,
   time,
   onChangePlay,
   onChangeTime,
@@ -38,67 +43,41 @@ const StepB = ({
 
   return (
     <StepTemplate
-      onPrevPage={handlePrevStepButtonClick}
-      onNextPage={handleNextStepButtonClick}
-    >
-      <StepBStyled>
-        <SubTitle>처음에는 가볍게 목표부터 설정해볼까요?</SubTitle>
-        <Title>
-          방을 체험할 동안
+      subTitle="처음에는 가볍게 목표부터 설정해볼까요?"
+      title={
+        <>
+          {goal}을
           <br />
-          <span>어떤 학습</span>을 하실 건가요?
-        </Title>
-        <ResultStyled>
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            color={TextColor.SECONDARY}
+          >
+            몇 분 동안
+          </Typography>
+          하실 건가요?
+        </>
+      }
+      content={
+        <>
           딱<br />
-          <span>
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            color={TextColor.SECONDARY}
+          >
             <Dropdown onChangeTime={handleChangeTime} /> 분 동안
-          </span>
+          </Typography>
           <br />
           몰입할래요!
-        </ResultStyled>
-      </StepBStyled>
-    </StepTemplate>
+        </>
+      }
+      prevButtonText="이전"
+      onPrevPage={handlePrevStepButtonClick}
+      nextButtonText="설정했어요!"
+      onNextPage={handleNextStepButtonClick}
+    />
   );
 };
-
-const StepBStyled = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const SubTitle = styled.p`
-  font-size: 14px;
-  font-weight: 300;
-  color: #333;
-  margin-bottom: 5px;
-`;
-
-const Title = styled.p`
-  font-size: 21px;
-  font-weight: 800;
-  color: #343434;
-
-  span {
-    color: #587bfa;
-  }
-`;
-
-const ResultStyled = styled.p`
-  font-size: 16px;
-  font-weight: 400;
-  color: #333;
-  margin-top: 60px;
-  padding-left: 10px;
-  line-height: 2.5;
-  margin-bottom: 60px;
-
-  span {
-    font-size: 18px;
-    font-weight: 800;
-    color: #587bfa;
-  }
-`;
 
 export default StepB;

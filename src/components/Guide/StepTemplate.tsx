@@ -1,22 +1,65 @@
 import styled from '@emotion/styled';
 
+import { Align, FontType } from '~/utils/font';
+import Typography from '~/components/Typography';
+import { TextColor } from '~/utils/color';
+
 interface Props {
-  children?: React.ReactNode;
+  subTitle?: React.ReactNode;
+  title?: React.ReactNode;
+  content?: React.ReactNode;
+  prevButtonText?: string;
   onPrevPage?: () => void;
+  nextButtonText?: string;
   onNextPage?: () => void;
 }
 
-const StepTemplate = ({ children, onPrevPage, onNextPage }: Props) => {
+const StepTemplate = ({
+  subTitle,
+  title,
+  content,
+  prevButtonText,
+  onPrevPage,
+  nextButtonText,
+  onNextPage,
+}: Props) => {
   return (
     <StepStyled>
-      {children}
+      <StepInfo>
+        <Typography font={FontType.LIGHT_CAPTION} marginBottom={5}>
+          {subTitle}
+        </Typography>
+        <Typography font={FontType.EXTRA_BOLD_HEAD_03}>{title}</Typography>
+        <Typography
+          font={FontType.REGULAR_BODY}
+          lineHeight={2.5}
+          marginTop={60}
+          marginBottom={60}
+        >
+          {content}
+        </Typography>
+      </StepInfo>
       <ButtonStyled>
         {onPrevPage && (
-          <PrevStepButton onClick={onPrevPage}>이전</PrevStepButton>
+          <PrevStepButton onClick={onPrevPage}>
+            <Typography
+              font={FontType.BOLD_TITLE_02}
+              color={TextColor.SECONDARY}
+              align={Align.CENTER}
+            >
+              {prevButtonText}
+            </Typography>
+          </PrevStepButton>
         )}
         {onNextPage && (
           <NextStepButton onClick={onNextPage} checkLast={!!onPrevPage}>
-            다음
+            <Typography
+              font={FontType.BOLD_TITLE_02}
+              color={TextColor.WHITE}
+              align={Align.CENTER}
+            >
+              {nextButtonText}
+            </Typography>
           </NextStepButton>
         )}
       </ButtonStyled>
@@ -32,6 +75,8 @@ const StepStyled = styled.div`
   justify-content: space-between;
 `;
 
+const StepInfo = styled.div``;
+
 const ButtonStyled = styled.div`
   width: 100%;
   display: flex;
@@ -43,19 +88,15 @@ const ButtonStyled = styled.div`
 const PrevStepButton = styled.button`
   width: 34%;
   border: 1px solid #dfe9fb;
-  padding: 15px;
   border-radius: 18px;
-  font-weight: 700;
-  color: #587bfa;
+  padding: 15px;
 `;
 
 const NextStepButton = styled.button<{ checkLast: boolean }>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
-  padding: 15px;
   border-radius: 18px;
+  padding: 15px;
   background-color: #587bfa;
-  font-weight: 700;
-  color: #fff;
 `;
 
 export default StepTemplate;
