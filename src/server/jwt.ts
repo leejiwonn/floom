@@ -7,6 +7,7 @@ import {
   verify,
   VerifyOptions,
 } from 'jsonwebtoken';
+
 import { AnyObject } from '../utils/typings';
 
 const JWT_SECRET = process.env.JWT_SECRET;

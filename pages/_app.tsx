@@ -2,7 +2,7 @@ import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../styles/global.css';
-import Header from '../src/components/Header';
+import Header from '~/components/Header';
 
 const queryClient = new QueryClient();
 

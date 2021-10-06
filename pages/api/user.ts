@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
+
 import database from '../../firebase/app';
 
 const userRef = database.collection('users');

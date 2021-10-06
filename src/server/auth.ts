@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { User } from '../types/User';
-import database from '../../firebase/app';
 import { NextHandler } from 'next-connect';
+
+import database from '../../firebase/app';
 import { jwtSign, jwtVerify } from './jwt';
+import { User } from '~/types/User';
 
 const THREE_MONTHS = 3 * 30 * 24 * 60 * 60;
 

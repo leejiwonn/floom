@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import { authorizeMiddleware } from '../../src/server/auth';
+
 import database from '../../firebase/app';
+import { authorizeMiddleware } from '~/server/auth';
 
 const getCategoryRooms = async (req: NextApiRequest, res: NextApiResponse) => {
   const rooms = await database

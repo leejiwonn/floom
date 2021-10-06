@@ -1,5 +1,5 @@
-import Play from '../src/pages/Play';
+import Play from '~/pages/Play';
 
 export default Play;
 
-export { getServerSideProps } from '../src/utils/server';
+export { getServerSideProps } from '~/utils/server';
