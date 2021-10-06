@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
-import api from '../utils/api';
-import { Room } from '../types/Room';
+
+import api from '~/utils/api';
+import { Room } from '~/types/Room';
 
 export const useCategoryRooms = (category: string) =>
   useQuery(

@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import { Canvas } from '@react-three/fiber';
 
-import Obj from '../components/Obj';
-import { useRoom } from '../hooks/useRoom';
+import Typography from '~/components/Typography';
+import Obj from '~/components/Obj';
+import { TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
+import { useRoom } from '~/hooks/useRoom';
 
 interface Props {
   category: string;
@@ -16,8 +19,10 @@ const Detail = ({ category, id }: Props) => {
     <DetailStyled>
       <TitleStyled>
         <TitleDecoration />
-        <Title>{data?.title}</Title>
-        <Creator>{data?.creator}</Creator>
+        <Typography font={FontType.BOLD_BODY}>{data?.title}</Typography>
+        <Typography font={FontType.REGULAR_BODY} color={TextColor.SECONDARY}>
+          {data?.creator}
+        </Typography>
       </TitleStyled>
       <ObjectStyled>
         <Canvas
@@ -36,7 +41,13 @@ const Detail = ({ category, id }: Props) => {
         </Canvas>
       </ObjectStyled>
       <PlayButton href={`/play?category=${category}&id=${id}`}>
-        체험해볼래요!
+        <Typography
+          tag="span"
+          font={FontType.BOLD_TITLE_02}
+          color={TextColor.WHITE}
+        >
+          체험해볼래요!
+        </Typography>
       </PlayButton>
     </DetailStyled>
   );
@@ -60,9 +71,9 @@ const TitleStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background-color: #fff;
   padding: 20px 30px;
   border-radius: 20px;
+  background-color: #fff;
 `;
 
 const TitleDecoration = styled.div`
@@ -71,20 +82,8 @@ const TitleDecoration = styled.div`
   position: absolute;
   top: -5px;
   left: -5px;
-  background-color: #5ce8a4;
   border-radius: 10px;
-`;
-
-const Title = styled.p`
-  font-size: 16px;
-  font-weight: 700;
-  color: #333;
-`;
-
-const Creator = styled.p`
-  font-size: 16px;
-  font-weight: 400;
-  color: #777;
+  background-color: #5ce8a4;
 `;
 
 const ObjectStyled = styled.div`
@@ -94,11 +93,8 @@ const ObjectStyled = styled.div`
 
 const PlayButton = styled.a`
   padding: 15px 60px;
-  background-color: #587bfa;
   border-radius: 20px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
+  background-color: #587bfa;
 `;
 
 export default Detail;

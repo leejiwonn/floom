@@ -18,6 +18,7 @@ const BasicColor = {
   GREEN10: '#E8F5EF',
 
   YELLOW: '#FFCA42',
+  WHITE: '#FFFFFF',
 } as const;
 
 const BackgroundColor = {
@@ -29,6 +30,7 @@ const TextColor = {
   // TODO : 업데이트 필요
   PRIMARY: BasicColor.DARK100,
   SECONDARY: BasicColor.DARK70,
+  WHITE: BasicColor.WHITE,
 } as const;
 
 const GraphicColor = {
