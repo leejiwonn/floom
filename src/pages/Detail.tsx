@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Canvas } from '@react-three/fiber';
-import { GetServerSideProps } from 'next';
 
 import Obj from '../components/Obj';
 import { useRoom } from '../hooks/useRoom';
@@ -41,29 +40,6 @@ const Detail = ({ category, id }: Props) => {
       </PlayButton>
     </DetailStyled>
   );
-};
-
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  query,
-}) => {
-  const category = query.category as string;
-  const id = query.id as string;
-
-  if (category == null || id == null) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      category,
-      id,
-    },
-  };
 };
 
 const DetailStyled = styled.div`
