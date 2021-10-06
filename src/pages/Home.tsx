@@ -1,8 +1,12 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { useCategoryRooms } from '../hooks/useRoom';
+import Typography from '~/components/Typography';
+import { useCategoryRooms } from '~/hooks/useRoom';
+import { TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
+// TODO : 스크롤 유지 or 데이터 미리 불러오는 방법으로 깜빡임 해결 필요
 const Home = () => {
   const [category, setCategory] = useState('work');
   const { data } = useCategoryRooms(category);
@@ -10,24 +14,55 @@ const Home = () => {
   return (
     <HomeStyled>
       <GateStyled>
-        <GateTitle>
-          <span>몰입</span>의 즐거움을 <br /> 경험하다!
-        </GateTitle>
+        <Typography
+          font={FontType.EXTRA_BOLD_HEAD_01}
+          color={TextColor.PRIMARY}
+        >
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_01}
+            color={TextColor.SECONDARY}
+          >
+            몰입
+          </Typography>
+          의 즐거움을 <br /> 경험하다!
+        </Typography>
       </GateStyled>
       <CategoryStyled>
-        <CategoryTitle>어떤 일에 몰입하고 싶은가요?</CategoryTitle>
+        <Typography
+          font={FontType.EXTRA_BOLD_HEAD_02}
+          color={TextColor.WHITE}
+          marginBottom={50}
+        >
+          어떤 일에 몰입하고 싶은가요?
+        </Typography>
         <CategoryList>
           <CategoryItem onClick={() => setCategory('work')}>
             <CategoryItemIcon />
-            <CategoryItemText>업무</CategoryItemText>
+            <Typography
+              font={FontType.REGULAR_TITLE_01}
+              color={TextColor.WHITE}
+            >
+              업무
+            </Typography>
           </CategoryItem>
           <CategoryItem onClick={() => setCategory('study')}>
             <CategoryItemIcon />
-            <CategoryItemText>학습</CategoryItemText>
+            <Typography
+              font={FontType.REGULAR_TITLE_01}
+              color={TextColor.WHITE}
+            >
+              학습
+            </Typography>
           </CategoryItem>
           <CategoryItem onClick={() => setCategory('rest')}>
             <CategoryItemIcon />
-            <CategoryItemText>휴식</CategoryItemText>
+            <Typography
+              font={FontType.REGULAR_TITLE_01}
+              color={TextColor.WHITE}
+            >
+              휴식
+            </Typography>
           </CategoryItem>
         </CategoryList>
       </CategoryStyled>
@@ -38,8 +73,10 @@ const Home = () => {
             key={i}
           >
             <RoomThumbnail src={room.screen} />
-            <RoomTitle>{room.title}</RoomTitle>
-            <RoomSubTitle>{room.creator}</RoomSubTitle>
+            <Typography font={FontType.REGULAR_TITLE_01}>
+              {room.title}
+            </Typography>
+            <Typography font={FontType.LIGHT_BODY}>{room.creator}</Typography>
           </RoomStyled>
         ))}
       </RoomsStyled>
@@ -64,16 +101,6 @@ const GateStyled = styled.div`
   padding-left: 60px;
 `;
 
-const GateTitle = styled.p`
-  font-size: 64px;
-  font-weight: 800;
-  color: #2e2e2e;
-
-  span {
-    color: #587bfa;
-  }
-`;
-
 const CategoryStyled = styled.div`
   width: 100%;
   height: auto;
@@ -83,13 +110,6 @@ const CategoryStyled = styled.div`
   padding: 60px 0;
   margin: 50px 0;
   background-color: #587bfa;
-`;
-
-const CategoryTitle = styled.p`
-  font-size: 42px;
-  font-weight: 800;
-  color: #ffffff;
-  padding-bottom: 50px;
 `;
 
 const CategoryList = styled.div``;
@@ -105,12 +125,6 @@ const CategoryItemIcon = styled.div`
   background-color: #dfe9fb;
   border-radius: 30px;
   margin-bottom: 10px;
-`;
-
-const CategoryItemText = styled.p`
-  font-size: 21px;
-  font-weight: 400;
-  color: #fff;
 `;
 
 const RoomsStyled = styled.div`
@@ -134,18 +148,6 @@ const RoomStyled = styled.a`
 const RoomThumbnail = styled.img`
   border-radius: 10px;
   margin-bottom: 10px;
-`;
-
-const RoomTitle = styled.p`
-  font-size: 21px;
-  font-weight: 400;
-  color: #000;
-`;
-
-const RoomSubTitle = styled.p`
-  font-size: 16px;
-  font-weight: 300;
-  color: #000;
 `;
 
 export default Home;

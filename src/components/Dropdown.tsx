@@ -4,10 +4,12 @@ interface Props {
   onChangeTime: (value: number) => void;
 }
 
+// TODO : 커스텀 형태로 변경 필요
 const Dropdown = ({ onChangeTime }: Props) => {
   const handleTimeValueClick = (e: any) => {
     onChangeTime(e.target.value);
   };
+
   return (
     <DropdownStyled name="time" onChange={(e) => handleTimeValueClick(e)}>
       <DropdownItem value={10}>10</DropdownItem>

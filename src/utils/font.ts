@@ -34,6 +34,7 @@ const FontType = {
   REGULAR_BODY: 'REGULAR_BODY',
 
   LIGHT_TITLE_02: 'LIGHT_TITLE_02',
+  LIGHT_BODY: 'LIGHT_BODY',
   LIGHT_CAPTION: 'LIGHT_CAPTION',
 } as const;
 
@@ -71,7 +72,8 @@ namespace Font {
       }
 
       case FontType.BOLD_BODY:
-      case FontType.REGULAR_BODY: {
+      case FontType.REGULAR_BODY:
+      case FontType.LIGHT_BODY: {
         return FontSize.SIZE_BODY;
       }
 
@@ -103,6 +105,7 @@ namespace Font {
       }
 
       case FontType.LIGHT_TITLE_02:
+      case FontType.LIGHT_BODY:
       case FontType.LIGHT_CAPTION: {
         return Weight.LIGHT;
       }

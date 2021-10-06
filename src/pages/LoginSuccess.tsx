@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { saveAuthTokenInLocalStorage } from '../utils/auth';
+
+import { saveAuthTokenInLocalStorage } from '~/utils/auth';
 
 function LoginSuccess() {
   const router = useRouter();
