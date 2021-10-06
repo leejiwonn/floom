@@ -3,7 +3,6 @@ import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import { useRoom } from '../hooks/useRoom';
-import { GetServerSideProps } from 'next';
 import Slider from '../components/Slider';
 
 import StepA from '../components/Guide/StepA';
@@ -169,28 +168,5 @@ const EndButton = styled.a`
   font-weight: 700;
   color: #fff;
 `;
-
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  query,
-}) => {
-  const category = query.category as string;
-  const id = query.id as string;
-
-  if (category == null || id == null) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      category,
-      id,
-    },
-  };
-};
 
 export default Play;
