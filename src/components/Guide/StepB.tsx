@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import Dropdown from '~/components/Dropdown';
@@ -25,10 +26,6 @@ const StepB = ({
   onNextPage,
 }: Props) => {
   const [currentTime, setCurrentTime] = useState(time);
-
-  const handleChangeTime = (value: any) => {
-    setCurrentTime(value);
-  };
 
   const handlePrevStepButtonClick = () => {
     onPrevPage();
@@ -59,18 +56,28 @@ const StepB = ({
         </>
       }
       content={
-        <>
-          딱<br />
-          <Typography
-            tag="span"
-            font={FontType.EXTRA_BOLD_HEAD_03}
-            color={TextColor.SECONDARY}
-          >
-            <Dropdown onChangeTime={handleChangeTime} /> 분 동안
-          </Typography>
-          <br />
-          몰입할래요!
-        </>
+        <ResultStyled>
+          <Typography>딱</Typography>
+          <DropdownLineStyled>
+            <Typography
+              tag="span"
+              font={FontType.EXTRA_BOLD_HEAD_03}
+              color={TextColor.SECONDARY}
+            >
+              <Dropdown time={currentTime} onChangeTime={setCurrentTime} />
+            </Typography>
+            <Typography
+              tag="span"
+              font={FontType.EXTRA_BOLD_HEAD_03}
+              color={TextColor.SECONDARY}
+              marginLeft={10}
+              marginTop={8}
+            >
+              동안
+            </Typography>
+          </DropdownLineStyled>
+          <Typography marginTop={70}>몰입할래요!</Typography>
+        </ResultStyled>
       }
       prevButtonText="이전"
       onPrevPage={handlePrevStepButtonClick}
@@ -79,5 +86,16 @@ const StepB = ({
     />
   );
 };
+
+const ResultStyled = styled.div`
+  position: relative;
+`;
+
+const DropdownLineStyled = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 30px;
+`;
 
 export default StepB;
