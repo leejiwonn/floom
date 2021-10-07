@@ -14,6 +14,7 @@ interface Props {
 
 const values = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
 
+// TODO : 외부 클릭 시 닫히도록 하는 코드 재사용 가능하게 분리
 const Dropdown = ({ time, onChangeTime }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const modalRef = useRef(null);
