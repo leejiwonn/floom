@@ -23,6 +23,9 @@
         "rootPathPrefix": "~",
         "rootPathSuffix": "src"
       }
+    ],
+    [
+      "inline-react-svg"
     ]
   ]
 }
