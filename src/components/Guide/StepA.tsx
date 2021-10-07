@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
 import { useState, useCallback } from 'react';
 
 import Typography from '~/components/Typography';
+import TextInput from '~/components/TextInput';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
@@ -49,11 +49,13 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
         <>
           저는,
           <br />
-          <TextInputStyled
-            type="text"
-            placeholder={placeholderInfo}
+          <TextInput
             value={textInput}
-            onChange={handleChangeInput}
+            onChangeInput={handleChangeInput}
+            placeholder={placeholderInfo}
+            marginLeft={-5}
+            font={FontType.REGULAR_BODY}
+            color={TextColor.SECONDARY}
           />
           <br />
           할래요.
@@ -64,16 +66,5 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
     />
   );
 };
-
-// TODO : TextInput 커스텀 컴포넌트 생성 필요
-const TextInputStyled = styled.input`
-  width: 300px;
-  padding: 10px;
-  border-radius: 10px;
-  margin-left: -5px;
-  font-size: 18px;
-  color: #587bfa;
-  background-color: #f6f6f6;
-`;
 
 export default StepA;
