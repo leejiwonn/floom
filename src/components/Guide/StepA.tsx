@@ -46,7 +46,12 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
         </>
       }
       content={
-        <>
+        <Typography
+          font={FontType.REGULAR_BODY}
+          lineHeight={2.5}
+          marginTop={60}
+          marginBottom={60}
+        >
           저는,
           <br />
           <TextInput
@@ -59,7 +64,7 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
           />
           <br />
           할래요.
-        </>
+        </Typography>
       }
       nextButtonText="다 적었어요!"
       onNextPage={handleNextStepButtonClick}

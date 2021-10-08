@@ -57,26 +57,34 @@ const StepB = ({
       }
       content={
         <ResultStyled>
-          <Typography>딱</Typography>
+          <Typography
+            font={FontType.REGULAR_BODY}
+            marginTop={60}
+            marginLeft={10}
+            marginBottom={60}
+          >
+            딱
+          </Typography>
           <DropdownLineStyled>
+            <Dropdown time={currentTime} onChangeTime={setCurrentTime} />
             <Typography
               tag="span"
               font={FontType.EXTRA_BOLD_HEAD_03}
               color={TextColor.SECONDARY}
-            >
-              <Dropdown time={currentTime} onChangeTime={setCurrentTime} />
-            </Typography>
-            <Typography
-              tag="span"
-              font={FontType.EXTRA_BOLD_HEAD_03}
-              color={TextColor.SECONDARY}
-              marginLeft={10}
               marginTop={8}
+              marginLeft={10}
             >
               동안
             </Typography>
           </DropdownLineStyled>
-          <Typography marginTop={70}>몰입할래요!</Typography>
+          <Typography
+            font={FontType.REGULAR_BODY}
+            marginTop={70}
+            marginLeft={10}
+            marginBottom={60}
+          >
+            몰입할래요!
+          </Typography>
         </ResultStyled>
       }
       prevButtonText="이전"
