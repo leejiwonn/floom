@@ -9,7 +9,7 @@ const Screen = ({ type, url }: Props) => {
   return <>{type === 'image' && <ImageScreen url={url} />}</>;
 };
 
-const ImageScreen = styled.button<{ url: string }>`
+const ImageScreen = styled.img<{ url: string }>`
   width: 100%;
   height: 100%;
   background-image: ${({ url }) => `url(${url})`};
