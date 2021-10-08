@@ -20,6 +20,7 @@ const Play = ({ category, id }: Props) => {
   const [sliderShow, setSliderShow] = useState(true);
   const [goal, setGoal] = useState('');
   const [time, setTime] = useState(10);
+  const [isFull, setIsPull] = useState(false);
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => prev - 1);
@@ -33,9 +34,20 @@ const Play = ({ category, id }: Props) => {
     <PlayStyled>
       <ObjectView>
         {currentPage > 0 && (
-          <Typography marginBottom={10}>목표는 {goal}!</Typography>
+          <Typography marginTop={100} marginLeft={50} marginBottom={10}>
+            목표는 {goal}!
+          </Typography>
         )}
-        {currentPage > 1 && <Typography>{time}분 동안 할래요 :)</Typography>}
+        {currentPage > 1 && (
+          <Typography marginLeft={50}>{time}분 동안 할래요 :)</Typography>
+        )}
+        {currentPage >= 3 && (
+          <Screen
+            onClick={() => setIsPull((prev) => !prev)}
+            isFull={isFull}
+            url={data?.screen}
+          />
+        )}
       </ObjectView>
       <PlayView>
         {currentPage < 3 && (
@@ -104,9 +116,23 @@ const PlayStyled = styled.div`
 
 const ObjectView = styled.div`
   width: 100%;
-  height: auto;
-  margin-top: 100px;
-  margin-left: 40px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+const Screen = styled.button<{ isFull: boolean; url: string }>`
+  width: ${({ isFull }) => (isFull ? '100%' : '200px')};
+  height: ${({ isFull }) => (isFull ? '100%' : '200px')};
+  position: absolute;
+  top: ${({ isFull }) => (isFull ? '0' : '200px')};
+  right: ${({ isFull }) => (isFull ? '0' : '100px')};
+  background-image: ${({ url }) => `url(${url})`};
+  background-size: cover;
+  background-position: 50%;
 `;
 
 const PlayView = styled.div`
