@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import Typography from '~/components/Typography';
+import Screen from '~/components/Screen';
 import { useCategoryRooms } from '~/hooks/useRoom';
 import { TextColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -72,7 +73,9 @@ const Home = () => {
             href={`/detail?category=${category}&id=${room.id}`}
             key={i}
           >
-            <RoomThumbnail src={room.screen} />
+            <ScreenStyled>
+              <Screen type={room.screen[0]} url={room.screen[1]} />
+            </ScreenStyled>
             <Typography font={FontType.REGULAR_TITLE_01}>
               {room.title}
             </Typography>
@@ -145,7 +148,10 @@ const RoomStyled = styled.a`
   margin: 0 10px;
 `;
 
-const RoomThumbnail = styled.img`
+const ScreenStyled = styled.div`
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
   border-radius: 10px;
   margin-bottom: 10px;
 `;
