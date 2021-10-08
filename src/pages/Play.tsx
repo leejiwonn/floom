@@ -6,6 +6,7 @@ import StepA from '~/components/Guide/StepA';
 import StepB from '~/components/Guide/StepB';
 import StepC from '~/components/Guide/StepC';
 import Typography from '~/components/Typography';
+import Screen from '~/components/Screen';
 import { FontType } from '~/utils/font';
 import { TextColor } from '~/utils/color';
 
@@ -44,11 +45,12 @@ const Play = ({ category, id }: Props) => {
         )}
         {currentPage >= 3 && (
           <>
-            <Screen
-              onClick={() => setIsPull((prev) => !prev)}
+            <ScreenStyled
               isFull={isFull}
-              url={data?.screen}
-            />
+              onClick={() => setIsPull((prev) => !prev)}
+            >
+              <Screen type={data?.screen[0]} url={data?.screen[1]} />
+            </ScreenStyled>
             <EndButton href={`/detail?category=${category}&id=${id}`}>
               <Typography font={FontType.BOLD_TITLE_02} color={TextColor.WHITE}>
                 체험 종료
@@ -125,15 +127,12 @@ const ObjectView = styled.div`
   z-index: 1;
 `;
 
-const Screen = styled.button<{ isFull: boolean; url: string }>`
+const ScreenStyled = styled.button<{ isFull: boolean }>`
   width: ${({ isFull }) => (isFull ? '100%' : '200px')};
   height: ${({ isFull }) => (isFull ? '100%' : '200px')};
   position: absolute;
   top: ${({ isFull }) => (isFull ? '0' : '200px')};
   right: ${({ isFull }) => (isFull ? '0' : '100px')};
-  background-image: ${({ url }) => `url(${url})`};
-  background-size: cover;
-  background-position: 50%;
 `;
 
 const PlayView = styled.div`
