@@ -30,14 +30,7 @@ const StepTemplate = ({
           {subTitle}
         </Typography>
         <Typography font={FontType.EXTRA_BOLD_HEAD_03}>{title}</Typography>
-        <Typography
-          font={FontType.REGULAR_BODY}
-          lineHeight={2.5}
-          marginTop={60}
-          marginBottom={60}
-        >
-          {content}
-        </Typography>
+        {content}
       </StepInfo>
       <ButtonStyled>
         {onPrevPage && (
