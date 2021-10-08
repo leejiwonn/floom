@@ -14,6 +14,7 @@ interface Props {
   id: string;
 }
 
+// TODO : 방 정보 부분 컴포넌트로 변경 필요
 const Play = ({ category, id }: Props) => {
   const { data } = useRoom(category, id);
   const [currentPage, setCurrentPage] = useState(0);
@@ -42,16 +43,22 @@ const Play = ({ category, id }: Props) => {
           <Typography marginLeft={50}>{time}분 동안 할래요 :)</Typography>
         )}
         {currentPage >= 3 && (
-          <Screen
-            onClick={() => setIsPull((prev) => !prev)}
-            isFull={isFull}
-            url={data?.screen}
-          />
+          <>
+            <Screen
+              onClick={() => setIsPull((prev) => !prev)}
+              isFull={isFull}
+              url={data?.screen}
+            />
+            <EndButton href={`/detail?category=${category}&id=${id}`}>
+              <Typography font={FontType.BOLD_TITLE_02} color={TextColor.WHITE}>
+                체험 종료
+              </Typography>
+            </EndButton>
+          </>
         )}
       </ObjectView>
-      <PlayView>
-        {currentPage < 3 && (
-          // TODO : 방 정보 부분 컴포넌트로 변경 필요
+      {currentPage < 3 && (
+        <PlayView>
           <RoomInfo>
             <TitleDecoration />
             <Typography font={FontType.BOLD_BODY}>{data?.title}</Typography>
@@ -62,45 +69,38 @@ const Play = ({ category, id }: Props) => {
               {data?.creator}
             </Typography>
           </RoomInfo>
-        )}
-        {sliderShow && (
-          <StepStyled>
-            <Typography font={FontType.BOLD_BODY} color={TextColor.SECONDARY}>
-              STEP {currentPage + 1} / 3
-            </Typography>
-            {currentPage === 0 && (
-              <StepA
-                onChangeGoalText={setGoal}
-                placeholderInfo="목표를 입력해주세요"
-                onNextPage={handleNextPage}
-              />
-            )}
-            {currentPage === 1 && (
-              <StepB
-                goal={goal}
-                time={time}
-                onChangeTime={setTime}
-                onPrevPage={handlePrevPage}
-                onNextPage={handleNextPage}
-              />
-            )}
-            {currentPage === 2 && (
-              <StepC
-                goal={goal}
-                onSliderShow={setSliderShow}
-                onPrevPage={handlePrevPage}
-                onNextPage={handleNextPage}
-              />
-            )}
-          </StepStyled>
-        )}
-      </PlayView>
-      {currentPage >= 3 && (
-        <EndButton href={`/detail?category=${category}&id=${id}`}>
-          <Typography font={FontType.BOLD_TITLE_02} color={TextColor.WHITE}>
-            체험 종료
-          </Typography>
-        </EndButton>
+          {sliderShow && (
+            <StepStyled>
+              <Typography font={FontType.BOLD_BODY} color={TextColor.SECONDARY}>
+                STEP {currentPage + 1} / 3
+              </Typography>
+              {currentPage === 0 && (
+                <StepA
+                  onChangeGoalText={setGoal}
+                  placeholderInfo="목표를 입력해주세요"
+                  onNextPage={handleNextPage}
+                />
+              )}
+              {currentPage === 1 && (
+                <StepB
+                  goal={goal}
+                  time={time}
+                  onChangeTime={setTime}
+                  onPrevPage={handlePrevPage}
+                  onNextPage={handleNextPage}
+                />
+              )}
+              {currentPage === 2 && (
+                <StepC
+                  goal={goal}
+                  onSliderShow={setSliderShow}
+                  onPrevPage={handlePrevPage}
+                  onNextPage={handleNextPage}
+                />
+              )}
+            </StepStyled>
+          )}
+        </PlayView>
       )}
     </PlayStyled>
   );
@@ -122,6 +122,7 @@ const ObjectView = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1;
 `;
 
 const Screen = styled.button<{ isFull: boolean; url: string }>`
@@ -138,12 +139,14 @@ const Screen = styled.button<{ isFull: boolean; url: string }>`
 const PlayView = styled.div`
   width: 500px;
   height: 100%;
+  position: absolute;
+  right: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  margin-right: 60px;
   padding: 40px 0;
+  z-index: 2;
 `;
 
 const RoomInfo = styled.div`
