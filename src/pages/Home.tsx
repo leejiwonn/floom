@@ -5,7 +5,7 @@ import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
 import { useCategoryRooms } from '~/hooks/useRoom';
 import { TextColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 
 // TODO : 스크롤 유지 or 데이터 미리 불러오는 방법으로 깜빡임 해결 필요
 const Home = () => {
@@ -43,6 +43,7 @@ const Home = () => {
             <Typography
               font={FontType.REGULAR_TITLE_01}
               color={TextColor.WHITE}
+              align={Align.CENTER}
             >
               업무
             </Typography>
@@ -52,6 +53,7 @@ const Home = () => {
             <Typography
               font={FontType.REGULAR_TITLE_01}
               color={TextColor.WHITE}
+              align={Align.CENTER}
             >
               학습
             </Typography>
@@ -61,6 +63,7 @@ const Home = () => {
             <Typography
               font={FontType.REGULAR_TITLE_01}
               color={TextColor.WHITE}
+              align={Align.CENTER}
             >
               휴식
             </Typography>
