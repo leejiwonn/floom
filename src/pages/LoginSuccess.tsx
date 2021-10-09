@@ -12,14 +12,14 @@ function LoginSuccess() {
     }
 
     const authToken = router.query.authToken as string | undefined;
-    const redirect = (router.query.redirect as string) ?? '/home';
+    const redirect = (router.query.redirect as string) ?? '/';
 
     if (authToken != null) {
       saveAuthTokenInLocalStorage(authToken);
       router.replace(redirect);
     } else {
       window.alert('잘못된 접근입니다.');
-      router.replace('/');
+      router.replace('/login');
     }
   }, [router]);
 

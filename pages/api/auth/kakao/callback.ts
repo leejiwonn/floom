@@ -10,7 +10,7 @@ const handler = nc()
     passport.authenticate('kakao', {
       session: false,
       // TODO
-      // failureRedirect: '/'
+      // failureRedirect: '/login'
     }),
     (req: Request, res: Response) => {
       console.log(req.user);
