@@ -24,7 +24,7 @@ export function isAxiosError(error: unknown): error is AxiosError {
 // 401 에러를 받으면 로그인 페이지로 리다이렉트
 axios.interceptors.response.use(undefined, (error) => {
   if (isAxiosError(error) && error.response?.status === 401) {
-    window.location.href = '/';
+    window.location.href = '/login';
   }
 
   return Promise.reject(error);

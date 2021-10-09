@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <HeaderStyled>
-      <Logo href="/home">LOGO</Logo>
+      <Logo href="/">LOGO</Logo>
       <NoiseStyled>
         <NoiseButton onClick={() => setShow((prev) => !prev)}>
           백색소음
