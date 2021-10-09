@@ -12,7 +12,7 @@ const Header = () => {
       <Logo href="/home">LOGO</Logo>
       <NoiseStyled>
         <NoiseButton onClick={() => setShow((prev) => !prev)}>
-          Noise
+          백색소음
         </NoiseButton>
         <NoiseController show={show}>
           <AudioPlayer title="장작소리" url="/audio/wood-fire.mp3" />
@@ -27,12 +27,13 @@ const Header = () => {
 
 const HeaderStyled = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 44px;
-  left: 48px;
-  z-index: 999;
+  top: 45px;
+  left: 50px;
+  right: 50px;
+  z-index: 5;
 `;
 
 const Logo = styled.a`
@@ -47,18 +48,21 @@ const NoiseStyled = styled.div`
 const NoiseButton = styled.button``;
 
 const NoiseController = styled.div<{ show: boolean }>`
-  width: 260px;
-  height: 200px;
+  width: 340px;
+  height: 100vh;
   position: fixed;
-  top: 48px;
-  left: 200px;
+  top: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  margin-top: ${({ show }) => (show ? '0px' : '-300px')};
-  padding: 10px;
-  border-radius: 30px;
+  justify-content: center;
+  margin-right: ${({ show }) => (show ? '0px' : '-340px')};
+  transition: 0.5s;
+  padding: 40px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
   background-color: #f1f3f4;
+  z-index: -1;
 `;
 
 export default Header;
