@@ -24,7 +24,7 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
     setIsActive(false);
   };
 
-  const handleClickOutside = (e: any) => {
+  const handleClickOutside = (e: MouseEvent) => {
     if (!modalRef.current?.contains(e.target)) {
       setIsActive(false);
     }
