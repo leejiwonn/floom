@@ -47,6 +47,7 @@ const AudioPlayerStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 8px 0;
 `;
 
 export default AudioPlayer;
