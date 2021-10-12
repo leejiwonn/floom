@@ -40,7 +40,9 @@ const AudioControls = ({
 
 const AudioControlsStyled = styled.div``;
 
-const AudioControlButton = styled.button``;
+const AudioControlButton = styled.button`
+  padding: 0 10px;
+`;
 
 const AudioSoundControl = styled.input``;
 

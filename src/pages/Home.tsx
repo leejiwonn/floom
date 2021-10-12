@@ -7,31 +7,34 @@ import { useCategoryRooms } from '~/hooks/useRoom';
 import { TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 
-// TODO : 스크롤 유지 or 데이터 미리 불러오는 방법으로 깜빡임 해결 필요
 const Home = () => {
   const [category, setCategory] = useState('work');
   const { data } = useCategoryRooms(category);
 
+  const getCatecory = (category: string) => {
+    if (category === 'work') {
+      return '업무';
+    } else if (category === 'study') {
+      return '학습';
+    } else if (category === 'rest') {
+      return '휴식';
+    }
+  };
+
   return (
     <HomeStyled>
-      <GateStyled>
-        <Typography
-          font={FontType.EXTRA_BOLD_HEAD_01}
-          color={TextColor.PRIMARY}
-        >
-          <Typography
-            tag="span"
-            font={FontType.EXTRA_BOLD_HEAD_01}
-            color={TextColor.SECONDARY}
-          >
-            몰입
-          </Typography>
-          의 즐거움을 <br /> 경험하다!
-        </Typography>
-      </GateStyled>
       <CategoryStyled>
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_02}
+          color={TextColor.WHITE}
+          marginBottom={30}
+        >
+          몰입의 즐거움을
+          <br />
+          경험하다!
+        </Typography>
+        <Typography
+          font={FontType.BOLD_TITLE_02}
           color={TextColor.WHITE}
           marginBottom={50}
         >
@@ -71,20 +74,31 @@ const Home = () => {
         </CategoryList>
       </CategoryStyled>
       <RoomsStyled>
-        {data?.map((room, i) => (
-          <RoomStyled
-            href={`/detail?category=${category}&id=${room.id}`}
-            key={i}
-          >
-            <ScreenStyled>
-              <Screen type={room.screen[0]} url={room.screen[1]} />
-            </ScreenStyled>
-            <Typography font={FontType.REGULAR_TITLE_01}>
-              {room.title}
-            </Typography>
-            <Typography font={FontType.LIGHT_BODY}>{room.creator}</Typography>
-          </RoomStyled>
-        ))}
+        <Typography
+          font={FontType.EXTRA_BOLD_HEAD_03}
+          marginTop={130}
+          marginBottom={50}
+        >
+          {getCatecory(category)}하실 방을 선택해주세요!
+        </Typography>
+        <RoomStyled>
+          {data?.map((room, i) => (
+            <RoomItem
+              href={`/detail?category=${category}&id=${room.id}`}
+              key={i}
+            >
+              <ScreenStyled>
+                <Screen type={room.screen[0]} url={room.screen[1]} />
+              </ScreenStyled>
+              <Typography font={FontType.BOLD_TITLE_02}>
+                {room.title}
+              </Typography>
+              <Typography font={FontType.LIGHT_CAPTION}>
+                {room.creator}
+              </Typography>
+            </RoomItem>
+          ))}
+        </RoomStyled>
       </RoomsStyled>
     </HomeStyled>
   );
@@ -92,67 +106,77 @@ const Home = () => {
 
 const HomeStyled = styled.div`
   width: 100vw;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f8f8f8;
-  padding-bottom: 50px;
-`;
-
-const GateStyled = styled.div`
-  width: 100%;
-  height: 400px;
-  padding-top: 140px;
-  padding-left: 60px;
+  height: 100vh;
+  position: relative;
+  background-color: #6a8aff;
 `;
 
 const CategoryStyled = styled.div`
-  width: 100%;
-  height: auto;
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 60px 0;
-  margin: 50px 0;
-  background-color: #587bfa;
+  align-items: flex-start;
+  padding: 40px;
+  padding-top: 120px;
+  z-index: 1;
 `;
 
-const CategoryList = styled.div``;
+const CategoryList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const CategoryItem = styled.button`
-  padding: 10px 20px;
-  margin: 0 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
 `;
 
 const CategoryItemIcon = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   background-color: #dfe9fb;
-  border-radius: 30px;
-  margin-bottom: 10px;
+  border-radius: 18px;
+  margin-right: 10px;
 `;
 
 const RoomsStyled = styled.div`
-  width: 100%;
-  height: auto;
+  width: 75%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
-  flex-direction: row;
-  padding: 0 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 60px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  z-index: 2;
+  background-color: #fff;
 `;
 
-const RoomStyled = styled.a`
-  width: 300px;
+const RoomStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const RoomItem = styled.a`
+  width: 250px;
   height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   cursor: pointer;
-  margin: 0 10px;
+  margin-right: 30px;
 `;
 
 const ScreenStyled = styled.div`
-  width: 300px;
+  width: 100%;
   height: 200px;
   overflow: hidden;
   border-radius: 10px;

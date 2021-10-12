@@ -2,6 +2,11 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import AudioPlayer from '~/components/AudioPlayer';
+import { TextColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
+import Typography from './Typography';
+import LogoIcon from '../../public/assets/icons/icon-logo.svg';
+import MusicIcon from '../../public/assets/icons/icon-music.svg';
 
 // TODO : 페이지 이동 시 렌더링 방지 필요 (노이즈 유지)
 const Header = () => {
@@ -9,10 +14,22 @@ const Header = () => {
 
   return (
     <HeaderStyled>
-      <Logo href="/">LOGO</Logo>
+      <Logo href="/">
+        <LogoIcon />
+      </Logo>
       <NoiseStyled>
         <NoiseButton onClick={() => setShow((prev) => !prev)}>
-          백색소음
+          <Typography
+            font={FontType.LIGHT_CAPTION}
+            color={TextColor.SECONDARY}
+            marginLeft={16}
+            marginRight={12}
+          >
+            백색소음
+          </Typography>
+          <NoiseIcon>
+            <MusicIcon />
+          </NoiseIcon>
         </NoiseButton>
         <NoiseController show={show}>
           <AudioPlayer title="장작소리" url="/audio/wood-fire.mp3" />
@@ -30,22 +47,39 @@ const HeaderStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 45px;
-  left: 50px;
-  right: 50px;
+  top: 30px;
+  left: 40px;
+  right: 40px;
   z-index: 5;
 `;
 
-const Logo = styled.a`
-  font-size: 18px;
-  font-weight: bold;
-`;
+const Logo = styled.a``;
 
 const NoiseStyled = styled.div`
   margin-left: 32px;
 `;
 
-const NoiseButton = styled.button``;
+const NoiseButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border: 2px solid #5ce8a4;
+  border-radius: 34px;
+  background-color: #e8f5ef;
+`;
+
+const NoiseIcon = styled.div`
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  margin-right: 8px;
+  background-color: #5ce8a4;
+`;
 
 const NoiseController = styled.div<{ show: boolean }>`
   width: 340px;
