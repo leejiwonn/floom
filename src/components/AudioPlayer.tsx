@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, useRef, useEffect } from 'react';
 
+import { FontType } from '~/utils/font';
 import Typography from './Typography';
 import AudioControls from './AudioControls';
 
@@ -32,7 +33,7 @@ const AudioPlayer = ({ title, url }: Props) => {
 
   return (
     <AudioPlayerStyled>
-      <Typography>{title}</Typography>
+      <Typography font={FontType.BOLD_BODY}>{title}</Typography>
       <AudioControls
         isPlaying={isPlaying}
         onPlayPauseClick={() => setIsPlaying((prev) => !prev)}
