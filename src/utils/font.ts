@@ -1,6 +1,7 @@
 const Weight = {
   EXTRA_BOLD: 800,
   BOLD: 700,
+  SEMI_BOLD: 600,
   REGULAR: 400,
   LIGHT: 300,
 } as const;
@@ -34,6 +35,11 @@ const FontType = {
   BOLD_TITLE_02: 'BOLD_TITLE_02',
   BOLD_BODY: 'BOLD_BODY',
   BOLD_CAPTION: 'BOLD_CAPTION',
+
+  SEMI_BOLD_TITLE_01: 'SEMI_BOLD_TITLE_01',
+  SEMI_BOLD_TITLE_02: 'SEMI_BOLD_TITLE_02',
+  SEMI_BOLD_BODY: 'SEMI_BOLD_BODY',
+  SEMI_BOLD_CAPTION: 'SEMI_BOLD_CAPTION',
 
   REGULAR_TITLE_01: 'REGULAR_TITLE_01',
   REGULAR_TITLE_02: 'REGULAR_TITLE_02',
@@ -75,6 +81,7 @@ namespace Font {
 
       case FontType.EXTRA_BOLD_TITLE_01:
       case FontType.BOLD_TITLE_01:
+      case FontType.SEMI_BOLD_TITLE_01:
       case FontType.REGULAR_TITLE_01:
       case FontType.LIGHT_TITLE_01: {
         return FontSize.SIZE_TITLE_01;
@@ -82,6 +89,7 @@ namespace Font {
 
       case FontType.EXTRA_BOLD_TITLE_02:
       case FontType.BOLD_TITLE_02:
+      case FontType.SEMI_BOLD_TITLE_02:
       case FontType.REGULAR_TITLE_02:
       case FontType.LIGHT_TITLE_02: {
         return FontSize.SIZE_TITLE_02;
@@ -89,6 +97,7 @@ namespace Font {
 
       case FontType.EXTRA_BOLD_BODY:
       case FontType.BOLD_BODY:
+      case FontType.SEMI_BOLD_BODY:
       case FontType.REGULAR_BODY:
       case FontType.LIGHT_BODY: {
         return FontSize.SIZE_BODY;
@@ -96,6 +105,7 @@ namespace Font {
 
       case FontType.EXTRA_BOLD_CAPTION:
       case FontType.BOLD_CAPTION:
+      case FontType.SEMI_BOLD_CAPTION:
       case FontType.REGULAR_CAPTION:
       case FontType.LIGHT_CAPTION: {
         return FontSize.SIZE_CAPTION;
@@ -121,6 +131,13 @@ namespace Font {
       case FontType.BOLD_TITLE_02:
       case FontType.BOLD_BODY:
       case FontType.BOLD_CAPTION: {
+        return Weight.BOLD;
+      }
+
+      case FontType.SEMI_BOLD_TITLE_01:
+      case FontType.SEMI_BOLD_TITLE_02:
+      case FontType.SEMI_BOLD_BODY:
+      case FontType.SEMI_BOLD_CAPTION: {
         return Weight.BOLD;
       }
 
