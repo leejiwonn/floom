@@ -25,14 +25,22 @@ const FontType = {
   EXTRA_BOLD_HEAD_01: 'EXTRA_BOLD_HEAD_01',
   EXTRA_BOLD_HEAD_02: 'EXTRA_BOLD_HEAD_02',
   EXTRA_BOLD_HEAD_03: 'EXTRA_BOLD_HEAD_03',
+  EXTRA_BOLD_TITLE_01: 'EXTRA_BOLD_TITLE_01',
+  EXTRA_BOLD_TITLE_02: 'EXTRA_BOLD_TITLE_02',
+  EXTRA_BOLD_BODY: 'EXTRA_BOLD_BODY',
+  EXTRA_BOLD_CAPTION: 'EXTRA_BOLD_CAPTION',
 
   BOLD_TITLE_01: 'BOLD_TITLE_01',
   BOLD_TITLE_02: 'BOLD_TITLE_02',
   BOLD_BODY: 'BOLD_BODY',
+  BOLD_CAPTION: 'BOLD_CAPTION',
 
   REGULAR_TITLE_01: 'REGULAR_TITLE_01',
+  REGULAR_TITLE_02: 'REGULAR_TITLE_02',
   REGULAR_BODY: 'REGULAR_BODY',
+  REGULAR_CAPTION: 'REGULAR_CAPTION',
 
+  LIGHT_TITLE_01: 'LIGHT_TITLE_01',
   LIGHT_TITLE_02: 'LIGHT_TITLE_02',
   LIGHT_BODY: 'LIGHT_BODY',
   LIGHT_CAPTION: 'LIGHT_CAPTION',
@@ -65,22 +73,30 @@ namespace Font {
         return FontSize.SIZE_HEAD_03;
       }
 
+      case FontType.EXTRA_BOLD_TITLE_01:
       case FontType.BOLD_TITLE_01:
-      case FontType.REGULAR_TITLE_01: {
+      case FontType.REGULAR_TITLE_01:
+      case FontType.LIGHT_TITLE_01: {
         return FontSize.SIZE_TITLE_01;
       }
 
+      case FontType.EXTRA_BOLD_TITLE_02:
       case FontType.BOLD_TITLE_02:
+      case FontType.REGULAR_TITLE_02:
       case FontType.LIGHT_TITLE_02: {
         return FontSize.SIZE_TITLE_02;
       }
 
+      case FontType.EXTRA_BOLD_BODY:
       case FontType.BOLD_BODY:
       case FontType.REGULAR_BODY:
       case FontType.LIGHT_BODY: {
         return FontSize.SIZE_BODY;
       }
 
+      case FontType.EXTRA_BOLD_CAPTION:
+      case FontType.BOLD_CAPTION:
+      case FontType.REGULAR_CAPTION:
       case FontType.LIGHT_CAPTION: {
         return FontSize.SIZE_CAPTION;
       }
@@ -93,21 +109,29 @@ namespace Font {
     switch (font) {
       case FontType.EXTRA_BOLD_HEAD_01:
       case FontType.EXTRA_BOLD_HEAD_02:
-      case FontType.EXTRA_BOLD_HEAD_03: {
+      case FontType.EXTRA_BOLD_HEAD_03:
+      case FontType.EXTRA_BOLD_TITLE_01:
+      case FontType.EXTRA_BOLD_TITLE_02:
+      case FontType.EXTRA_BOLD_BODY:
+      case FontType.EXTRA_BOLD_CAPTION: {
         return Weight.EXTRA_BOLD;
       }
 
       case FontType.BOLD_TITLE_01:
       case FontType.BOLD_TITLE_02:
-      case FontType.BOLD_BODY: {
+      case FontType.BOLD_BODY:
+      case FontType.BOLD_CAPTION: {
         return Weight.BOLD;
       }
 
       case FontType.REGULAR_TITLE_01:
-      case FontType.REGULAR_BODY: {
+      case FontType.REGULAR_TITLE_02:
+      case FontType.REGULAR_BODY:
+      case FontType.REGULAR_CAPTION: {
         return Weight.REGULAR;
       }
 
+      case FontType.LIGHT_TITLE_01:
       case FontType.LIGHT_TITLE_02:
       case FontType.LIGHT_BODY:
       case FontType.LIGHT_CAPTION: {
