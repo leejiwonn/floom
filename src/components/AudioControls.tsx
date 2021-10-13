@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { GraphicColor } from '~/utils/color';
 
 import Typography from './Typography';
 
@@ -38,12 +39,35 @@ const AudioControls = ({
   );
 };
 
-const AudioControlsStyled = styled.div``;
+const AudioControlsStyled = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const AudioControlButton = styled.button`
   padding: 0 10px;
 `;
 
-const AudioSoundControl = styled.input``;
+const AudioSoundControl = styled.input`
+  -webkit-appearance: none;
+  width: 120px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+
+  :focus {
+    outline: none;
+  }
+
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 4px;
+    height: 4px;
+    background: ${GraphicColor.BLUE1_D};
+    border-radius: 50%;
+    box-shadow: -102px 0 0 100px ${GraphicColor.BLUE2_D};
+  }
+`;
 
 export default AudioControls;

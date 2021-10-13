@@ -2,8 +2,12 @@ import { useQuery } from 'react-query';
 
 import api from '~/utils/api';
 
-export const useUserProfile = (userId: string) =>
-  useQuery(
-    ['getUserProfile', userId],
-    async () => await api.get(`/api/user`).then((res) => res.data),
-  );
+export const useUserProfile = () =>
+  useQuery('getUserProfile', async () => {
+    try {
+      const { data } = await api.get(`/api/user`);
+      return data;
+    } catch (error) {
+      console.warn(error);
+    }
+  });

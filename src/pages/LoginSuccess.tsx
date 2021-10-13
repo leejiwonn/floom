@@ -19,7 +19,7 @@ function LoginSuccess() {
       router.replace(redirect);
     } else {
       window.alert('잘못된 접근입니다.');
-      router.replace('/login');
+      router.replace('/');
     }
   }, [router]);
 
