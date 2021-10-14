@@ -9,6 +9,9 @@ import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
+import StudyIcon from '../../public/assets/icons/icon-study.svg';
+import WorkIcon from '../../public/assets/icons/icon-work.svg';
+import RestIcon from '../../public/assets/icons/icon-rest.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
@@ -50,18 +53,10 @@ const Home = () => {
           어떤 일에 몰입하고 싶은가요?
         </Typography>
         <CategoryList>
-          <CategoryItem onClick={() => setCategory('work')}>
-            <CategoryItemIcon />
-            <Typography
-              font={FontType.BOLD_TITLE_01}
-              color={TextColor.WHITE}
-              align={Align.CENTER}
-            >
-              업무
-            </Typography>
-          </CategoryItem>
           <CategoryItem onClick={() => setCategory('study')}>
-            <CategoryItemIcon />
+            <CategoryItemIcon>
+              <StudyIcon />
+            </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
               color={TextColor.WHITE}
@@ -70,8 +65,22 @@ const Home = () => {
               학습
             </Typography>
           </CategoryItem>
+          <CategoryItem onClick={() => setCategory('work')}>
+            <CategoryItemIcon>
+              <WorkIcon />
+            </CategoryItemIcon>
+            <Typography
+              font={FontType.BOLD_TITLE_01}
+              color={TextColor.WHITE}
+              align={Align.CENTER}
+            >
+              업무
+            </Typography>
+          </CategoryItem>
           <CategoryItem onClick={() => setCategory('rest')}>
-            <CategoryItemIcon />
+            <CategoryItemIcon>
+              <RestIcon />
+            </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
               color={TextColor.WHITE}
@@ -88,7 +97,7 @@ const Home = () => {
         )}
       </CategoryStyled>
       <RoomsStyled>
-        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={50}>
+        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={40}>
           {getCatecory(category)}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
@@ -151,6 +160,9 @@ const CategoryItem = styled.button`
 const CategoryItemIcon = styled.div`
   width: 50px;
   height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 18px;
   margin-right: 15px;
   background-color: ${GraphicColor.WHITE};
@@ -187,22 +199,24 @@ const RoomsStyled = styled.div`
 `;
 
 const RoomStyled = styled.div`
-  display: flex;
-  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 `;
 
 const RoomItem = styled.a`
-  width: 250px;
+  width: 300px;
   height: auto;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   margin-right: 20px;
+  margin-bottom: 30px;
   cursor: pointer;
 `;
 
 const ScreenStyled = styled.div`
   width: 100%;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
   border-radius: 20px;
 `;
