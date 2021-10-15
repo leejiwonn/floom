@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState, useRef } from 'react';
 
 import { Music } from '~/types/Music';
+import { BasicColor } from '~/utils/color';
 import PlaylistControls from './PlaylistControls';
 import Typography from './Typography';
 
@@ -120,7 +121,7 @@ const PlaylistStyled = styled.div`
   height: 200px;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: ${BasicColor.WHITE};
   z-index: 99;
 `;
 

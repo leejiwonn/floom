@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Typography from './Typography';
 
 import { FontType } from '~/utils/font';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import DropdownIcon from '../../public/assets/icons/icon-dropdown.svg';
 
 interface Props {
@@ -42,7 +42,7 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
       <DropdownButton onClick={() => setIsActive((prev) => !prev)}>
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_03}
-          color={TextColor.SECONDARY}
+          color={BasicColor.DARK70}
         >
           {time}분
         </Typography>
@@ -102,7 +102,7 @@ const DropdownBox = styled.div<{ active: boolean }>`
 
 const DropdownItem = styled.button<{ selected: boolean }>`
   color: ${({ selected }) =>
-    selected ? TextColor.PRIMARY : TextColor.SECONDARY};
+    selected ? BasicColor.DARK100 : BasicColor.DARK70};
 `;
 
 export default Dropdown;

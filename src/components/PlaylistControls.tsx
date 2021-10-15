@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { LegacyRef } from 'react';
 
 import { Music } from '~/types/Music';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import Typography from './Typography';
 
 interface Props {
@@ -28,23 +28,23 @@ const PlaylistControls = ({
 }: Props) => {
   return (
     <PlaylistControlsStyled>
-      <Typography color={TextColor.WHITE}>{music.name}</Typography>
-      <Typography color={TextColor.WHITE}>{music.author}</Typography>
+      <Typography color={BasicColor.WHITE}>{music.name}</Typography>
+      <Typography color={BasicColor.WHITE}>{music.author}</Typography>
       <MusicControls>
         <MusicControlButton onClick={onPrevButtonClick}>
-          <Typography color={TextColor.WHITE}>이전</Typography>
+          <Typography color={BasicColor.WHITE}>이전</Typography>
         </MusicControlButton>
         {isPlaying ? (
           <PlayButton onClick={onPlayPauseClick}>
-            <Typography color={TextColor.WHITE}>정지</Typography>
+            <Typography color={BasicColor.WHITE}>정지</Typography>
           </PlayButton>
         ) : (
           <PlayButton onClick={onPlayPauseClick}>
-            <Typography color={TextColor.WHITE}>재생</Typography>
+            <Typography color={BasicColor.WHITE}>재생</Typography>
           </PlayButton>
         )}
         <MusicControlButton onClick={onNextButtonClick}>
-          <Typography color={TextColor.WHITE}>다음</Typography>
+          <Typography color={BasicColor.WHITE}>다음</Typography>
         </MusicControlButton>
       </MusicControls>
       <PlayControls>
@@ -52,8 +52,8 @@ const PlaylistControls = ({
           <Playhead ref={playheadRef} />
         </Timeline>
         <CurrentTime>
-          <Typography color={TextColor.WHITE}>{currentTime}</Typography>
-          <Typography color={TextColor.WHITE}>{music.duration}</Typography>
+          <Typography color={BasicColor.WHITE}>{currentTime}</Typography>
+          <Typography color={BasicColor.WHITE}>{music.duration}</Typography>
         </CurrentTime>
       </PlayControls>
     </PlaylistControlsStyled>
@@ -66,7 +66,7 @@ const PlaylistControlsStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #587bfa;
+  background-color: ${BasicColor.BLUE100};
   padding: 20px;
 `;
 
@@ -97,7 +97,7 @@ const Playhead = styled.div`
   width: 0;
   height: 5px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: ${BasicColor.WHITE};
 `;
 
 const MusicControls = styled.div`

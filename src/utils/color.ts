@@ -19,6 +19,7 @@ const BasicColor = {
   GREEN100: '#5CE8A4',
   GREEN150: '#1D696D',
   GREEN60: '#6EE0AA',
+  GREEN20: '#D1ECE0',
   GREEN10: '#E8F5EF',
 
   YELLOW: '#FFCA42',
@@ -31,37 +32,7 @@ const GradientColor = {
   GREEN: 'linear-gradient(to bottom right, #5CE8A4 0%, #3BD88D 100%)',
 } as const;
 
-const BackgroundColor = {
-  // TODO : 업데이트 필요
-  DEPTH_L: BasicColor.DARK10,
-  GRADIENT: GradientColor.BLUE,
-  WHITE: BasicColor.WHITE,
-  BLACK: BasicColor.BLACK,
-} as const;
+type BasicColor = typeof BasicColor[keyof typeof BasicColor];
+type GradientColor = typeof GradientColor[keyof typeof GradientColor];
 
-const TextColor = {
-  // TODO : 업데이트 필요
-  PRIMARY: BasicColor.DARK100,
-  SECONDARY: BasicColor.DARK70,
-  WHITE: BasicColor.WHITE,
-  GREEN: BasicColor.GREEN100,
-} as const;
-
-const GraphicColor = {
-  YELLOW: BasicColor.YELLOW,
-  WHITE: BasicColor.WHITE,
-  BLACK: BasicColor.BLACK,
-  BLUE1_D: BasicColor.BLUE90,
-  BLUE2_D: BasicColor.BLUE80,
-  BLUE2_L: BasicColor.BLUE40,
-  GRAY1_L: BasicColor.GRAY10,
-  GRAY2_L: BasicColor.GRAY20,
-  GREEN2_D: BasicColor.GREEN60,
-  GRADIENT: GradientColor.GREEN,
-} as const;
-
-type BackgroundColor = typeof BackgroundColor[keyof typeof BackgroundColor];
-type TextColor = typeof TextColor[keyof typeof TextColor];
-type GraphicColor = typeof GraphicColor[keyof typeof GraphicColor];
-
-export { BackgroundColor, TextColor, GraphicColor };
+export { BasicColor, GradientColor };

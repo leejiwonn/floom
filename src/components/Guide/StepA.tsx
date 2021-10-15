@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 import Typography from '~/components/Typography';
 import TextInput from '~/components/TextInput';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 import StepTemplate from './StepTemplate';
@@ -38,7 +38,7 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
           <Typography
             tag="span"
             font={FontType.EXTRA_BOLD_HEAD_03}
-            color={TextColor.SECONDARY}
+            color={BasicColor.DARK70}
           >
             어떤 목표
           </Typography>
@@ -60,7 +60,7 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
             placeholder={placeholderInfo}
             marginLeft={-5}
             font={FontType.REGULAR_BODY}
-            color={TextColor.SECONDARY}
+            color={BasicColor.DARK70}
           />
           <br />
           할래요.

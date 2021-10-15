@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { GraphicColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 
 import PlayIcon from '../../public/assets/icons/icon-play.svg';
 import PauseIcon from '../../public/assets/icons/icon-pause.svg';
@@ -68,7 +68,7 @@ const AudioSoundControlBackground = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  background-color: ${GraphicColor.BLACK};
+  background-color: ${BasicColor.BLACK};
   z-index: 0;
 `;
 
@@ -90,9 +90,9 @@ const AudioSoundControl = styled.input`
     -webkit-appearance: none;
     width: 7px;
     height: 7px;
-    background-color: ${GraphicColor.BLACK};
+    background-color: ${BasicColor.BLACK};
     border-radius: 50%;
-    box-shadow: 102px 0 0 100px ${GraphicColor.WHITE};
+    box-shadow: 102px 0 0 100px ${BasicColor.WHITE};
   }
 `;
 

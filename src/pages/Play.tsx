@@ -8,7 +8,7 @@ import StepC from '~/components/Guide/StepC';
 import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
 import { FontType } from '~/utils/font';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 
 interface Props {
   category: string;
@@ -52,7 +52,10 @@ const Play = ({ category, id }: Props) => {
               <Screen type={data?.screen[0]} url={data?.screen[1]} />
             </ScreenStyled>
             <EndButton href={`/detail?category=${category}&id=${id}`}>
-              <Typography font={FontType.BOLD_TITLE_02} color={TextColor.WHITE}>
+              <Typography
+                font={FontType.BOLD_TITLE_02}
+                color={BasicColor.WHITE}
+              >
                 체험 종료
               </Typography>
             </EndButton>
@@ -64,16 +67,13 @@ const Play = ({ category, id }: Props) => {
           <RoomInfo>
             <TitleDecoration />
             <Typography font={FontType.BOLD_BODY}>{data?.title}</Typography>
-            <Typography
-              font={FontType.REGULAR_BODY}
-              color={TextColor.SECONDARY}
-            >
+            <Typography font={FontType.REGULAR_BODY} color={BasicColor.DARK70}>
               {data?.creator}
             </Typography>
           </RoomInfo>
           {sliderShow && (
             <StepStyled>
-              <Typography font={FontType.BOLD_BODY} color={TextColor.SECONDARY}>
+              <Typography font={FontType.BOLD_BODY} color={BasicColor.DARK70}>
                 STEP {currentPage + 1} / 3
               </Typography>
               {currentPage === 0 && (
@@ -113,7 +113,6 @@ const PlayStyled = styled.div`
   height: 100vh;
   position: relative;
   display: flex;
-  background-color: #f5f2ed;
 `;
 
 const ObjectView = styled.div`
@@ -155,7 +154,7 @@ const RoomInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background-color: #fff;
+  background-color: ${BasicColor.WHITE};
   padding: 20px 30px;
   border-radius: 20px;
   margin-bottom: 30px;
@@ -167,7 +166,7 @@ const TitleDecoration = styled.div`
   position: absolute;
   top: -5px;
   left: -5px;
-  background-color: #5ce8a4;
+  background-color: ${BasicColor.GREEN100};
   border-radius: 10px;
 `;
 
@@ -180,7 +179,7 @@ const StepStyled = styled.div`
   justify-content: space-between;
   border-radius: 20px;
   padding: 40px 20px;
-  background-color: #fff;
+  background-color: ${BasicColor.WHITE};
 `;
 
 const EndButton = styled.a`
@@ -189,7 +188,7 @@ const EndButton = styled.a`
   bottom: 30px;
   padding: 15px 60px;
   border-radius: 20px;
-  background-color: #4f75ee;
+  background-color: ${BasicColor.WHITE};
 `;
 
 export default Play;

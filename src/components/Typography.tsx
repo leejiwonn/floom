@@ -1,4 +1,4 @@
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import { Font, Align, FontType } from '~/utils/font';
 
 type TypographyTag = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span';
@@ -7,7 +7,7 @@ interface Props {
   tag?: TypographyTag;
   children: React.ReactNode;
   font?: FontType;
-  color?: TextColor;
+  color?: BasicColor;
   align?: Align;
   marginTop?: number;
   marginBottom?: number;
@@ -20,7 +20,7 @@ const Typography = ({
   tag = 'p',
   children,
   font = FontType.REGULAR_BODY,
-  color = TextColor.PRIMARY,
+  color = BasicColor.DARK100,
   align = Align.LEFT,
   marginTop,
   marginBottom,
