@@ -189,6 +189,11 @@ const LogoutButton = styled.button`
   border-radius: 55px;
   border: 1px solid ${GraphicColor.BLUE2_D};
   background-color: ${GraphicColor.BLUE1_D};
+  transition: 0.1s;
+
+  :hover {
+    background-color: ${GraphicColor.BLUE2_D};
+  }
 `;
 
 const RoomsStyled = styled.div`
