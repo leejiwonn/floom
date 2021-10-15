@@ -23,6 +23,7 @@ const BasicColor = {
 
   YELLOW: '#FFCA42',
   WHITE: '#FFFFFF',
+  BLACK: '#000000',
 } as const;
 
 const GradientColor = {
@@ -35,6 +36,7 @@ const BackgroundColor = {
   DEPTH_L: BasicColor.DARK10,
   GRADIENT: GradientColor.BLUE,
   WHITE: BasicColor.WHITE,
+  BLACK: BasicColor.BLACK,
 } as const;
 
 const TextColor = {
@@ -48,8 +50,10 @@ const TextColor = {
 const GraphicColor = {
   YELLOW: BasicColor.YELLOW,
   WHITE: BasicColor.WHITE,
+  BLACK: BasicColor.BLACK,
   BLUE1_D: BasicColor.BLUE90,
   BLUE2_D: BasicColor.BLUE80,
+  BLUE2_L: BasicColor.BLUE40,
   GRAY1_L: BasicColor.GRAY10,
   GRAY2_L: BasicColor.GRAY20,
   GREEN2_D: BasicColor.GREEN60,

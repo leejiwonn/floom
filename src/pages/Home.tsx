@@ -15,7 +15,7 @@ import RestIcon from '../../public/assets/icons/icon-rest.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
-  const [category, setCategory] = useState('work');
+  const [category, setCategory] = useState('study');
   const { data } = useCategoryRooms(category);
 
   const getCatecory = (category: string) => {
@@ -54,7 +54,7 @@ const Home = () => {
         </Typography>
         <CategoryList>
           <CategoryItem onClick={() => setCategory('study')}>
-            <CategoryItemIcon>
+            <CategoryItemIcon active={category === 'study'}>
               <StudyIcon />
             </CategoryItemIcon>
             <Typography
@@ -66,7 +66,7 @@ const Home = () => {
             </Typography>
           </CategoryItem>
           <CategoryItem onClick={() => setCategory('work')}>
-            <CategoryItemIcon>
+            <CategoryItemIcon active={category === 'work'}>
               <WorkIcon />
             </CategoryItemIcon>
             <Typography
@@ -78,7 +78,7 @@ const Home = () => {
             </Typography>
           </CategoryItem>
           <CategoryItem onClick={() => setCategory('rest')}>
-            <CategoryItemIcon>
+            <CategoryItemIcon active={category === 'rest'}>
               <RestIcon />
             </CategoryItemIcon>
             <Typography
@@ -155,17 +155,27 @@ const CategoryItem = styled.button`
   flex-direction: row;
   align-items: center;
   margin: 15px 0;
+
+  :hover {
+    div {
+      background-color: ${GraphicColor.BLUE2_L};
+    }
+  }
 `;
 
-const CategoryItemIcon = styled.div`
+const CategoryItemIcon = styled.div<{ active: boolean }>`
   width: 50px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: ${({ active }) =>
+    active ? GraphicColor.WHITE : GraphicColor.BLUE2_D};
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
   border-radius: 18px;
   margin-right: 15px;
-  background-color: ${GraphicColor.WHITE};
+  transition: 0.1s;
 `;
 
 const LogoutButton = styled.button`
