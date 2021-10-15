@@ -57,8 +57,8 @@ const TextInputStyled = styled.input<{
   marginLeft: number;
   marginRight: number;
 }>`
-  width: 300px;
-  padding: 10px;
+  width: 100%;
+  padding: 8px 10px;
   border-radius: 10px;
   font-size: ${({ size }) => size + 'px'};
   font-weight: ${({ weight }) => weight};
@@ -68,7 +68,11 @@ const TextInputStyled = styled.input<{
   margin-bottom: ${({ marginBottom }) => marginBottom + 'px'};
   margin-left: ${({ marginLeft }) => marginLeft + 'px'};
   margin-right: ${({ marginRight }) => marginRight + 'px'};
-  background-color: #f6f6f6;
+  background-color: ${BasicColor.GRAY20};
+
+  :focus {
+    outline: none;
+  }
 `;
 
 export default TextInput;
