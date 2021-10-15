@@ -5,7 +5,6 @@ import Typography from '~/components/Typography';
 import { BasicColor } from '~/utils/color';
 
 interface Props {
-  subTitle?: React.ReactNode;
   title?: React.ReactNode;
   content?: React.ReactNode;
   prevButtonText?: string;
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const StepTemplate = ({
-  subTitle,
   title,
   content,
   prevButtonText,
@@ -26,9 +24,6 @@ const StepTemplate = ({
   return (
     <StepStyled>
       <StepInfo>
-        <Typography font={FontType.LIGHT_CAPTION} marginBottom={5}>
-          {subTitle}
-        </Typography>
         <Typography font={FontType.EXTRA_BOLD_HEAD_03}>{title}</Typography>
         {content}
       </StepInfo>
@@ -36,7 +31,7 @@ const StepTemplate = ({
         {onPrevPage && (
           <PrevStepButton onClick={onPrevPage}>
             <Typography
-              font={FontType.BOLD_TITLE_02}
+              font={FontType.SEMI_BOLD_BODY}
               color={BasicColor.DARK70}
               align={Align.CENTER}
             >
@@ -47,7 +42,7 @@ const StepTemplate = ({
         {onNextPage && (
           <NextStepButton onClick={onNextPage} checkLast={!!onPrevPage}>
             <Typography
-              font={FontType.BOLD_TITLE_02}
+              font={FontType.SEMI_BOLD_BODY}
               color={BasicColor.WHITE}
               align={Align.CENTER}
             >
@@ -81,13 +76,13 @@ const ButtonStyled = styled.div`
 const PrevStepButton = styled.button`
   width: 34%;
   border: 1px solid ${BasicColor.BLUE40};
-  border-radius: 18px;
+  border-radius: 48px;
   padding: 15px;
 `;
 
 const NextStepButton = styled.button<{ checkLast: boolean }>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
-  border-radius: 18px;
+  border-radius: 48px;
   padding: 15px;
   background-color: ${BasicColor.BLUE100};
 `;

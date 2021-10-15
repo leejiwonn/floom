@@ -4,7 +4,6 @@ import Typography from '~/components/Typography';
 import TextInput from '~/components/TextInput';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-
 import StepTemplate from './StepTemplate';
 
 interface Props {
@@ -30,7 +29,6 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
 
   return (
     <StepTemplate
-      subTitle="처음에는 가볍게 목표부터 설정해볼까요?"
       title={
         <>
           방을 체험할 동안
@@ -38,32 +36,27 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
           <Typography
             tag="span"
             font={FontType.EXTRA_BOLD_HEAD_03}
-            color={BasicColor.DARK70}
+            color={BasicColor.BLUE100}
           >
-            어떤 목표
+            어떤 일
           </Typography>
-          를 이루실 건가요?
+          에 몰입하고 싶으신가요?
         </>
       }
       content={
         <Typography
-          font={FontType.REGULAR_BODY}
+          font={FontType.REGULAR_TITLE_01}
           lineHeight={2.5}
-          marginTop={60}
-          marginBottom={60}
+          marginTop={50}
         >
-          저는,
-          <br />
           <TextInput
             value={textInput}
             onChangeInput={handleChangeInput}
             placeholder={placeholderInfo}
             marginLeft={-5}
-            font={FontType.REGULAR_BODY}
-            color={BasicColor.DARK70}
+            font={FontType.BOLD_TITLE_01}
           />
-          <br />
-          할래요.
+          <br />에 몰입하고 싶어요.
         </Typography>
       }
       nextButtonText="다 적었어요!"

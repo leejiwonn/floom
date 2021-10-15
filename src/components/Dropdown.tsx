@@ -1,18 +1,18 @@
 import styled from '@emotion/styled';
 import { useState, useEffect, useRef } from 'react';
 
-import Typography from './Typography';
-
+import Typography from '~/components/Typography';
 import { FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
 import DropdownIcon from '../../public/assets/icons/icon-dropdown.svg';
+import LoopIcon from '../../public/assets/icons/icon-loop.svg';
 
 interface Props {
   time: number;
   onChangeTime: (value: number) => void;
 }
 
-const values = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
+const values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
 
 // TODO : 외부 클릭 시 닫히도록 하는 코드 재사용 가능하게 분리
 const Dropdown = ({ time, onChangeTime }: Props) => {
@@ -42,9 +42,9 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
       <DropdownButton onClick={() => setIsActive((prev) => !prev)}>
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_03}
-          color={BasicColor.DARK70}
+          color={BasicColor.BLUE100}
         >
-          {time}분
+          {time === 0 ? <LoopIcon /> : time + '분'}
         </Typography>
         <DropdownIconStyled active={isActive}>
           <DropdownIcon />
@@ -52,12 +52,17 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
       </DropdownButton>
       <DropdownBox active={isActive}>
         {values.map((value, index) => (
-          <DropdownItem
-            key={index}
-            onClick={() => handleTimeValueClick(value)}
-            selected={time === value}
-          >
-            {value}분
+          <DropdownItem key={index} onClick={() => handleTimeValueClick(value)}>
+            {value === 0 ? (
+              <LoopIcon />
+            ) : (
+              <Typography
+                font={FontType.REGULAR_TITLE_02}
+                color={time === value ? BasicColor.BLUE100 : BasicColor.DARK70}
+              >
+                {value}분
+              </Typography>
+            )}
           </DropdownItem>
         ))}
       </DropdownBox>
@@ -70,7 +75,7 @@ const DropdownStyled = styled.div`
   height: 50px;
   display: inline-block;
   border-radius: 10px;
-  background-color: #f6f6f6;
+  background-color: ${BasicColor.GRAY20};
 `;
 
 const DropdownButton = styled.button`
@@ -93,16 +98,18 @@ const DropdownBox = styled.div<{ active: boolean }>`
   display: ${({ active }) => (active ? 'flex' : 'none')};
   flex-direction: column;
   overflow: scroll;
-  background-color: #fff;
-  border: 2px solid #f6f6f6;
+  background-color: ${BasicColor.WHITE};
+  border: 2px solid ${BasicColor.GRAY20};
   border-radius: 10px;
   padding: 0 10px;
   margin-top: 5px;
 `;
 
-const DropdownItem = styled.button<{ selected: boolean }>`
-  color: ${({ selected }) =>
-    selected ? BasicColor.DARK100 : BasicColor.DARK70};
+const DropdownItem = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
 `;
 
 export default Dropdown;

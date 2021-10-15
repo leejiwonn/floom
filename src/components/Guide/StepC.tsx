@@ -1,13 +1,16 @@
+import { BasicColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
+import Typography from '../Typography';
 import StepTemplate from './StepTemplate';
 
 interface Props {
-  goal: string;
+  objective: string;
   onSliderShow: (value: boolean) => void;
   onPrevPage?: () => void;
   onNextPage?: () => void;
 }
 
-const StepC = ({ goal, onSliderShow, onPrevPage, onNextPage }: Props) => {
+const StepC = ({ objective, onSliderShow, onPrevPage, onNextPage }: Props) => {
   const handleNextStepButtonClick = () => {
     onNextPage();
     onSliderShow(false);
@@ -15,8 +18,20 @@ const StepC = ({ goal, onSliderShow, onPrevPage, onNextPage }: Props) => {
 
   return (
     <StepTemplate
-      subTitle="이제 마지막이예요!"
-      title={<>{goal}을(를) 위해 작은 목표를 작성해보세요.</>}
+      title={
+        <>
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            color={BasicColor.BLUE100}
+          >
+            {objective}
+          </Typography>
+          에
+          <br />
+          몰입하며 이룰 작은 목표들을 적어주세요.
+        </>
+      }
       prevButtonText="이전"
       onPrevPage={onPrevPage}
       nextButtonText="이제 방을 체험해볼까요?"
