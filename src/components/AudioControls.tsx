@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { GraphicColor } from '~/utils/color';
 
-import Typography from './Typography';
+import PlayIcon from '../../public/assets/icons/icon-play.svg';
+import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 
 interface Props {
   isPlaying: boolean;
@@ -20,11 +21,11 @@ const AudioControls = ({
     <AudioControlsStyled>
       {isPlaying ? (
         <AudioControlButton onClick={onPlayPauseClick}>
-          <Typography>정지</Typography>
+          <PauseIcon />
         </AudioControlButton>
       ) : (
         <AudioControlButton onClick={onPlayPauseClick}>
-          <Typography>재생</Typography>
+          <PlayIcon />
         </AudioControlButton>
       )}
       <AudioSoundControlBox>
@@ -48,13 +49,17 @@ const AudioControlsStyled = styled.div`
 `;
 
 const AudioControlButton = styled.button`
-  padding: 0 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 15px;
 `;
 
 const AudioSoundControlBox = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  }
 `;
 
 const AudioSoundControlBackground = styled.div`
@@ -69,7 +74,7 @@ const AudioSoundControlBackground = styled.div`
 
 const AudioSoundControl = styled.input`
   -webkit-appearance: none;
-  width: 120px;
+  width: 100px;
   height: 7px;
   overflow: hidden;
   border-radius: 5px;

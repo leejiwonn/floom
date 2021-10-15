@@ -33,7 +33,9 @@ const AudioPlayer = ({ title, url }: Props) => {
 
   return (
     <AudioPlayerStyled>
-      <Typography font={FontType.BOLD_BODY}>{title}</Typography>
+      <Typography font={FontType.BOLD_BODY} marginRight={30}>
+        {title}
+      </Typography>
       <AudioControls
         isPlaying={isPlaying}
         onPlayPauseClick={() => setIsPlaying((prev) => !prev)}
@@ -48,6 +50,7 @@ const AudioPlayerStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding: 8px 0;
 `;
 
