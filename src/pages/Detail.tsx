@@ -6,6 +6,8 @@ import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import { getCatecory } from '~/utils/category';
 import { useRoom } from '~/hooks/useRoom';
+import VisitIcon from '../../public/assets/emojis/emoji-visit.svg';
+import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
 
 interface Props {
   category: string;
@@ -48,12 +50,22 @@ const Detail = ({ category, id }: Props) => {
             {data?.creator}
           </Typography>
           <CaptionStyled>
-            <Typography font={FontType.SEMI_BOLD_BODY} marginRight={30}>
-              체험 {data?.playCount}
-            </Typography>
-            <Typography font={FontType.SEMI_BOLD_BODY}>
-              추천 {data?.recommendCount}
-            </Typography>
+            <CationItem>
+              <VisitIcon />
+              <Typography
+                font={FontType.SEMI_BOLD_BODY}
+                marginLeft={8}
+                marginRight={30}
+              >
+                {data?.playCount}
+              </Typography>
+            </CationItem>
+            <CationItem>
+              <RecommendIcon />
+              <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
+                {data?.recommendCount}
+              </Typography>
+            </CationItem>
           </CaptionStyled>
         </RoomTitleStyled>
         <RoomContentStyled>
@@ -204,6 +216,11 @@ const RoomTitleStyled = styled.div`
 const CaptionStyled = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const CationItem = styled.div`
+  display: inline-flex;
+  align-items: center;
 `;
 
 const RoomContentStyled = styled.div`
