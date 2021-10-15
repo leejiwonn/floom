@@ -5,7 +5,7 @@ import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
 import { useUserProfile } from '~/hooks/useUser';
 import { useCategoryRooms } from '~/hooks/useRoom';
-import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
+import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
@@ -38,7 +38,7 @@ const Home = () => {
       <CategoryStyled>
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_02}
-          color={TextColor.WHITE}
+          color={BasicColor.WHITE}
           marginBottom={30}
         >
           몰입의 즐거움을
@@ -47,7 +47,7 @@ const Home = () => {
         </Typography>
         <Typography
           font={FontType.BOLD_TITLE_02}
-          color={TextColor.WHITE}
+          color={BasicColor.WHITE}
           marginBottom={55}
         >
           어떤 일에 몰입하고 싶은가요?
@@ -59,7 +59,7 @@ const Home = () => {
             </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
-              color={TextColor.WHITE}
+              color={BasicColor.WHITE}
               align={Align.CENTER}
             >
               학습
@@ -71,7 +71,7 @@ const Home = () => {
             </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
-              color={TextColor.WHITE}
+              color={BasicColor.WHITE}
               align={Align.CENTER}
             >
               업무
@@ -83,7 +83,7 @@ const Home = () => {
             </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
-              color={TextColor.WHITE}
+              color={BasicColor.WHITE}
               align={Align.CENTER}
             >
               휴식
@@ -141,7 +141,7 @@ const CategoryStyled = styled.div`
   padding: 50px;
   padding-top: 100px;
   padding-right: 8%;
-  background: ${BackgroundColor.GRADIENT};
+  background: ${GradientColor.BLUE};
   z-index: 1;
 `;
 
@@ -158,7 +158,7 @@ const CategoryItem = styled.button`
 
   :hover {
     div {
-      background-color: ${GraphicColor.BLUE2_L};
+      background-color: ${BasicColor.BLUE20};
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
     }
   }
@@ -171,7 +171,7 @@ const CategoryItemIcon = styled.div<{ active: boolean }>`
   justify-content: center;
   align-items: center;
   background-color: ${({ active }) =>
-    active ? GraphicColor.WHITE : GraphicColor.BLUE2_D};
+    active ? BasicColor.WHITE : BasicColor.BLUE80};
   box-sizing: border-box;
   box-shadow: ${({ active }) => active && '0px 4px 4px rgba(0, 0, 0, 0.08)'};
   border-radius: 18px;
@@ -188,12 +188,12 @@ const LogoutButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 55px;
-  border: 1px solid ${GraphicColor.BLUE2_D};
-  background-color: ${GraphicColor.BLUE1_D};
+  border: 1px solid ${BasicColor.BLUE80};
+  background-color: ${BasicColor.BLUE90};
   transition: 0.1s;
 
   :hover {
-    background-color: ${GraphicColor.BLUE2_D};
+    background-color: ${BasicColor.BLUE80};
   }
 `;
 
@@ -210,7 +210,7 @@ const RoomsStyled = styled.div`
   padding-top: 110px;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
-  background-color: ${BackgroundColor.WHITE};
+  background-color: ${BasicColor.WHITE};
   z-index: 2;
 `;
 

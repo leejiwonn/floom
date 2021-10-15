@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { Align, FontType } from '~/utils/font';
 import Typography from '~/components/Typography';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 
 interface Props {
   subTitle?: React.ReactNode;
@@ -37,7 +37,7 @@ const StepTemplate = ({
           <PrevStepButton onClick={onPrevPage}>
             <Typography
               font={FontType.BOLD_TITLE_02}
-              color={TextColor.SECONDARY}
+              color={BasicColor.DARK70}
               align={Align.CENTER}
             >
               {prevButtonText}
@@ -48,7 +48,7 @@ const StepTemplate = ({
           <NextStepButton onClick={onNextPage} checkLast={!!onPrevPage}>
             <Typography
               font={FontType.BOLD_TITLE_02}
-              color={TextColor.WHITE}
+              color={BasicColor.WHITE}
               align={Align.CENTER}
             >
               {nextButtonText}
@@ -80,7 +80,7 @@ const ButtonStyled = styled.div`
 
 const PrevStepButton = styled.button`
   width: 34%;
-  border: 1px solid #dfe9fb;
+  border: 1px solid ${BasicColor.BLUE40};
   border-radius: 18px;
   padding: 15px;
 `;
@@ -89,7 +89,7 @@ const NextStepButton = styled.button<{ checkLast: boolean }>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
   border-radius: 18px;
   padding: 15px;
-  background-color: #587bfa;
+  background-color: ${BasicColor.BLUE100};
 `;
 
 export default StepTemplate;

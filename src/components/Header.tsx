@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import AudioPlayer from '~/components/AudioPlayer';
-import { BackgroundColor, GraphicColor, TextColor } from '~/utils/color';
+import { BasicColor, GradientColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import { useUserProfile } from '~/hooks/useUser';
 import Typography from './Typography';
@@ -45,7 +45,7 @@ const Header = () => {
           <NoiseButton onClick={() => setShow((prev) => !prev)}>
             <Typography
               font={FontType.SEMI_BOLD_BODY}
-              color={TextColor.PRIMARY}
+              color={BasicColor.DARK100}
               marginLeft={14}
               marginRight={9}
             >
@@ -59,7 +59,7 @@ const Header = () => {
               <Typography
                 tag="span"
                 font={FontType.EXTRA_BOLD_TITLE_01}
-                color={TextColor.GREEN}
+                color={BasicColor.GREEN100}
               >
                 백색소음
               </Typography>
@@ -68,7 +68,7 @@ const Header = () => {
             </Typography>
             <Typography
               font={FontType.REGULAR_CAPTION}
-              color={TextColor.SECONDARY}
+              color={BasicColor.DARK70}
               marginBottom={80}
             >
               볼륨을 조절하며 원하는 소리를 찾아보세요!
@@ -106,9 +106,9 @@ const RightStyled = styled.div`
 
 const UserInfo = styled.div`
   padding: 8px 18px;
-  border: 2px solid ${GraphicColor.GRAY1_L};
+  border: 2px solid ${BasicColor.GRAY10};
   border-radius: 34px;
-  background-color: ${GraphicColor.GRAY2_L};
+  background-color: ${BasicColor.GRAY20};
 `;
 
 const KakaoLoginButton = styled.a`
@@ -116,7 +116,7 @@ const KakaoLoginButton = styled.a`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${GraphicColor.YELLOW};
+  background-color: ${BasicColor.YELLOW};
   padding: 10px 15px;
   border-radius: 34px;
 `;
@@ -138,9 +138,9 @@ const NoiseButton = styled.button`
   justify-content: space-between;
   align-items: center;
   padding: 6px 0;
-  border: 2px solid ${GraphicColor.GRAY1_L};
+  border: 2px solid ${BasicColor.GRAY10};
   border-radius: 34px;
-  background-color: ${GraphicColor.GRAY2_L};
+  background-color: ${BasicColor.GRAY20};
 `;
 
 const NoiseIcon = styled.div`
@@ -151,8 +151,8 @@ const NoiseIcon = styled.div`
   align-items: center;
   border-radius: 30px;
   margin-right: 6px;
-  background: ${GraphicColor.GRADIENT};
-  border: 2px solid ${GraphicColor.GREEN2_D};
+  background: ${GradientColor.GREEN};
+  border: 2px solid ${BasicColor.GREEN100};
 `;
 
 const NoiseController = styled.div<{ show: boolean }>`
@@ -169,7 +169,7 @@ const NoiseController = styled.div<{ show: boolean }>`
   padding: 40px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  background-color: ${BackgroundColor.WHITE};
+  background-color: ${BasicColor.WHITE};
   box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
   z-index: -1;
 `;

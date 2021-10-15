@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import { Font, Align, FontType } from '~/utils/font';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   font?: FontType;
-  color?: TextColor;
+  color?: BasicColor;
   align?: Align;
   marginTop?: number;
   marginBottom?: number;
@@ -21,7 +21,7 @@ const TextInput = ({
   onChangeInput,
   placeholder,
   font = FontType.REGULAR_BODY,
-  color = TextColor.PRIMARY,
+  color = BasicColor.DARK100,
   align = Align.LEFT,
   marginTop,
   marginBottom,

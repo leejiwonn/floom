@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import Dropdown from '~/components/Dropdown';
 import Typography from '~/components/Typography';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 import StepTemplate from './StepTemplate';
@@ -48,7 +48,7 @@ const StepB = ({
           <Typography
             tag="span"
             font={FontType.EXTRA_BOLD_HEAD_03}
-            color={TextColor.SECONDARY}
+            color={BasicColor.DARK70}
           >
             몇 분 동안
           </Typography>
@@ -70,7 +70,7 @@ const StepB = ({
             <Typography
               tag="span"
               font={FontType.EXTRA_BOLD_HEAD_03}
-              color={TextColor.SECONDARY}
+              color={BasicColor.DARK70}
               marginTop={8}
               marginLeft={10}
             >

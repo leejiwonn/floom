@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import Typography from '~/components/Typography';
 import Playlist from '~/components/Playlist';
-import { TextColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import { useRoom } from '~/hooks/useRoom';
 
@@ -19,25 +19,39 @@ const Detail = ({ category, id }: Props) => {
       <RoomImageStyled>
         <RoomImage url={data?.screen[1]} />
         <ThumImage url={data?.screen[1]} />
-        <CaptionStyled>
-          <Typography
-            font={FontType.LIGHT_CAPTION}
-            color={TextColor.SECONDARY}
-            marginRight={25}
-          >
-            체험 54
-          </Typography>
-          <Typography font={FontType.LIGHT_CAPTION} color={TextColor.SECONDARY}>
-            추천 24
-          </Typography>
-        </CaptionStyled>
+        <TagStyled>
+          <CatecoryStyled>
+            <Typography font={FontType.BOLD_BODY} color={BasicColor.BLUE100}>
+              {category}
+            </Typography>
+          </CatecoryStyled>
+          {data?.tags.map((tag, index) => (
+            <TagItem key={index}>
+              <Typography font={FontType.BOLD_BODY} color={BasicColor.GREEN150}>
+                {tag}
+              </Typography>
+            </TagItem>
+          ))}
+        </TagStyled>
       </RoomImageStyled>
       <RoomInfoStyled>
         <RoomTitleStyled>
           <Typography font={FontType.BOLD_TITLE_01}>{data?.title}</Typography>
-          <Typography font={FontType.REGULAR_BODY} color={TextColor.SECONDARY}>
+          <Typography font={FontType.REGULAR_BODY} color={BasicColor.DARK70}>
             {data?.creator}
           </Typography>
+          <CaptionStyled>
+            <Typography
+              font={FontType.LIGHT_CAPTION}
+              color={BasicColor.DARK70}
+              marginRight={25}
+            >
+              체험 54
+            </Typography>
+            <Typography font={FontType.LIGHT_CAPTION} color={BasicColor.DARK70}>
+              추천 24
+            </Typography>
+          </CaptionStyled>
         </RoomTitleStyled>
         <RoomContentStyled>
           <UserListStyled>
@@ -46,14 +60,11 @@ const Detail = ({ category, id }: Props) => {
               <br />
               이런 일에 몰입했어요!
             </Typography>
-            <Typography
-              font={FontType.LIGHT_CAPTION}
-              color={TextColor.SECONDARY}
-            >
+            <Typography font={FontType.LIGHT_CAPTION} color={BasicColor.DARK70}>
               <Typography
                 tag="span"
                 font={FontType.BOLD_BODY}
-                color={TextColor.SECONDARY}
+                color={BasicColor.DARK70}
               >
                 이 방에서 아직 몰입한 사람이 없네요.
               </Typography>
@@ -101,7 +112,7 @@ const Detail = ({ category, id }: Props) => {
         <Typography
           tag="span"
           font={FontType.BOLD_TITLE_02}
-          color={TextColor.WHITE}
+          color={BasicColor.WHITE}
         >
           체험해볼래요!
         </Typography>
@@ -118,9 +129,7 @@ const DetailStyled = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 40px 40px;
-  padding-top: 130px;
-  background-color: #f8f8f8;
+  background-color: ${BasicColor.GRAY20};
 `;
 
 const RoomImageStyled = styled.div`
@@ -131,33 +140,46 @@ const RoomImageStyled = styled.div`
 
 const RoomImage = styled.img<{ url: string }>`
   width: 100%;
-  height: 250px;
+  height: 45vh;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
 `;
 
 const ThumImage = styled.img<{ url: string }>`
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 160px;
   position: absolute;
   left: 50px;
-  bottom: -75px;
+  bottom: -20px;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
-  border-radius: 200px;
-  border: 6px solid #fff;
+  border-radius: 0 30px 30px 30px;
 `;
 
-const CaptionStyled = styled.div`
+const TagStyled = styled.div`
   position: absolute;
-  left: 230px;
-  bottom: -50px;
-  display: flex;
-  flex-direction: row;
+  right: 50px;
+  bottom: 30px;
+`;
+
+const CatecoryStyled = styled.div`
+  display: inline-flex;
+  padding: 6px 22px;
+  background-color: ${BasicColor.WHITE};
+  border: 1px solid ${BasicColor.BLUE80};
+  border-radius: 24px;
+  margin-left: 12px;
+`;
+
+const TagItem = styled.div`
+  display: inline-flex;
+  padding: 4px 12px;
+  background-color: ${BasicColor.GREEN10};
+  border: 1px solid ${BasicColor.GREEN20};
+  border-radius: 24px;
+  margin-left: 12px;
 `;
 
 const RoomInfoStyled = styled.div`
@@ -171,8 +193,13 @@ const RoomInfoStyled = styled.div`
 const RoomTitleStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 50px;
   padding-left: 50px;
+`;
+
+const CaptionStyled = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const RoomContentStyled = styled.div`
@@ -195,7 +222,7 @@ const PlayButton = styled.a`
   bottom: 40px;
   padding: 15px 120px;
   border-radius: 20px;
-  background-color: #587bfa;
+  background-color: ${BasicColor.BLUE100};
 `;
 
 export default Detail;
