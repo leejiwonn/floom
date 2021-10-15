@@ -7,6 +7,7 @@ const BasicColor = {
   BLUE10: '#ECF1FA',
 
   GRAY100: '#C4C0B6',
+  GRAY70: '#E1E1E1',
   GRAY60: '#EAE8E4',
   GRAY20: '#F9F9F9',
   GRAY10: '#ECECEC',

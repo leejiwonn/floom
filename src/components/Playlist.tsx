@@ -3,8 +3,11 @@ import { useEffect, useState, useRef } from 'react';
 import MUSIC from '~/constants/music';
 
 import { BasicColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 import PlaylistControls from './PlaylistControls';
 import Typography from './Typography';
+import PlayIcon from '../../public/assets/icons/icon-play.svg';
+import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 
 interface Props {
   playlist: Array<keyof typeof MUSIC>;
@@ -31,22 +34,22 @@ const Playlist = ({ playlist, controls }: Props) => {
     }
   }, [isPlaying]);
 
-  const updatePlayer = () => {
-    const currentMusic = MUSIC[playlist[currentIndex]];
+  const updatePlayer = (index: number) => {
+    const currentMusic = MUSIC[playlist[index]];
     playerRef.current.src = currentMusic.url;
     playerRef.current.load();
   };
 
   const handlePrevButtonClick = () => {
     setCurrentIndex((prev) => (prev + playlist.length - 1) % playlist.length);
-    updatePlayer();
+    updatePlayer(currentIndex);
     setIsPlaying(true);
     playerRef.current.play();
   };
 
   const handleNextButtonClick = () => {
     setCurrentIndex((prev) => (prev + 1) % playlist.length);
-    updatePlayer();
+    updatePlayer(currentIndex);
     setIsPlaying(true);
     playerRef.current.play();
   };
@@ -84,7 +87,7 @@ const Playlist = ({ playlist, controls }: Props) => {
           music={MUSIC[playlist[currentIndex]]}
           isPlaying={isPlaying}
           currentTime={currentTime}
-          onPlayPauseClick={() => setIsPlaying(!isPlaying)}
+          onPlayPauseClick={() => setIsPlaying((prev) => !prev)}
           onPrevButtonClick={handlePrevButtonClick}
           onNextButtonClick={handleNextButtonClick}
           timelineRef={timelineRef}
@@ -97,16 +100,34 @@ const Playlist = ({ playlist, controls }: Props) => {
             key={index}
             onClick={() => {
               setCurrentIndex(index);
-              updatePlayer();
-              setIsPlaying(true);
-              playerRef.current.play();
+              updatePlayer(index);
+              setIsPlaying((prev) => !prev);
             }}
           >
-            <PlaylistItemInfo>
-              <Typography>{MUSIC[value].name}</Typography>
-              <Typography>{MUSIC[value].author}</Typography>
-            </PlaylistItemInfo>
-            <Typography>
+            <PlaylistLeftView>
+              <PlayPauseButton>
+                {isPlaying && currentIndex === index ? (
+                  <PauseIcon fill={BasicColor.BLUE100} />
+                ) : (
+                  <PlayIcon fill={BasicColor.BLUE100} />
+                )}
+              </PlayPauseButton>
+              <PlaylistItemInfo>
+                <Typography font={FontType.BOLD_TITLE_02} marginBottom={5}>
+                  {MUSIC[value].name}
+                </Typography>
+                <Typography
+                  font={FontType.REGULAR_BODY}
+                  color={BasicColor.DARK70}
+                >
+                  {MUSIC[value].author}
+                </Typography>
+              </PlaylistItemInfo>
+            </PlaylistLeftView>
+            <Typography
+              font={FontType.REGULAR_CAPTION}
+              color={BasicColor.DARK40}
+            >
               {currentIndex === index ? currentTime : MUSIC[value].duration}
             </Typography>
           </PlaylistItem>
@@ -117,18 +138,17 @@ const Playlist = ({ playlist, controls }: Props) => {
 };
 
 const PlaylistStyled = styled.div`
-  width: 300px;
-  height: 200px;
+  width: 340px;
+  height: auto;
   display: flex;
   flex-direction: column;
-  background-color: ${BasicColor.WHITE};
   z-index: 99;
 `;
 
 const PlaylistView = styled.div`
   width: 100%;
-  overflow: scroll;
-  padding: 20px;
+  height: 34vh;
+  overflow: auto;
 `;
 
 const PlaylistItem = styled.button`
@@ -137,12 +157,29 @@ const PlaylistItem = styled.button`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid ${BasicColor.GRAY70};
+`;
+
+const PlaylistLeftView = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const PlayPauseButton = styled.button`
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${BasicColor.BLUE10};
+  border-radius: 50%;
+  margin-right: 20px;
 `;
 
 const PlaylistItemInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 `;
 
 export default Playlist;

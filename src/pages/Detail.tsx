@@ -101,7 +101,7 @@ const Detail = ({ category, id }: Props) => {
             )}
           </UserListStyled>
           <PlaylistStyled>
-            <Typography font={FontType.BOLD_TITLE_01} marginBottom={30}>
+            <Typography font={FontType.BOLD_TITLE_01} marginBottom={16}>
               플레이리스트
             </Typography>
             <Playlist playlist={data?.music as any} controls={false} />
