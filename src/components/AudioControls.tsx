@@ -21,11 +21,11 @@ const AudioControls = ({
     <AudioControlsStyled>
       {isPlaying ? (
         <AudioControlButton onClick={onPlayPauseClick}>
-          <PauseIcon />
+          <PauseIcon fill={BasicColor.BLACK} />
         </AudioControlButton>
       ) : (
         <AudioControlButton onClick={onPlayPauseClick}>
-          <PlayIcon />
+          <PlayIcon fill={BasicColor.BLACK} />
         </AudioControlButton>
       )}
       <AudioSoundControlBox>
