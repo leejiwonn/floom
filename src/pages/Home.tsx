@@ -159,6 +159,7 @@ const CategoryItem = styled.button`
   :hover {
     div {
       background-color: ${GraphicColor.BLUE2_L};
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
     }
   }
 `;
@@ -172,7 +173,7 @@ const CategoryItemIcon = styled.div<{ active: boolean }>`
   background-color: ${({ active }) =>
     active ? GraphicColor.WHITE : GraphicColor.BLUE2_D};
   box-sizing: border-box;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: ${({ active }) => active && '0px 4px 4px rgba(0, 0, 0, 0.08)'};
   border-radius: 18px;
   margin-right: 15px;
   transition: 0.1s;
