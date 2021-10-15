@@ -10,9 +10,9 @@ import { Align, FontType } from '~/utils/font';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { getCatecory } from '~/utils/category';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
-import StudyIcon from '../../public/assets/icons/icon-study.svg';
-import WorkIcon from '../../public/assets/icons/icon-work.svg';
-import RestIcon from '../../public/assets/icons/icon-rest.svg';
+import StudyIcon from '../../public/assets/emojis/emoji-study.svg';
+import WorkIcon from '../../public/assets/emojis/emoji-work.svg';
+import RestIcon from '../../public/assets/emojis/emoji-rest.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
