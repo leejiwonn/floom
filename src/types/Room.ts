@@ -6,4 +6,13 @@ export type Room = {
   light: string;
   music: string[];
   tags: string[];
+  playCount: number;
+  recommendCount: number;
+  usedUsers: UsedUser[];
+};
+
+type UsedUser = {
+  objective: string;
+  player: string;
+  comment: string;
 };

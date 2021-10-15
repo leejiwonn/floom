@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { useEffect, useState, useRef } from 'react';
+import MUSIC from '~/constants/music';
 
-import { Music } from '~/types/Music';
 import { BasicColor } from '~/utils/color';
 import PlaylistControls from './PlaylistControls';
 import Typography from './Typography';
 
 interface Props {
-  playlist: Music[];
+  playlist: Array<keyof typeof MUSIC>;
   controls?: boolean;
 }
 
@@ -17,7 +17,7 @@ const Playlist = ({ playlist, controls }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef(
-    typeof Audio !== 'undefined' && new Audio(playlist?.[0]?.url),
+    typeof Audio !== 'undefined' && new Audio(MUSIC[playlist?.[0]]?.url),
   );
 
   const timelineRef = useRef(null);
@@ -32,7 +32,7 @@ const Playlist = ({ playlist, controls }: Props) => {
   }, [isPlaying]);
 
   const updatePlayer = () => {
-    const currentMusic = playlist[currentIndex];
+    const currentMusic = MUSIC[playlist[currentIndex]];
     playerRef.current.src = currentMusic.url;
     playerRef.current.load();
   };
@@ -81,7 +81,7 @@ const Playlist = ({ playlist, controls }: Props) => {
     <PlaylistStyled>
       {controls && (
         <PlaylistControls
-          music={playlist[currentIndex]}
+          music={MUSIC[playlist[currentIndex]]}
           isPlaying={isPlaying}
           currentTime={currentTime}
           onPlayPauseClick={() => setIsPlaying(!isPlaying)}
@@ -103,11 +103,11 @@ const Playlist = ({ playlist, controls }: Props) => {
             }}
           >
             <PlaylistItemInfo>
-              <Typography>{value.name}</Typography>
-              <Typography>{value.author}</Typography>
+              <Typography>{MUSIC[value].name}</Typography>
+              <Typography>{MUSIC[value].author}</Typography>
             </PlaylistItemInfo>
             <Typography>
-              {currentIndex === index ? currentTime : value.duration}
+              {currentIndex === index ? currentTime : MUSIC[value].duration}
             </Typography>
           </PlaylistItem>
         ))}

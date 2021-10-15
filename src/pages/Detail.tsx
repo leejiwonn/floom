@@ -4,6 +4,7 @@ import Typography from '~/components/Typography';
 import Playlist from '~/components/Playlist';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import { getCatecory } from '~/utils/category';
 import { useRoom } from '~/hooks/useRoom';
 
 interface Props {
@@ -22,7 +23,7 @@ const Detail = ({ category, id }: Props) => {
         <TagStyled>
           <CatecoryStyled>
             <Typography font={FontType.BOLD_BODY} color={BasicColor.BLUE100}>
-              {category}
+              {getCatecory(category)}
             </Typography>
           </CatecoryStyled>
           {data?.tags.map((tag, index) => (
@@ -36,82 +37,81 @@ const Detail = ({ category, id }: Props) => {
       </RoomImageStyled>
       <RoomInfoStyled>
         <RoomTitleStyled>
-          <Typography font={FontType.BOLD_TITLE_01}>{data?.title}</Typography>
-          <Typography font={FontType.REGULAR_BODY} color={BasicColor.DARK70}>
+          <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={10}>
+            {data?.title}
+          </Typography>
+          <Typography
+            font={FontType.REGULAR_BODY}
+            color={BasicColor.DARK70}
+            marginBottom={30}
+          >
             {data?.creator}
           </Typography>
           <CaptionStyled>
-            <Typography
-              font={FontType.LIGHT_CAPTION}
-              color={BasicColor.DARK70}
-              marginRight={25}
-            >
-              체험 54
+            <Typography font={FontType.SEMI_BOLD_BODY} marginRight={30}>
+              체험 {data?.playCount}
             </Typography>
-            <Typography font={FontType.LIGHT_CAPTION} color={BasicColor.DARK70}>
-              추천 24
+            <Typography font={FontType.SEMI_BOLD_BODY}>
+              추천 {data?.recommendCount}
             </Typography>
           </CaptionStyled>
         </RoomTitleStyled>
         <RoomContentStyled>
           <UserListStyled>
-            <Typography font={FontType.BOLD_TITLE_01} marginBottom={24}>
-              다른 사람들은
-              <br />
-              이런 일에 몰입했어요!
+            <Typography font={FontType.BOLD_TITLE_01} marginBottom={30}>
+              다른 사람들은 이런 일에 몰입했어요!
             </Typography>
-            <Typography font={FontType.LIGHT_CAPTION} color={BasicColor.DARK70}>
+            {data?.usedUsers.length ? (
+              <CommentStyled>
+                {data?.usedUsers.map((item, index) => (
+                  <CommentItem key={index}>
+                    <CommentTitle>
+                      <Typography
+                        font={FontType.BOLD_BODY}
+                        color={BasicColor.BLUE100}
+                      >
+                        {item.objective}
+                      </Typography>
+                      <Typography
+                        font={FontType.LIGHT_BODY}
+                        color={BasicColor.DARK70}
+                      >
+                        {item.player}
+                      </Typography>
+                    </CommentTitle>
+                    <Typography marginTop={10}>{item.comment}</Typography>
+                  </CommentItem>
+                ))}
+              </CommentStyled>
+            ) : (
               <Typography
-                tag="span"
-                font={FontType.BOLD_BODY}
+                font={FontType.LIGHT_CAPTION}
                 color={BasicColor.DARK70}
               >
-                이 방에서 아직 몰입한 사람이 없네요.
+                <Typography
+                  tag="span"
+                  font={FontType.BOLD_BODY}
+                  color={BasicColor.DARK70}
+                >
+                  이 방에서 아직 몰입한 사람이 없네요.
+                </Typography>
+                <br />
+                체험하기 버튼을 눌러 첫 번째 몰입을 경험해보세요 :)
               </Typography>
-              <br />
-              체험하기 버튼을 눌러 첫 번째 몰입을 경험해보세요 :)
-            </Typography>
+            )}
           </UserListStyled>
           <PlaylistStyled>
-            <Typography font={FontType.BOLD_TITLE_01} marginBottom={16}>
+            <Typography font={FontType.BOLD_TITLE_01} marginBottom={30}>
               플레이리스트
             </Typography>
-            <Playlist
-              playlist={[
-                {
-                  name: 'Nice piano and ukulele',
-                  author: 'Royalty',
-                  url: 'https://www.bensound.com/bensound-music/bensound-buddy.mp3',
-                  duration: '2:02',
-                },
-                {
-                  name: 'Gentle acoustic',
-                  author: 'Acoustic',
-                  url: 'https://www.bensound.com//bensound-music/bensound-sunny.mp3',
-                  duration: '2:20',
-                },
-                {
-                  name: 'Corporate motivational',
-                  author: 'Corporate',
-                  url: 'https://www.bensound.com/bensound-music/bensound-energy.mp3',
-                  duration: '2:59',
-                },
-                {
-                  name: 'Slow cinematic',
-                  author: 'Royalty',
-                  url: 'https://www.bensound.com/bensound-music/bensound-slowmotion.mp3',
-                  duration: '3:26',
-                },
-              ]}
-              controls={false}
-            />
+            <Playlist playlist={data?.music as any} controls={false} />
           </PlaylistStyled>
         </RoomContentStyled>
       </RoomInfoStyled>
       <PlayButton href={`/play?category=${category}&id=${id}`}>
         <Typography
           tag="span"
-          font={FontType.BOLD_TITLE_02}
+          font={FontType.BOLD_TITLE_01}
           color={BasicColor.WHITE}
         >
           체험해볼래요!
@@ -125,6 +125,7 @@ const DetailStyled = styled.div`
   width: 100vw;
   height: 100vh;
   position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,7 +141,7 @@ const RoomImageStyled = styled.div`
 
 const RoomImage = styled.img<{ url: string }>`
   width: 100%;
-  height: 45vh;
+  height: 48vh;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
@@ -148,7 +149,7 @@ const RoomImage = styled.img<{ url: string }>`
 
 const ThumImage = styled.img<{ url: string }>`
   width: 200px;
-  height: 160px;
+  height: 180px;
   position: absolute;
   left: 50px;
   bottom: -20px;
@@ -167,10 +168,12 @@ const TagStyled = styled.div`
 const CatecoryStyled = styled.div`
   display: inline-flex;
   padding: 6px 22px;
-  background-color: ${BasicColor.WHITE};
   border: 1px solid ${BasicColor.BLUE80};
-  border-radius: 24px;
-  margin-left: 12px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background-color: ${BasicColor.WHITE};
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  margin-right: 2px;
 `;
 
 const TagItem = styled.div`
@@ -178,6 +181,7 @@ const TagItem = styled.div`
   padding: 4px 12px;
   background-color: ${BasicColor.GREEN10};
   border: 1px solid ${BasicColor.GREEN20};
+  box-sizing: border-box;
   border-radius: 24px;
   margin-left: 12px;
 `;
@@ -209,18 +213,41 @@ const RoomContentStyled = styled.div`
 `;
 
 const UserListStyled = styled.div`
-  width: 300px;
-  height: auto;
-  margin-right: 50px;
+  border-left: 1px solid ${BasicColor.GRAY60};
+  padding: 0 30px;
 `;
 
-const PlaylistStyled = styled.div``;
+const CommentStyled = styled.div`
+  width: auto;
+  height: 32vh;
+  overflow: auto;
+`;
+
+const CommentItem = styled.div`
+  width: 340px;
+  background-color: ${BasicColor.GRAY10};
+  border-radius: 0px 20px 20px 20px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+`;
+
+const CommentTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const PlaylistStyled = styled.div`
+  margin-right: 60px;
+  border-left: 1px solid ${BasicColor.GRAY60};
+  padding-left: 30px;
+`;
 
 const PlayButton = styled.a`
   position: absolute;
   left: 50px;
   bottom: 40px;
-  padding: 15px 120px;
+  padding: 20px 120px;
   border-radius: 20px;
   background-color: ${BasicColor.BLUE100};
 `;
