@@ -52,7 +52,7 @@ const AudioControlButton = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding-right: 15px;
+  padding-right: 10px;
 `;
 
 const AudioSoundControlBox = styled.div`
@@ -74,7 +74,7 @@ const AudioSoundControlBackground = styled.div`
 
 const AudioSoundControl = styled.input`
   -webkit-appearance: none;
-  width: 100px;
+  width: 80px;
   height: 7px;
   overflow: hidden;
   border-radius: 5px;
