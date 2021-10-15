@@ -8,6 +8,7 @@ import { useCategoryRooms } from '~/hooks/useRoom';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
+import { getCatecory } from '~/utils/category';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 import StudyIcon from '../../public/assets/icons/icon-study.svg';
 import WorkIcon from '../../public/assets/icons/icon-work.svg';
@@ -17,16 +18,6 @@ const Home = () => {
   const { data: user } = useUserProfile();
   const [category, setCategory] = useState('study');
   const { data } = useCategoryRooms(category);
-
-  const getCatecory = (category: string) => {
-    if (category === 'work') {
-      return '업무';
-    } else if (category === 'study') {
-      return '학습';
-    } else if (category === 'rest') {
-      return '휴식';
-    }
-  };
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();
