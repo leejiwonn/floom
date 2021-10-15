@@ -20,7 +20,7 @@ const Detail = ({ category, id }: Props) => {
   return (
     <DetailStyled>
       <RoomImageStyled>
-        <RoomImage url={data?.screen[1]} />
+        <RoomImage url={data?.roomImage} />
         <ThumImage url={data?.screen[1]} />
         <TagStyled>
           <CatecoryStyled>
