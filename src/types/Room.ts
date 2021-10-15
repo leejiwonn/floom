@@ -2,6 +2,7 @@ export type Room = {
   id: string;
   title: string;
   creator: string;
+  roomImage: string;
   screen: string;
   light: string;
   music: string[];
