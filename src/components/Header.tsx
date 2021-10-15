@@ -66,13 +66,17 @@ const Header = () => {
               은
               <br />더 몰입할 수 있게 도와줍니다 :)
             </Typography>
-            <Typography font={FontType.REGULAR_CAPTION} marginBottom={80}>
+            <Typography
+              font={FontType.REGULAR_CAPTION}
+              color={TextColor.SECONDARY}
+              marginBottom={80}
+            >
               볼륨을 조절하며 원하는 소리를 찾아보세요!
             </Typography>
-            <AudioPlayer title="장작소리" url="/audio/wood-fire.mp3" />
-            <AudioPlayer title="파도소리" url="/audio/ocean.mp3" />
-            <AudioPlayer title="빗소리" url="/audio/rain.mp3" />
-            <AudioPlayer title="사람소리" url="/audio/people.mp3" />
+            <AudioPlayer title="타닥타닥 모닥불" url="/audio/wood-fire.mp3" />
+            <AudioPlayer title="쏴아쏴아 파도" url="/audio/ocean.mp3" />
+            <AudioPlayer title="추적추적 빗소리" url="/audio/rain.mp3" />
+            <AudioPlayer title="웅성웅성 사람들" url="/audio/people.mp3" />
           </NoiseController>
         </NoiseStyled>
       </RightStyled>
@@ -162,7 +166,7 @@ const NoiseController = styled.div<{ show: boolean }>`
   justify-content: center;
   margin-right: ${({ show }) => (show ? '0px' : '-360px')};
   transition: 0.5s;
-  padding: 40px 50px;
+  padding: 40px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   background-color: ${BackgroundColor.WHITE};
