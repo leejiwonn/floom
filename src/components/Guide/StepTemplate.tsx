@@ -94,7 +94,6 @@ const NextStepButton = styled.button<{ checkLast: boolean; status: boolean }>`
     status ? BasicColor.BLUE100 : BasicColor.WHITE};
   border: 1px solid ${BasicColor.BLUE100};
   transition: 0.1s;
-  cursor: ${({ status }) => (status ? 'pointer' : 'default')};
 `;
 
 export default StepTemplate;
