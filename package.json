@@ -17,8 +17,6 @@
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@react-three/drei": "^7.7.0",
-    "@react-three/fiber": "^7.0.6",
     "axios": "^0.21.4",
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
@@ -30,8 +28,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-player": "^2.9.0",
-    "react-query": "^3.24.4",
-    "three": "^0.132.2"
+    "react-query": "^3.24.4"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.5",
@@ -39,7 +36,6 @@
     "@types/passport-kakao": "^0.2.1",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
-    "@types/three": "^0.131.0",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
     "babel-plugin-inline-react-svg": "^2.0.1",
