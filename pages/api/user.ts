@@ -6,7 +6,6 @@ const handler = nc<NextApiRequest, NextApiResponse>()
   .use(authorizeMiddleware)
   .get((req, res) => {
     const user = (req as any).user;
-    console.log(user);
 
     res.status(200).json({
       id: user.id,
