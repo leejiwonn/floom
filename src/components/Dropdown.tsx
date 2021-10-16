@@ -57,8 +57,8 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
               <LoopIcon />
             ) : (
               <Typography
-                font={FontType.REGULAR_TITLE_02}
-                color={time === value ? BasicColor.BLUE100 : BasicColor.DARK70}
+                font={FontType.BOLD_TITLE_01}
+                color={time === value ? BasicColor.BLUE100 : BasicColor.DARK100}
               >
                 {value}분
               </Typography>
@@ -97,19 +97,23 @@ const DropdownBox = styled.div<{ active: boolean }>`
   height: 100px;
   display: ${({ active }) => (active ? 'flex' : 'none')};
   flex-direction: column;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background-color: ${BasicColor.WHITE};
   border: 2px solid ${BasicColor.GRAY20};
   border-radius: 10px;
   padding: 0 10px;
   margin-top: 5px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const DropdownItem = styled.button`
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 4px 0;
+  padding: 6px 0;
 `;
 
 export default Dropdown;
