@@ -7,7 +7,7 @@ import { FontType } from '~/utils/font';
 import { useUserProfile } from '~/hooks/useUser';
 import Typography from './Typography';
 import MusicIcon from '../../public/assets/icons/icon-music.svg';
-import CloseIcon from '../../public/assets/icons/icon-close.svg';
+import CloseNoiseIcon from '../../public/assets/icons/icon-close-noise.svg';
 import LogoIcon from '../../public/assets/icons/icon-logo.svg';
 
 // TODO : 페이지 이동 시 렌더링 방지 필요 (노이즈 유지)
@@ -51,7 +51,7 @@ const Header = () => {
             >
               NOISE
             </Typography>
-            <NoiseIcon>{show ? <CloseIcon /> : <MusicIcon />}</NoiseIcon>
+            <NoiseIcon>{show ? <CloseNoiseIcon /> : <MusicIcon />}</NoiseIcon>
           </NoiseButton>
           <NoiseController show={show}>
             <Typography font={FontType.EXTRA_BOLD_TITLE_01} marginBottom={24}>

@@ -21,6 +21,7 @@ const Play = ({ category, id }: Props) => {
   const [sliderShow, setSliderShow] = useState(true);
   const [objective, setObjective] = useState('');
   const [time, setTime] = useState(0);
+  const [todos, setTodos] = useState([]);
   const [isFull, setIsPull] = useState(false);
 
   const handlePrevPage = () => {
@@ -39,6 +40,16 @@ const Play = ({ category, id }: Props) => {
     } else if (page === 2) {
       return '작은 목표를 차곡차곡 쌓으며 성취감을 느껴요 😊';
     }
+  };
+
+  const handleChangeTodos = (todo: string) => {
+    if (todo !== '' && todos.indexOf(todo) === -1) {
+      setTodos((prev) => [...prev, todo]);
+    }
+  };
+
+  const handleDeleteTodo = (todo: string) => {
+    setTodos((prev) => prev.filter((item) => item !== todo));
   };
 
   return (
@@ -68,7 +79,7 @@ const Play = ({ category, id }: Props) => {
               {currentPage === 0 && (
                 <StepA
                   onChangeGoalText={setObjective}
-                  placeholderInfo="목표를 입력해주세요"
+                  placeholderInfo="20자 이내의 목표를 입력해주세요"
                   onNextPage={handleNextPage}
                 />
               )}
@@ -83,7 +94,11 @@ const Play = ({ category, id }: Props) => {
               )}
               {currentPage === 2 && (
                 <StepC
+                  todos={todos}
+                  onChangeTodos={handleChangeTodos}
+                  onDeleteTodo={handleDeleteTodo}
                   objective={objective}
+                  placeholderInfo="작은 목표를 입력해주세요"
                   onSliderShow={setSliderShow}
                   onPrevPage={handlePrevPage}
                   onNextPage={handleNextPage}
