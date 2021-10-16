@@ -105,7 +105,10 @@ const StepC = ({
       }
       prevButtonText="이전"
       onPrevPage={onPrevPage}
-      nextButtonText="이제 방을 체험해볼까요?"
+      nextButtonText={
+        todos.length !== 0 ? '이제 방을 체험해볼까요?' : '생략할래요!'
+      }
+      nextButtonStatus={todos.length !== 0}
       onNextPage={handleNextStepButtonClick}
     />
   );

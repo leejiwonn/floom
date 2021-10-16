@@ -25,8 +25,10 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
   );
 
   const handleNextStepButtonClick = () => {
-    onNextPage();
-    onChangeGoalText(textInput);
+    if (textInput !== '') {
+      onNextPage();
+      onChangeGoalText(textInput);
+    }
   };
 
   return (
@@ -61,7 +63,8 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
           <br />에 몰입하고 싶어요.
         </Typography>
       }
-      nextButtonText="다 적었어요!"
+      nextButtonText={textInput !== '' ? '다 적었어요!' : '고민중이에요'}
+      nextButtonStatus={textInput !== ''}
       onNextPage={handleNextStepButtonClick}
     />
   );
