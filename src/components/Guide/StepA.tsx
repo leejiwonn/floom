@@ -17,7 +17,9 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
 
   const handleChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextInput(e.target.value);
+      if (e.target.value.length <= 20) {
+        setTextInput(e.target.value);
+      }
     },
     [setTextInput],
   );
