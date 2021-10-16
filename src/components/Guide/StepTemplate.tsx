@@ -10,6 +10,7 @@ interface Props {
   prevButtonText?: string;
   onPrevPage?: () => void;
   nextButtonText?: string;
+  nextButtonStatus?: boolean;
   onNextPage?: () => void;
 }
 
@@ -19,6 +20,7 @@ const StepTemplate = ({
   prevButtonText,
   onPrevPage,
   nextButtonText,
+  nextButtonStatus = true,
   onNextPage,
 }: Props) => {
   return (
@@ -40,10 +42,14 @@ const StepTemplate = ({
           </PrevStepButton>
         )}
         {onNextPage && (
-          <NextStepButton onClick={onNextPage} checkLast={!!onPrevPage}>
+          <NextStepButton
+            onClick={onNextPage}
+            checkLast={!!onPrevPage}
+            status={nextButtonStatus}
+          >
             <Typography
               font={FontType.SEMI_BOLD_BODY}
-              color={BasicColor.WHITE}
+              color={nextButtonStatus ? BasicColor.WHITE : BasicColor.BLUE100}
               align={Align.CENTER}
             >
               {nextButtonText}
@@ -80,11 +86,15 @@ const PrevStepButton = styled.button`
   padding: 15px;
 `;
 
-const NextStepButton = styled.button<{ checkLast: boolean }>`
+const NextStepButton = styled.button<{ checkLast: boolean; status: boolean }>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
   border-radius: 48px;
   padding: 15px;
-  background-color: ${BasicColor.BLUE100};
+  background-color: ${({ status }) =>
+    status ? BasicColor.BLUE100 : BasicColor.WHITE};
+  border: 1px solid ${BasicColor.BLUE100};
+  transition: 0.1s;
+  cursor: ${({ status }) => (status ? 'pointer' : 'default')};
 `;
 
 export default StepTemplate;
