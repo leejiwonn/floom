@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import Typography from '~/components/Typography';
@@ -92,21 +93,23 @@ const Home = () => {
           {getCatecory(category)}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
-          {data?.map((room, i) => (
-            <RoomItem
+          {data?.map((room) => (
+            <Link
+              key={`${category}-${room.id}`}
               href={`/detail?category=${category}&id=${room.id}`}
-              key={i}
             >
-              <ScreenStyled>
-                <Screen type={room.screen[0]} url={room.screen[1]} />
-              </ScreenStyled>
-              <Typography font={FontType.BOLD_TITLE_02} marginTop={10}>
-                {room.title}
-              </Typography>
-              <Typography font={FontType.LIGHT_CAPTION}>
-                {room.creator}
-              </Typography>
-            </RoomItem>
+              <RoomItem>
+                <ScreenStyled>
+                  <Screen type={room.screen[0]} url={room.screen[1]} />
+                </ScreenStyled>
+                <Typography font={FontType.BOLD_TITLE_02} marginTop={10}>
+                  {room.title}
+                </Typography>
+                <Typography font={FontType.LIGHT_CAPTION}>
+                  {room.creator}
+                </Typography>
+              </RoomItem>
+            </Link>
           ))}
         </RoomStyled>
       </RoomsStyled>
