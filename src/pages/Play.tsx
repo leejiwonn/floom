@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useRoom } from '~/hooks/useRoom';
 import StepA from '~/components/Guide/StepA';
@@ -7,10 +7,13 @@ import StepB from '~/components/Guide/StepB';
 import StepC from '~/components/Guide/StepC';
 import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
 import ROOM from '~/constants/room';
-import { Light } from '~/types/Obejct';
+import { Light, Todo } from '~/types/Obejct';
+import AddIcon from '../../public/assets/icons/icon-add.svg';
+import CheckIcon from '../../public/assets/icons/icon-check.svg';
+import CloseIcon from '../../public/assets/icons/icon-close.svg';
 
 interface Props {
   category: string;
@@ -44,15 +47,29 @@ const Play = ({ category, id }: Props) => {
     }
   };
 
-  const handleChangeTodos = (todo: string) => {
-    if (todo !== '' && todos.indexOf(todo) === -1) {
+  const handleChangeTodos = (todo: Todo) => {
+    if (todo.text !== '' && todos.indexOf(todo.text) === -1) {
       setTodos((prev) => [...prev, todo]);
     }
   };
 
-  const handleDeleteTodo = (todo: string) => {
-    setTodos((prev) => prev.filter((item) => item !== todo));
+  const handleDeleteTodo = (todo: Todo) => {
+    setTodos((prev) => prev.filter((item) => item.text !== todo.text));
   };
+
+  const handleClearTodo = useCallback(
+    (todo: Todo) => {
+      setTodos((prev) =>
+        prev.map((item) => {
+          if (item.text === todo.text) {
+            todo.clear = !todo.clear;
+          }
+          return todo;
+        }),
+      );
+    },
+    [todos],
+  );
 
   return (
     <PlayStyled>
@@ -117,61 +134,145 @@ const Play = ({ category, id }: Props) => {
         }
         page={currentPage}
       >
-        <ObjectBox page={currentPage}>
-          <ObjectWindow>
-            {
-              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                data?.light as Light
-              ]?.WINDOW
-            }
-          </ObjectWindow>
-          <ObjectClock>
-            {
-              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                data?.light as Light
-              ]?.CLOCK
-            }
-          </ObjectClock>
-          <ObjectMemo>
-            {
-              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                data?.light as Light
-              ]?.MEMO
-            }
-          </ObjectMemo>
-          <ObjectPicture>
-            {
-              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                data?.light as Light
-              ]?.PICTURE
-            }
-          </ObjectPicture>
-          <ObjectSpeaker>
-            {
-              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                data?.light as Light
-              ]?.SPEAKER
-            }
-          </ObjectSpeaker>
-          <ObjectTable>
-            {
-              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                data?.light as Light
-              ]?.TABLE
-            }
-          </ObjectTable>
-        </ObjectBox>
+        <LayerBox page={currentPage}>
+          <ObjectBox>
+            <ObjectWindow>
+              {
+                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                  data?.light as Light
+                ]?.WINDOW
+              }
+            </ObjectWindow>
+            <ObjectClock>
+              {
+                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                  data?.light as Light
+                ]?.CLOCK
+              }
+            </ObjectClock>
+            <ObjectMemo>
+              {
+                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                  data?.light as Light
+                ]?.MEMO
+              }
+            </ObjectMemo>
+            <ObjectPicture>
+              {
+                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                  data?.light as Light
+                ]?.PICTURE
+              }
+            </ObjectPicture>
+            <ObjectSpeaker>
+              {
+                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                  data?.light as Light
+                ]?.SPEAKER
+              }
+            </ObjectSpeaker>
+            <ObjectTable>
+              {
+                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                  data?.light as Light
+                ]?.TABLE
+              }
+            </ObjectTable>
+          </ObjectBox>
+          {currentPage >= 3 && (
+            <PopupBox>
+              <ScreenStyled
+                isFull={isFull}
+                onClick={() => setIsPull((prev) => !prev)}
+              >
+                <Screen type={data?.screen[0]} url={data?.screen[1]} />
+              </ScreenStyled>
+            </PopupBox>
+          )}
+        </LayerBox>
       </ObjectView>
       {currentPage >= 3 && (
         <ContentView>
-          <ScreenStyled
-            isFull={isFull}
-            onClick={() => setIsPull((prev) => !prev)}
-          >
-            <Screen type={data?.screen[0]} url={data?.screen[1]} />
-          </ScreenStyled>
+          <ContentTitleView>
+            <Typography
+              font={FontType.EXTRA_BOLD_TITLE_01}
+              marginLeft={20}
+              marginRight={20}
+              marginBottom={15}
+            >
+              {objective}
+            </Typography>
+            <TimerView>
+              <Typography>10:00</Typography>
+            </TimerView>
+          </ContentTitleView>
+          <ChecklistStyled>
+            <ChecklistTitle>
+              <Typography font={FontType.BOLD_TITLE_02}>체크리스트</Typography>
+              <ChecklistAddButton onClick={() => console.log('add')}>
+                <AddIcon />
+              </ChecklistAddButton>
+            </ChecklistTitle>
+            <ChecklistView>
+              {todos?.length === 0 ? (
+                <NoneChecklist>
+                  <Typography
+                    font={FontType.BOLD_BODY}
+                    color={BasicColor.DARK70}
+                    align={Align.CENTER}
+                    marginBottom={5}
+                  >
+                    아직 작성된 작은 목표가 없어요.
+                  </Typography>
+                  <Typography
+                    font={FontType.LIGHT_CAPTION}
+                    color={BasicColor.DARK70}
+                    align={Align.CENTER}
+                  >
+                    간단한 목표라도 괜찮으니 부담없이 작성해보세요!
+                    <br />
+                    작은 목표들이 모여 순간을 더욱 알차게 채워준답니다 :)
+                  </Typography>
+                </NoneChecklist>
+              ) : (
+                todos?.map((todo, index) => (
+                  <ChecklistItem key={index} last={index === todos.length - 1}>
+                    <ChecklistItemInfo onClick={() => handleClearTodo(todo)}>
+                      <CheckIconStyled clear={todo.clear}>
+                        <CheckIcon
+                          fill={
+                            todo.clear ? BasicColor.WHITE : BasicColor.DARK40
+                          }
+                        />
+                      </CheckIconStyled>
+                      <Typography
+                        tag="span"
+                        font={FontType.BOLD_BODY}
+                        color={
+                          todo.clear ? BasicColor.BLUE100 : BasicColor.DARK100
+                        }
+                      >
+                        {todo.text}
+                      </Typography>
+                    </ChecklistItemInfo>
+                    <DeleteButtonStyled onClick={() => handleDeleteTodo(todo)}>
+                      <CloseIcon stroke={BasicColor.DARK40} />
+                    </DeleteButtonStyled>
+                  </ChecklistItem>
+                ))
+              )}
+            </ChecklistView>
+          </ChecklistStyled>
+          <UIHiddenButton onClick={() => console.log('hidden')}>
+            <Typography font={FontType.BOLD_TITLE_01} color={BasicColor.WHITE}>
+              UI 가리기
+            </Typography>
+          </UIHiddenButton>
           <EndButton href={`/detail?category=${category}&id=${id}`}>
-            <Typography font={FontType.BOLD_TITLE_02} color={BasicColor.WHITE}>
+            <Typography
+              font={FontType.BOLD_TITLE_01}
+              color={BasicColor.DARK100}
+            >
               체험 종료
             </Typography>
           </EndButton>
@@ -243,26 +344,18 @@ const StatusBarActive = styled.div<{ status: number }>`
   border-radius: 53px;
   background-color: ${BasicColor.GREEN100};
   transition: 0.1s;
+  z-index: 1;
 `;
 
 const StatusBarBackground = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute:
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: ${BasicColor.GREEN10};
-`;
-
-const EndButton = styled.a`
-  position: absolute;
-  right: 30px;
-  bottom: 30px;
-  padding: 15px 60px;
-  border-radius: 20px;
-  background-color: ${BasicColor.WHITE};
 `;
 
 const ObjectView = styled.div<{ page: number; backgroundImage: string }>`
@@ -279,13 +372,19 @@ const ObjectView = styled.div<{ page: number; backgroundImage: string }>`
   z-index: 0;
 `;
 
-const ObjectBox = styled.div<{ page: number }>`
+const LayerBox = styled.div<{ page: number }>`
   width: ${({ page }) => (page === 1 || page === 2 ? '80vw' : '60vw')};
   height: ${({ page }) => (page === 1 || page === 2 ? '100vh' : '80vh')};
   position: absolute;
   right: ${({ page }) => (page === 1 ? '26vw' : page === 2 ? '15vw' : '0')};
   bottom: 2vh;
   transition: 0.3s ease-in-out;
+`;
+
+const ObjectBox = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
 
   div {
     svg {
@@ -348,6 +447,20 @@ const ObjectTable = styled.div`
   z-index: 0;
 `;
 
+const PopupBox = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
+const ScreenStyled = styled.button<{ isFull: boolean }>`
+  width: ${({ isFull }) => (isFull ? '100%' : '200px')};
+  height: ${({ isFull }) => (isFull ? '100%' : '200px')};
+  position: absolute;
+  top: ${({ isFull }) => (isFull ? '0' : '200px')};
+  right: ${({ isFull }) => (isFull ? '0' : '100px')};
+`;
+
 const ContentView = styled.div`
   width: 100%;
   height: 100%;
@@ -359,12 +472,118 @@ const ContentView = styled.div`
   z-index: 1;
 `;
 
-const ScreenStyled = styled.button<{ isFull: boolean }>`
-  width: ${({ isFull }) => (isFull ? '100%' : '200px')};
-  height: ${({ isFull }) => (isFull ? '100%' : '200px')};
+const ContentTitleView = styled.div`
+  width: 400px;
+  height: auto;
+  position: relative;
+  top: 100px;
+  left: 50px;
+  background-color: ${BasicColor.WHITE};
+  border: 2px solid ${BasicColor.BLUE40};
+  box-sizing: border-box;
+  box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 0px 30px 30px 30px;
+  padding-top: 15px;
+`;
+
+const TimerView = styled.div`
+  border-top: 2px solid ${BasicColor.BLUE40};
+  padding: 15px 20px;
+`;
+
+const ChecklistStyled = styled.div`
+  width: 400px;
+  height: auto;
+  position: relative;
+  top: 130px;
+  left: 50px;
+  background-color: ${BasicColor.WHITE};
+  border: 2px solid ${BasicColor.BLUE40};
+  box-sizing: border-box;
+  box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 30px;
+  padding: 20px;
+`;
+
+const NoneChecklist = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  padding-bottom: 40px;
+`;
+
+const ChecklistTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ChecklistAddButton = styled.button``;
+
+const ChecklistView = styled.div`
+  margin-top: 8px;
+`;
+
+const ChecklistItem = styled.div<{ last: boolean }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: ${({ last }) => !last && `1px solid ${BasicColor.DARK10}`};
+`;
+
+const ChecklistItemInfo = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const CheckIconStyled = styled.div<{ clear: boolean }>`
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: ${({ clear }) => (clear ? BasicColor.BLUE100 : 'none')};
+  border: 1px solid
+    ${({ clear }) => (clear ? BasicColor.BLUE100 : BasicColor.DARK40)};
+  transition: 0.1s;
+  margin-right: 8px;
+`;
+
+const DeleteButtonStyled = styled.button`
+  margin-right: 8px;
+`;
+
+const UIHiddenButton = styled.button`
   position: absolute;
-  top: ${({ isFull }) => (isFull ? '0' : '200px')};
-  right: ${({ isFull }) => (isFull ? '0' : '100px')};
+  right: 250px;
+  bottom: 30px;
+  padding: 15px 60px;
+  border: 2px solid ${BasicColor.BLUE40};
+  box-sizing: border-box;
+  border-radius: 18px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(14px);
+`;
+
+const EndButton = styled.a`
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  padding: 15px 60px;
+  border: 2px solid ${BasicColor.BLUE40};
+  box-sizing: border-box;
+  border-radius: 18px;
+  background-color: ${BasicColor.WHITE};
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
 `;
 
 export default Play;

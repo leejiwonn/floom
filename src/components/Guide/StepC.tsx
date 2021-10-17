@@ -2,19 +2,20 @@ import styled from '@emotion/styled';
 import { useState, useCallback } from 'react';
 
 import { BasicColor, GradientColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 import TextInput from '../TextInput';
 import Typography from '../Typography';
 import StepTemplate from './StepTemplate';
 import PlusIcon from '../../../public/assets/icons/icon-plus.svg';
 import CloseIcon from '../../../public/assets/icons/icon-close.svg';
+import { Todo } from '~/types/Obejct';
 
 interface Props {
   objective: string;
   placeholderInfo: string;
-  todos: string[];
-  onChangeTodos: (todo: string) => void;
-  onDeleteTodo: (todo: string) => void;
+  todos: Todo[];
+  onChangeTodos: (todo: Todo) => void;
+  onDeleteTodo: (todo: Todo) => void;
   onSliderShow: (value: boolean) => void;
   onPrevPage?: () => void;
   onNextPage?: () => void;
@@ -43,7 +44,7 @@ const StepC = ({
 
   const handlePlusButtonClick = () => {
     if (todos.length < 5) {
-      onChangeTodos(textInput);
+      onChangeTodos({ text: textInput, clear: false });
       setTextInput('');
     }
   };
@@ -87,19 +88,41 @@ const StepC = ({
             </PlusButton>
           </PlusTagStyled>
           <TagListStyled>
-            {todos?.map((todo, index) => (
-              <TagItem key={index}>
+            {todos?.length === 0 ? (
+              <NoneChecklist>
                 <Typography
-                  font={FontType.SEMI_BOLD_BODY}
-                  color={BasicColor.BLUE100}
+                  font={FontType.BOLD_BODY}
+                  color={BasicColor.DARK70}
+                  align={Align.CENTER}
+                  marginBottom={5}
                 >
-                  {todo}
+                  아직 작성된 작은 목표가 없어요.
                 </Typography>
-                <TagDeleteButton onClick={() => onDeleteTodo(todo)}>
-                  <CloseIcon />
-                </TagDeleteButton>
-              </TagItem>
-            ))}
+                <Typography
+                  font={FontType.LIGHT_CAPTION}
+                  color={BasicColor.DARK70}
+                  align={Align.CENTER}
+                >
+                  간단한 목표라도 괜찮으니 부담없이 작성해보세요!
+                  <br />
+                  작은 목표들이 모여 순간을 더욱 알차게 채워준답니다 :)
+                </Typography>
+              </NoneChecklist>
+            ) : (
+              todos?.map((todo, index) => (
+                <TagItem key={index}>
+                  <Typography
+                    font={FontType.SEMI_BOLD_BODY}
+                    color={BasicColor.BLUE100}
+                  >
+                    {todo.text}
+                  </Typography>
+                  <TagDeleteButton onClick={() => onDeleteTodo(todo)}>
+                    <CloseIcon stroke={BasicColor.BLUE80} />
+                  </TagDeleteButton>
+                </TagItem>
+              ))
+            )}
           </TagListStyled>
         </TodolistStyled>
       }
@@ -143,6 +166,14 @@ const TagListStyled = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
+`;
+
+const NoneChecklist = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
 `;
 
 const TagItem = styled.div`
