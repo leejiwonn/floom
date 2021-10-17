@@ -115,8 +115,9 @@ const Play = ({ category, id }: Props) => {
           ROOM?.[data?.wallColor as keyof typeof ROOM]?.[data?.light as Light]
             ?.WALL
         }
+        page={currentPage}
       >
-        <ObjectBox>
+        <ObjectBox page={currentPage}>
           <ObjectWindow>
             {
               ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
@@ -264,27 +265,27 @@ const EndButton = styled.a`
   background-color: ${BasicColor.WHITE};
 `;
 
-const ObjectView = styled.div<{ backgroundImage: string }>`
-  width: 100%;
-  height: 100%;
+const ObjectView = styled.div<{ page: number; backgroundImage: string }>`
+  width: ${({ page }) => (page === 1 || page === 2 ? '150%' : '100%')};
+  height: ${({ page }) => (page === 1 || page === 2 ? '150%' : '100%')};
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: ${({ page }) => (page === 1 ? '-10vw' : page === 2 ? '-30vw' : '0')};
+  right: ${({ page }) => (page === 1 ? '-20vw' : page === 2 ? '-30vw' : '0')};
   background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: 50%;
+  transition: 0.3s ease-in-out;
   z-index: 0;
 `;
 
-const ObjectBox = styled.div`
-  width: 50vw;
-  height: 80vh;
+const ObjectBox = styled.div<{ page: number }>`
+  width: ${({ page }) => (page === 1 || page === 2 ? '80vw' : '60vw')};
+  height: ${({ page }) => (page === 1 || page === 2 ? '100vh' : '80vh')};
   position: absolute;
-  right: 150px;
-  bottom: 20px;
+  right: ${({ page }) => (page === 1 ? '26vw' : page === 2 ? '15vw' : '0')};
+  bottom: 2vh;
+  transition: 0.3s ease-in-out;
 
   div {
     svg {
@@ -294,56 +295,56 @@ const ObjectBox = styled.div`
 `;
 
 const ObjectWindow = styled.div`
-  width: 10vw;
+  width: 20%;
   height: auto;
   position: absolute;
-  top: 2vw;
-  left: 0vw;
+  top: 0;
+  left: 0;
   z-index: 0;
 `;
 
 const ObjectClock = styled.div`
-  width: 7vw;
+  width: 14%;
   height: auto;
   position: absolute;
-  top: 1vw;
-  right: 10vw;
+  top: 2%;
+  right: 32%;
   z-index: 0;
 `;
 
 const ObjectMemo = styled.div`
-  width: 5vw;
+  width: 10%;
   height: auto;
   position: absolute;
-  left: 18vw;
-  bottom: 13vw;
+  left: 36%;
+  bottom: 34.5%;
   z-index: 1;
 `;
 
 const ObjectPicture = styled.div`
-  width: 8vw;
+  width: 16%;
   height: auto;
   position: absolute;
-  top: 12vw;
-  right: 2vw;
+  top: 30%;
+  right: 16%;
   z-index: 0;
 `;
 
 const ObjectSpeaker = styled.div`
-  width: 8vw;
+  width: 16%;
   height: auto;
   position: absolute;
-  left: 11vw;
-  bottom: 14.5vw;
+  left: 22%;
+  bottom: 38%;
   z-index: 1;
 `;
 
 const ObjectTable = styled.div`
-  width: 26vw;
+  width: 52%;
   height: auto;
   position: absolute;
-  left: 0vw;
-  bottom: 2vw;
+  left: 0;
+  bottom: 3%;
   z-index: 0;
 `;
 
