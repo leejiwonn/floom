@@ -14,6 +14,7 @@ import { Light, Todo } from '~/types/Obejct';
 import AddIcon from '../../public/assets/icons/icon-add.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
+import Timer from '~/components/Timer';
 
 interface Props {
   category: string;
@@ -202,9 +203,7 @@ const Play = ({ category, id }: Props) => {
             >
               {objective}
             </Typography>
-            <TimerView>
-              <Typography>10:00</Typography>
-            </TimerView>
+            {time !== 0 && <Timer time={time} />}
           </ContentTitleView>
           <ChecklistStyled>
             <ChecklistTitle>
@@ -484,11 +483,6 @@ const ContentTitleView = styled.div`
   box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0px 30px 30px 30px;
   padding-top: 15px;
-`;
-
-const TimerView = styled.div`
-  border-top: 2px solid ${BasicColor.BLUE40};
-  padding: 15px 20px;
 `;
 
 const ChecklistStyled = styled.div`
