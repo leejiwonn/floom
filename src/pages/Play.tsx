@@ -9,6 +9,8 @@ import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
 import { FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
+import ROOM from '~/constants/room';
+import { Light } from '~/types/Obejct';
 
 interface Props {
   category: string;
@@ -108,35 +110,72 @@ const Play = ({ category, id }: Props) => {
           )}
         </PlayView>
       )}
-
-      <ObjectView>
-        {currentPage > 0 && (
-          <Typography marginTop={100} marginLeft={50} marginBottom={10}>
-            목표는 {objective}!
-          </Typography>
-        )}
-        {currentPage > 1 && (
-          <Typography marginLeft={50}>{time}분 동안 할래요 :)</Typography>
-        )}
-        {currentPage >= 3 && (
-          <>
-            <ScreenStyled
-              isFull={isFull}
-              onClick={() => setIsPull((prev) => !prev)}
-            >
-              <Screen type={data?.screen[0]} url={data?.screen[1]} />
-            </ScreenStyled>
-            <EndButton href={`/detail?category=${category}&id=${id}`}>
-              <Typography
-                font={FontType.BOLD_TITLE_02}
-                color={BasicColor.WHITE}
-              >
-                체험 종료
-              </Typography>
-            </EndButton>
-          </>
-        )}
+      <ObjectView
+        backgroundImage={
+          ROOM?.[data?.wallColor as keyof typeof ROOM]?.[data?.light as Light]
+            ?.WALL
+        }
+      >
+        <ObjectBox>
+          <ObjectWindow>
+            {
+              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                data?.light as Light
+              ]?.WINDOW
+            }
+          </ObjectWindow>
+          <ObjectClock>
+            {
+              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                data?.light as Light
+              ]?.CLOCK
+            }
+          </ObjectClock>
+          <ObjectMemo>
+            {
+              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                data?.light as Light
+              ]?.MEMO
+            }
+          </ObjectMemo>
+          <ObjectPicture>
+            {
+              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                data?.light as Light
+              ]?.PICTURE
+            }
+          </ObjectPicture>
+          <ObjectSpeaker>
+            {
+              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                data?.light as Light
+              ]?.SPEAKER
+            }
+          </ObjectSpeaker>
+          <ObjectTable>
+            {
+              ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                data?.light as Light
+              ]?.TABLE
+            }
+          </ObjectTable>
+        </ObjectBox>
       </ObjectView>
+      {currentPage >= 3 && (
+        <ContentView>
+          <ScreenStyled
+            isFull={isFull}
+            onClick={() => setIsPull((prev) => !prev)}
+          >
+            <Screen type={data?.screen[0]} url={data?.screen[1]} />
+          </ScreenStyled>
+          <EndButton href={`/detail?category=${category}&id=${id}`}>
+            <Typography font={FontType.BOLD_TITLE_02} color={BasicColor.WHITE}>
+              체험 종료
+            </Typography>
+          </EndButton>
+        </ContentView>
+      )}
     </PlayStyled>
   );
 };
@@ -225,7 +264,90 @@ const EndButton = styled.a`
   background-color: ${BasicColor.WHITE};
 `;
 
-const ObjectView = styled.div`
+const ObjectView = styled.div<{ backgroundImage: string }>`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+  z-index: 0;
+`;
+
+const ObjectBox = styled.div`
+  width: 50vw;
+  height: 80vh;
+  position: absolute;
+  right: 150px;
+  bottom: 20px;
+
+  div {
+    svg {
+      width: 100%;
+    }
+  }
+`;
+
+const ObjectWindow = styled.div`
+  width: 10vw;
+  height: auto;
+  position: absolute;
+  top: 2vw;
+  left: 0vw;
+  z-index: 0;
+`;
+
+const ObjectClock = styled.div`
+  width: 7vw;
+  height: auto;
+  position: absolute;
+  top: 1vw;
+  right: 10vw;
+  z-index: 0;
+`;
+
+const ObjectMemo = styled.div`
+  width: 5vw;
+  height: auto;
+  position: absolute;
+  left: 18vw;
+  bottom: 13vw;
+  z-index: 1;
+`;
+
+const ObjectPicture = styled.div`
+  width: 8vw;
+  height: auto;
+  position: absolute;
+  top: 12vw;
+  right: 2vw;
+  z-index: 0;
+`;
+
+const ObjectSpeaker = styled.div`
+  width: 8vw;
+  height: auto;
+  position: absolute;
+  left: 11vw;
+  bottom: 14.5vw;
+  z-index: 1;
+`;
+
+const ObjectTable = styled.div`
+  width: 26vw;
+  height: auto;
+  position: absolute;
+  left: 0vw;
+  bottom: 2vw;
+  z-index: 0;
+`;
+
+const ContentView = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
