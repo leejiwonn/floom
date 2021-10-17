@@ -1,38 +1,58 @@
 import styled from '@emotion/styled';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 
 import { FontType } from '~/utils/font';
 import Typography from './Typography';
 import AudioControls from './AudioControls';
+import { visuallyHidden } from '~/utils/css';
 
 interface Props {
   title: string;
   url: string;
 }
 
-// TODO : 외부 클릭 시 닫히도록 적용 필요
+// 저전력 모드 등에서는 play 재생 시에 오류 발생함
+const playAudioSafely = async (audio: HTMLAudioElement) => {
+  try {
+    await audio.play();
+  } catch {
+    //
+  }
+};
+
 const AudioPlayer = ({ title, url }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(50);
 
-  const audioRef = useRef(typeof Audio !== 'undefined' && new Audio(url));
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    if (isPlaying) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
+    const audio = audioRef.current;
+
+    if (audio == null) {
+      return;
     }
-    audioRef.current.volume = volume / 100;
+
+    if (isPlaying) {
+      playAudioSafely(audio);
+    } else {
+      audio.pause();
+    }
   }, [isPlaying]);
+
+  useEffect(() => {
+    if (audioRef.current != null) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume]);
 
   const handleAudioSoundControl = (value: number) => {
     setVolume(value);
-    audioRef.current.volume = volume / 100;
   };
 
   return (
     <AudioPlayerStyled>
+      <audio ref={audioRef} preload="auto" src={url} css={visuallyHidden} />
       <Typography font={FontType.BOLD_BODY} marginRight={30}>
         {title}
       </Typography>
@@ -54,4 +74,4 @@ const AudioPlayerStyled = styled.div`
   padding: 8px 0;
 `;
 
-export default AudioPlayer;
+export default memo(AudioPlayer);
