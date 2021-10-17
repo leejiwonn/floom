@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useRoom } from '~/hooks/useRoom';
 import StepA from '~/components/Guide/StepA';
@@ -13,6 +13,7 @@ import ROOM from '~/constants/room';
 import { Light, Todo } from '~/types/Obejct';
 import Timer from '~/components/Timer';
 import Checklist from '~/components/Checklist';
+import Modal from '~/components/Modal';
 
 interface Props {
   category: string;
@@ -23,8 +24,12 @@ const Play = ({ category, id }: Props) => {
   const { data } = useRoom(category, id);
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
+  const [visibleModal, setVisibleModal] = useState<
+    'timeout' | 'finished' | null
+  >(null);
   const [objective, setObjective] = useState('');
   const [time, setTime] = useState(0);
+  const [timer, setTimer] = useState(0);
   const [todos, setTodos] = useState([]);
   const [isFull, setIsPull] = useState(false);
 
@@ -75,6 +80,19 @@ const Play = ({ category, id }: Props) => {
 
   const handleAddTodo = (todo: Todo) => {
     setTodos((prev) => [...prev, todo]);
+  };
+
+  useEffect(() => {
+    setTimer(time);
+  }, [time]);
+
+  const handleTimeout = useCallback(() => {
+    // TODO : 타이머 종료 음악 재생
+    setVisibleModal('timeout');
+  }, []);
+
+  const handleFinishedButtonClick = () => {
+    setVisibleModal(null);
   };
 
   return (
@@ -208,7 +226,13 @@ const Play = ({ category, id }: Props) => {
             >
               {objective}
             </Typography>
-            {time !== 0 && <Timer time={time} />}
+            {timer !== 0 && (
+              <Timer
+                time={time}
+                timeUpdate={() => setTime((prev) => prev + 10)}
+                onTimeout={handleTimeout}
+              />
+            )}
           </ContentTitleView>
           <Checklist
             todos={todos}
@@ -221,7 +245,7 @@ const Play = ({ category, id }: Props) => {
               UI 가리기
             </Typography>
           </UIHiddenButton>
-          <EndButton href={`/detail?category=${category}&id=${id}`}>
+          <EndButton onClick={() => setVisibleModal('finished')}>
             <Typography
               font={FontType.BOLD_TITLE_01}
               color={BasicColor.DARK100}
@@ -230,6 +254,54 @@ const Play = ({ category, id }: Props) => {
             </Typography>
           </EndButton>
         </ContentView>
+      )}
+      {visibleModal === 'timeout' && (
+        <Modal
+          setShow={(type: 'timeout' | 'finished' | null) =>
+            setVisibleModal(type)
+          }
+          title="목표시간 달성!"
+          subTitle={
+            <>
+              설정한 목표시간{' '}
+              <Typography
+                tag="span"
+                font={FontType.SEMI_BOLD_BODY}
+                color={BasicColor.BLUE100}
+              >
+                {time}분
+              </Typography>
+              이 되었어요!
+            </>
+          }
+          content="확인 후 연장하기 버튼을 누르면 목표시간이 연장됩니다."
+          buttonText="확인"
+          onButtonClick={() => setVisibleModal(null)}
+        />
+      )}
+      {visibleModal === 'finished' && (
+        <Modal
+          setShow={(type: 'timeout' | 'finished' | null) =>
+            setVisibleModal(type)
+          }
+          title="체험 종료하기"
+          subTitle={
+            <>
+              이 방에서 몰입에{' '}
+              <Typography
+                tag="span"
+                font={FontType.SEMI_BOLD_BODY}
+                color={BasicColor.BLUE100}
+              >
+                성공
+              </Typography>
+              하셨나요?
+            </>
+          }
+          content="성공 여부와 한 줄 평을 기록해주세요!"
+          buttonText="완료"
+          onButtonClick={handleFinishedButtonClick}
+        />
       )}
     </PlayStyled>
   );
@@ -422,7 +494,7 @@ const ContentView = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 98;
 `;
 
 const ContentTitleView = styled.div`
@@ -452,7 +524,7 @@ const UIHiddenButton = styled.button`
   backdrop-filter: blur(14px);
 `;
 
-const EndButton = styled.a`
+const EndButton = styled.button`
   position: absolute;
   right: 30px;
   bottom: 30px;
