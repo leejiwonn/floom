@@ -15,8 +15,8 @@ interface Props {
 const playAudioSafely = async (audio: HTMLAudioElement) => {
   try {
     await audio.play();
-  } catch {
-    //
+  } catch (error) {
+    console.warn(error);
   }
 };
 
