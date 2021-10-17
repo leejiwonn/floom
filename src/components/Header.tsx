@@ -188,7 +188,8 @@ const NoiseController = styled.div<{ show: boolean }>`
   padding: 40px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  background-color: ${BasicColor.WHITE};
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
   box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
   z-index: -1;
 `;
