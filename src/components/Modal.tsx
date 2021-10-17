@@ -12,6 +12,7 @@ interface Props {
   subTitle: React.ReactElement;
   content: string;
   action?: React.ReactNode;
+  buttonActive?: boolean;
   buttonText: string;
   onButtonClick: () => void;
 }
@@ -23,6 +24,7 @@ const Modal = ({
   subTitle,
   content,
   action,
+  buttonActive = true,
   buttonText,
   onButtonClick,
 }: Props) => {
@@ -43,7 +45,7 @@ const Modal = ({
 
   return (
     <ModalStyled>
-      <ModalBox>
+      <ModalBox ref={modalRef}>
         <Typography font={FontType.BOLD_TITLE_01} marginBottom={20}>
           {title}
         </Typography>
@@ -59,8 +61,11 @@ const Modal = ({
           {content}
         </Typography>
         {action}
-        <ModalButton onClick={onButtonClick}>
-          <Typography font={FontType.EXTRA_BOLD_BODY} color={BasicColor.WHITE}>
+        <ModalButton onClick={onButtonClick} active={buttonActive}>
+          <Typography
+            font={FontType.EXTRA_BOLD_BODY}
+            color={buttonActive ? BasicColor.WHITE : BasicColor.DARK100}
+          >
             {buttonText}
           </Typography>
         </ModalButton>
@@ -93,12 +98,15 @@ const ModalBox = styled.div`
   padding: 30px;
 `;
 
-const ModalButton = styled.button`
+const ModalButton = styled.button<{ active: boolean }>`
   padding: 6px 12vw;
-  background-color: ${BasicColor.BLUE100};
-  border: 2px solid ${BasicColor.BLUE110};
+  background-color: ${({ active }) => (active ? BasicColor.BLUE100 : 'none')};
+  border: 2px solid
+    ${({ active }) => (active ? BasicColor.BLUE110 : BasicColor.BLUE40)};
   box-sizing: border-box;
   border-radius: 48px;
+  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
+  transition: 0.1s;
 `;
 
 export default Modal;
