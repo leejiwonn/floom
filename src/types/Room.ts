@@ -3,13 +3,14 @@ export type Room = {
   title: string;
   creator: string;
   roomImage: string;
-  screen: string;
+  screen: string[];
   light: string;
   music: string[];
   tags: string[];
   playCount: number;
   recommendCount: number;
   usedUsers: UsedUser[];
+  wallColor: string;
 };
 
 type UsedUser = {
