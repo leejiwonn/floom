@@ -49,7 +49,7 @@ const Play = ({ category, id }: Props) => {
 
   const handleChangeTodos = (todo: Todo) => {
     if (todo.text !== '' && todos.indexOf(todo.text) === -1) {
-      setTodos((prev) => [...prev, todo]);
+      setTodos((prev) => [todo, ...prev]);
     }
   };
 
@@ -62,9 +62,9 @@ const Play = ({ category, id }: Props) => {
       setTodos((prev) =>
         prev.map((item) => {
           if (item.text === todo.text) {
-            todo.clear = !todo.clear;
+            item.clear = !item.clear;
           }
-          return todo;
+          return item;
         }),
       );
     },
