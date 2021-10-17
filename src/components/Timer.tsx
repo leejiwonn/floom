@@ -7,9 +7,11 @@ import Typography from './Typography';
 
 interface Props {
   time: number;
+  timeUpdate: () => void;
+  onTimeout: () => void;
 }
 
-const Timer = ({ time }: Props) => {
+const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
   const [minutes, setMinutes] = useState(time);
   const [seconds, setSeconds] = useState(0);
   const [stop, setStop] = useState(false);
@@ -22,6 +24,7 @@ const Timer = ({ time }: Props) => {
         }
         if (seconds === 0) {
           if (minutes === 0) {
+            onTimeout();
             clearInterval(countdown);
           } else {
             setMinutes(minutes - 1);
@@ -33,13 +36,18 @@ const Timer = ({ time }: Props) => {
     return () => clearInterval(countdown);
   }, [minutes, seconds, stop]);
 
+  const handleTimeUpdate = () => {
+    setMinutes((prev) => prev + 10);
+    timeUpdate();
+  };
+
   return (
     <TimerStyled>
       <Typography font={FontType.EXTRA_BOLD_HEAD_03} color={BasicColor.BLUE100}>
         {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
       </Typography>
       <TimerButtonStyled>
-        <ExtensionButton onClick={() => setMinutes((prev) => prev + 10)}>
+        <ExtensionButton onClick={handleTimeUpdate}>
           <Typography font={FontType.SEMI_BOLD_BODY} color={BasicColor.WHITE}>
             10분 더
           </Typography>

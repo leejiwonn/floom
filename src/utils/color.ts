@@ -1,4 +1,5 @@
 const BasicColor = {
+  BLUE110: '#4F75EE',
   BLUE100: '#587BFA',
   BLUE90: '#728FF6',
   BLUE80: '#98AFF9',
