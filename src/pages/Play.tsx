@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
+import Router from 'next/router';
 
 import { useRoom } from '~/hooks/useRoom';
 import StepA from '~/components/Guide/StepA';
@@ -14,6 +15,7 @@ import { Light, Todo } from '~/types/Obejct';
 import Timer from '~/components/Timer';
 import Checklist from '~/components/Checklist';
 import Modal from '~/components/Modal';
+import TextInput from '~/components/TextInput';
 
 interface Props {
   category: string;
@@ -27,10 +29,14 @@ const Play = ({ category, id }: Props) => {
   const [visibleModal, setVisibleModal] = useState<
     'timeout' | 'finished' | null
   >(null);
+  const [reviewInput, setReviewInput] = useState('');
+  const [isRecommend, setIsRecommend] = useState(false);
+
   const [objective, setObjective] = useState('');
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
   const [todos, setTodos] = useState([]);
+
   const [isFull, setIsPull] = useState(false);
 
   const handlePrevPage = () => {
@@ -92,8 +98,23 @@ const Play = ({ category, id }: Props) => {
   }, []);
 
   const handleFinishedButtonClick = () => {
-    setVisibleModal(null);
+    if (reviewInput !== '') {
+      console.log(isRecommend, reviewInput);
+      setReviewInput('');
+      setIsRecommend(false);
+      setVisibleModal(null);
+      Router.push(`/detail?category=${category}&id=${id}`);
+    }
   };
+
+  const handleChangeInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (todos.length < 5 && e.target.value.length <= 7) {
+        setReviewInput(e.target.value);
+      }
+    },
+    [todos, setReviewInput],
+  );
 
   return (
     <PlayStyled>
@@ -299,7 +320,25 @@ const Play = ({ category, id }: Props) => {
             </>
           }
           content="성공 여부와 한 줄 평을 기록해주세요!"
-          buttonText="완료"
+          action={
+            <ActionStyled>
+              <RecommendButton
+                onClick={() => setIsRecommend((prev) => !prev)}
+                active={isRecommend}
+              >
+                <Typography tag="span" color={BasicColor.WHITE}>
+                  좋아요
+                </Typography>
+              </RecommendButton>
+              <TextInput
+                value={reviewInput}
+                onChangeInput={handleChangeInput}
+                placeholder="한 줄 평을 작성해주세요."
+              />
+            </ActionStyled>
+          }
+          buttonActive={reviewInput !== ''}
+          buttonText={reviewInput !== '' ? '완료' : '작성중'}
           onButtonClick={handleFinishedButtonClick}
         />
       )}
@@ -534,6 +573,22 @@ const EndButton = styled.button`
   border-radius: 18px;
   background-color: ${BasicColor.WHITE};
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+`;
+
+const ActionStyled = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+`;
+
+const RecommendButton = styled.button<{ active: boolean }>`
+  margin-bottom: 20px;
+  background-color: ${({ active }) =>
+    active ? BasicColor.BLUE100 : BasicColor.DARK100};
+  padding: 4px 8px;
+  border-radius: 12px;
 `;
 
 export default Play;
