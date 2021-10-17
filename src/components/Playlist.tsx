@@ -199,7 +199,7 @@ const PlaylistLeftView = styled.div`
   align-items: center;
 `;
 
-const PlayPauseButton = styled.button`
+const PlayPauseButton = styled.div`
   width: 40px;
   height: 40px;
   justify-content: center;
