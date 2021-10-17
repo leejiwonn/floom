@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 import Typography from '~/components/Typography';
 import Playlist from '~/components/Playlist';
@@ -120,15 +121,17 @@ const Detail = ({ category, id }: Props) => {
           </PlaylistStyled>
         </RoomContentStyled>
       </RoomInfoStyled>
-      <PlayButton href={`/play?category=${category}&id=${id}`}>
-        <Typography
-          tag="span"
-          font={FontType.BOLD_TITLE_01}
-          color={BasicColor.WHITE}
-        >
-          체험해볼래요!
-        </Typography>
-      </PlayButton>
+      <Link href={`/play?category=${category}&id=${id}`}>
+        <PlayButton>
+          <Typography
+            tag="span"
+            font={FontType.BOLD_TITLE_01}
+            color={BasicColor.WHITE}
+          >
+            체험해볼래요!
+          </Typography>
+        </PlayButton>
+      </Link>
     </DetailStyled>
   );
 };
@@ -267,6 +270,7 @@ const PlayButton = styled.a`
   padding: 20px 120px;
   border-radius: 20px;
   background-color: ${BasicColor.BLUE100};
+  cursor: pointer;
 `;
 
 export default Detail;

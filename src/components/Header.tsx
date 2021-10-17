@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import AudioPlayer from '~/components/AudioPlayer';
 import { BasicColor, GradientColor } from '~/utils/color';
@@ -9,17 +10,34 @@ import Typography from './Typography';
 import MusicIcon from '../../public/assets/icons/icon-music.svg';
 import CloseNoiseIcon from '../../public/assets/icons/icon-close-noise.svg';
 import LogoIcon from '../../public/assets/icons/icon-logo.svg';
+import { useRouter } from 'next/router';
 
 // TODO : 페이지 이동 시 렌더링 방지 필요 (노이즈 유지)
 const Header = () => {
   const { data: user, isLoading } = useUserProfile();
   const [show, setShow] = useState(false);
 
+  const router = useRouter();
+
+  useEffect(() => {
+    const listener = () => {
+      setShow(false);
+    };
+
+    router.events.on('routeChangeComplete', listener);
+
+    return () => {
+      router.events.off('routeChangeComplete', listener);
+    };
+  }, [router]);
+
   return (
     <HeaderStyled>
-      <Logo href="/">
-        <LogoIcon />
-      </Logo>
+      <Link href="/">
+        <Logo aria-label="메인 페이지로 이동하기">
+          <LogoIcon />
+        </Logo>
+      </Link>
       <RightStyled>
         {!isLoading ? (
           user ? (
@@ -97,6 +115,7 @@ const HeaderStyled = styled.div`
 
 const Logo = styled.a`
   width: 70px;
+  cursor: pointer;
 `;
 
 const RightStyled = styled.div`
