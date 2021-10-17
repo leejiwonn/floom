@@ -1,30 +1,95 @@
 import styled from '@emotion/styled';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 import Typography from '~/components/Typography';
 import { Align, FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
-import AddIcon from '../../public/assets/icons/icon-add.svg';
+import PlusIcon from '../../public/assets/icons/icon-plus.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
 import { Todo } from '~/types/Obejct';
+import TextInput from './TextInput';
 
 interface Props {
   todos: Todo[];
   onClearTodo: (todo: Todo) => void;
   onDeleteTodo: (todo: Todo) => void;
+  onAddTodo: (todo: Todo) => void;
 }
 
-const Checklist = ({ todos, onClearTodo, onDeleteTodo }: Props) => {
+const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
+  const [show, setShow] = useState(false);
+  const [textInput, setTextInput] = useState('');
+  const modalRef = useRef(null);
+
+  const handleChangeInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length <= 20) {
+        setTextInput(e.target.value);
+      }
+    },
+    [setTextInput],
+  );
+
+  const handleClearButtonClick = (todo: Todo) => {
+    onClearTodo(todo);
+    setTextInput('');
+    setShow(false);
+  };
+
+  const handleDeleteButtonClick = (todo: Todo) => {
+    onDeleteTodo(todo);
+    setTextInput('');
+    setShow(false);
+  };
+
+  const handleSubmitButtonClick = () => {
+    if (
+      textInput !== '' &&
+      todos.findIndex((item) => item.text === textInput) === -1
+    ) {
+      onAddTodo({ text: textInput, clear: false });
+      setShow(false);
+    } else {
+      setTextInput('');
+    }
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (!modalRef.current?.contains(e.target)) {
+      setTextInput('');
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <ChecklistStyled>
-      <ChecklistTitle>
+    <ChecklistStyled ref={modalRef}>
+      <ChecklistTitle noneShow={show && todos.length === 0}>
         <Typography font={FontType.BOLD_TITLE_02}>체크리스트</Typography>
-        <ChecklistAddButton onClick={() => console.log('add')}>
-          <AddIcon />
+        <ChecklistAddButton
+          onClick={() => setShow(todos.length < 5 ? true : false)}
+          active={todos.length < 5}
+        >
+          <PlusIcon width={15} height={15} />
+          <Typography
+            tag="span"
+            font={FontType.SEMI_BOLD_BODY}
+            color={BasicColor.WHITE}
+            marginLeft={2}
+          >
+            추가
+          </Typography>
         </ChecklistAddButton>
       </ChecklistTitle>
       <ChecklistView>
-        {todos.length === 0 ? (
+        {!show && todos.length === 0 ? (
           <NoneChecklist>
             <Typography
               font={FontType.BOLD_BODY}
@@ -47,7 +112,7 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo }: Props) => {
         ) : (
           todos.map((todo, index) => (
             <ChecklistItem key={index} last={index === todos.length - 1}>
-              <ChecklistItemInfo onClick={() => onClearTodo(todo)}>
+              <ChecklistItemInfo onClick={() => handleClearButtonClick(todo)}>
                 <CheckIconStyled clear={todo.clear}>
                   <CheckIcon
                     fill={todo.clear ? BasicColor.WHITE : BasicColor.DARK40}
@@ -61,11 +126,20 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo }: Props) => {
                   {todo.text}
                 </Typography>
               </ChecklistItemInfo>
-              <DeleteButtonStyled onClick={() => onDeleteTodo(todo)}>
+              <DeleteButtonStyled onClick={() => handleDeleteButtonClick(todo)}>
                 <CloseIcon stroke={BasicColor.DARK40} />
               </DeleteButtonStyled>
             </ChecklistItem>
           ))
+        )}
+        {show && (
+          <TextInput
+            value={textInput}
+            onChangeInput={handleChangeInput}
+            placeholder="체크리스트를 작성해주세요."
+            submitButton={true}
+            onSubmitButtonClick={handleSubmitButtonClick}
+          />
         )}
       </ChecklistView>
     </ChecklistStyled>
@@ -95,14 +169,25 @@ const NoneChecklist = styled.div`
   padding-bottom: 40px;
 `;
 
-const ChecklistTitle = styled.div`
+const ChecklistTitle = styled.div<{ noneShow: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: ${({ noneShow }) => noneShow && '20px'};
 `;
 
-const ChecklistAddButton = styled.button``;
+const ChecklistAddButton = styled.button<{ active: boolean }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ active }) =>
+    active ? BasicColor.BLUE100 : BasicColor.GRAY70};
+  border-radius: 12px;
+  padding: 7px 16px;
+  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
+  transition: 0.1s;
+`;
 
 const ChecklistView = styled.div`
   margin-top: 8px;

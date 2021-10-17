@@ -47,7 +47,10 @@ const Play = ({ category, id }: Props) => {
   };
 
   const handleChangeTodos = (todo: Todo) => {
-    if (todo.text !== '' && todos.indexOf(todo.text) === -1) {
+    if (
+      todo.text !== '' &&
+      todos.findIndex((item) => item.text === todo.text) === -1
+    ) {
       setTodos((prev) => [todo, ...prev]);
     }
   };
@@ -69,6 +72,10 @@ const Play = ({ category, id }: Props) => {
     },
     [todos],
   );
+
+  const handleAddTodo = (todo: Todo) => {
+    setTodos((prev) => [...prev, todo]);
+  };
 
   return (
     <PlayStyled>
@@ -207,6 +214,7 @@ const Play = ({ category, id }: Props) => {
             todos={todos}
             onClearTodo={handleClearTodo}
             onDeleteTodo={handleDeleteTodo}
+            onAddTodo={handleAddTodo}
           />
           <UIHiddenButton onClick={() => console.log('hidden')}>
             <Typography font={FontType.BOLD_TITLE_01} color={BasicColor.WHITE}>

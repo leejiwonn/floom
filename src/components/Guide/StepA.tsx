@@ -48,20 +48,19 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
         </>
       }
       content={
-        <Typography
-          font={FontType.REGULAR_TITLE_01}
-          lineHeight={2.5}
-          marginTop={50}
-        >
+        <>
           <TextInput
             value={textInput}
             onChangeInput={handleChangeInput}
             placeholder={placeholderInfo}
             marginLeft={-5}
             font={FontType.BOLD_TITLE_01}
+            marginTop={50}
           />
-          <br />에 몰입하고 싶어요.
-        </Typography>
+          <Typography font={FontType.REGULAR_TITLE_01} marginTop={-20}>
+            <br />에 몰입하고 싶어요.
+          </Typography>
+        </>
       }
       nextButtonText={textInput !== '' ? '다 적었어요!' : '고민중이에요'}
       nextButtonStatus={textInput !== ''}
