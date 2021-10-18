@@ -21,6 +21,7 @@ import api from '~/utils/api';
 import { visuallyHidden } from '~/utils/css';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
+import OpenButton from '~/components/OpenButton';
 
 interface Props {
   category: string;
@@ -137,6 +138,19 @@ const Play = ({ category, id }: Props) => {
     },
     [todos, setReviewInput],
   );
+
+  const close = (e: KeyboardEvent) => {
+    if (e.key === 'Ese' || e.key === 'Escape') {
+      setIsPull(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', close);
+    return () => {
+      window.addEventListener('keydown', close);
+    };
+  }, []);
 
   return (
     <PlayStyled>
@@ -286,64 +300,73 @@ const Play = ({ category, id }: Props) => {
           </ObjectBox>
           {currentPage >= 3 && (
             <PopupBox>
-              <ScreenStyled
-                isFull={isFull}
-                onClick={() => setIsPull((prev) => !prev)}
-              >
-                <Screen type={data?.screen[0]} url={data?.screen[1]} />
-              </ScreenStyled>
+              <PopupPicture>
+                <OpenButton
+                  visible={isFull}
+                  onOpenButtonClick={() => setIsPull((prev) => !prev)}
+                />
+              </PopupPicture>
+              <PopupClock>시계</PopupClock>
+              <PopupSpeaker>스피커</PopupSpeaker>
+              <PopupMemo>메모</PopupMemo>
             </PopupBox>
           )}
         </LayerBox>
+        <ScreenStyled isFull={isFull}>
+          <Screen type={data?.screen[0]} url={data?.screen[1]} />
+        </ScreenStyled>
+        {currentPage >= 3 && (
+          <>
+            <ContentTitleView>
+              <Typography
+                font={FontType.EXTRA_BOLD_TITLE_01}
+                marginLeft={20}
+                marginRight={20}
+                marginBottom={15}
+              >
+                {objective}
+              </Typography>
+              {timer !== 0 && (
+                <>
+                  <Timer
+                    time={time}
+                    timeUpdate={() => setTime((prev) => prev + 10)}
+                    onTimeout={handleTimeout}
+                  />
+                  <audio
+                    ref={timerAudioRef}
+                    src={'/audio/timeout.mp3'}
+                    loop
+                    css={visuallyHidden}
+                  />
+                </>
+              )}
+            </ContentTitleView>
+            <Checklist
+              todos={todos}
+              onClearTodo={handleClearTodo}
+              onDeleteTodo={handleDeleteTodo}
+              onAddTodo={handleAddTodo}
+            />
+            <UIHiddenButton onClick={() => console.log('hidden')}>
+              <Typography
+                font={FontType.BOLD_TITLE_01}
+                color={BasicColor.WHITE}
+              >
+                UI 가리기
+              </Typography>
+            </UIHiddenButton>
+            <EndButton onClick={() => setVisibleModal('finished')}>
+              <Typography
+                font={FontType.BOLD_TITLE_01}
+                color={BasicColor.DARK100}
+              >
+                체험 종료
+              </Typography>
+            </EndButton>
+          </>
+        )}
       </ObjectView>
-      {currentPage >= 3 && (
-        <ContentView>
-          <ContentTitleView>
-            <Typography
-              font={FontType.EXTRA_BOLD_TITLE_01}
-              marginLeft={20}
-              marginRight={20}
-              marginBottom={15}
-            >
-              {objective}
-            </Typography>
-            {timer !== 0 && (
-              <>
-                <Timer
-                  time={time}
-                  timeUpdate={() => setTime((prev) => prev + 10)}
-                  onTimeout={handleTimeout}
-                />
-                <audio
-                  ref={timerAudioRef}
-                  src={'/audio/timeout.mp3'}
-                  loop
-                  css={visuallyHidden}
-                />
-              </>
-            )}
-          </ContentTitleView>
-          <Checklist
-            todos={todos}
-            onClearTodo={handleClearTodo}
-            onDeleteTodo={handleDeleteTodo}
-            onAddTodo={handleAddTodo}
-          />
-          <UIHiddenButton onClick={() => console.log('hidden')}>
-            <Typography font={FontType.BOLD_TITLE_01} color={BasicColor.WHITE}>
-              UI 가리기
-            </Typography>
-          </UIHiddenButton>
-          <EndButton onClick={() => setVisibleModal('finished')}>
-            <Typography
-              font={FontType.BOLD_TITLE_01}
-              color={BasicColor.DARK100}
-            >
-              체험 종료
-            </Typography>
-          </EndButton>
-        </ContentView>
-      )}
       {visibleModal === 'timeout' && (
         <Modal
           setShow={(type: 'timeout' | 'finished' | null) =>
@@ -514,6 +537,7 @@ const LayerBox = styled.div<{ page: number }>`
   right: ${({ page }) => (page === 1 ? '2vw' : page === 2 ? '2vw' : '0')};
   bottom: ${({ page }) => (page === 1 ? '8vh' : page === 2 ? '8vh' : '0')};
   transition: 0.4s ease-in-out;
+  z-index: 1;
 `;
 
 const ObjectBox = styled.div`
@@ -551,7 +575,7 @@ const ObjectMemo = styled.div`
   height: auto;
   position: absolute;
   right: 45%;
-  bottom: 27%;
+  bottom: 31%;
   z-index: 1;
 `;
 
@@ -587,7 +611,7 @@ const ObjectTable = styled.div`
   height: auto;
   position: absolute;
   right: 34%;
-  bottom: 12%;
+  bottom: 16%;
   z-index: 0;
 `;
 
@@ -604,25 +628,43 @@ const PopupBox = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 2;
 `;
 
-const ScreenStyled = styled.button<{ isFull: boolean }>`
-  width: ${({ isFull }) => (isFull ? '100%' : '200px')};
-  height: ${({ isFull }) => (isFull ? '100%' : '200px')};
+const PopupPicture = styled.div`
   position: absolute;
-  top: ${({ isFull }) => (isFull ? '0' : '200px')};
-  right: ${({ isFull }) => (isFull ? '0' : '100px')};
+  top: 10%;
+  right: 27%;
 `;
 
-const ContentView = styled.div`
+const PopupClock = styled.div`
+  position: absolute;
+  top: 0;
+  right: 14%;
+`;
+
+const PopupSpeaker = styled.div`
+  position: absolute;
+  right: 20%;
+  bottom: 46%;
+`;
+
+const PopupMemo = styled.div`
+  position: absolute;
+  right: 45%;
+  bottom: 31%;
+`;
+
+const ScreenStyled = styled.div<{ isFull: boolean }>`
   width: 100%;
   height: 100%;
+  display: ${({ isFull }) => (isFull ? 'flex' : 'none')};
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 98;
+  z-index: 99;
 `;
 
 const ContentTitleView = styled.div`
@@ -650,6 +692,7 @@ const UIHiddenButton = styled.button`
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(14px);
+  z-index: 99;
 `;
 
 const EndButton = styled.button`
@@ -662,6 +705,7 @@ const EndButton = styled.button`
   border-radius: 18px;
   background-color: ${BasicColor.WHITE};
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  z-index: 99;
 `;
 
 const ActionStyled = styled.div`
@@ -678,7 +722,7 @@ const RecommendButton = styled.button`
   border-radius: 12px;
 `;
 
-const Emoji = styled.div`
+const Emoji = styled.span`
   display: inline-flex;
   width: 60px;
   height: 60px;
