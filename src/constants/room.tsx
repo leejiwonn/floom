@@ -1,42 +1,37 @@
-import YellowOneClock from '../../public/assets/images/yello-1-clock.svg';
-import YellowOneLight from '../../public/assets/images/yello-1-light.svg';
-import YellowOneMemo from '../../public/assets/images/yello-1-memo.svg';
-import YellowOnePicture from '../../public/assets/images/yello-1-picture.svg';
-import YellowOneSpeaker from '../../public/assets/images/yello-1-speaker.svg';
-import YellowOneTable from '../../public/assets/images/yello-1-table.svg';
-import YellowOneWindow from '../../public/assets/images/yello-1-window.svg';
-
 const ROOM = {
   YELLOW: {
     ONE: {
-      CLOCK: <YellowOneClock />,
-      LIGHT: <YellowOneLight />,
-      MEMO: <YellowOneMemo />,
-      PICTURE: <YellowOnePicture />,
-      SPEAKER: <YellowOneSpeaker />,
-      TABLE: <YellowOneTable />,
-      WINDOW: <YellowOneWindow />,
-      WALL: '/assets/images/yello-1-wall.png',
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
     },
     TWO: {
-      CLOCK: <YellowOneClock />,
-      LIGHT: <YellowOneLight />,
-      MEMO: <YellowOneMemo />,
-      PICTURE: <YellowOnePicture />,
-      SPEAKER: <YellowOneSpeaker />,
-      TABLE: <YellowOneTable />,
-      WINDOW: <YellowOneWindow />,
-      WALL: '/assets/images/yello-1-wall.png',
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
     },
     THREE: {
-      CLOCK: <YellowOneClock />,
-      LIGHT: <YellowOneLight />,
-      MEMO: <YellowOneMemo />,
-      PICTURE: <YellowOnePicture />,
-      SPEAKER: <YellowOneSpeaker />,
-      TABLE: <YellowOneTable />,
-      WINDOW: <YellowOneWindow />,
-      WALL: '/assets/images/yello-1-wall.png',
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
     },
   },
 };
