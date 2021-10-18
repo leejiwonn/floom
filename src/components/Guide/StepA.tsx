@@ -72,13 +72,13 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
   );
 };
 
-const EmojiStyled = styled.div`
-  display: flex;
+const EmojiStyled = styled.span`
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const Emoji = styled.div`
+const Emoji = styled.span`
   display: inline-flex;
   width: 36px;
   height: 36px;

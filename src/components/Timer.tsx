@@ -98,13 +98,13 @@ const StopButton = styled.button<{ stop: boolean }>`
   transition: 0.1s;
 `;
 
-const EmojiStyled = styled.div`
-  display: flex;
+const EmojiStyled = styled.span`
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const Emoji = styled.div`
+const Emoji = styled.span`
   display: inline-flex;
   width: 25px;
   height: 25px;

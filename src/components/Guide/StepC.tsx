@@ -69,6 +69,7 @@ const StepC = ({
             </Typography>
             <Emoji>{EMOJI.EYES}</Emoji>에
           </EmojiStyled>
+          <br />
           몰입하며 이룰{' '}
           <EmojiStyled>
             작은 목표<Emoji>{EMOJI.OBJECTIVE}</Emoji>들을 적어주세요.
@@ -198,13 +199,13 @@ const TagDeleteButton = styled.button`
   align-items: center;
 `;
 
-const EmojiStyled = styled.div`
-  display: flex;
+const EmojiStyled = styled.span`
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const Emoji = styled.div`
+const Emoji = styled.span`
   display: inline-flex;
   width: 36px;
   height: 36px;
