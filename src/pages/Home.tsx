@@ -10,10 +10,8 @@ import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { getCatecory } from '~/utils/category';
+import EMOJI from '~/constants/emoji';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
-import StudyIcon from '../../public/assets/emojis/emoji-study.svg';
-import WorkIcon from '../../public/assets/emojis/emoji-work.svg';
-import RestIcon from '../../public/assets/emojis/emoji-rest.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
@@ -47,7 +45,7 @@ const Home = () => {
         <CategoryList>
           <CategoryItem onClick={() => setCategory('study')}>
             <CategoryItemIcon active={category === 'study'}>
-              <StudyIcon />
+              {EMOJI.STUDY}
             </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
@@ -59,7 +57,7 @@ const Home = () => {
           </CategoryItem>
           <CategoryItem onClick={() => setCategory('work')}>
             <CategoryItemIcon active={category === 'work'}>
-              <WorkIcon />
+              {EMOJI.WORK}
             </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}
@@ -71,7 +69,7 @@ const Home = () => {
           </CategoryItem>
           <CategoryItem onClick={() => setCategory('rest')}>
             <CategoryItemIcon active={category === 'rest'}>
-              <RestIcon />
+              {EMOJI.REST}
             </CategoryItemIcon>
             <Typography
               font={FontType.BOLD_TITLE_01}

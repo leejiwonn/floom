@@ -7,8 +7,7 @@ import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import { getCatecory } from '~/utils/category';
 import { useRoom } from '~/hooks/useRoom';
-import VisitIcon from '../../public/assets/emojis/emoji-visit.svg';
-import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
+import EMOJI from '~/constants/emoji';
 
 interface Props {
   category: string;
@@ -52,7 +51,7 @@ const Detail = ({ category, id }: Props) => {
           </Typography>
           <CaptionStyled>
             <CationItem>
-              <VisitIcon />
+              {EMOJI.VISIT}
               <Typography
                 font={FontType.SEMI_BOLD_BODY}
                 marginLeft={8}
@@ -62,7 +61,7 @@ const Detail = ({ category, id }: Props) => {
               </Typography>
             </CationItem>
             <CationItem>
-              <RecommendIcon />
+              {EMOJI.RECOMMEND}
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
                 {data?.recommendCount}
               </Typography>
