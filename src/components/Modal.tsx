@@ -43,6 +43,19 @@ const Modal = ({
     };
   }, []);
 
+  const close = (e: KeyboardEvent) => {
+    if (e.key === 'Ese' || e.key === 'Escape') {
+      setShow(null);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', close);
+    return () => {
+      window.addEventListener('keydown', close);
+    };
+  }, []);
+
   return (
     <ModalStyled>
       <ModalBox ref={modalRef}>
