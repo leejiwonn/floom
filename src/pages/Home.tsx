@@ -200,8 +200,6 @@ const RoomsStyled = styled.div`
   align-items: flex-start;
   padding: 0 60px;
   padding-top: 110px;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
   background-color: ${BasicColor.WHITE};
   z-index: 2;
 `;
