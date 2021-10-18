@@ -45,6 +45,9 @@ const Play = ({ category, id }: Props) => {
   const timerAudioRef = useRef<HTMLAudioElement>(null);
   const [todos, setTodos] = useState([]);
 
+  const [visibleClockPopup, setVisibleClockPopup] = useState(false);
+  const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
+  const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [isFull, setIsPull] = useState(false);
 
   const handlePrevPage = () => {
@@ -302,13 +305,32 @@ const Play = ({ category, id }: Props) => {
             <PopupBox>
               <PopupPicture>
                 <OpenButton
-                  visible={isFull}
+                  visible={false}
                   onOpenButtonClick={() => setIsPull((prev) => !prev)}
                 />
               </PopupPicture>
-              <PopupClock>시계</PopupClock>
-              <PopupSpeaker>스피커</PopupSpeaker>
-              <PopupMemo>메모</PopupMemo>
+              <PopupClock>
+                <OpenButton
+                  visible={visibleClockPopup}
+                  onOpenButtonClick={() =>
+                    setVisibleClockPopup((prev) => !prev)
+                  }
+                />
+              </PopupClock>
+              <PopupSpeaker>
+                <OpenButton
+                  visible={visibleSpeakerPopup}
+                  onOpenButtonClick={() =>
+                    setVisibleSpeakerPopup((prev) => !prev)
+                  }
+                />
+              </PopupSpeaker>
+              <PopupMemo>
+                <OpenButton
+                  visible={visibleMemoPopup}
+                  onOpenButtonClick={() => setVisibleMemoPopup((prev) => !prev)}
+                />
+              </PopupMemo>
             </PopupBox>
           )}
         </LayerBox>
@@ -639,20 +661,20 @@ const PopupPicture = styled.div`
 
 const PopupClock = styled.div`
   position: absolute;
-  top: 0;
+  top: 4%;
   right: 14%;
 `;
 
 const PopupSpeaker = styled.div`
   position: absolute;
-  right: 20%;
-  bottom: 46%;
+  right: 19%;
+  bottom: 50%;
 `;
 
 const PopupMemo = styled.div`
   position: absolute;
-  right: 45%;
-  bottom: 31%;
+  right: 44%;
+  bottom: 32%;
 `;
 
 const ScreenStyled = styled.div<{ isFull: boolean }>`
@@ -664,7 +686,7 @@ const ScreenStyled = styled.div<{ isFull: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 99;
+  z-index: 97;
 `;
 
 const ContentTitleView = styled.div`
@@ -692,7 +714,7 @@ const UIHiddenButton = styled.button`
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(14px);
-  z-index: 99;
+  z-index: 96;
 `;
 
 const EndButton = styled.button`
@@ -705,7 +727,7 @@ const EndButton = styled.button`
   border-radius: 18px;
   background-color: ${BasicColor.WHITE};
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  z-index: 99;
+  z-index: 98;
 `;
 
 const ActionStyled = styled.div`
