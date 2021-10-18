@@ -48,7 +48,7 @@ const Detail = ({ category, id }: Props) => {
             color={BasicColor.DARK70}
             marginBottom={30}
           >
-            {data?.creator}
+            {data?.creator}님
           </Typography>
           <CaptionStyled>
             <CationItem>
@@ -89,7 +89,7 @@ const Detail = ({ category, id }: Props) => {
                         font={FontType.LIGHT_BODY}
                         color={BasicColor.DARK70}
                       >
-                        {item.player}
+                        {item.player}님
                       </Typography>
                     </CommentTitle>
                     <Typography marginTop={10}>{item.comment}</Typography>

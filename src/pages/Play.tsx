@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Router from 'next/router';
 
 import { useRoom } from '~/hooks/useRoom';
+import { useUserProfile } from '~/hooks/useUser';
 import StepA from '~/components/Guide/StepA';
 import StepB from '~/components/Guide/StepB';
 import StepC from '~/components/Guide/StepC';
@@ -16,6 +17,7 @@ import Timer from '~/components/Timer';
 import Checklist from '~/components/Checklist';
 import Modal from '~/components/Modal';
 import TextInput from '~/components/TextInput';
+import api from '~/utils/api';
 
 interface Props {
   category: string;
@@ -24,6 +26,7 @@ interface Props {
 
 const Play = ({ category, id }: Props) => {
   const { data } = useRoom(category, id);
+  const { data: user } = useUserProfile();
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
   const [visibleModal, setVisibleModal] = useState<
@@ -97,9 +100,19 @@ const Play = ({ category, id }: Props) => {
     setVisibleModal('timeout');
   }, []);
 
-  const handleFinishedButtonClick = () => {
+  const handleFinishedButtonClick = async () => {
+    const player = user ? user.name : `guest-${data.playCount + 1}`;
     if (reviewInput !== '') {
-      console.log(isRecommend, reviewInput);
+      try {
+        await api.post(`/api/review?category=${category}&id=${id}`, {
+          objective: objective,
+          comment: reviewInput,
+          player: player,
+          recommend: isRecommend,
+        });
+      } catch (error) {
+        console.warn(error);
+      }
       setReviewInput('');
       setIsRecommend(false);
       setVisibleModal(null);
