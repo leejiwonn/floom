@@ -47,7 +47,7 @@ const Detail = ({ category, id }: Props) => {
             color={BasicColor.DARK70}
             marginBottom={30}
           >
-            {data?.creator}님
+            {data?.creator} 님의 방
           </Typography>
           <CaptionStyled>
             <CationItem>
@@ -88,7 +88,7 @@ const Detail = ({ category, id }: Props) => {
                         font={FontType.LIGHT_BODY}
                         color={BasicColor.DARK70}
                       >
-                        {item.player}님
+                        {item.player}
                       </Typography>
                     </CommentTitle>
                     <Typography marginTop={10}>{item.comment}</Typography>
@@ -127,7 +127,7 @@ const Detail = ({ category, id }: Props) => {
             font={FontType.BOLD_TITLE_01}
             color={BasicColor.WHITE}
           >
-            체험해볼래요!
+            체험 해볼래요!
           </Typography>
         </PlayButton>
       </Link>
@@ -170,7 +170,7 @@ const ThumImage = styled.img<{ url: string }>`
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
-  border-radius: 0 30px 30px 30px;
+  border-radius: 30px 30px 30px 0;
 `;
 
 const TagStyled = styled.div`
@@ -183,7 +183,7 @@ const CatecoryStyled = styled.div`
   display: inline-flex;
   padding: 6px 22px;
   border: 1px solid ${BasicColor.BLUE80};
-  border-radius: 20px;
+  border-radius: 20px 20px 0 20px;
   box-sizing: border-box;
   background-color: ${BasicColor.WHITE};
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
@@ -265,7 +265,7 @@ const PlaylistStyled = styled.div`
 const PlayButton = styled.a`
   position: absolute;
   left: 50px;
-  bottom: 40px;
+  bottom: 8vh;
   padding: 20px 120px;
   border-radius: 20px;
   background-color: ${BasicColor.BLUE100};
