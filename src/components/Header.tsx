@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import AudioPlayer from '~/components/AudioPlayer';
@@ -9,8 +10,8 @@ import { useUserProfile } from '~/hooks/useUser';
 import Typography from './Typography';
 import MusicIcon from '../../public/assets/icons/icon-music.svg';
 import CloseNoiseIcon from '../../public/assets/icons/icon-close-noise.svg';
-import LogoIcon from '../../public/assets/icons/icon-logo.svg';
-import { useRouter } from 'next/router';
+import WhiteLogoIcon from '../../public/assets/icons/icon-logo-white.svg';
+import BlueLogoIcon from '../../public/assets/icons/icon-logo-blue.svg';
 
 // TODO : 페이지 이동 시 렌더링 방지 필요 (노이즈 유지)
 const Header = () => {
@@ -35,7 +36,11 @@ const Header = () => {
     <HeaderStyled>
       <Link href="/">
         <Logo aria-label="메인 페이지로 이동하기">
-          <LogoIcon />
+          {router.pathname === '/detail' || router.pathname === '/play' ? (
+            <WhiteLogoIcon />
+          ) : (
+            <BlueLogoIcon />
+          )}
         </Logo>
       </Link>
       <RightStyled>
