@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import Router from 'next/router';
 
 import { useRoom } from '~/hooks/useRoom';
@@ -18,6 +18,7 @@ import Checklist from '~/components/Checklist';
 import Modal from '~/components/Modal';
 import TextInput from '~/components/TextInput';
 import api from '~/utils/api';
+import { visuallyHidden } from '~/utils/css';
 
 interface Props {
   category: string;
@@ -38,6 +39,7 @@ const Play = ({ category, id }: Props) => {
   const [objective, setObjective] = useState('');
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
+  const timerAudioRef = useRef<HTMLAudioElement>(null);
   const [todos, setTodos] = useState([]);
 
   const [isFull, setIsPull] = useState(false);
@@ -96,9 +98,14 @@ const Play = ({ category, id }: Props) => {
   }, [time]);
 
   const handleTimeout = useCallback(() => {
-    // TODO : 타이머 종료 음악 재생
     setVisibleModal('timeout');
+    timerAudioRef.current.play();
   }, []);
+
+  const handleTimeoutButtonClick = () => {
+    setVisibleModal(null);
+    timerAudioRef.current.pause();
+  };
 
   const handleFinishedButtonClick = async () => {
     const player = user ? user.name : `guest-${data.playCount + 1}`;
@@ -122,7 +129,7 @@ const Play = ({ category, id }: Props) => {
 
   const handleChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (todos.length < 5 && e.target.value.length <= 7) {
+      if (e.target.value.length <= 20) {
         setReviewInput(e.target.value);
       }
     },
@@ -261,11 +268,19 @@ const Play = ({ category, id }: Props) => {
               {objective}
             </Typography>
             {timer !== 0 && (
-              <Timer
-                time={time}
-                timeUpdate={() => setTime((prev) => prev + 10)}
-                onTimeout={handleTimeout}
-              />
+              <>
+                <Timer
+                  time={time}
+                  timeUpdate={() => setTime((prev) => prev + 10)}
+                  onTimeout={handleTimeout}
+                />
+                <audio
+                  ref={timerAudioRef}
+                  src={'/audio/timeout.mp3'}
+                  loop
+                  css={visuallyHidden}
+                />
+              </>
             )}
           </ContentTitleView>
           <Checklist
@@ -310,7 +325,7 @@ const Play = ({ category, id }: Props) => {
           }
           content="확인 후 연장하기 버튼을 누르면 목표시간이 연장됩니다."
           buttonText="확인"
-          onButtonClick={() => setVisibleModal(null)}
+          onButtonClick={handleTimeoutButtonClick}
         />
       )}
       {visibleModal === 'finished' && (
