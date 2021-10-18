@@ -15,23 +15,25 @@ const OpenButton = ({ visible, onOpenButtonClick }: Props) => {
       {visible ? (
         <CloseIcon stroke={BasicColor.WHITE} />
       ) : (
-        <PlusIcon width="16px" height="16px" />
+        <PlusIcon width="22px" height="22px" />
       )}
     </OpenButtonStyled>
   );
 };
 
 const OpenButtonStyled = styled.button<{ visible: boolean }>`
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 4px;
-  border: ${({ visible }) =>
-    visible
-      ? `8px solid ${BasicColor.BLUE10}`
-      : `1px solid ${BasicColor.BLUE10}`};
+  border: 1px solid ${BasicColor.BLUE10};
+  box-sizing: content-box;
   background: ${({ visible }) =>
     visible ? GradientColor.BLUE : 'rgba(236, 241, 250, 0.6)'};
   border-radius: 50%;
+  transition: 0.1s;
 
   :focus {
     outline: none;
