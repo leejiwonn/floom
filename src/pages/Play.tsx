@@ -99,6 +99,12 @@ const Play = ({ category, id }: Props) => {
     setTodos((prev) => [...prev, todo]);
   };
 
+  const handleUIHiddenButtonClick = () => {
+    setVisibleClockPopup(false);
+    setVisibleMemoPopup(false);
+    setVisibleSpeakerPopup(false);
+  };
+
   useEffect(() => {
     setTimer(time);
   }, [time]);
@@ -370,7 +376,7 @@ const Play = ({ category, id }: Props) => {
               onDeleteTodo={handleDeleteTodo}
               onAddTodo={handleAddTodo}
             />
-            <UIHiddenButton onClick={() => console.log('hidden')}>
+            <UIHiddenButton onClick={handleUIHiddenButtonClick}>
               <Typography
                 font={FontType.BOLD_TITLE_01}
                 color={BasicColor.WHITE}
