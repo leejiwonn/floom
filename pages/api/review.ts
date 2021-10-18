@@ -15,6 +15,7 @@ const postReview = async (req: NextApiRequest, res: NextApiResponse) => {
     objective: req.body.objective,
     comment: req.body.comment,
     player: req.body.player,
+    recommend: req.body.recommend,
   };
   await room.update({
     usedUsers: [docData, ...roomData.usedUsers],
