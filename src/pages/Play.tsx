@@ -203,48 +203,86 @@ const Play = ({ category, id }: Props) => {
       >
         <LayerBox page={currentPage}>
           <ObjectBox>
-            <ObjectWindow>
-              {
-                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                  data?.light as Light
-                ]?.WINDOW
-              }
-            </ObjectWindow>
+            <ObjectVase>
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.VASE
+                }
+                alt="vase"
+              />
+            </ObjectVase>
             <ObjectClock>
-              {
-                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                  data?.light as Light
-                ]?.CLOCK
-              }
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.CLOCK
+                }
+                alt="clock"
+              />
             </ObjectClock>
             <ObjectMemo>
-              {
-                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                  data?.light as Light
-                ]?.MEMO
-              }
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.MEMO
+                }
+                alt="memo"
+              />
             </ObjectMemo>
             <ObjectPicture>
-              {
-                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                  data?.light as Light
-                ]?.PICTURE
-              }
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.PICTURE
+                }
+                alt="picture"
+              />
             </ObjectPicture>
+            <ObjectConsole>
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.CONSOLE
+                }
+                alt="console"
+              />
+            </ObjectConsole>
             <ObjectSpeaker>
-              {
-                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                  data?.light as Light
-                ]?.SPEAKER
-              }
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.SPEAKER
+                }
+                alt="speaker"
+              />
             </ObjectSpeaker>
             <ObjectTable>
-              {
-                ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
-                  data?.light as Light
-                ]?.TABLE
-              }
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.TABLE
+                }
+                alt="table"
+              />
             </ObjectTable>
+            <ObjectLight>
+              <img
+                src={
+                  ROOM?.[data?.wallColor as keyof typeof ROOM]?.[
+                    data?.light as Light
+                  ]?.LIGHT
+                }
+                alt="light"
+              />
+            </ObjectLight>
           </ObjectBox>
           {currentPage >= 3 && (
             <PopupBox>
@@ -484,27 +522,27 @@ const ObjectBox = styled.div`
   position: absolute;
 
   div {
-    svg {
+    img {
       width: 100%;
     }
   }
 `;
 
-const ObjectWindow = styled.div`
-  width: 20%;
+const ObjectVase = styled.div`
+  width: 16%;
   height: auto;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10%;
+  left: 41%;
   z-index: 0;
 `;
 
 const ObjectClock = styled.div`
-  width: 14%;
+  width: 10%;
   height: auto;
   position: absolute;
-  top: 2%;
-  right: 32%;
+  top: 0;
+  right: 14%;
   z-index: 0;
 `;
 
@@ -512,35 +550,53 @@ const ObjectMemo = styled.div`
   width: 10%;
   height: auto;
   position: absolute;
-  left: 36%;
-  bottom: 34.5%;
+  right: 45%;
+  bottom: 27%;
   z-index: 1;
 `;
 
 const ObjectPicture = styled.div`
-  width: 16%;
+  width: 6%;
   height: auto;
   position: absolute;
-  top: 30%;
-  right: 16%;
+  top: 8%;
+  right: 28%;
   z-index: 0;
 `;
 
-const ObjectSpeaker = styled.div`
-  width: 16%;
+const ObjectConsole = styled.div`
+  width: 20%;
   height: auto;
   position: absolute;
-  left: 22%;
-  bottom: 38%;
+  right: 18%;
+  bottom: 33%;
+  z-index: 1;
+`;
+
+const ObjectSpeaker = styled.div`
+  width: 8%;
+  height: auto;
+  position: absolute;
+  right: 20%;
+  bottom: 46%;
   z-index: 1;
 `;
 
 const ObjectTable = styled.div`
-  width: 52%;
+  width: 46%;
   height: auto;
   position: absolute;
-  left: 0;
-  bottom: 3%;
+  right: 34%;
+  bottom: 12%;
+  z-index: 0;
+`;
+
+const ObjectLight = styled.div`
+  width: 10%;
+  height: auto;
+  position: absolute;
+  right: 4%;
+  bottom: 20%;
   z-index: 0;
 `;
 
