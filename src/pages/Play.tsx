@@ -494,26 +494,26 @@ const StatusBarBackground = styled.div`
 `;
 
 const ObjectView = styled.div<{ page: number; backgroundImage: string }>`
-  width: ${({ page }) => (page === 1 || page === 2 ? '150%' : '100%')};
-  height: ${({ page }) => (page === 1 || page === 2 ? '150%' : '100%')};
+  width: ${({ page }) => (page === 1 || page === 2 ? '190%' : '100%')};
+  height: ${({ page }) => (page === 1 || page === 2 ? '190%' : '100%')};
   position: absolute;
-  top: ${({ page }) => (page === 1 ? '-10vw' : page === 2 ? '-30vw' : '0')};
-  right: ${({ page }) => (page === 1 ? '-20vw' : page === 2 ? '-30vw' : '0')};
+  top: ${({ page }) => (page === 1 ? '-6vh' : page === 2 ? '-68vh' : '0')};
+  right: ${({ page }) => (page === 1 ? '0vw' : page === 2 ? '-28vw' : '0')};
   background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: 50%;
-  transition: 0.3s ease-in-out;
+  transition: 0.4s ease-in-out;
   z-index: 0;
 `;
 
 const LayerBox = styled.div<{ page: number }>`
-  width: ${({ page }) => (page === 1 || page === 2 ? '80vw' : '60vw')};
-  height: ${({ page }) => (page === 1 || page === 2 ? '100vh' : '80vh')};
+  width: ${({ page }) => (page === 1 || page === 2 ? '110vw' : '60vw')};
+  height: ${({ page }) => (page === 1 || page === 2 ? '150vh' : '80vh')};
   position: absolute;
-  right: ${({ page }) => (page === 1 ? '26vw' : page === 2 ? '15vw' : '0')};
-  bottom: 2vh;
-  transition: 0.3s ease-in-out;
+  right: ${({ page }) => (page === 1 ? '2vw' : page === 2 ? '2vw' : '0')};
+  bottom: ${({ page }) => (page === 1 ? '8vh' : page === 2 ? '8vh' : '0')};
+  transition: 0.4s ease-in-out;
 `;
 
 const ObjectBox = styled.div`
