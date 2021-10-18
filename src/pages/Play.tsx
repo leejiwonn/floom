@@ -19,6 +19,8 @@ import Modal from '~/components/Modal';
 import TextInput from '~/components/TextInput';
 import api from '~/utils/api';
 import { visuallyHidden } from '~/utils/css';
+import ClockIcon from '../../public/assets/icons/icon-clock.svg';
+import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
 
 interface Props {
   category: string;
@@ -323,6 +325,11 @@ const Play = ({ category, id }: Props) => {
               이 되었어요!
             </>
           }
+          emoji={
+            <Emoji>
+              <ClockIcon />
+            </Emoji>
+          }
           content="확인 후 연장하기 버튼을 누르면 목표시간이 연장됩니다."
           buttonText="확인"
           onButtonClick={handleTimeoutButtonClick}
@@ -350,13 +357,11 @@ const Play = ({ category, id }: Props) => {
           content="성공 여부와 한 줄 평을 기록해주세요!"
           action={
             <ActionStyled>
-              <RecommendButton
-                onClick={() => setIsRecommend((prev) => !prev)}
-                active={isRecommend}
-              >
-                <Typography tag="span" color={BasicColor.WHITE}>
-                  좋아요
-                </Typography>
+              <RecommendButton onClick={() => setIsRecommend((prev) => !prev)}>
+                <RecommendIcon
+                  fill={isRecommend ? BasicColor.BLUE100 : BasicColor.DARK70}
+                  stroke={isRecommend ? BasicColor.BLUE100 : BasicColor.DARK70}
+                />
               </RecommendButton>
               <TextInput
                 value={reviewInput}
@@ -611,12 +616,23 @@ const ActionStyled = styled.div`
   padding-bottom: 30px;
 `;
 
-const RecommendButton = styled.button<{ active: boolean }>`
+const RecommendButton = styled.button`
   margin-bottom: 20px;
-  background-color: ${({ active }) =>
-    active ? BasicColor.BLUE100 : BasicColor.DARK100};
   padding: 4px 8px;
   border-radius: 12px;
+`;
+
+const Emoji = styled.div`
+  display: inline-flex;
+  width: 60px;
+  height: 60px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export default Play;

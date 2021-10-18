@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import Typography from './Typography';
 
 interface Props {
@@ -43,9 +44,17 @@ const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
 
   return (
     <TimerStyled>
-      <Typography font={FontType.EXTRA_BOLD_HEAD_03} color={BasicColor.BLUE100}>
-        {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-      </Typography>
+      <EmojiStyled>
+        <Emoji>
+          <ClockIcon />
+        </Emoji>
+        <Typography
+          font={FontType.EXTRA_BOLD_HEAD_03}
+          color={BasicColor.BLUE100}
+        >
+          {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+        </Typography>
+      </EmojiStyled>
       <TimerButtonStyled>
         <ExtensionButton onClick={handleTimeUpdate}>
           <Typography font={FontType.SEMI_BOLD_BODY} color={BasicColor.WHITE}>
@@ -87,6 +96,19 @@ const StopButton = styled.button<{ stop: boolean }>`
   border-radius: 12px;
   background-color: ${({ stop }) => (stop ? BasicColor.BLUE40 : 'none')};
   transition: 0.1s;
+`;
+
+const EmojiStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Emoji = styled.div`
+  display: inline-flex;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
 `;
 
 export default Timer;

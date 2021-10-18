@@ -3,12 +3,13 @@ import { useState, useCallback } from 'react';
 
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import TextInput from '../TextInput';
-import Typography from '../Typography';
+import TextInput from '~/components/TextInput';
+import Typography from '~/components/Typography';
 import StepTemplate from './StepTemplate';
 import PlusIcon from '../../../public/assets/icons/icon-plus.svg';
 import CloseIcon from '../../../public/assets/icons/icon-close.svg';
 import { Todo } from '~/types/Obejct';
+import EMOJI from '~/constants/emoji';
 
 interface Props {
   objective: string;
@@ -58,16 +59,20 @@ const StepC = ({
     <StepTemplate
       title={
         <>
-          <Typography
-            tag="span"
-            font={FontType.EXTRA_BOLD_HEAD_03}
-            color={BasicColor.BLUE100}
-          >
-            {objective}
-          </Typography>
-          에
-          <br />
-          몰입하며 이룰 작은 목표들을 적어주세요.
+          <EmojiStyled>
+            <Typography
+              tag="span"
+              font={FontType.EXTRA_BOLD_HEAD_03}
+              color={BasicColor.BLUE100}
+            >
+              {objective}
+            </Typography>
+            <Emoji>{EMOJI.EYES}</Emoji>에
+          </EmojiStyled>
+          몰입하며 이룰{' '}
+          <EmojiStyled>
+            작은 목표<Emoji>{EMOJI.OBJECTIVE}</Emoji>들을 적어주세요.
+          </EmojiStyled>
         </>
       }
       content={
@@ -191,6 +196,19 @@ const TagDeleteButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const EmojiStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Emoji = styled.div`
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  padding: 0 3px;
 `;
 
 export default StepC;

@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { useState, useCallback } from 'react';
 
 import Typography from '~/components/Typography';
@@ -5,6 +6,7 @@ import TextInput from '~/components/TextInput';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import StepTemplate from './StepTemplate';
+import EMOJI from '~/constants/emoji';
 
 interface Props {
   placeholderInfo?: string;
@@ -36,15 +38,16 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
       title={
         <>
           방을 체험할 동안
-          <br />
-          <Typography
-            tag="span"
-            font={FontType.EXTRA_BOLD_HEAD_03}
-            color={BasicColor.BLUE100}
-          >
-            어떤 일
-          </Typography>
-          에 몰입하고 싶으신가요?
+          <EmojiStyled>
+            <Typography
+              tag="span"
+              font={FontType.EXTRA_BOLD_HEAD_03}
+              color={BasicColor.BLUE100}
+            >
+              어떤 일
+            </Typography>
+            에 몰입<Emoji>{EMOJI.EYES}</Emoji>하고 싶으신가요?
+          </EmojiStyled>
         </>
       }
       content={
@@ -68,5 +71,18 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
     />
   );
 };
+
+const EmojiStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Emoji = styled.div`
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  padding: 0 3px;
+`;
 
 export default StepA;

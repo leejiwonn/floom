@@ -5,7 +5,7 @@ import Dropdown from '~/components/Dropdown';
 import Typography from '~/components/Typography';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-
+import EMOJI from '~/constants/emoji';
 import StepTemplate from './StepTemplate';
 
 interface Props {
@@ -42,15 +42,19 @@ const StepB = ({
     <StepTemplate
       title={
         <>
-          <Typography
-            tag="span"
-            font={FontType.EXTRA_BOLD_HEAD_03}
-            color={BasicColor.BLUE100}
-          >
-            {objective}
-          </Typography>
-          에
-          <br />몇 분 동안 몰입할까요?
+          <EmojiStyled>
+            <Typography
+              tag="span"
+              font={FontType.EXTRA_BOLD_HEAD_03}
+              color={BasicColor.BLUE100}
+            >
+              {objective}
+            </Typography>
+            <Emoji>{EMOJI.EYES}</Emoji>에
+          </EmojiStyled>
+          <EmojiStyled>
+            몇 분<Emoji>{EMOJI.CLOCK}</Emoji>동안 몰입할까요?
+          </EmojiStyled>
         </>
       }
       content={
@@ -98,6 +102,19 @@ const ResultStyled = styled.div`
 const DropdownLineStyled = styled.div`
   display: flex;
   justify-content: flex-start;
+`;
+
+const EmojiStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Emoji = styled.div`
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  padding: 0 3px;
 `;
 
 export default StepB;
