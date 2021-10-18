@@ -17,4 +17,5 @@ type UsedUser = {
   objective: string;
   player: string;
   comment: string;
+  recommend: boolean;
 };
