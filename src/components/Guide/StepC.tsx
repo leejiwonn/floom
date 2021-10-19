@@ -36,7 +36,7 @@ const StepC = ({
 
   const handleChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (todos.length < 5 && e.target.value.length <= 7) {
+      if (todos.length < 5 && e.target.value.length <= 20) {
         setTextInput(e.target.value);
       }
     },
