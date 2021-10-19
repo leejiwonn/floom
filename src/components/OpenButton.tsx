@@ -21,10 +21,13 @@ const OpenButton = ({ visible, onOpenButtonClick }: Props) => {
   );
 };
 
-const OpenButtonStyled = styled.button<{ visible: boolean }>`
+const OpenButtonStyled = styled.button<{
+  visible: boolean;
+}>`
   width: 22px;
   height: 22px;
   display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
   padding: 4px;

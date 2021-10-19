@@ -26,7 +26,9 @@ const StepTemplate = ({
   return (
     <StepStyled>
       <StepInfo>
-        <Typography font={FontType.EXTRA_BOLD_HEAD_03}>{title}</Typography>
+        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginTop={30}>
+          {title}
+        </Typography>
         {content}
       </StepInfo>
       <ButtonStyled>
