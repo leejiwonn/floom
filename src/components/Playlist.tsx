@@ -12,7 +12,10 @@ import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 
 interface Props {
   playlist: Array<keyof typeof MUSIC>;
+  viewHeight: number;
   controls?: boolean;
+  autoplay?: boolean;
+  size?: 'big' | 'small';
 }
 
 // 저전력 모드 등에서는 play 재생 시에 오류 발생함
@@ -38,7 +41,13 @@ const formatTime = (currentTime: number) => {
   return formatTime;
 };
 
-const Playlist = ({ playlist, controls }: Props) => {
+const Playlist = ({
+  playlist,
+  controls,
+  autoplay,
+  viewHeight,
+  size = 'big',
+}: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -47,6 +56,10 @@ const Playlist = ({ playlist, controls }: Props) => {
 
   const timelineRef = useRef(null);
   const playheadRef = useRef(null);
+
+  useEffect(() => {
+    autoplay && setIsPlaying(true);
+  }, []);
 
   useEffect(() => {
     if (isPlaying) {
@@ -108,7 +121,7 @@ const Playlist = ({ playlist, controls }: Props) => {
   }, []);
 
   return (
-    <PlaylistStyled>
+    <PlaylistStyled size={size}>
       <audio
         ref={playerRef}
         src={MUSIC[playlist?.[0]]?.url}
@@ -126,7 +139,7 @@ const Playlist = ({ playlist, controls }: Props) => {
           playheadRef={playheadRef}
         />
       )}
-      <PlaylistView>
+      <PlaylistView controls={controls} viewHeight={viewHeight}>
         {playlist?.map((value, index) => (
           <PlaylistItem
             key={index}
@@ -135,6 +148,7 @@ const Playlist = ({ playlist, controls }: Props) => {
               updatePlayer(index);
               setIsPlaying((prev) => !prev);
             }}
+            last={playlist.length !== index + 1}
           >
             <PlaylistLeftView>
               <PlayPauseButton>
@@ -145,11 +159,20 @@ const Playlist = ({ playlist, controls }: Props) => {
                 )}
               </PlayPauseButton>
               <PlaylistItemInfo>
-                <Typography font={FontType.BOLD_TITLE_02} marginBottom={5}>
+                <Typography
+                  font={
+                    size === 'big' ? FontType.BOLD_TITLE_02 : FontType.BOLD_BODY
+                  }
+                  marginBottom={5}
+                >
                   {MUSIC[value].name}
                 </Typography>
                 <Typography
-                  font={FontType.REGULAR_BODY}
+                  font={
+                    size === 'big'
+                      ? FontType.REGULAR_BODY
+                      : FontType.REGULAR_CAPTION
+                  }
                   color={BasicColor.DARK70}
                 >
                   {MUSIC[value].author}
@@ -169,28 +192,33 @@ const Playlist = ({ playlist, controls }: Props) => {
   );
 };
 
-const PlaylistStyled = styled.div`
-  width: 340px;
+const PlaylistStyled = styled.div<{ size: 'big' | 'small' }>`
+  width: ${({ size }) => (size === 'big' ? '340px' : '240px')};
   height: auto;
   display: flex;
   flex-direction: column;
   z-index: 99;
 `;
 
-const PlaylistView = styled.div`
+const PlaylistView = styled.div<{ controls: boolean; viewHeight: number }>`
   width: 100%;
-  height: 34vh;
+  height: ${({ viewHeight }) => viewHeight + 'vh'};
   overflow: auto;
+  background-color: ${({ controls }) => controls && BasicColor.DARK10};
+  border: ${({ controls }) =>
+    controls ? `1px solid ${BasicColor.GRAY70}` : 'none'};
+  padding: ${({ controls }) => (controls ? '15px' : 0)};
 `;
 
-const PlaylistItem = styled.button`
+const PlaylistItem = styled.button<{ last: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
-  border-bottom: 1px solid ${BasicColor.GRAY70};
+  border-bottom: ${({ last }) =>
+    last ? `1px solid ${BasicColor.GRAY70}` : 'none'};
 `;
 
 const PlaylistLeftView = styled.div`

@@ -3,7 +3,12 @@ import { LegacyRef } from 'react';
 
 import { Music } from '~/types/Music';
 import { BasicColor } from '~/utils/color';
+import { Align, FontType } from '~/utils/font';
 import Typography from './Typography';
+import PrevIcon from '../../public/assets/icons/icon-prev.svg';
+import NextIcon from '../../public/assets/icons/icon-next.svg';
+import PlayIcon from '../../public/assets/icons/icon-play.svg';
+import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 
 interface Props {
   music: Music;
@@ -28,23 +33,29 @@ const PlaylistControls = ({
 }: Props) => {
   return (
     <PlaylistControlsStyled>
-      <Typography color={BasicColor.WHITE}>{music.name}</Typography>
-      <Typography color={BasicColor.WHITE}>{music.author}</Typography>
+      <Typography
+        font={FontType.BOLD_TITLE_02}
+        align={Align.CENTER}
+        marginBottom={5}
+      >
+        {music.name}
+      </Typography>
+      <Typography color={BasicColor.DARK70}>{music.author}</Typography>
       <MusicControls>
         <MusicControlButton onClick={onPrevButtonClick}>
-          <Typography color={BasicColor.WHITE}>이전</Typography>
+          <PrevIcon />
         </MusicControlButton>
         {isPlaying ? (
-          <PlayButton onClick={onPlayPauseClick}>
-            <Typography color={BasicColor.WHITE}>정지</Typography>
-          </PlayButton>
+          <PlayPauseButton onClick={onPlayPauseClick}>
+            <PauseIcon fill={BasicColor.BLUE100} />
+          </PlayPauseButton>
         ) : (
-          <PlayButton onClick={onPlayPauseClick}>
-            <Typography color={BasicColor.WHITE}>재생</Typography>
-          </PlayButton>
+          <PlayPauseButton onClick={onPlayPauseClick}>
+            <PlayIcon fill={BasicColor.BLUE100} />
+          </PlayPauseButton>
         )}
         <MusicControlButton onClick={onNextButtonClick}>
-          <Typography color={BasicColor.WHITE}>다음</Typography>
+          <NextIcon />
         </MusicControlButton>
       </MusicControls>
       <PlayControls>
@@ -52,8 +63,12 @@ const PlaylistControls = ({
           <Playhead ref={playheadRef} />
         </Timeline>
         <CurrentTime>
-          <Typography color={BasicColor.WHITE}>{currentTime}</Typography>
-          <Typography color={BasicColor.WHITE}>{music.duration}</Typography>
+          <Typography font={FontType.BOLD_CAPTION} color={BasicColor.BLUE100}>
+            {currentTime}
+          </Typography>
+          <Typography font={FontType.LIGHT_CAPTION} color={BasicColor.BLUE80}>
+            {music.duration}
+          </Typography>
         </CurrentTime>
       </PlayControls>
     </PlaylistControlsStyled>
@@ -66,7 +81,7 @@ const PlaylistControlsStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${BasicColor.BLUE100};
+  background-color: ${BasicColor.WHITE};
   padding: 20px;
 `;
 
@@ -87,7 +102,7 @@ const Timeline = styled.div`
   height: 5px;
   position: relative;
   border-radius: 5px;
-  background-color: #9cb2fb;
+  background-color: ${BasicColor.DARK10};
 `;
 
 const Playhead = styled.div`
@@ -97,18 +112,28 @@ const Playhead = styled.div`
   width: 0;
   height: 5px;
   border-radius: 5px;
-  background-color: ${BasicColor.WHITE};
+  background-color: ${BasicColor.BLUE100};
 `;
 
 const MusicControls = styled.div`
-  width: 40%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 24px;
 `;
 
 const MusicControlButton = styled.button``;
 
-const PlayButton = styled.button``;
+const PlayPauseButton = styled.button`
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${BasicColor.BLUE20};
+  border: 1px solid ${BasicColor.BLUE10};
+  border-radius: 50%;
+`;
 
 export default PlaylistControls;
