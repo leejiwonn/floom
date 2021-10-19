@@ -68,6 +68,15 @@ const Play = ({ category, id }: Props) => {
     }
   };
 
+  const getTodoClearStatus = (fullNumber: number) => {
+    let clearCount = 0;
+    todos.map((todo) => todo.clear && (clearCount += 1));
+
+    return clearCount
+      ? parseInt((clearCount * Math.max(fullNumber / todos.length)).toFixed())
+      : 0;
+  };
+
   const handleChangeTodos = (todo: Todo) => {
     if (
       todo.text !== '' &&
@@ -181,7 +190,7 @@ const Play = ({ category, id }: Props) => {
                   {currentPage + 1} / 3
                 </Typography>
               </StepTitleStyled>
-              <StatusBarStyled>
+              <StatusBarStyled statusHeight={8}>
                 <StatusBarActive status={(currentPage + 1) * (400 / 3)} />
                 <StatusBarBackground />
               </StatusBarStyled>
@@ -309,34 +318,50 @@ const Play = ({ category, id }: Props) => {
           </ObjectBox>
           {currentPage >= 3 && (
             <PopupBox>
-              <PopupPicture>
+              <PopupPictureStyled>
                 <OpenButton
                   visible={false}
                   onOpenButtonClick={() => setIsPull((prev) => !prev)}
                 />
-              </PopupPicture>
-              <PopupClock>
+              </PopupPictureStyled>
+              <PopupClockStyled>
                 <OpenButton
                   visible={visibleClockPopup}
                   onOpenButtonClick={() =>
                     setVisibleClockPopup((prev) => !prev)
                   }
                 />
-              </PopupClock>
-              <PopupSpeaker>
+              </PopupClockStyled>
+              <PopupSpeakerStyled>
                 <OpenButton
                   visible={visibleSpeakerPopup}
                   onOpenButtonClick={() =>
                     setVisibleSpeakerPopup((prev) => !prev)
                   }
                 />
-              </PopupSpeaker>
-              <PopupMemo>
+              </PopupSpeakerStyled>
+              <PopupMemoStyled>
                 <OpenButton
                   visible={visibleMemoPopup}
                   onOpenButtonClick={() => setVisibleMemoPopup((prev) => !prev)}
                 />
-              </PopupMemo>
+                {visibleMemoPopup && (
+                  <PopupMemo>
+                    <PopupMemoTitle>
+                      <Typography font={FontType.SEMI_BOLD_BODY}>
+                        목표 달성률
+                      </Typography>
+                      <Typography font={FontType.SEMI_BOLD_BODY}>
+                        {todos.length ? `${getTodoClearStatus(100)}%` : '-'}
+                      </Typography>
+                    </PopupMemoTitle>
+                    <StatusBarStyled statusHeight={12}>
+                      <StatusBarActive status={getTodoClearStatus(280)} />
+                      <StatusBarBackground />
+                    </StatusBarStyled>
+                  </PopupMemo>
+                )}
+              </PopupMemoStyled>
             </PopupBox>
           )}
         </LayerBox>
@@ -512,13 +537,12 @@ const StepTitleStyled = styled.div`
   margin-bottom: 15px;
 `;
 
-const StatusBarStyled = styled.div`
+const StatusBarStyled = styled.div<{ statusHeight: number }>`
   width: 100%;
-  height: 8px;
   position: relative;
   overflow: hidden;
   border-radius: 53px;
-  margin-bottom: 30px;
+  padding-bottom: ${({ statusHeight }) => statusHeight + 'px'};
 `;
 
 const StatusBarActive = styled.div<{ status: number }>`
@@ -659,28 +683,46 @@ const PopupBox = styled.div`
   z-index: 2;
 `;
 
-const PopupPicture = styled.div`
+const PopupPictureStyled = styled.div`
   position: absolute;
   top: 10%;
   right: 27%;
 `;
 
-const PopupClock = styled.div`
+const PopupClockStyled = styled.div`
   position: absolute;
   top: 4%;
   right: 14%;
 `;
 
-const PopupSpeaker = styled.div`
+const PopupSpeakerStyled = styled.div`
   position: absolute;
   right: 19%;
   bottom: 50%;
 `;
 
-const PopupMemo = styled.div`
+const PopupMemoStyled = styled.div`
+  width: 300px;
   position: absolute;
-  right: 44%;
-  bottom: 32%;
+  right: 9%;
+  bottom: 36%;
+`;
+
+const PopupMemo = styled.div`
+  width: 100%;
+  position: absolute;
+  top: -90px;
+  left: -250px;
+  padding: 15px;
+  background-color: ${BasicColor.WHITE};
+  border-radius: 10px;
+`;
+
+const PopupMemoTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const ScreenStyled = styled.div<{ isFull: boolean }>`
