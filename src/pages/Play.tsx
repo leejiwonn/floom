@@ -21,6 +21,8 @@ import api from '~/utils/api';
 import { visuallyHidden } from '~/utils/css';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
+import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
+import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import OpenButton from '~/components/OpenButton';
 
 interface Props {
@@ -49,6 +51,7 @@ const Play = ({ category, id }: Props) => {
   const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
   const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [isFull, setIsPull] = useState(false);
+  const [isTimerAlarm, setIsTimerAlarm] = useState(true);
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => prev - 1);
@@ -120,7 +123,7 @@ const Play = ({ category, id }: Props) => {
 
   const handleTimeout = useCallback(() => {
     setVisibleModal('timeout');
-    timerAudioRef.current.play();
+    isTimerAlarm && timerAudioRef.current.play();
   }, []);
 
   const handleTimeoutButtonClick = () => {
@@ -331,6 +334,13 @@ const Play = ({ category, id }: Props) => {
                     setVisibleClockPopup((prev) => !prev)
                   }
                 />
+                {visibleClockPopup && (
+                  <PopupClock onClick={() => setIsTimerAlarm((prev) => !prev)}>
+                    <ClockToggleButton isTimerAlarm={isTimerAlarm}>
+                      {isTimerAlarm ? <ClockOnIcon /> : <ClockOffIcon />}
+                    </ClockToggleButton>
+                  </PopupClock>
+                )}
               </PopupClockStyled>
               <PopupSpeakerStyled>
                 <OpenButton
@@ -685,26 +695,56 @@ const PopupBox = styled.div`
 
 const PopupPictureStyled = styled.div`
   position: absolute;
-  top: 10%;
-  right: 27%;
+  top: 11%;
+  left: 70%;
 `;
 
 const PopupClockStyled = styled.div`
+  width: 80px;
   position: absolute;
-  top: 4%;
-  right: 14%;
+  top: 3%;
+  left: 82%;
+  padding: 5px;
+`;
+
+const PopupClock = styled.button`
+  width: 100%;
+  position: absolute;
+  top: 46px;
+  right: 4px;
+  padding: 6px;
+  background-color: ${BasicColor.BLUE100};
+  border: 2px solid ${BasicColor.BLUE90};
+  box-sizing: border-box;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 35px;
+`;
+
+const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
+  width: 30px;
+  height: 30px;
+  position: relative;
+  left: ${({ isTimerAlarm }) => (isTimerAlarm ? 34 + 'px' : 0)};
+  background-color: ${BasicColor.WHITE};
+  border-radius: 50%;
+  transition: 0.3s;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const PopupSpeakerStyled = styled.div`
   position: absolute;
-  right: 19%;
-  bottom: 50%;
+  left: 78%;
+  bottom: 55%;
 `;
 
 const PopupMemoStyled = styled.div`
   width: 300px;
   position: absolute;
-  right: 9%;
+  left: 53%;
   bottom: 36%;
 `;
 
