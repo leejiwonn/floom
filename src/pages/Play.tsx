@@ -116,6 +116,7 @@ const Play = ({ category, id }: Props) => {
     setVisibleClockPopup(false);
     setVisibleMemoPopup(false);
     setVisibleSpeakerPopup(false);
+    setIsPull(false);
   };
 
   useEffect(() => {
@@ -826,7 +827,7 @@ const UIHiddenButton = styled.button`
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(14px);
-  z-index: 96;
+  z-index: 98;
 `;
 
 const EndButton = styled.button`
