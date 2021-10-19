@@ -1,15 +1,15 @@
 const MUSIC = {
   // STUDY
   STUDY_01: {
-    name: 'Nice piano and ukulele',
+    name: 'Dreams',
     author: 'Royalty',
-    url: 'https://www.bensound.com/bensound-music/bensound-buddy.mp3',
-    duration: '2:02',
+    url: 'https://www.bensound.com/bensound-music/bensound-dreams.mp3',
+    duration: '3:30',
   },
   STUDY_02: {
     name: 'Gentle acoustic',
     author: 'Acoustic',
-    url: 'https://www.bensound.com//bensound-music/bensound-sunny.mp3',
+    url: 'https://www.bensound.com/bensound-music/bensound-sunny.mp3',
     duration: '2:20',
   },
   STUDY_03: {
@@ -26,15 +26,15 @@ const MUSIC = {
   },
   // WORK
   WORK_01: {
-    name: 'Nice piano and ukulele',
+    name: 'Tomorrow',
     author: 'Royalty',
-    url: 'https://www.bensound.com/bensound-music/bensound-buddy.mp3',
-    duration: '2:02',
+    url: 'https://www.bensound.com/bensound-music/bensound-tomorrow.mp3',
+    duration: '4:54',
   },
   WORK_02: {
     name: 'Gentle acoustic',
     author: 'Acoustic',
-    url: 'https://www.bensound.com//bensound-music/bensound-sunny.mp3',
+    url: 'https://www.bensound.com/bensound-music/bensound-sunny.mp3',
     duration: '2:20',
   },
   WORK_03: {
@@ -45,15 +45,15 @@ const MUSIC = {
   },
   // REST
   REST_01: {
-    name: 'Nice piano and ukulele',
+    name: 'Relaxing',
     author: 'Royalty',
-    url: 'https://www.bensound.com/bensound-music/bensound-buddy.mp3',
-    duration: '2:02',
+    url: 'https://www.bensound.com/bensound-music/bensound-relaxing.mp3',
+    duration: '4:48',
   },
   REST_02: {
     name: 'Gentle acoustic',
     author: 'Acoustic',
-    url: 'https://www.bensound.com//bensound-music/bensound-sunny.mp3',
+    url: 'https://www.bensound.com/bensound-music/bensound-sunny.mp3',
     duration: '2:20',
   },
   REST_03: {
