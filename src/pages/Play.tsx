@@ -17,13 +17,14 @@ import Timer from '~/components/Timer';
 import Checklist from '~/components/Checklist';
 import Modal from '~/components/Modal';
 import TextInput from '~/components/TextInput';
+import OpenButton from '~/components/OpenButton';
+import Playlist from '~/components/Playlist';
 import api from '~/utils/api';
 import { visuallyHidden } from '~/utils/css';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
 import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
-import OpenButton from '~/components/OpenButton';
 
 interface Props {
   category: string;
@@ -349,6 +350,15 @@ const Play = ({ category, id }: Props) => {
                     setVisibleSpeakerPopup((prev) => !prev)
                   }
                 />
+                <PopupSpeaker visible={visibleSpeakerPopup}>
+                  <Playlist
+                    playlist={data?.music as any}
+                    controls
+                    autoplay
+                    viewHeight={24}
+                    size="small"
+                  />
+                </PopupSpeaker>
               </PopupSpeakerStyled>
               <PopupMemoStyled>
                 <OpenButton
@@ -710,7 +720,7 @@ const PopupClockStyled = styled.div`
 const PopupClock = styled.button`
   width: 100%;
   position: absolute;
-  top: 46px;
+  top: 45px;
   right: 4px;
   padding: 6px;
   background-color: ${BasicColor.BLUE100};
@@ -736,9 +746,23 @@ const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
 `;
 
 const PopupSpeakerStyled = styled.div`
+  width: 240px;
   position: absolute;
   left: 78%;
   bottom: 55%;
+  z-index: 1;
+`;
+
+const PopupSpeaker = styled.div<{ visible: boolean }>`
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: -200px;
+  left: -250px;
+  background-color: ${BasicColor.WHITE};
+  border-radius: 30px;
+  opacity: ${({ visible }) => (visible ? 100 : 0)};
+  pointer-events: ${({ visible }) => (visible ? 'visible' : 'none')};
 `;
 
 const PopupMemoStyled = styled.div`
@@ -751,8 +775,8 @@ const PopupMemoStyled = styled.div`
 const PopupMemo = styled.div`
   width: 100%;
   position: absolute;
-  top: -90px;
-  left: -250px;
+  top: -20px;
+  left: -310px;
   padding: 15px;
   background-color: ${BasicColor.WHITE};
   border-radius: 10px;

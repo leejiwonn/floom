@@ -116,7 +116,11 @@ const Detail = ({ category, id }: Props) => {
             <Typography font={FontType.BOLD_TITLE_01} marginBottom={16}>
               플레이리스트
             </Typography>
-            <Playlist playlist={data?.music as any} controls={false} />
+            <Playlist
+              playlist={data?.music as any}
+              controls={false}
+              viewHeight={34}
+            />
           </PlaylistStyled>
         </RoomContentStyled>
       </RoomInfoStyled>
