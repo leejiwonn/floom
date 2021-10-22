@@ -6,17 +6,21 @@ import Link from 'next/link';
 import AudioPlayer from '~/components/AudioPlayer';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import useOutsideEvent from '~/utils/useOutsideEvent';
 import { useUserProfile } from '~/hooks/useUser';
 import Typography from './Typography';
+
 import MusicIcon from '../../public/assets/icons/icon-music.svg';
 import CloseNoiseIcon from '../../public/assets/icons/icon-close-noise.svg';
 import WhiteLogoIcon from '../../public/assets/icons/icon-logo-white.svg';
 import BlueLogoIcon from '../../public/assets/icons/icon-logo-blue.svg';
 
-// TODO : 페이지 이동 시 렌더링 방지 필요 (노이즈 유지)
 const Header = () => {
   const { data: user, isLoading } = useUserProfile();
   const [show, setShow] = useState(false);
+  const { modalRef } = useOutsideEvent({
+    onOutsideClick: () => setShow(false),
+  });
 
   const router = useRouter();
 
@@ -64,7 +68,7 @@ const Header = () => {
             </KakaoLoginButton>
           )
         ) : null}
-        <NoiseStyled>
+        <NoiseStyled ref={modalRef}>
           <NoiseButton onClick={() => setShow((prev) => !prev)}>
             <Typography
               font={FontType.SEMI_BOLD_BODY}

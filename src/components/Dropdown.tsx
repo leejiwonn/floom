@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 import Typography from '~/components/Typography';
 import { FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
+import useOutsideEvent from '~/utils/useOutsideEvent';
+
 import DropdownIcon from '../../public/assets/icons/icon-dropdown.svg';
 import LoopIcon from '../../public/assets/icons/icon-loop.svg';
 
@@ -14,43 +16,31 @@ interface Props {
 
 const values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
 
-// TODO : 외부 클릭 시 닫히도록 하는 코드 재사용 가능하게 분리
 const Dropdown = ({ time, onChangeTime }: Props) => {
-  const [isActive, setIsActive] = useState(false);
-  const modalRef = useRef(null);
+  const [show, setShow] = useState(false);
+  const { modalRef } = useOutsideEvent({
+    onOutsideClick: () => setShow(false),
+  });
 
   const handleTimeValueClick = (value: number) => {
     onChangeTime(value);
-    setIsActive(false);
+    setShow(false);
   };
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (!modalRef.current?.contains(e.target)) {
-      setIsActive(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('click', handleClickOutside);
-    return () => {
-      window.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
 
   return (
     <DropdownStyled ref={modalRef}>
-      <DropdownButton onClick={() => setIsActive((prev) => !prev)}>
+      <DropdownButton onClick={() => setShow((prev) => !prev)}>
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_03}
           color={BasicColor.BLUE100}
         >
           {time === 0 ? <LoopIcon /> : time + '분'}
         </Typography>
-        <DropdownIconStyled active={isActive}>
+        <DropdownIconStyled active={show}>
           <DropdownIcon />
         </DropdownIconStyled>
       </DropdownButton>
-      <DropdownBox active={isActive}>
+      <DropdownBox active={show}>
         {values.map((value, index) => (
           <DropdownItem key={index} onClick={() => handleTimeValueClick(value)}>
             {value === 0 ? (
