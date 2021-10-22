@@ -11,7 +11,9 @@ import { Align, FontType } from '~/utils/font';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { getCatecory } from '~/utils/category';
 import EMOJI from '~/constants/emoji';
+
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
+import CreateIcon from '../../public/assets/icons/icon-create.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
@@ -111,6 +113,11 @@ const Home = () => {
           ))}
         </RoomStyled>
       </RoomsStyled>
+      <Link href={`/create`}>
+        <CreateButton>
+          <CreateIcon />
+        </CreateButton>
+      </Link>
     </HomeStyled>
   );
 };
@@ -225,6 +232,22 @@ const ScreenStyled = styled.div`
   height: 250px;
   overflow: hidden;
   border-radius: 20px;
+`;
+
+const CreateButton = styled.div`
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  z-index: 999;
+  background-color: ${BasicColor.GREEN100};
+  border: 2px solid ${BasicColor.GREEN150};
+  border-radius: 50%;
+  cursor: pointer;
 `;
 
 export default Home;
