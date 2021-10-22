@@ -499,6 +499,7 @@ const Play = ({ category, id }: Props) => {
                 />
               </RecommendButton>
               <TextInput
+                maxLength={20}
                 value={reviewInput}
                 onChangeInput={handleChangeInput}
                 placeholder="한 줄 평을 작성해주세요."
