@@ -4,11 +4,12 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Typography from '~/components/Typography';
 import { Align, FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
+import { Todo } from '~/types/Obejct';
+import TextInput from './TextInput';
+
 import PlusIcon from '../../public/assets/icons/icon-plus.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
-import { Todo } from '~/types/Obejct';
-import TextInput from './TextInput';
 
 interface Props {
   todos: Todo[];
@@ -134,6 +135,7 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
         )}
         {show && (
           <TextInput
+            maxLength={20}
             value={textInput}
             onChangeInput={handleChangeInput}
             placeholder="체크리스트를 작성해주세요."

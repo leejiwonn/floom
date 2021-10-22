@@ -5,11 +5,12 @@ import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import TextInput from '~/components/TextInput';
 import Typography from '~/components/Typography';
-import StepTemplate from './StepTemplate';
-import PlusIcon from '../../../public/assets/icons/icon-plus.svg';
-import CloseIcon from '../../../public/assets/icons/icon-close.svg';
 import { Todo } from '~/types/Obejct';
 import EMOJI from '~/constants/emoji';
+import StepTemplate from './StepTemplate';
+
+import PlusIcon from '../../../public/assets/icons/icon-plus.svg';
+import CloseIcon from '../../../public/assets/icons/icon-close.svg';
 
 interface Props {
   objective: string;
@@ -80,6 +81,7 @@ const StepC = ({
         <TodolistStyled>
           <PlusTagStyled>
             <TextInput
+              maxLength={20}
               value={textInput}
               onChangeInput={handleChangeInput}
               placeholder={todos.length < 5 ? placeholderInfo : '입력 끝!'}

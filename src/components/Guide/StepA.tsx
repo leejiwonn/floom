@@ -53,6 +53,7 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
       content={
         <>
           <TextInput
+            maxLength={20}
             value={textInput}
             onChangeInput={handleChangeInput}
             placeholder={placeholderInfo}
