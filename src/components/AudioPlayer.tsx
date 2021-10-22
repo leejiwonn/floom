@@ -52,7 +52,13 @@ const AudioPlayer = ({ title, url }: Props) => {
 
   return (
     <AudioPlayerStyled>
-      <audio ref={audioRef} preload="auto" src={url} css={visuallyHidden} />
+      <audio
+        ref={audioRef}
+        preload="auto"
+        loop
+        src={url}
+        css={visuallyHidden}
+      />
       <Typography font={FontType.BOLD_BODY} marginRight={30}>
         {title}
       </Typography>

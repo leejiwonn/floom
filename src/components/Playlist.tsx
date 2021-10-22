@@ -111,6 +111,10 @@ const Playlist = ({
       }
       const currentTime = formatTime(parseInt(String(audio.currentTime)));
       setCurrentTime(currentTime);
+
+      if (currentTime === MUSIC[playlist[currentIndex]].duration) {
+        handleNextButtonClick();
+      }
     };
 
     audio.addEventListener('timeupdate', timeUpdate, false);
