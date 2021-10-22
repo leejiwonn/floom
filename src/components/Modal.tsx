@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef } from 'react';
 
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import useOutsideEvent from '~/utils/useOutsideEvent';
 import Typography from './Typography';
 
 interface Props {
@@ -28,33 +28,7 @@ const Modal = ({
   buttonText,
   onButtonClick,
 }: Props) => {
-  const modalRef = useRef(null);
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (!modalRef.current?.contains(e.target)) {
-      setShow(null);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('click', handleClickOutside);
-    return () => {
-      window.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
-  const close = (e: KeyboardEvent) => {
-    if (e.key === 'Ese' || e.key === 'Escape') {
-      setShow(null);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('keydown', close);
-    return () => {
-      window.addEventListener('keydown', close);
-    };
-  }, []);
+  const { modalRef } = useOutsideEvent({ onOutsideClick: () => setShow(null) });
 
   return (
     <ModalStyled>
