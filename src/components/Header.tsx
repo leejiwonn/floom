@@ -48,7 +48,7 @@ const Header = () => {
         </Logo>
       </Link>
       <RightStyled>
-        {!isLoading ? (
+        {!isLoading && router.pathname !== '/play' ? (
           user ? (
             <UserInfo>
               <Typography font={FontType.REGULAR_BODY}>
