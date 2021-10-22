@@ -94,7 +94,7 @@ const DropdownIconStyled = styled.span<{ active: boolean }>`
 
 const DropdownBox = styled.div<{ active: boolean }>`
   width: 100%;
-  height: 100px;
+  height: 15vh;
   display: ${({ active }) => (active ? 'flex' : 'none')};
   flex-direction: column;
   overflow-x: hidden;
