@@ -21,6 +21,8 @@ import OpenButton from '~/components/OpenButton';
 import Playlist from '~/components/Playlist';
 import api from '~/utils/api';
 import { visuallyHidden } from '~/utils/css';
+import useOutsideEvent from '~/utils/useOutsideEvent';
+
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
@@ -53,6 +55,16 @@ const Play = ({ category, id }: Props) => {
   const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [isFull, setIsPull] = useState(false);
   const [isTimerAlarm, setIsTimerAlarm] = useState(true);
+
+  const { modalRef: clockRef } = useOutsideEvent({
+    onOutsideClick: () => setVisibleClockPopup(false),
+  });
+  const { modalRef: speakerRef } = useOutsideEvent({
+    onOutsideClick: () => setVisibleSpeakerPopup(false),
+  });
+  const { modalRef: memoRef } = useOutsideEvent({
+    onOutsideClick: () => setVisibleMemoPopup(false),
+  });
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => prev - 1);
@@ -112,13 +124,6 @@ const Play = ({ category, id }: Props) => {
     setTodos((prev) => [...prev, todo]);
   };
 
-  const handleUIHiddenButtonClick = () => {
-    setVisibleClockPopup(false);
-    setVisibleMemoPopup(false);
-    setVisibleSpeakerPopup(false);
-    setIsPull(false);
-  };
-
   useEffect(() => {
     setTimer(time);
   }, [time]);
@@ -161,19 +166,6 @@ const Play = ({ category, id }: Props) => {
     },
     [todos, setReviewInput],
   );
-
-  const close = (e: KeyboardEvent) => {
-    if (e.key === 'Ese' || e.key === 'Escape') {
-      setIsPull(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('keydown', close);
-    return () => {
-      window.addEventListener('keydown', close);
-    };
-  }, []);
 
   return (
     <PlayStyled>
@@ -329,7 +321,7 @@ const Play = ({ category, id }: Props) => {
                   onOpenButtonClick={() => setIsPull((prev) => !prev)}
                 />
               </PopupPictureStyled>
-              <PopupClockStyled>
+              <PopupClockStyled ref={clockRef}>
                 <OpenButton
                   visible={visibleClockPopup}
                   onOpenButtonClick={() =>
@@ -339,12 +331,16 @@ const Play = ({ category, id }: Props) => {
                 {visibleClockPopup && (
                   <PopupClock onClick={() => setIsTimerAlarm((prev) => !prev)}>
                     <ClockToggleButton isTimerAlarm={isTimerAlarm}>
-                      {isTimerAlarm ? <ClockOnIcon /> : <ClockOffIcon />}
+                      {isTimerAlarm ? (
+                        <ClockOnIcon width={56} height={56} />
+                      ) : (
+                        <ClockOffIcon width={56} height={56} />
+                      )}
                     </ClockToggleButton>
                   </PopupClock>
                 )}
               </PopupClockStyled>
-              <PopupSpeakerStyled>
+              <PopupSpeakerStyled ref={speakerRef}>
                 <OpenButton
                   visible={visibleSpeakerPopup}
                   onOpenButtonClick={() =>
@@ -361,7 +357,7 @@ const Play = ({ category, id }: Props) => {
                   />
                 </PopupSpeaker>
               </PopupSpeakerStyled>
-              <PopupMemoStyled>
+              <PopupMemoStyled ref={memoRef}>
                 <OpenButton
                   visible={visibleMemoPopup}
                   onOpenButtonClick={() => setVisibleMemoPopup((prev) => !prev)}
@@ -422,14 +418,6 @@ const Play = ({ category, id }: Props) => {
               onDeleteTodo={handleDeleteTodo}
               onAddTodo={handleAddTodo}
             />
-            <UIHiddenButton onClick={handleUIHiddenButtonClick}>
-              <Typography
-                font={FontType.BOLD_TITLE_01}
-                color={BasicColor.WHITE}
-              >
-                UI 가리기
-              </Typography>
-            </UIHiddenButton>
             <EndButton onClick={() => setVisibleModal('finished')}>
               <Typography
                 font={FontType.BOLD_TITLE_01}
@@ -745,6 +733,7 @@ const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
   svg {
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
 `;
 
@@ -816,20 +805,6 @@ const ContentTitleView = styled.div`
   box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0px 30px 30px 30px;
   padding-top: 15px;
-`;
-
-const UIHiddenButton = styled.button`
-  position: absolute;
-  right: 250px;
-  bottom: 30px;
-  padding: 15px 60px;
-  border: 2px solid ${BasicColor.BLUE40};
-  box-sizing: border-box;
-  border-radius: 18px;
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(14px);
-  z-index: 98;
 `;
 
 const EndButton = styled.button`
