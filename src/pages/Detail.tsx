@@ -22,50 +22,61 @@ const Detail = ({ category, id }: Props) => {
       <RoomImageStyled>
         <RoomImage url={data?.roomImage} />
         <ThumImage url={data?.screen[1]} />
-        <TagStyled>
-          <CatecoryStyled>
-            <Typography font={FontType.BOLD_BODY} color={BasicColor.BLUE100}>
-              {getCatecory(category)}
-            </Typography>
-          </CatecoryStyled>
-          {data?.tags.map((tag, index) => (
-            <TagItem key={index}>
-              <Typography font={FontType.BOLD_BODY} color={BasicColor.GREEN150}>
-                {tag}
-              </Typography>
-            </TagItem>
-          ))}
-        </TagStyled>
       </RoomImageStyled>
       <RoomInfoStyled>
         <RoomTitleStyled>
-          <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={10}>
-            {data?.title}
-          </Typography>
+          <RoomTitleInfo>
+            <Typography font={FontType.SEMI_BOLD_HEAD_03}>
+              {getCatecory(category)}
+            </Typography>
+            <RoomTitleInfoLine />
+            <Typography font={FontType.EXTRA_BOLD_HEAD_03}>
+              {data?.title}
+            </Typography>
+          </RoomTitleInfo>
           <Typography
             font={FontType.REGULAR_BODY}
             color={BasicColor.DARK70}
-            marginBottom={30}
+            marginBottom={24}
           >
             {data?.creator} 님의 방
           </Typography>
+          <TagStyled>
+            {data?.tags.map((tag, index) => (
+              <TagItem key={index}>
+                <Typography
+                  font={FontType.SEMI_BOLD_BODY}
+                  color={BasicColor.GREEN150}
+                >
+                  {tag}
+                </Typography>
+              </TagItem>
+            ))}
+          </TagStyled>
           <CaptionStyled>
-            <CationItem>
-              방문
+            <CaptionItem>
               <Typography
-                font={FontType.SEMI_BOLD_BODY}
-                marginLeft={8}
-                marginRight={30}
+                font={FontType.REGULAR_CAPTION}
+                color={BasicColor.DARK70}
               >
+                방문
+              </Typography>
+              <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
                 {data?.playCount}
               </Typography>
-            </CationItem>
-            <CationItem>
-              추천
+            </CaptionItem>
+            <CaptionLine />
+            <CaptionItem>
+              <Typography
+                font={FontType.REGULAR_CAPTION}
+                color={BasicColor.DARK70}
+              >
+                추천
+              </Typography>
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
                 {data?.recommendCount}
               </Typography>
-            </CationItem>
+            </CaptionItem>
           </CaptionStyled>
         </RoomTitleStyled>
         <RoomContentStyled>
@@ -163,7 +174,7 @@ const RoomImageStyled = styled.div`
 
 const RoomImage = styled.img<{ url: string }>`
   width: 100%;
-  height: 48vh;
+  height: 42vh;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
@@ -171,32 +182,17 @@ const RoomImage = styled.img<{ url: string }>`
 
 const ThumImage = styled.img<{ url: string }>`
   width: 200px;
-  height: 180px;
+  height: 170px;
   position: absolute;
   left: 50px;
-  bottom: -20px;
+  bottom: -40px;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
   border-radius: 30px 30px 30px 0;
 `;
 
-const TagStyled = styled.div`
-  position: absolute;
-  right: 50px;
-  bottom: 30px;
-`;
-
-const CatecoryStyled = styled.div`
-  display: inline-flex;
-  padding: 6px 22px;
-  border: 1px solid ${BasicColor.BLUE80};
-  border-radius: 20px 20px 0 20px;
-  box-sizing: border-box;
-  background-color: ${BasicColor.WHITE};
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-  margin-right: 2px;
-`;
+const TagStyled = styled.div``;
 
 const TagItem = styled.div`
   display: inline-flex;
@@ -205,7 +201,7 @@ const TagItem = styled.div`
   border: 1px solid ${BasicColor.GREEN20};
   box-sizing: border-box;
   border-radius: 24px;
-  margin-left: 12px;
+  margin-right: 6px;
 `;
 
 const RoomInfoStyled = styled.div`
@@ -219,18 +215,42 @@ const RoomInfoStyled = styled.div`
 const RoomTitleStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 60px;
   padding-left: 50px;
+`;
+
+const RoomTitleInfo = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const RoomTitleInfoLine = styled.div`
+  width: 2px;
+  height: 60%;
+  background-color: ${BasicColor.DARK40};
+  margin: 0 12px;
 `;
 
 const CaptionStyled = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-top: 36px;
 `;
 
-const CationItem = styled.div`
+const CaptionItem = styled.div`
   display: inline-flex;
+  justify-content: center;
   align-items: center;
+`;
+
+const CaptionLine = styled.div`
+  width: 1px;
+  height: 60%;
+  background-color: ${BasicColor.GRAY60};
+  margin: 0 15px;
 `;
 
 const RoomContentStyled = styled.div`
@@ -246,7 +266,7 @@ const UserListStyled = styled.div`
 
 const CommentStyled = styled.div`
   width: auto;
-  height: 32vh;
+  height: 39vh;
   overflow: auto;
 `;
 
@@ -279,7 +299,7 @@ const PlaylistStyled = styled.div`
 const PlayButton = styled.a`
   position: absolute;
   left: 50px;
-  bottom: 8vh;
+  bottom: 5vh;
   padding: 20px 120px;
   border-radius: 20px;
   background-color: ${BasicColor.BLUE100};
