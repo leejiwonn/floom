@@ -51,7 +51,7 @@ const Detail = ({ category, id }: Props) => {
           </Typography>
           <CaptionStyled>
             <CationItem>
-              {EMOJI.VISIT}
+              방문
               <Typography
                 font={FontType.SEMI_BOLD_BODY}
                 marginLeft={8}
@@ -61,7 +61,7 @@ const Detail = ({ category, id }: Props) => {
               </Typography>
             </CationItem>
             <CationItem>
-              {EMOJI.RECOMMEND}
+              추천
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
                 {data?.recommendCount}
               </Typography>
@@ -78,12 +78,16 @@ const Detail = ({ category, id }: Props) => {
                 {data?.usedUsers.map((item, index) => (
                   <CommentItem key={index}>
                     <CommentTitle>
-                      <Typography
-                        font={FontType.BOLD_BODY}
-                        color={BasicColor.BLUE100}
-                      >
-                        {item.objective}
-                      </Typography>
+                      <CommentTitleLeft>
+                        <Typography
+                          font={FontType.BOLD_BODY}
+                          color={BasicColor.BLUE100}
+                          marginRight={3}
+                        >
+                          {item.objective}
+                        </Typography>
+                        {item.recommend && EMOJI.RECOMMEND}
+                      </CommentTitleLeft>
                       <Typography
                         font={FontType.LIGHT_BODY}
                         color={BasicColor.DARK70}
@@ -258,6 +262,12 @@ const CommentTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const CommentTitleLeft = styled.div`
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const PlaylistStyled = styled.div`
