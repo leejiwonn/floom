@@ -12,6 +12,7 @@ interface Props {
   subTitle: React.ReactElement;
   content: string;
   action?: React.ReactNode;
+  resetAction?: () => void;
   buttonActive?: boolean;
   buttonText: string;
   onButtonClick: () => void;
@@ -24,11 +25,17 @@ const Modal = ({
   subTitle,
   content,
   action,
+  resetAction,
   buttonActive = true,
   buttonText,
   onButtonClick,
 }: Props) => {
-  const { modalRef } = useOutsideEvent({ onOutsideClick: () => setShow(null) });
+  const { modalRef } = useOutsideEvent({
+    onOutsideClick: () => {
+      setShow(null);
+      resetAction?.();
+    },
+  });
 
   return (
     <ModalStyled>
@@ -86,7 +93,10 @@ const ModalBox = styled.div`
 `;
 
 const ModalButton = styled.button<{ active: boolean }>`
-  padding: 6px 12vw;
+  width: 28vw;
+  display: flex;
+  justify-content: center;
+  padding: 6px 0;
   background-color: ${({ active }) => (active ? BasicColor.BLUE100 : 'none')};
   border: 2px solid
     ${({ active }) => (active ? BasicColor.BLUE110 : BasicColor.BLUE40)};

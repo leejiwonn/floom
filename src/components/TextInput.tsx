@@ -131,7 +131,7 @@ const TextLength = styled.div`
   align-items: center;
   background-color: ${BasicColor.GRAY20};
   border-radius: '0 10px 10px 0';
-  padding: 15px 10px;
+  padding: 10px;
 `;
 
 const SubmitButton = styled.button`

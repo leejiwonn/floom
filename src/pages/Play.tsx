@@ -480,10 +480,13 @@ const Play = ({ category, id }: Props) => {
           content="성공 여부와 한 줄 평을 기록해주세요!"
           action={
             <ActionStyled>
-              <RecommendButton onClick={() => setIsRecommend((prev) => !prev)}>
+              <RecommendButton
+                onClick={() => setIsRecommend((prev) => !prev)}
+                isRecommend={isRecommend}
+              >
                 <RecommendIcon
-                  fill={isRecommend ? BasicColor.BLUE100 : BasicColor.DARK70}
-                  stroke={isRecommend ? BasicColor.BLUE100 : BasicColor.DARK70}
+                  fill={isRecommend ? BasicColor.WHITE : BasicColor.BLUE100}
+                  stroke={isRecommend ? BasicColor.WHITE : BasicColor.BLUE100}
                 />
               </RecommendButton>
               <TextInput
@@ -494,6 +497,10 @@ const Play = ({ category, id }: Props) => {
               />
             </ActionStyled>
           }
+          resetAction={() => {
+            setIsRecommend(false);
+            setReviewInput('');
+          }}
           buttonActive={reviewInput !== ''}
           buttonText={reviewInput !== '' ? '완료' : '작성중'}
           onButtonClick={handleFinishedButtonClick}
@@ -826,12 +833,20 @@ const ActionStyled = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 30px;
+  margin-top: -10px;
 `;
 
-const RecommendButton = styled.button`
+const RecommendButton = styled.button<{ isRecommend: boolean }>`
+  width: 94px;
+  height: 94px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
-  padding: 4px 8px;
-  border-radius: 12px;
+  border-radius: 50%;
+  background-color: ${({ isRecommend }) =>
+    isRecommend ? BasicColor.BLUE100 : BasicColor.BLUE10};
+  transition: 0.1s;
 `;
 
 const Emoji = styled.span`
