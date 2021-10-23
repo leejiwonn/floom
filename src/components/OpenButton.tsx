@@ -43,6 +43,7 @@ const OpenButtonStyled = styled.button<{
   }
   svg {
     width: 100%;
+    pointer-events: none;
   }
 `;
 

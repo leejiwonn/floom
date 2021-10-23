@@ -5,6 +5,7 @@ import { Music } from '~/types/Music';
 import { BasicColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import Typography from './Typography';
+
 import PrevIcon from '../../public/assets/icons/icon-prev.svg';
 import NextIcon from '../../public/assets/icons/icon-next.svg';
 import PlayIcon from '../../public/assets/icons/icon-play.svg';
@@ -123,7 +124,11 @@ const MusicControls = styled.div`
   margin-bottom: 24px;
 `;
 
-const MusicControlButton = styled.button``;
+const MusicControlButton = styled.button`
+  svg {
+    pointer-events: none;
+  }
+`;
 
 const PlayPauseButton = styled.button`
   width: 45px;
@@ -134,6 +139,10 @@ const PlayPauseButton = styled.button`
   background-color: ${BasicColor.BLUE20};
   border: 1px solid ${BasicColor.BLUE10};
   border-radius: 50%;
+
+  svg {
+    pointer-events: none;
+  }
 `;
 
 export default PlaylistControls;

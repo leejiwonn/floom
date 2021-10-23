@@ -7,6 +7,7 @@ import { visuallyHidden } from '~/utils/css';
 import { FontType } from '~/utils/font';
 import PlaylistControls from './PlaylistControls';
 import Typography from './Typography';
+
 import PlayIcon from '../../public/assets/icons/icon-play.svg';
 import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 
@@ -239,6 +240,7 @@ const PlayPauseButton = styled.div`
   background-color: ${BasicColor.BLUE10};
   border-radius: 50%;
   margin-right: 20px;
+  pointer-events: none;
 `;
 
 const PlaylistItemInfo = styled.div`
