@@ -15,7 +15,7 @@ const OpenButton = ({ visible, onOpenButtonClick }: Props) => {
       {visible ? (
         <CloseIcon stroke={BasicColor.WHITE} />
       ) : (
-        <PlusIcon width="22px" height="22px" />
+        <PlusIcon width={22} height={22} stroke={BasicColor.WHITE} />
       )}
     </OpenButtonStyled>
   );

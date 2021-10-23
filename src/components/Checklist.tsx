@@ -68,12 +68,13 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
           }}
           active={todos.length < 5}
         >
-          <PlusIcon width={15} height={15} />
+          <PlusIcon width={15} height={15} stroke={BasicColor.WHITE} />
           <Typography
             tag="span"
             font={FontType.SEMI_BOLD_BODY}
             color={BasicColor.WHITE}
             marginLeft={2}
+            lineHeight={0}
           >
             추가
           </Typography>
@@ -176,7 +177,7 @@ const ChecklistAddButton = styled.button<{ active: boolean }>`
   background-color: ${({ active }) =>
     active ? BasicColor.BLUE100 : BasicColor.GRAY70};
   border-radius: 12px;
-  padding: 7px 16px;
+  padding: 10px 15px;
   cursor: ${({ active }) => (active ? 'pointer' : 'default')};
   transition: 0.1s;
 `;
