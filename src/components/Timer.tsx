@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import Typography from './Typography';
+
+import ClockIcon from '../../public/assets/icons/icon-clock.svg';
+import PlusIcon from '../../public/assets/icons/icon-plus.svg';
+import MinusIcon from '../../public/assets/icons/icon-minus.svg';
 
 interface Props {
   time: number;
@@ -37,8 +40,8 @@ const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
     return () => clearInterval(countdown);
   }, [minutes, seconds, stop]);
 
-  const handleTimeUpdate = () => {
-    setMinutes((prev) => prev + 10);
+  const handleTimeUpdate = (type: '-' | '+') => {
+    setMinutes((prev) => prev + (type === '+' ? +10 : -10));
     timeUpdate();
   };
 
@@ -56,10 +59,22 @@ const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
         </Typography>
       </EmojiStyled>
       <TimerButtonStyled>
-        <ExtensionButton onClick={handleTimeUpdate}>
-          <Typography font={FontType.SEMI_BOLD_BODY} color={BasicColor.WHITE}>
-            10분 더
-          </Typography>
+        <ExtensionButton
+          onClick={() => minutes > 10 && handleTimeUpdate('-')}
+          disable={!(minutes > 10 && !(minutes === 10 && seconds === 0))}
+        >
+          <MinusIcon
+            width={24}
+            height={24}
+            stroke={
+              minutes > 10 && !(minutes === 10 && seconds === 0)
+                ? BasicColor.BLUE100
+                : BasicColor.DARK40
+            }
+          />
+        </ExtensionButton>
+        <ExtensionButton onClick={() => handleTimeUpdate('+')}>
+          <PlusIcon width={24} height={24} stroke={BasicColor.BLUE100} />
         </ExtensionButton>
         <StopButton onClick={() => setStop((prev) => !prev)} stop={stop}>
           <Typography font={FontType.SEMI_BOLD_BODY}>
@@ -80,13 +95,22 @@ const TimerStyled = styled.div`
   padding: 15px 20px;
 `;
 
-const TimerButtonStyled = styled.div``;
+const TimerButtonStyled = styled.div`
+  display: flex;
+`;
 
-const ExtensionButton = styled.button`
-  padding: 5px 10px;
-  background-color: ${BasicColor.BLUE100};
+const ExtensionButton = styled.button<{ disable?: boolean }>`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid
+    ${({ disable }) => (disable ? BasicColor.DARK10 : BasicColor.BLUE40)};
   border-radius: 12px;
-  margin-right: 10px;
+  margin-right: 6px;
+  transition: 0.1s;
+  cursor: ${({ disable }) => disable && 'default'};
 `;
 
 const StopButton = styled.button<{ stop: boolean }>`
@@ -96,10 +120,11 @@ const StopButton = styled.button<{ stop: boolean }>`
   border-radius: 12px;
   background-color: ${({ stop }) => (stop ? BasicColor.BLUE40 : 'none')};
   transition: 0.1s;
+  margin-left: 4px;
 `;
 
-const EmojiStyled = styled.span`
-  display: inline-flex;
+const EmojiStyled = styled.div`
+  display: flex;
   flex-direction: row;
   align-items: center;
 `;

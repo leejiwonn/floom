@@ -92,7 +92,7 @@ const StepC = ({
               onClick={handlePlusButtonClick}
               active={todos.length < 5}
             >
-              <PlusIcon width={30} height={30} />
+              <PlusIcon width={30} height={30} stroke={BasicColor.WHITE} />
             </PlusButton>
           </PlusTagStyled>
           <TagListStyled>
