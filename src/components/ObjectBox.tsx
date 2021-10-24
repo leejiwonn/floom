@@ -9,7 +9,6 @@ interface Props {
 }
 
 const ObjectBox = ({ room }: Props) => {
-  console.log(room);
   return (
     <ObjectBoxStyled>
       <ObjectVase>

@@ -4,19 +4,21 @@ import { BasicColor } from '~/utils/color';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
 
 interface Props {
-  isFull: boolean;
-  onFullButtonClick: () => void;
   type: string;
   url: string;
+  isFull?: boolean;
+  onFullButtonClick?: () => void;
 }
 
-const Screen = ({ isFull, onFullButtonClick, type, url }: Props) => {
+const Screen = ({ isFull = true, onFullButtonClick, type, url }: Props) => {
   return (
     <ScreenStyled isFull={isFull}>
       {type === 'image' && <ImageScreen url={url} />}
-      <ScreenButton onClick={onFullButtonClick}>
-        <CloseIcon stroke={BasicColor.WHITE} />
-      </ScreenButton>
+      {onFullButtonClick && (
+        <ScreenButton onClick={onFullButtonClick}>
+          <CloseIcon stroke={BasicColor.WHITE} />
+        </ScreenButton>
+      )}
     </ScreenStyled>
   );
 };
