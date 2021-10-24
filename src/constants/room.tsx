@@ -1,4 +1,22 @@
-const ROOM = {
+import type { RoomLight, RoomWallColor } from '~/types/Room';
+
+type RoomAssetName =
+  | 'VASE'
+  | 'CLOCK'
+  | 'LIGHT'
+  | 'MEMO'
+  | 'PICTURE'
+  | 'CONSOLE'
+  | 'SPEAKER'
+  | 'TABLE'
+  | 'WALL';
+
+type RoomAssets = Record<
+  RoomWallColor,
+  Record<RoomLight, Record<RoomAssetName, string>>
+>;
+
+const ROOM: RoomAssets = {
   RED: {
     ONE: {
       VASE: '/assets/images/rooms/red-1-vase.png',

@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { NextHandler } from 'next-connect';
-
-import database from '../../firebase/app';
+import { findUserByProfileId } from '~/server/db';
 import { jwtSign, jwtVerify } from './jwt';
-import { User } from '~/types/User';
 
 const THREE_MONTHS = 3 * 30 * 24 * 60 * 60;
 
@@ -26,9 +24,36 @@ export function createAuthToken(userId: string) {
 }
 
 const HEADER_PREFIX = 'Bearer';
-const userRef = database.collection('users');
 
-export async function authorizeMiddleware(
+export async function optionalAuthorize(
+  req: Request,
+  res: Response,
+  next: NextHandler,
+) {
+  const [headerPrefix, authToken] = req.headers.authorization?.split(' ') ?? [];
+
+  if (headerPrefix !== HEADER_PREFIX || authToken == null) {
+    next();
+    return;
+  }
+
+  try {
+    const profileId = await verifyAuthToken(authToken);
+    const user = await findUserByProfileId(profileId);
+
+    if (user == null || user.authToken !== authToken) {
+      next();
+      return;
+    }
+
+    req.user = user;
+    next();
+  } catch (error: unknown) {
+    next();
+  }
+}
+
+export async function authorize(
   req: Request,
   res: Response,
   next: NextHandler,
@@ -40,15 +65,21 @@ export async function authorizeMiddleware(
     return;
   }
 
-  const userId = await verifyAuthToken(authToken);
-  const doc = await userRef.doc(`${userId}`).get();
-  const user = doc.data() as User | undefined;
+  try {
+    const profileId = await verifyAuthToken(authToken);
+    const user = await findUserByProfileId(profileId);
 
-  if (user == null || user.authToken !== authToken) {
-    res.status(401).end();
-    return;
+    if (user == null || user.authToken !== authToken) {
+      res.status(401).end();
+      return;
+    }
+
+    req.user = user;
+    next();
+  } catch (error: unknown) {
+    console.error(error);
+    res.status(500).send({
+      message: (error as Error).message,
+    });
   }
-
-  req.user = user;
-  next();
 }

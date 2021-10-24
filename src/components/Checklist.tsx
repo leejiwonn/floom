@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import Typography from '~/components/Typography';
 import { Align, FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
-import useOutsideEvent from '~/utils/useOutsideEvent';
+import useOutsideEvent from '~/hooks/useOutsideEvent';
 import { Todo } from '~/types/Obejct';
 import TextInput from './TextInput';
 
@@ -21,8 +21,10 @@ interface Props {
 
 const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
   const [textInput, setTextInput] = useState('');
-  const [show, setShow] = useState(null);
-  const { modalRef } = useOutsideEvent({ onOutsideClick: () => setShow(null) });
+  const [show, setShow] = useState<boolean>();
+  const { modalRef } = useOutsideEvent<HTMLDivElement>({
+    onOutsideClick: () => setShow(undefined),
+  });
 
   const handleChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,12 +61,12 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
 
   return (
     <ChecklistStyled ref={modalRef}>
-      <ChecklistTitle noneShow={show && todos.length === 0}>
+      <ChecklistTitle noneShow={show === true && todos.length === 0}>
         <Typography font={FontType.BOLD_TITLE_02}>체크리스트</Typography>
         <ChecklistAddButton
           onClick={() => {
             setTextInput('');
-            setShow(todos.length < 5 ? true : false);
+            setShow(todos.length < 5);
           }}
           active={todos.length < 5}
         >

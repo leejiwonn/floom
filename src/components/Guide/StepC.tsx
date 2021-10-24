@@ -52,7 +52,7 @@ const StepC = ({
   };
 
   const handleNextStepButtonClick = () => {
-    onNextPage();
+    onNextPage?.();
     onSliderShow(false);
   };
 

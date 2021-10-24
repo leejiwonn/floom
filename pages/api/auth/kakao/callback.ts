@@ -1,8 +1,9 @@
+import 'reflect-metadata';
 import { Request, Response } from 'express';
 import nc from 'next-connect';
+import { getUserFromRequest } from '~/server/utils';
 
 import passport from './passport';
-import { User } from '~/types/User';
 
 const handler = nc()
   .use(passport.initialize())
@@ -13,9 +14,9 @@ const handler = nc()
       // failureRedirect: '/'
     }),
     (req: Request, res: Response) => {
-      console.log(req.user);
-
-      res.redirect(`/login-success?authToken=${(req.user as User).authToken}`);
+      res.redirect(
+        `/login-success?authToken=${getUserFromRequest(req).authToken}`,
+      );
     },
   );
 

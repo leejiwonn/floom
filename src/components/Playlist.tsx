@@ -1,18 +1,19 @@
 import styled from '@emotion/styled';
-import { useEffect, useState, useRef } from 'react';
-import MUSIC from '~/constants/music';
+import { useEffect, useRef, useState } from 'react';
+import { Music } from '~/types/Music';
 
 import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
 import { FontType } from '~/utils/font';
+import { formatDuration } from '~/utils/format';
+
+import PauseIcon from '../../public/assets/icons/icon-pause.svg';
+import PlayIcon from '../../public/assets/icons/icon-play.svg';
 import PlaylistControls from './PlaylistControls';
 import Typography from './Typography';
 
-import PlayIcon from '../../public/assets/icons/icon-play.svg';
-import PauseIcon from '../../public/assets/icons/icon-pause.svg';
-
 interface Props {
-  playlist: Array<keyof typeof MUSIC>;
+  playlist: Music[];
   viewHeight: number;
   controls?: boolean;
   autoplay?: boolean;
@@ -20,7 +21,7 @@ interface Props {
 }
 
 // 저전력 모드 등에서는 play 재생 시에 오류 발생함
-const playAudioSafely = async (audio?: HTMLAudioElement) => {
+const playAudioSafely = async (audio: HTMLAudioElement | null) => {
   if (audio == null) {
     return;
   }
@@ -30,16 +31,6 @@ const playAudioSafely = async (audio?: HTMLAudioElement) => {
   } catch (error) {
     console.warn(error);
   }
-};
-
-const formatTime = (currentTime: number) => {
-  const minutes = Math.floor(currentTime / 60);
-  const seconds = Math.floor(currentTime % 60);
-  const currentsSeconds = seconds >= 10 ? seconds : '0' + (seconds % 60);
-
-  const formatTime = minutes + ':' + currentsSeconds;
-
-  return formatTime;
 };
 
 const Playlist = ({
@@ -71,7 +62,7 @@ const Playlist = ({
   }, [isPlaying]);
 
   const updatePlayer = (index: number) => {
-    const currentMusic = MUSIC[playlist[index]];
+    const currentMusic = playlist[index];
 
     if (playerRef.current != null) {
       playerRef.current.src = currentMusic.url;
@@ -110,10 +101,9 @@ const Playlist = ({
         const playPercent = 100 * (audio.currentTime / duration);
         audio.style.width = playPercent + '%';
       }
-      const currentTime = formatTime(parseInt(String(audio.currentTime)));
-      setCurrentTime(currentTime);
+      setCurrentTime(formatDuration(audio.currentTime));
 
-      if (currentTime === MUSIC[playlist[currentIndex]].duration) {
+      if (audio.currentTime === playlist[currentIndex].duration) {
         handleNextButtonClick();
       }
     };
@@ -127,14 +117,10 @@ const Playlist = ({
 
   return (
     <PlaylistStyled size={size}>
-      <audio
-        ref={playerRef}
-        src={MUSIC[playlist?.[0]]?.url}
-        css={visuallyHidden}
-      />
+      <audio ref={playerRef} src={playlist[0].url} css={visuallyHidden} />
       {controls && (
         <PlaylistControls
-          music={MUSIC[playlist[currentIndex]]}
+          music={playlist[currentIndex]}
           isPlaying={isPlaying}
           currentTime={currentTime}
           onPlayPauseClick={() => setIsPlaying((prev) => !prev)}
@@ -145,7 +131,7 @@ const Playlist = ({
         />
       )}
       <PlaylistView controls={controls} viewHeight={viewHeight}>
-        {playlist?.map((value, index) => (
+        {playlist.map((music, index) => (
           <PlaylistItem
             key={index}
             onClick={() => {
@@ -170,7 +156,7 @@ const Playlist = ({
                   }
                   marginBottom={5}
                 >
-                  {MUSIC[value].name}
+                  {music.name}
                 </Typography>
                 <Typography
                   font={
@@ -180,7 +166,7 @@ const Playlist = ({
                   }
                   color={BasicColor.DARK70}
                 >
-                  {MUSIC[value].author}
+                  {music.author}
                 </Typography>
               </PlaylistItemInfo>
             </PlaylistLeftView>
@@ -188,7 +174,9 @@ const Playlist = ({
               font={FontType.REGULAR_CAPTION}
               color={BasicColor.DARK40}
             >
-              {currentIndex === index ? currentTime : MUSIC[value].duration}
+              {currentIndex === index
+                ? currentTime
+                : formatDuration(music.duration)}
             </Typography>
           </PlaylistItem>
         ))}
@@ -205,7 +193,7 @@ const PlaylistStyled = styled.div<{ size: 'big' | 'small' }>`
   z-index: 99;
 `;
 
-const PlaylistView = styled.div<{ controls: boolean; viewHeight: number }>`
+const PlaylistView = styled.div<{ controls?: boolean; viewHeight: number }>`
   width: 100%;
   height: ${({ viewHeight }) => viewHeight + 'vh'};
   overflow: auto;

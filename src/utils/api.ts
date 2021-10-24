@@ -1,13 +1,23 @@
 import axios, { AxiosError } from 'axios';
+import { isServer } from '~/utils/is';
 import { getAuthTokenFromLocalStorage } from './auth';
 
 const AUTHORIZATION_HEADER_PREFIX = 'Bearer';
 
-axios.interceptors.request.use((config) => {
-  const authToken = getAuthTokenFromLocalStorage();
+const api = axios.create({
+  baseURL: isServer() ? 'http://localhost:3000' : undefined,
+  withCredentials: true,
+});
 
-  if (config.headers.Authorization == null && authToken != null) {
-    config.headers.Authorization = `${AUTHORIZATION_HEADER_PREFIX} ${authToken}`;
+api.interceptors.request.use((config) => {
+  if (!isServer()) {
+    const authToken = getAuthTokenFromLocalStorage();
+
+    console.log('???', authToken);
+
+    if (config.headers.Authorization == null && authToken != null) {
+      config.headers.Authorization = `${AUTHORIZATION_HEADER_PREFIX} ${authToken}`;
+    }
   }
 
   return config;
@@ -21,4 +31,4 @@ export function isAxiosError(error: unknown): error is AxiosError {
   );
 }
 
-export default axios;
+export default api;

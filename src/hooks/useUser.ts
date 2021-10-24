@@ -1,13 +1,21 @@
-import { useQuery } from 'react-query';
+import useSWR from 'swr';
+import { User } from '~/types/User';
 
-import api from '~/utils/api';
+import api, { isAxiosError } from '~/utils/api';
+import { saveAuthTokenInLocalStorage } from '~/utils/auth';
 
 export const useUserProfile = () =>
-  useQuery('getUserProfile', async () => {
+  useSWR('getUserProfile', async () => {
     try {
-      const { data } = await api.get(`/api/user`);
+      const { data } = await api.get<User>(`/api/user`);
+
+      saveAuthTokenInLocalStorage(data.authToken);
+
       return data;
     } catch (error) {
-      console.warn(error);
+      if (isAxiosError(error) && error.response?.status === 401) {
+        return null;
+      }
+      throw error;
     }
   });

@@ -28,7 +28,7 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
 
   const handleNextStepButtonClick = () => {
     if (textInput !== '') {
-      onNextPage();
+      onNextPage?.();
       onChangeGoalText(textInput);
     }
   };

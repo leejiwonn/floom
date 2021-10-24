@@ -1,23 +1,15 @@
-import { useQuery } from 'react-query';
+import useSWR from 'swr';
+import { RoomSimple } from '~/types/Room';
 
 import api from '~/utils/api';
-import { Room } from '~/types/Room';
 
-export const useCategoryRooms = (category: string) =>
-  useQuery(
-    ['getCategoryRooms', category],
-    async () =>
-      await api
-        .get<Room[]>(`/api/rooms?category=${category}`)
-        .then((res) => res.data),
-  );
+export const useRooms = (categoryName?: string) =>
+  useSWR(['getCategoryRooms', categoryName], async () => {
+    const { data } = await api.get<RoomSimple[]>(
+      categoryName != null
+        ? `/api/rooms?categoryName=${categoryName}`
+        : '/api/rooms',
+    );
 
-export const useRoom = (category: string, id: string) => {
-  return useQuery(
-    ['getRoom', category, id],
-    async () =>
-      await api
-        .get<Room>(`/api/rooms?category=${category}&id=${id}`)
-        .then((res) => res.data),
-  );
-};
+    return data;
+  });
