@@ -4,8 +4,14 @@ import { getAuthTokenFromLocalStorage } from './auth';
 
 const AUTHORIZATION_HEADER_PREFIX = 'Bearer';
 
+const baseURL = isServer()
+  ? process.env.NODE_ENV === 'production'
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000'
+  : undefined;
+
 const api = axios.create({
-  baseURL: isServer() ? 'http://localhost:3000' : undefined,
+  baseURL,
   withCredentials: true,
 });
 
