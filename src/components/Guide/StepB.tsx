@@ -28,12 +28,12 @@ const StepB = ({
   const [currentTime, setCurrentTime] = useState(time);
 
   const handlePrevStepButtonClick = () => {
-    onPrevPage();
+    onPrevPage?.();
     onChangePlay?.(false);
   };
 
   const handleNextStepButtonClick = () => {
-    onNextPage();
+    onNextPage?.();
     onChangePlay?.(true);
     onChangeTime?.(currentTime);
   };

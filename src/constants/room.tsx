@@ -1,5 +1,163 @@
-const ROOM = {
+import { RoomLight, RoomWallColor } from '~/types/Room';
+
+type RoomAssetName =
+  | 'VASE'
+  | 'CLOCK'
+  | 'LIGHT'
+  | 'MEMO'
+  | 'PICTURE'
+  | 'CONSOLE'
+  | 'SPEAKER'
+  | 'TABLE'
+  | 'WALL';
+
+type RoomAssets = Record<
+  RoomWallColor,
+  Record<RoomLight, Record<RoomAssetName, string>>
+>;
+
+const RoomAssets: RoomAssets = {
   YELLOW: {
+    ONE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    TWO: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    THREE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+  },
+  BLUE: {
+    ONE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    TWO: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    THREE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+  },
+  GREEN: {
+    ONE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    TWO: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    THREE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+  },
+  RED: {
+    ONE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    TWO: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+    THREE: {
+      VASE: '/assets/images/yellow-1-vase.png',
+      CLOCK: '/assets/images/yellow-1-clock.png',
+      LIGHT: '/assets/images/yellow-1-light.png',
+      MEMO: '/assets/images/yellow-1-memo.png',
+      PICTURE: '/assets/images/yellow-1-picture.png',
+      CONSOLE: '/assets/images/yellow-1-console.png',
+      SPEAKER: '/assets/images/yellow-1-speaker.png',
+      TABLE: '/assets/images/yellow-1-table.png',
+      WALL: '/assets/images/yellow-1-wall.png',
+    },
+  },
+  PURPLE: {
     ONE: {
       VASE: '/assets/images/yellow-1-vase.png',
       CLOCK: '/assets/images/yellow-1-clock.png',
@@ -36,4 +194,4 @@ const ROOM = {
   },
 };
 
-export default ROOM;
+export default RoomAssets;

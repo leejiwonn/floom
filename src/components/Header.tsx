@@ -6,7 +6,7 @@ import Link from 'next/link';
 import AudioPlayer from '~/components/AudioPlayer';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import useOutsideEvent from '~/utils/useOutsideEvent';
+import useOutsideEvent from '~/hooks/useOutsideEvent';
 import { useUserProfile } from '~/hooks/useUser';
 import Typography from './Typography';
 
@@ -16,9 +16,9 @@ import WhiteLogoIcon from '../../public/assets/icons/icon-logo-white.svg';
 import BlueLogoIcon from '../../public/assets/icons/icon-logo-blue.svg';
 
 const Header = () => {
-  const { data: user, isLoading } = useUserProfile();
+  const { data: user } = useUserProfile();
   const [show, setShow] = useState(false);
-  const { modalRef } = useOutsideEvent({
+  const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setShow(false),
   });
 
@@ -48,13 +48,13 @@ const Header = () => {
         </Logo>
       </Link>
       <RightStyled>
-        {!isLoading && router.pathname !== '/play' ? (
-          user ? (
+        {user !== undefined && router.pathname !== '/play' ? (
+          user != null ? (
             <UserInfo>
               <Typography font={FontType.REGULAR_BODY}>
                 안녕하세요,{' '}
                 <Typography tag="span" font={FontType.BOLD_BODY}>
-                  {user.name}
+                  {user.displayName}
                 </Typography>{' '}
                 님!
               </Typography>

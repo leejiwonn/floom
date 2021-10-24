@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Typography from '~/components/Typography';
 import { FontType } from '~/utils/font';
 import { BasicColor } from '~/utils/color';
-import useOutsideEvent from '~/utils/useOutsideEvent';
+import useOutsideEvent from '~/hooks/useOutsideEvent';
 
 import DropdownIcon from '../../public/assets/icons/icon-dropdown.svg';
 import LoopIcon from '../../public/assets/icons/icon-loop.svg';
@@ -18,7 +18,7 @@ const values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
 
 const Dropdown = ({ time, onChangeTime }: Props) => {
   const [show, setShow] = useState(false);
-  const { modalRef } = useOutsideEvent({
+  const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setShow(false),
   });
 

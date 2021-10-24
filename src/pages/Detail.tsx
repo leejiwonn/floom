@@ -1,37 +1,36 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import Playlist from '~/components/Playlist';
 
 import Typography from '~/components/Typography';
-import Playlist from '~/components/Playlist';
+import EMOJI from '~/constants/emoji';
+import { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import { getCatecory } from '~/utils/category';
-import { useRoom } from '~/hooks/useRoom';
-import EMOJI from '~/constants/emoji';
 
 interface Props {
-  category: string;
-  id: string;
+  room: Room;
 }
 
-const Detail = ({ category, id }: Props) => {
-  const { data } = useRoom(category, id);
+const Detail = ({ room }: Props) => {
+  const playCount = room.reviews.length;
+  const recommendCount = room.reviews.filter((x) => x.recommend).length;
 
   return (
     <DetailStyled>
       <RoomImageStyled>
-        <RoomImage url={data?.roomImage} />
-        <ThumImage url={data?.screen[1]} />
+        <RoomImage url={room.roomImage} />
+        <ThumImage url={room.assets[0]?.url} />
       </RoomImageStyled>
       <RoomInfoStyled>
         <RoomTitleStyled>
           <RoomTitleInfo>
             <Typography font={FontType.SEMI_BOLD_HEAD_03}>
-              {getCatecory(category)}
+              {room.category.name}
             </Typography>
             <RoomTitleInfoLine />
             <Typography font={FontType.EXTRA_BOLD_HEAD_03}>
-              {data?.title}
+              {room.title}
             </Typography>
           </RoomTitleInfo>
           <Typography
@@ -39,11 +38,11 @@ const Detail = ({ category, id }: Props) => {
             color={BasicColor.DARK70}
             marginBottom={24}
           >
-            {data?.creator} 님의 방
+            {room.creator.displayName} 님의 방
           </Typography>
           <TagStyled>
-            {data?.tags.map((tag, index) => (
-              <TagItem key={index}>
+            {room.tags.map((tag, index) => (
+              <TagItem key={tag + index}>
                 <Typography
                   font={FontType.SEMI_BOLD_BODY}
                   color={BasicColor.GREEN150}
@@ -62,7 +61,7 @@ const Detail = ({ category, id }: Props) => {
                 방문
               </Typography>
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
-                {data?.playCount}
+                {playCount}
               </Typography>
             </CaptionItem>
             <CaptionLine />
@@ -74,7 +73,7 @@ const Detail = ({ category, id }: Props) => {
                 추천
               </Typography>
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
-                {data?.recommendCount}
+                {recommendCount}
               </Typography>
             </CaptionItem>
           </CaptionStyled>
@@ -84,9 +83,9 @@ const Detail = ({ category, id }: Props) => {
             <Typography font={FontType.BOLD_TITLE_01} marginBottom={30}>
               다른 사람들은 이런 일에 몰입했어요!
             </Typography>
-            {data?.usedUsers.length ? (
+            {room.reviews.length > 0 ? (
               <CommentStyled>
-                {data?.usedUsers.map((item, index) => (
+                {room.reviews.map((review, index) => (
                   <CommentItem key={index}>
                     <CommentTitle>
                       <CommentTitleLeft>
@@ -95,18 +94,18 @@ const Detail = ({ category, id }: Props) => {
                           color={BasicColor.BLUE100}
                           marginRight={3}
                         >
-                          {item.objective}
+                          {review.objective}
                         </Typography>
-                        {item.recommend && EMOJI.RECOMMEND}
+                        {review.recommend ? EMOJI.RECOMMEND : null}
                       </CommentTitleLeft>
                       <Typography
                         font={FontType.LIGHT_BODY}
                         color={BasicColor.DARK70}
                       >
-                        {item.player}
+                        {review.author?.displayName ?? review.guestName}
                       </Typography>
                     </CommentTitle>
-                    <Typography marginTop={10}>{item.comment}</Typography>
+                    <Typography marginTop={10}>{review.comment}</Typography>
                   </CommentItem>
                 ))}
               </CommentStyled>
@@ -131,15 +130,11 @@ const Detail = ({ category, id }: Props) => {
             <Typography font={FontType.BOLD_TITLE_01} marginBottom={16}>
               플레이리스트
             </Typography>
-            <Playlist
-              playlist={data?.music as any}
-              controls={false}
-              viewHeight={34}
-            />
+            <Playlist playlist={room.musics} controls={false} viewHeight={34} />
           </PlaylistStyled>
         </RoomContentStyled>
       </RoomInfoStyled>
-      <Link href={`/play?category=${category}&id=${id}`}>
+      <Link href={`/play?roomId=${room.id}`}>
         <PlayButton>
           <Typography
             tag="span"

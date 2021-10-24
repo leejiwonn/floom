@@ -2,10 +2,9 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import Modal from '~/components/Modal';
 
-import ObjectBox from '~/components/ObjectBox';
 import Typography from '~/components/Typography';
 import EMOJI from '~/constants/emoji';
-import ROOM from '~/constants/room';
+import RoomAssets from '~/constants/room';
 import { useUserProfile } from '~/hooks/useUser';
 import { Light } from '~/types/Obejct';
 import { BasicColor } from '~/utils/color';
@@ -37,13 +36,12 @@ const Create = () => {
         <ContentView></ContentView>
         <ObjectView
           backgroundImage={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.WALL
+            RoomAssets?.[room?.wallColor as keyof typeof RoomAssets]?.[
+              room?.light as Light
+            ]?.WALL
           }
         >
-          <LayerBox>
-            <ObjectBox room={room} />
-          </LayerBox>
+          <LayerBox>{/*<ObjectBox room={room} />*/}</LayerBox>
         </ObjectView>
       </CreateStyled>
       {visibleModal && (

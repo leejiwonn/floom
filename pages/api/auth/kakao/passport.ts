@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import 'reflect-metadata';
 import passport from 'passport';
 import { Strategy as KakaoStrategy } from 'passport-kakao';
-
-import database from '../../../../firebase/app';
 import { createAuthToken } from '~/server/auth';
-import { User, UserProvider } from '~/types/User';
-
-const userRef = database.collection('users');
+import { findUserByProfileId, saveUser } from '~/server/db';
+import { UserEntity } from '~/server/entities/UserEntity';
+import { UserProvider } from '~/types/User';
 
 const callbackURL =
   process.env.NODE_ENV === 'production'
@@ -15,29 +15,27 @@ const callbackURL =
 passport.use(
   new KakaoStrategy(
     {
-      clientID: process.env.KAKAO_CLIENT_ID,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET,
+      clientID: process.env.KAKAO_CLIENT_ID!,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
       callbackURL,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const userId = String(profile.id);
-
-      const doc = await userRef.doc(userId).get();
-      let user = doc.data() as User | undefined;
+      const profileId = String(profile.id);
+      let user = await findUserByProfileId(profileId);
 
       if (user == null) {
-        user = {
-          id: profile.id,
-          provider: profile.provider as UserProvider,
-          providerAccessToken: accessToken,
-          providerRefreshToken: refreshToken,
-          username: profile.username,
-          displayName: profile.displayName,
-          authToken: await createAuthToken(userId),
-          email: profile.emails?.[0]?.value,
-        };
+        user = new UserEntity();
 
-        await userRef.doc(userId).set(user);
+        user.profileId = profileId;
+        user.provider = profile.provider as UserProvider;
+        user.providerAccessToken = accessToken;
+        user.providerRefreshToken = refreshToken;
+        user.email = profile.emails?.[0]?.value;
+        user.username = profile.username;
+        user.displayName = profile.displayName;
+        user.authToken = await createAuthToken(profileId);
+
+        user = await saveUser(user);
       }
 
       done(null, user);

@@ -4,12 +4,13 @@ import { LegacyRef } from 'react';
 import { Music } from '~/types/Music';
 import { BasicColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import Typography from './Typography';
+import { formatDuration } from '~/utils/format';
 
-import PrevIcon from '../../public/assets/icons/icon-prev.svg';
 import NextIcon from '../../public/assets/icons/icon-next.svg';
-import PlayIcon from '../../public/assets/icons/icon-play.svg';
 import PauseIcon from '../../public/assets/icons/icon-pause.svg';
+import PlayIcon from '../../public/assets/icons/icon-play.svg';
+import PrevIcon from '../../public/assets/icons/icon-prev.svg';
+import Typography from './Typography';
 
 interface Props {
   music: Music;
@@ -68,7 +69,7 @@ const PlaylistControls = ({
             {currentTime}
           </Typography>
           <Typography font={FontType.LIGHT_CAPTION} color={BasicColor.BLUE80}>
-            {music.duration}
+            {formatDuration(music.duration)}
           </Typography>
         </CurrentTime>
       </PlayControls>
