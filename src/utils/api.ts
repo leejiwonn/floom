@@ -13,8 +13,6 @@ api.interceptors.request.use((config) => {
   if (!isServer()) {
     const authToken = getAuthTokenFromLocalStorage();
 
-    console.log('???', authToken);
-
     if (config.headers.Authorization == null && authToken != null) {
       config.headers.Authorization = `${AUTHORIZATION_HEADER_PREFIX} ${authToken}`;
     }
