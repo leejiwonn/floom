@@ -6,7 +6,7 @@ import useOutsideEvent from '~/utils/useOutsideEvent';
 import Typography from './Typography';
 
 interface Props {
-  setShow: (type: string) => void;
+  setShow?: (type: string) => void;
   title: string;
   emoji?: React.ReactNode;
   subTitle: React.ReactElement;
@@ -32,7 +32,7 @@ const Modal = ({
 }: Props) => {
   const { modalRef } = useOutsideEvent({
     onOutsideClick: () => {
-      setShow(null);
+      setShow?.(null);
       resetAction?.();
     },
   });
