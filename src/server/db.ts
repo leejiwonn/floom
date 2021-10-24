@@ -46,7 +46,7 @@ function prepareConnection() {
         ],
         logging: 'all',
         useUTC: false,
-        connectTimeoutMS: 7_000,
+        connectTimeoutMS: 9_999,
       });
     })();
   }
