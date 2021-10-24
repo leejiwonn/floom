@@ -44,6 +44,7 @@ function prepareConnection() {
           RoomEntity,
           UserEntity,
         ],
+        logging: 'all',
         useUTC: false,
         connectTimeoutMS: 7_000,
       });
