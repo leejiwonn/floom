@@ -144,7 +144,7 @@ const KakaoLoginButton = styled.a`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${BasicColor.YELLOW};
+  background-color: ${BasicColor.YELLOW100};
   padding: 10px 15px;
   border-radius: 34px;
 `;
