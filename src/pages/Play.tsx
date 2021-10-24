@@ -382,9 +382,12 @@ const Play = ({ category, id }: Props) => {
             </PopupBox>
           )}
         </LayerBox>
-        <ScreenStyled isFull={isFull}>
-          <Screen type={data?.screen[0]} url={data?.screen[1]} />
-        </ScreenStyled>
+        <Screen
+          isFull={isFull}
+          onFullButtonClick={() => setIsPull(false)}
+          type={data?.screen[0]}
+          url={data?.screen[1]}
+        />
         {currentPage >= 3 && (
           <>
             <ContentTitleView>
@@ -419,10 +422,7 @@ const Play = ({ category, id }: Props) => {
               onAddTodo={handleAddTodo}
             />
             <EndButton onClick={() => setVisibleModal('finished')}>
-              <Typography
-                font={FontType.BOLD_TITLE_01}
-                color={BasicColor.DARK100}
-              >
+              <Typography font={FontType.BOLD_BODY} color={BasicColor.WHITE}>
                 체험 종료
               </Typography>
             </EndButton>
@@ -788,18 +788,6 @@ const PopupMemoTitle = styled.div`
   margin-bottom: 10px;
 `;
 
-const ScreenStyled = styled.div<{ isFull: boolean }>`
-  width: 100%;
-  height: 100%;
-  display: ${({ isFull }) => (isFull ? 'flex' : 'none')};
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 97;
-`;
-
 const ContentTitleView = styled.div`
   width: 400px;
   height: auto;
@@ -816,14 +804,15 @@ const ContentTitleView = styled.div`
 
 const EndButton = styled.button`
   position: absolute;
-  right: 30px;
-  bottom: 30px;
+  right: 60px;
+  bottom: 40px;
   padding: 15px 60px;
   border: 2px solid ${BasicColor.BLUE40};
   box-sizing: border-box;
   border-radius: 18px;
-  background-color: ${BasicColor.WHITE};
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(14px);
   z-index: 98;
 `;
 
