@@ -12,13 +12,6 @@ import { User } from '~/types/User';
 let connectionReadyPromise: Promise<void> | null = null;
 
 function prepareConnection() {
-  console.log('endpoint', process.env.RDB_ENDPOINT);
-  console.log('username', process.env.RDB_USERNAME);
-  console.log('password', process.env.RDB_PASSWORD?.slice(0, 5));
-  console.log('port', Number(process.env.RDB_PORT));
-  console.log('db', process.env.RDB_DATABASE);
-  console.log('?', connectionReadyPromise);
-
   if (connectionReadyPromise == null) {
     connectionReadyPromise = (async () => {
       // clean up old connection that references outdated hot-reload classes
@@ -46,7 +39,6 @@ function prepareConnection() {
         ],
         logging: 'all',
         useUTC: false,
-        connectTimeoutMS: 9_999,
       });
     })();
   }
