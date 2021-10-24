@@ -9,7 +9,7 @@ import { UserProvider } from '~/types/User';
 
 const callbackURL =
   process.env.NODE_ENV === 'production'
-    ? 'https://floom.vercel.app/api/auth/kakao/callback'
+    ? `https://${process.env.VERCEL_URL}/api/auth/kakao/callback`
     : 'http://localhost:3000/api/auth/kakao/callback';
 
 passport.use(
