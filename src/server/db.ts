@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { nanoid } from 'nanoid';
 import { createConnection, getConnection } from 'typeorm';
 import { MusicEntity } from '~/server/entities/MusicEntity';
@@ -11,10 +12,7 @@ import { User } from '~/types/User';
 let connectionReadyPromise: Promise<void> | null = null;
 
 function prepareConnection() {
-  const { RDB_ENDPOINT, RDB_PORT, RDB_USERNAME, RDB_PASSWORD, RDB_DATABASE } =
-    process.env;
-
-  if (!connectionReadyPromise) {
+  if (connectionReadyPromise == null) {
     connectionReadyPromise = (async () => {
       // clean up old connection that references outdated hot-reload classes
       try {
@@ -27,11 +25,11 @@ function prepareConnection() {
       // wait for new default connection
       await createConnection({
         type: 'postgres',
-        host: RDB_ENDPOINT,
-        port: Number(RDB_PORT),
-        username: RDB_USERNAME,
-        password: RDB_PASSWORD,
-        database: RDB_DATABASE,
+        host: process.env.RDB_ENDPOINT!,
+        port: Number(process.env.RDB_PORT!),
+        username: process.env.RDB_USERNAME,
+        password: process.env.RDB_PASSWORD,
+        database: process.env.RDB_DATABASE,
         entities: [
           MusicEntity,
           ReviewEntity,
