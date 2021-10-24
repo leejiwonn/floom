@@ -1,16 +1,22 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import Modal from '~/components/Modal';
 
 import ObjectBox from '~/components/ObjectBox';
+import Typography from '~/components/Typography';
+import EMOJI from '~/constants/emoji';
 import ROOM from '~/constants/room';
 import { useUserProfile } from '~/hooks/useUser';
 import { Light } from '~/types/Obejct';
 import { BasicColor } from '~/utils/color';
+import { Align, FontType } from '~/utils/font';
 
 const Create = () => {
   const { data: user } = useUserProfile();
 
-  const [room, setRoom] = useState({
+  const [visibleModal, setVisibleModal] = useState(true);
+  const [category, setCategory] = useState('study');
+  const [room] = useState({
     id: '',
     title: '',
     creator: user,
@@ -26,19 +32,83 @@ const Create = () => {
   });
 
   return (
-    <CreateStyled>
-      <ContentView></ContentView>
-      <ObjectView
-        backgroundImage={
-          ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-            ?.WALL
-        }
-      >
-        <LayerBox>
-          <ObjectBox room={room} />
-        </LayerBox>
-      </ObjectView>
-    </CreateStyled>
+    <>
+      <CreateStyled>
+        <ContentView></ContentView>
+        <ObjectView
+          backgroundImage={
+            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
+              ?.WALL
+          }
+        >
+          <LayerBox>
+            <ObjectBox room={room} />
+          </LayerBox>
+        </ObjectView>
+      </CreateStyled>
+      {visibleModal && (
+        <Modal
+          title="카테고리 선택"
+          subTitle={<>방에서 어떤 일을 하고싶으세요?</>}
+          content="자유롭게 선택해주세요!"
+          action={
+            <CategoryStyled>
+              <CategoryItem onClick={() => setCategory('study')}>
+                <CategoryItemIcon active={category === 'study'}>
+                  {EMOJI.STUDY}
+                </CategoryItemIcon>
+                <Typography
+                  font={FontType.SEMI_BOLD_BODY}
+                  color={
+                    category === 'study'
+                      ? BasicColor.BLUE100
+                      : BasicColor.DARK100
+                  }
+                  align={Align.CENTER}
+                >
+                  학습
+                </Typography>
+              </CategoryItem>
+              <CategoryItem onClick={() => setCategory('work')}>
+                <CategoryItemIcon active={category === 'work'}>
+                  {EMOJI.WORK}
+                </CategoryItemIcon>
+                <Typography
+                  font={FontType.SEMI_BOLD_BODY}
+                  color={
+                    category === 'work'
+                      ? BasicColor.BLUE100
+                      : BasicColor.DARK100
+                  }
+                  align={Align.CENTER}
+                >
+                  업무
+                </Typography>
+              </CategoryItem>
+              <CategoryItem onClick={() => setCategory('rest')}>
+                <CategoryItemIcon active={category === 'rest'}>
+                  {EMOJI.REST}
+                </CategoryItemIcon>
+                <Typography
+                  font={FontType.SEMI_BOLD_BODY}
+                  color={
+                    category === 'rest'
+                      ? BasicColor.BLUE100
+                      : BasicColor.DARK100
+                  }
+                  align={Align.CENTER}
+                >
+                  휴식
+                </Typography>
+              </CategoryItem>
+            </CategoryStyled>
+          }
+          buttonActive
+          buttonText="완료"
+          onButtonClick={() => setVisibleModal(false)}
+        />
+      )}
+    </>
   );
 };
 
@@ -82,6 +152,36 @@ const LayerBox = styled.div`
   bottom: 0;
   transition: 0.4s ease-in-out;
   z-index: 1;
+`;
+
+const CategoryStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+`;
+
+const CategoryItem = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px;
+`;
+
+const CategoryItemIcon = styled.div<{ active: boolean }>`
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ active }) =>
+    active ? BasicColor.BLUE80 : BasicColor.WHITE};
+  box-sizing: border-box;
+  box-shadow: ${({ active }) => !active && '0px 4px 4px rgba(0, 0, 0, 0.08)'};
+  border: 1px solid ${BasicColor.BLUE100};
+  border-radius: 18px;
+  margin-bottom: 10px;
+  transition: 0.1s;
 `;
 
 export default Create;
