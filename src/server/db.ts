@@ -13,7 +13,11 @@ let connectionReadyPromise: Promise<void> | null = null;
 
 function prepareConnection() {
   console.log('endpoint', process.env.RDB_ENDPOINT);
+  console.log('username', process.env.RDB_USERNAME);
+  console.log('password', process.env.RDB_PASSWORD?.slice(0, 5));
   console.log('port', Number(process.env.RDB_PORT));
+  console.log('db', process.env.RDB_DATABASE);
+  console.log('?', connectionReadyPromise);
 
   if (connectionReadyPromise == null) {
     connectionReadyPromise = (async () => {
