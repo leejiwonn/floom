@@ -113,11 +113,9 @@ const Home = () => {
           ))}
         </RoomStyled>
       </RoomsStyled>
-      <Link href={`/create`}>
-        <CreateButton>
-          <CreateIcon />
-        </CreateButton>
-      </Link>
+      <CreateButton href={user ? '/create' : '/api/auth/kakao'}>
+        <CreateIcon />
+      </CreateButton>
     </HomeStyled>
   );
 };
@@ -235,7 +233,7 @@ const ScreenStyled = styled.div`
   border-radius: 20px;
 `;
 
-const CreateButton = styled.div`
+const CreateButton = styled.a`
   width: 70px;
   height: 70px;
   display: flex;
@@ -248,6 +246,7 @@ const CreateButton = styled.div`
   background-color: ${BasicColor.GREEN100};
   border: 2px solid ${BasicColor.GREEN150};
   border-radius: 50%;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 `;
 
