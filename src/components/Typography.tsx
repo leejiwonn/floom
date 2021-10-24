@@ -1,11 +1,12 @@
+import { ReactNode } from 'react';
 import { BasicColor } from '~/utils/color';
-import { Font, Align, FontType } from '~/utils/font';
+import { Align, Font, FontType } from '~/utils/font';
 
 type TypographyTag = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span';
 
 interface Props {
   tag?: TypographyTag;
-  children: React.ReactNode;
+  children: ReactNode;
   font?: FontType;
   color?: BasicColor;
   align?: Align;

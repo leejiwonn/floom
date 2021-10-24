@@ -8,9 +8,10 @@ import {
   VerifyOptions,
 } from 'jsonwebtoken';
 
-import { AnyObject } from '../utils/typings';
+import type { AnyObject } from '~/utils/typings';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 if (JWT_SECRET == null) {
   throw new Error('"JWT_SECRET"을 설정해주세요.');
@@ -22,7 +23,8 @@ export function jwtSign<T extends AnyObject>(data: T, options?: SignOptions) {
       if (error != null) {
         reject(error);
       } else {
-        resolve(encoded);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        resolve(encoded!);
       }
     });
   });

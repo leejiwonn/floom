@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
-import ROOM from '~/constants/room';
-import { Light } from '~/types/Obejct';
+import RoomAssets from '~/constants/room';
 import { Room } from '~/types/Room';
 
 interface Props {
@@ -12,76 +11,37 @@ const ObjectBox = ({ room }: Props) => {
   return (
     <ObjectBoxStyled>
       <ObjectVase>
-        <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.VASE
-          }
-          alt="vase"
-        />
+        <img src={RoomAssets[room.wallColor][room.light].VASE} alt="화분" />
       </ObjectVase>
       <ObjectClock>
-        <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.CLOCK
-          }
-          alt="clock"
-        />
+        <img src={RoomAssets[room.wallColor][room.light].CLOCK} alt="시계" />
       </ObjectClock>
       <ObjectMemo>
-        <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.MEMO
-          }
-          alt="memo"
-        />
+        <img src={RoomAssets[room.wallColor][room.light].MEMO} alt="메모지" />
       </ObjectMemo>
       <ObjectPicture>
         <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.PICTURE
-          }
-          alt="picture"
+          src={RoomAssets[room.wallColor][room.light].PICTURE}
+          alt="액자(포스터)"
         />
       </ObjectPicture>
       <ObjectConsole>
         <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.CONSOLE
-          }
-          alt="console"
+          src={RoomAssets[room.wallColor][room.light].CONSOLE}
+          alt="가구장"
         />
       </ObjectConsole>
       <ObjectSpeaker>
         <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.SPEAKER
-          }
-          alt="speaker"
+          src={RoomAssets[room.wallColor][room.light].SPEAKER}
+          alt="스피커"
         />
       </ObjectSpeaker>
       <ObjectTable>
-        <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.TABLE
-          }
-          alt="table"
-        />
+        <img src={RoomAssets[room.wallColor][room.light].TABLE} alt="책상" />
       </ObjectTable>
       <ObjectLight>
-        <img
-          src={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.LIGHT
-          }
-          alt="light"
-        />
+        <img src={RoomAssets[room.wallColor][room.light].LIGHT} alt="조명" />
       </ObjectLight>
     </ObjectBoxStyled>
   );

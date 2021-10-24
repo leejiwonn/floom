@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
+import { ReactElement, ReactNode } from 'react';
+import useOutsideEvent from '~/hooks/useOutsideEvent';
 
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import useOutsideEvent from '~/utils/useOutsideEvent';
 import Typography from './Typography';
 
 interface Props {
-  setShow?: (type: string) => void;
+  setShow?: (type?: string) => void;
   title: string;
-  emoji?: React.ReactNode;
-  subTitle: React.ReactElement;
+  emoji?: ReactNode;
+  subTitle: ReactElement;
   content: string;
-  action?: React.ReactNode;
+  action?: ReactNode;
   resetAction?: () => void;
   buttonActive?: boolean;
   buttonText: string;
@@ -30,9 +31,9 @@ const Modal = ({
   buttonText,
   onButtonClick,
 }: Props) => {
-  const { modalRef } = useOutsideEvent({
+  const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => {
-      setShow?.(null);
+      setShow?.();
       resetAction?.();
     },
   });

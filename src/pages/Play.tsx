@@ -1,47 +1,42 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState, useRef } from 'react';
 import Router from 'next/router';
-
-import { useRoom } from '~/hooks/useRoom';
-import { useUserProfile } from '~/hooks/useUser';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Checklist from '~/components/Checklist';
 import StepA from '~/components/Guide/StepA';
 import StepB from '~/components/Guide/StepB';
 import StepC from '~/components/Guide/StepC';
-import Typography from '~/components/Typography';
-import Screen from '~/components/Screen';
-import { FontType } from '~/utils/font';
-import { BasicColor } from '~/utils/color';
-import ROOM from '~/constants/room';
-import { Light, Todo } from '~/types/Obejct';
-import Timer from '~/components/Timer';
-import Checklist from '~/components/Checklist';
 import Modal from '~/components/Modal';
-import TextInput from '~/components/TextInput';
+import ObjectBox from '~/components/ObjectBox';
 import OpenButton from '~/components/OpenButton';
 import Playlist from '~/components/Playlist';
-import ObjectBox from '~/components/ObjectBox';
-import api from '~/utils/api';
+import Screen from '~/components/Screen';
+import TextInput from '~/components/TextInput';
+import Timer from '~/components/Timer';
+import Typography from '~/components/Typography';
+import RoomAssets from '~/constants/room';
+import useOutsideEvent from '~/hooks/useOutsideEvent';
+import { postReview } from '~/remotes/review';
+import { Todo } from '~/types/Obejct';
+import { Room } from '~/types/Room';
+import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
-import useOutsideEvent from '~/utils/useOutsideEvent';
+import { FontType } from '~/utils/font';
+import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
+import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
 
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
-import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
-import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 
 interface Props {
-  category: string;
-  id: string;
+  room: Room;
 }
 
-const Play = ({ category, id }: Props) => {
-  const { data } = useRoom(category, id);
-  const { data: user } = useUserProfile();
+const Play = ({ room }: Props) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
   const [visibleModal, setVisibleModal] = useState<
-    'timeout' | 'finished' | null
-  >(null);
+    'timeout' | 'finished' | undefined
+  >();
   const [reviewInput, setReviewInput] = useState('');
   const [isRecommend, setIsRecommend] = useState(false);
 
@@ -49,7 +44,7 @@ const Play = ({ category, id }: Props) => {
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
   const timerAudioRef = useRef<HTMLAudioElement>(null);
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   const [visibleClockPopup, setVisibleClockPopup] = useState(false);
   const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
@@ -57,13 +52,13 @@ const Play = ({ category, id }: Props) => {
   const [isFull, setIsPull] = useState(false);
   const [isTimerAlarm, setIsTimerAlarm] = useState(true);
 
-  const { modalRef: clockRef } = useOutsideEvent({
+  const { modalRef: clockRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setVisibleClockPopup(false),
   });
-  const { modalRef: speakerRef } = useOutsideEvent({
+  const { modalRef: speakerRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setVisibleSpeakerPopup(false),
   });
-  const { modalRef: memoRef } = useOutsideEvent({
+  const { modalRef: memoRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setVisibleMemoPopup(false),
   });
 
@@ -131,31 +126,31 @@ const Play = ({ category, id }: Props) => {
 
   const handleTimeout = useCallback(() => {
     setVisibleModal('timeout');
-    isTimerAlarm && timerAudioRef.current.play();
+    isTimerAlarm && timerAudioRef.current?.play();
   }, []);
 
   const handleTimeoutButtonClick = () => {
-    setVisibleModal(null);
-    timerAudioRef.current.pause();
+    setVisibleModal(undefined);
+    timerAudioRef.current?.pause();
   };
 
   const handleFinishedButtonClick = async () => {
-    const player = user ? user.name : `guest-${data.playCount + 1}`;
     if (reviewInput !== '') {
       try {
-        await api.post(`/api/review?category=${category}&id=${id}`, {
-          objective: objective,
+        await postReview({
+          roomId: room.id,
+          objective,
           comment: reviewInput,
-          player: player,
           recommend: isRecommend,
         });
       } catch (error) {
         console.warn(error);
+        alert('오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.');
       }
       setReviewInput('');
       setIsRecommend(false);
-      setVisibleModal(null);
-      Router.push(`/detail?category=${category}&id=${id}`);
+      setVisibleModal(undefined);
+      Router.push(`/detail?roomId=${room.id}`);
     }
   };
 
@@ -225,14 +220,11 @@ const Play = ({ category, id }: Props) => {
         </PlayView>
       )}
       <ObjectView
-        backgroundImage={
-          ROOM?.[data?.wallColor as keyof typeof ROOM]?.[data?.light as Light]
-            ?.WALL
-        }
+        backgroundImage={RoomAssets[room.wallColor][room.light].WALL}
         page={currentPage}
       >
         <LayerBox page={currentPage}>
-          <ObjectBox room={data} />
+          <ObjectBox room={room} />
           {currentPage >= 3 && (
             <PopupBox>
               <PopupPictureStyled>
@@ -269,7 +261,7 @@ const Play = ({ category, id }: Props) => {
                 />
                 <PopupSpeaker visible={visibleSpeakerPopup}>
                   <Playlist
-                    playlist={data?.music as any}
+                    playlist={room.musics}
                     controls
                     autoplay
                     viewHeight={24}
@@ -305,8 +297,8 @@ const Play = ({ category, id }: Props) => {
         <Screen
           isFull={isFull}
           onFullButtonClick={() => setIsPull(false)}
-          type={data?.screen[0]}
-          url={data?.screen[1]}
+          type={room.assets[0].type}
+          url={room.assets[0].url}
         />
         {currentPage >= 3 && (
           <>
@@ -351,8 +343,8 @@ const Play = ({ category, id }: Props) => {
       </ObjectView>
       {visibleModal === 'timeout' && (
         <Modal
-          setShow={(type: 'timeout' | 'finished' | null) =>
-            setVisibleModal(type)
+          setShow={(type) =>
+            setVisibleModal(type as 'timeout' | 'finished' | undefined)
           }
           title="목표시간 달성!"
           subTitle={
@@ -380,8 +372,8 @@ const Play = ({ category, id }: Props) => {
       )}
       {visibleModal === 'finished' && (
         <Modal
-          setShow={(type: 'timeout' | 'finished' | null) =>
-            setVisibleModal(type)
+          setShow={(type) =>
+            setVisibleModal(type as 'timeout' | 'finished' | undefined)
           }
           title="체험 종료하기"
           subTitle={

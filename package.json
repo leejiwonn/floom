@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "next build"
+    "build": "next build",
+    "lint": "eslint -c .eslintrc.js '{src,pages,scripts}/**/*.{ts,tsx}'",
+    "lint:fix": "yarn lint --fix",
+    "typecheck": "tsc --noEmit",
+    "db:sync": "ts-node -T -r tsconfig-paths/register scripts/db-sync.ts"
   },
   "dependencies": {
     "@babel/core": "^7.15.5",
@@ -18,20 +22,26 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "axios": "^0.21.4",
+    "dotenv": "^10.0.0",
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
     "jsonwebtoken": "^8.5.1",
+    "nanoid": "^3.1.30",
     "next": "^11.1.2",
     "next-connect": "^0.10.2",
     "passport": "^0.4.1",
     "passport-kakao": "^1.0.1",
+    "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-player": "^2.9.0",
-    "react-query": "^3.24.4"
+    "reflect-metadata": "^0.1.13",
+    "swr": "^1.0.1",
+    "typeorm": "^0.2.38"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.5",
+    "@types/node": "^16.11.4",
     "@types/passport": "^1.0.7",
     "@types/passport-kakao": "^0.2.1",
     "@types/react": "^17.0.20",
@@ -40,12 +50,15 @@
     "@typescript-eslint/parser": "^4.31.0",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-root-import": "^6.6.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.0",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.11.0",
     "typescript": "^4.4.2"
   }
 }

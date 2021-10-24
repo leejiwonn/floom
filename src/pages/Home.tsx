@@ -1,28 +1,28 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useState } from 'react';
+import Screen from '~/components/Screen';
 
 import Typography from '~/components/Typography';
-import Screen from '~/components/Screen';
+import EMOJI from '~/constants/emoji';
+import { useRooms } from '~/hooks/useRoom';
 import { useUserProfile } from '~/hooks/useUser';
-import { useCategoryRooms } from '~/hooks/useRoom';
+import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import { removeAuthTokenInLocalStorage } from '~/utils/auth';
-import { getCatecory } from '~/utils/category';
-import EMOJI from '~/constants/emoji';
 
-import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 import CreateIcon from '../../public/assets/icons/icon-create.svg';
+import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
-  const [category, setCategory] = useState('study');
-  const { data } = useCategoryRooms(category);
+  const [category, setCategory] = useState('학습');
+
+  const { data: rooms } = useRooms(category);
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();
-    window.location.reload();
+    location.href = '/';
   };
 
   return (
@@ -45,8 +45,8 @@ const Home = () => {
           어떤 일에 몰입하고 싶은가요?
         </Typography>
         <CategoryList>
-          <CategoryItem onClick={() => setCategory('study')}>
-            <CategoryItemIcon active={category === 'study'}>
+          <CategoryItem onClick={() => setCategory('학습')}>
+            <CategoryItemIcon active={category === '학습'}>
               {EMOJI.STUDY}
             </CategoryItemIcon>
             <Typography
@@ -57,8 +57,8 @@ const Home = () => {
               학습
             </Typography>
           </CategoryItem>
-          <CategoryItem onClick={() => setCategory('work')}>
-            <CategoryItemIcon active={category === 'work'}>
+          <CategoryItem onClick={() => setCategory('업무')}>
+            <CategoryItemIcon active={category === '업무'}>
               {EMOJI.WORK}
             </CategoryItemIcon>
             <Typography
@@ -69,8 +69,8 @@ const Home = () => {
               업무
             </Typography>
           </CategoryItem>
-          <CategoryItem onClick={() => setCategory('rest')}>
-            <CategoryItemIcon active={category === 'rest'}>
+          <CategoryItem onClick={() => setCategory('휴식')}>
+            <CategoryItemIcon active={category === '휴식'}>
               {EMOJI.REST}
             </CategoryItemIcon>
             <Typography
@@ -82,40 +82,39 @@ const Home = () => {
             </Typography>
           </CategoryItem>
         </CategoryList>
-        {user && (
+        {user != null ? (
           <LogoutButton onClick={handleLogoutButtonClick}>
             <LogoutIcon />
           </LogoutButton>
-        )}
+        ) : null}
       </CategoryStyled>
       <RoomsStyled>
         <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={40}>
-          {getCatecory(category)}하실 방을 선택해주세요!
+          {category}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
-          {data?.map((room) => (
-            <Link
-              key={`${category}-${room.id}`}
-              href={`/detail?category=${category}&id=${room.id}`}
-            >
+          {rooms?.map((room) => (
+            <Link key={room.id} href={`/detail?roomId=${room.id}`}>
               <RoomItem>
                 <ScreenStyled>
-                  <Screen type={room.screen[0]} url={room.screen[1]} />
+                  <Screen type={room.assets[0].type} url={room.assets[0].url} />
                 </ScreenStyled>
                 <Typography font={FontType.BOLD_TITLE_02} marginTop={10}>
                   {room.title}
                 </Typography>
                 <Typography font={FontType.LIGHT_CAPTION}>
-                  {room.creator}
+                  {room.creator.displayName}
                 </Typography>
               </RoomItem>
             </Link>
           ))}
         </RoomStyled>
       </RoomsStyled>
-      <CreateButton href={user ? '/create' : '/api/auth/kakao'}>
-        <CreateIcon />
-      </CreateButton>
+      <Link passHref={true} href={user != null ? '/create' : '/api/auth/kakao'}>
+        <CreateButton aria-label="방 생성하기">
+          <CreateIcon />
+        </CreateButton>
+      </Link>
     </HomeStyled>
   );
 };

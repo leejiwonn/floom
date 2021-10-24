@@ -4,11 +4,15 @@ interface Props {
   onOutsideClick: () => void;
 }
 
-const useOutsideEvent = ({ onOutsideClick }: Props) => {
-  const modalRef = useRef(null);
+const useOutsideEvent = <T extends HTMLElement = HTMLElement>({
+  onOutsideClick,
+}: Props) => {
+  const modalRef = useRef<T>(null);
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (!modalRef.current?.contains(e.target)) {
+    const modal = modalRef.current;
+
+    if (modal != null && !modal.contains(e.target as HTMLElement)) {
       onOutsideClick();
     }
   };

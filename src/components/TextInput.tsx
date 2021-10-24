@@ -84,10 +84,10 @@ const TextInput = ({
 };
 
 const TextInputStyled = styled.div<{
-  marginTop: number;
-  marginBottom: number;
-  marginLeft: number;
-  marginRight: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
 }>`
   width: 100%;
   display: flex;
@@ -105,7 +105,7 @@ const TextInputBox = styled.input<{
   weight: number;
   color: string;
   align: string;
-  submitButton: boolean;
+  submitButton?: boolean;
 }>`
   width: ${({ submitButton }) => (submitButton ? '85%' : '100%')};
   font-size: ${({ size }) => size + 'px'};
@@ -130,7 +130,7 @@ const TextLength = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.GRAY20};
-  border-radius: '0 10px 10px 0';
+  border-radius: 0 10px 10px 0;
   padding: 10px;
 `;
 

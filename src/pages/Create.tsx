@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import Router from 'next/router';
+import { useState } from 'react';
 
 import Modal from '~/components/Modal';
-import ObjectBox from '~/components/ObjectBox';
 import Typography from '~/components/Typography';
 import EMOJI from '~/constants/emoji';
 import ROOM from '~/constants/room';
@@ -50,7 +49,8 @@ const Create = () => {
           }
         >
           <LayerBox>
-            <ObjectBox room={room} />
+            {/*TODO*/}
+            {/*<ObjectBox room={room} />*/}
           </LayerBox>
           {!visibleCategoryModal && (
             <>
