@@ -45,6 +45,7 @@ function prepareConnection() {
           UserEntity,
         ],
         useUTC: false,
+        connectTimeoutMS: 7_000,
       });
     })();
   }
