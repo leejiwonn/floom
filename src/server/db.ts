@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { nanoid } from 'nanoid';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnection, In } from 'typeorm';
 import { MusicEntity } from '~/server/entities/MusicEntity';
 import { ReviewEntity } from '~/server/entities/ReviewEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import { RoomEntity } from '~/server/entities/RoomEntity';
 import { UserEntity } from '~/server/entities/UserEntity';
 import { CreateReviewData } from '~/types/Review';
+import { CreateRoomData } from '~/types/Room';
 import { User } from '~/types/User';
 
 let connectionReadyPromise: Promise<void> | null = null;
@@ -37,7 +38,7 @@ function prepareConnection() {
           RoomEntity,
           UserEntity,
         ],
-        logging: 'all',
+        logging: process.env.NODE_ENV === 'production' ? ['error'] : 'all',
         useUTC: false,
       });
     })();
@@ -63,6 +64,12 @@ export async function findUserByProfileId(profileId: string) {
   const UserRepository = await getUserRepository();
 
   return UserRepository.findOne({ profileId });
+}
+
+export async function getUserByProfileId(profileId: string) {
+  const UserRepository = await getUserRepository();
+
+  return UserRepository.findOneOrFail({ profileId });
 }
 
 export async function saveUser(user: UserEntity) {
@@ -123,6 +130,34 @@ export async function getRoomById(roomId: number) {
   return room;
 }
 
+type CreateRoomParams = CreateRoomData & {
+  user: User;
+};
+
+export async function createRoom(payload: CreateRoomParams) {
+  const RoomRepository = await getRoomRepository();
+
+  const room = new RoomEntity();
+  const [category, musics, creator] = await Promise.all([
+    getRoomCategoryById(payload.categoryId),
+    findAllMusicsByIds(payload.musicIds),
+    getUserByProfileId(payload.user.profileId),
+  ]);
+
+  room.title = payload.title;
+  room.assets = JSON.stringify(payload.assets);
+  room.light = payload.light;
+  room.wallColor = payload.wallColor;
+  room.roomImage = payload.roomImage;
+  room.tags = payload.tags;
+  room.category = category;
+  room.reviews = [];
+  room.musics = musics;
+  room.creator = creator;
+
+  return RoomRepository.save(room);
+}
+
 // Room Category
 export async function getRoomCategoryRepository() {
   const database = await getDatabase();
@@ -141,6 +176,13 @@ export async function findAllRoomCategories() {
   });
 }
 
+export async function getRoomCategoryById(categoryId: number) {
+  const RoomCategoryRepository = await getRoomCategoryRepository();
+  const roomCategory = await RoomCategoryRepository.findOneOrFail(categoryId);
+
+  return roomCategory;
+}
+
 // Music
 export async function getMusicRepository() {
   const database = await getDatabase();
@@ -155,6 +197,16 @@ export async function findAllMusics() {
   return MusicRepository.find({
     order: {
       id: 'ASC',
+    },
+  });
+}
+
+export async function findAllMusicsByIds(ids: number[]) {
+  const MusicRepository = await getMusicRepository();
+
+  return MusicRepository.find({
+    where: {
+      id: In(ids),
     },
   });
 }
@@ -178,7 +230,7 @@ export async function createReview(payload: CreateReviewParams) {
   review.room = await getRoomById(payload.roomId);
 
   if (payload.user != null) {
-    review.author = await findUserByProfileId(payload.user.profileId);
+    review.author = await getUserByProfileId(payload.user.profileId);
   } else {
     review.guestName = `방문자-${nanoid(6)}`;
   }
