@@ -48,7 +48,9 @@ const Header = () => {
         </Logo>
       </Link>
       <RightStyled>
-        {user !== undefined && router.pathname !== '/play' ? (
+        {user !== undefined &&
+        router.pathname !== '/play' &&
+        router.pathname !== '/create' ? (
           user != null ? (
             <UserInfo>
               <Typography font={FontType.REGULAR_BODY}>
