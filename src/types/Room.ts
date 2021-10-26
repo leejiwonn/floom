@@ -7,7 +7,7 @@ export type RoomLight = 'ONE' | 'TWO' | 'THREE';
 export type RoomWallColor = 'YELLOW' | 'BLUE' | 'GREEN' | 'RED' | 'PURPLE';
 
 export type RoomAsset = {
-  type: 'image';
+  type: 'image' | 'video';
   url: string;
 };
 
@@ -23,6 +23,14 @@ export type RoomSimple = {
   creator: UserSimple;
   createdAt: string;
   updatedAt: string;
+};
+
+export type CreateRoomData = Pick<
+  Room,
+  'title' | 'light' | 'wallColor' | 'assets' | 'tags' | 'roomImage'
+> & {
+  categoryId: RoomCategory['id'];
+  musicIds: Array<Music['id']>;
 };
 
 export type Room = RoomSimple & {
