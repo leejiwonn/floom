@@ -7,6 +7,7 @@ import Typography from '~/components/Typography';
 import ObjectBox from '~/components/ObjectBox';
 import CreateInfoItem from '~/components/CreateInfoItem';
 import TextInput from '~/components/TextInput';
+import TagList from '~/components/TagList';
 import { getCategoryEmoji } from '~/utils/category';
 import ROOM from '~/constants/room';
 import { BasicColor, getWallColor } from '~/utils/color';
@@ -102,6 +103,32 @@ const Create = () => {
         assets: prev.assets.filter((x) => x.url !== value),
       };
     });
+  };
+
+  const handleDeleteTag = (tag: string) => {
+    setRoom((prev) => {
+      return {
+        ...prev,
+        tags: prev.tags.filter((item) => item !== tag),
+      };
+    });
+  };
+
+  const handleToggleTagClick = (tag: string) => {
+    console.log(room.tags);
+    if (
+      room.tags.length < 5 &&
+      room.tags.findIndex((item) => item === tag) === -1
+    ) {
+      setRoom((prev) => {
+        return {
+          ...prev,
+          tags: [...prev.tags, tag],
+        };
+      });
+    } else {
+      handleDeleteTag(tag);
+    }
   };
 
   const handleCreateButtonClick = () => {
@@ -260,9 +287,106 @@ const Create = () => {
               <CreateInfoItem
                 title="방 태그"
                 titleIcon={<TagIcon />}
-                content={<CreateInfoTagStyled></CreateInfoTagStyled>}
+                content={
+                  <CreateInfoTagStyled>
+                    <SelectedTagListStyled>
+                      <SelectedTagList>
+                        {room.tags.length ? (
+                          room.tags.map((tag, index) => (
+                            <SelectedTagItem key={index}>
+                              <Typography
+                                font={FontType.SEMI_BOLD_BODY}
+                                color={BasicColor.GREEN150}
+                              >
+                                {tag}
+                              </Typography>
+                              <TagDeleteButton
+                                onClick={() => handleDeleteTag(tag)}
+                              >
+                                <CloseIcon stroke={BasicColor.GREEN150} />
+                              </TagDeleteButton>
+                            </SelectedTagItem>
+                          ))
+                        ) : (
+                          <NoneTagItem>
+                            <EmojiExclamationMarkStyled>
+                              {EMOJI.EXCLAMATION_MARK}
+                            </EmojiExclamationMarkStyled>
+                            <Typography
+                              tag="span"
+                              marginTop={5}
+                              marginBottom={5}
+                            >
+                              어울리는{' '}
+                              <Typography
+                                tag="span"
+                                font={FontType.SEMI_BOLD_BODY}
+                              >
+                                태그
+                              </Typography>
+                              를 선택해보세요.
+                            </Typography>
+                          </NoneTagItem>
+                        )}
+                      </SelectedTagList>
+                      <Typography
+                        font={FontType.REGULAR_CAPTION}
+                        color={BasicColor.DARK40}
+                        align={Align.RIGHT}
+                      >
+                        최대 5개 선택 가능
+                      </Typography>
+                    </SelectedTagListStyled>
+                    <TagList
+                      title="감정"
+                      tags={[
+                        '기쁜',
+                        '슬픈',
+                        '우울',
+                        '신나는',
+                        '잔잔한',
+                        '설레는',
+                        '위로',
+                        '힐링',
+                        '기분좋은',
+                      ]}
+                      selectedTags={room.tags}
+                      onToggleTagClick={handleToggleTagClick}
+                    />
+                    <TagList
+                      title="상황"
+                      tags={[
+                        '휴식',
+                        '숙면',
+                        '나홀로',
+                        '파티',
+                        '공부',
+                        '작업',
+                        '스트레스',
+                        '독서',
+                        '운동',
+                      ]}
+                      selectedTags={room.tags}
+                      onToggleTagClick={handleToggleTagClick}
+                    />
+                    <TagList
+                      title="분위기"
+                      tags={[
+                        '비오는',
+                        '흐린',
+                        '안개 낀',
+                        '따뜻한',
+                        '맑은',
+                        '포근한',
+                        '쌀쌀한',
+                        '깜깜한',
+                      ]}
+                      selectedTags={room.tags}
+                      onToggleTagClick={handleToggleTagClick}
+                    />
+                  </CreateInfoTagStyled>
+                }
                 isDrop
-                required
               />
             </ContentBox>
           )}
@@ -517,7 +641,55 @@ const EmojiExclamationMarkStyled = styled.div`
 
 const CreateInfoTagStyled = styled.div`
   width: 100%;
-  height: 100px;
+  height: 100%;
+`;
+
+const SelectedTagListStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+`;
+
+const SelectedTagList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 10px 0;
+`;
+
+const SelectedTagItem = styled.div`
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 4px 10px;
+  background-color: ${BasicColor.GREEN10};
+  border: 1px solid ${BasicColor.GREEN20};
+  border-radius: 24px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+`;
+
+const TagDeleteButton = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.5;
+  margin-left: 5px;
+`;
+
+const NoneTagItem = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    fill: ${BasicColor.BLUE80};
+    margin-bottom: 5px;
+  }
 `;
 
 const LayerBox = styled.div`
