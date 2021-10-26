@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import nc from 'next-connect';
 import { authorize } from '~/server/auth';
-import { findAllRooms } from '~/server/db';
-import { toRoomSimple } from '~/server/dto/room';
+import { createRoom, findAllRooms } from '~/server/db';
+import { toRoom, toRoomSimple } from '~/server/dto/room';
+import { getUserFromRequest } from '~/server/utils';
+import { CreateRoomData } from '~/types/Room';
 
 async function listRooms(req: Request, res: Response) {
   const categoryName = req.query.categoryName as string | undefined;
@@ -15,10 +17,16 @@ async function listRooms(req: Request, res: Response) {
   res.status(200).send(response);
 }
 
-async function createRoom(req: Request, res: Response) {
-  res.status(500).send({
-    message: '아직 API 안만들어짐',
+async function postRoom(req: Request, res: Response) {
+  const payload = req.body as CreateRoomData;
+  const user = getUserFromRequest(req);
+
+  const room = await createRoom({
+    ...payload,
+    user,
   });
+
+  res.status(200).send(toRoom(room));
 }
 
 const handler = nc<Request, Response>({
@@ -31,6 +39,6 @@ const handler = nc<Request, Response>({
   },
 })
   .get(listRooms)
-  .post(authorize, createRoom);
+  .post(authorize, postRoom);
 
 export default handler;
