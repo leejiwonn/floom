@@ -7,9 +7,12 @@
     "target": "esnext",
     "jsx": "preserve",
     "jsxImportSource": "@emotion/react",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
-    "skipLibCheck": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
@@ -21,9 +24,18 @@
     "isolatedModules": true,
     "baseUrl": "./src",
     "paths": {
-      "~/*": ["*"]
-    }
+      "~/*": [
+        "*"
+      ]
+    },
+    "skipLibCheck": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
