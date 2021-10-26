@@ -52,10 +52,6 @@ const AudioControlButton = styled.button`
   justify-content: center;
   align-items: center;
   padding-right: 10px;
-
-  svg {
-    pointer-events: none;
-  }
 `;
 
 const AudioSoundControl = styled.input<{ volume: number }>`

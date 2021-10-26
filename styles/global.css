@@ -300,3 +300,7 @@ video {
 select::-ms-expand {
   display: none;
 }
+
+svg {
+  pointer-events: none;
+}

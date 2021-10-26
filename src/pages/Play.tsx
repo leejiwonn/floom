@@ -21,9 +21,9 @@ import { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
 import { FontType } from '~/utils/font';
+
 import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
-
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
 
@@ -568,7 +568,6 @@ const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
   svg {
     width: 100%;
     height: 100%;
-    pointer-events: none;
   }
 `;
 
