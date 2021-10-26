@@ -1,24 +1,31 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Screen from '~/components/Screen';
 
 import Typography from '~/components/Typography';
-import EMOJI from '~/constants/emoji';
 import { useRooms } from '~/hooks/useRoom';
 import { useUserProfile } from '~/hooks/useUser';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
+import { useCategories } from '~/hooks/useCategories';
+import { getCategoryEmoji } from '~/utils/category';
+import { RoomCategory } from '~/types/RoomCategory';
 
 import CreateIcon from '../../public/assets/icons/icon-create.svg';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
-  const [category, setCategory] = useState('학습');
+  const { data: categories } = useCategories();
+  const [category, setCategory] = useState<RoomCategory>();
 
-  const { data: rooms } = useRooms(category);
+  const { data: rooms } = useRooms(category?.name);
+
+  useEffect(() => {
+    setCategory(categories?.[0]);
+  }, [categories]);
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();
@@ -45,42 +52,20 @@ const Home = () => {
           어떤 일에 몰입하고 싶은가요?
         </Typography>
         <CategoryList>
-          <CategoryItem onClick={() => setCategory('학습')}>
-            <CategoryItemIcon active={category === '학습'}>
-              {EMOJI.STUDY}
-            </CategoryItemIcon>
-            <Typography
-              font={FontType.BOLD_TITLE_01}
-              color={BasicColor.WHITE}
-              align={Align.CENTER}
-            >
-              학습
-            </Typography>
-          </CategoryItem>
-          <CategoryItem onClick={() => setCategory('업무')}>
-            <CategoryItemIcon active={category === '업무'}>
-              {EMOJI.WORK}
-            </CategoryItemIcon>
-            <Typography
-              font={FontType.BOLD_TITLE_01}
-              color={BasicColor.WHITE}
-              align={Align.CENTER}
-            >
-              업무
-            </Typography>
-          </CategoryItem>
-          <CategoryItem onClick={() => setCategory('휴식')}>
-            <CategoryItemIcon active={category === '휴식'}>
-              {EMOJI.REST}
-            </CategoryItemIcon>
-            <Typography
-              font={FontType.BOLD_TITLE_01}
-              color={BasicColor.WHITE}
-              align={Align.CENTER}
-            >
-              휴식
-            </Typography>
-          </CategoryItem>
+          {categories?.map((value, index) => (
+            <CategoryItem key={index} onClick={() => setCategory(value)}>
+              <CategoryItemIcon active={category === value}>
+                {getCategoryEmoji(value.name)}
+              </CategoryItemIcon>
+              <Typography
+                font={FontType.BOLD_TITLE_01}
+                color={BasicColor.WHITE}
+                align={Align.CENTER}
+              >
+                {value.name}
+              </Typography>
+            </CategoryItem>
+          ))}
         </CategoryList>
         {user != null ? (
           <LogoutButton onClick={handleLogoutButtonClick}>
@@ -90,7 +75,7 @@ const Home = () => {
       </CategoryStyled>
       <RoomsStyled>
         <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={40}>
-          {category}하실 방을 선택해주세요!
+          {category?.name}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
           {rooms?.map((room) => (
