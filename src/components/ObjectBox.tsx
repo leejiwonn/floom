@@ -4,44 +4,35 @@ import RoomAssets from '~/constants/room';
 import { Room } from '~/types/Room';
 
 interface Props {
-  room: Room;
+  room: Pick<Room, 'wallColor' | 'light'>;
 }
 
-const ObjectBox = ({ room }: Props) => {
+const ObjectBox = ({ room: { wallColor, light } }: Props) => {
   return (
     <ObjectBoxStyled>
       <ObjectVase>
-        <img src={RoomAssets[room.wallColor][room.light].VASE} alt="화분" />
+        <img src={RoomAssets[wallColor][light].VASE} alt="화분" />
       </ObjectVase>
       <ObjectClock>
-        <img src={RoomAssets[room.wallColor][room.light].CLOCK} alt="시계" />
+        <img src={RoomAssets[wallColor][light].CLOCK} alt="시계" />
       </ObjectClock>
       <ObjectMemo>
-        <img src={RoomAssets[room.wallColor][room.light].MEMO} alt="메모지" />
+        <img src={RoomAssets[wallColor][light].MEMO} alt="메모지" />
       </ObjectMemo>
       <ObjectPicture>
-        <img
-          src={RoomAssets[room.wallColor][room.light].PICTURE}
-          alt="액자(포스터)"
-        />
+        <img src={RoomAssets[wallColor][light].PICTURE} alt="액자(포스터)" />
       </ObjectPicture>
       <ObjectConsole>
-        <img
-          src={RoomAssets[room.wallColor][room.light].CONSOLE}
-          alt="가구장"
-        />
+        <img src={RoomAssets[wallColor][light].CONSOLE} alt="가구장" />
       </ObjectConsole>
       <ObjectSpeaker>
-        <img
-          src={RoomAssets[room.wallColor][room.light].SPEAKER}
-          alt="스피커"
-        />
+        <img src={RoomAssets[wallColor][light].SPEAKER} alt="스피커" />
       </ObjectSpeaker>
       <ObjectTable>
-        <img src={RoomAssets[room.wallColor][room.light].TABLE} alt="책상" />
+        <img src={RoomAssets[wallColor][light].TABLE} alt="책상" />
       </ObjectTable>
       <ObjectLight>
-        <img src={RoomAssets[room.wallColor][room.light].LIGHT} alt="조명" />
+        <img src={RoomAssets[wallColor][light].LIGHT} alt="조명" />
       </ObjectLight>
     </ObjectBoxStyled>
   );

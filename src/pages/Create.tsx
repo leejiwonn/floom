@@ -1,38 +1,108 @@
 import styled from '@emotion/styled';
 import Router from 'next/router';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import Modal from '~/components/Modal';
 import Typography from '~/components/Typography';
-import EMOJI from '~/constants/emoji';
+import ObjectBox from '~/components/ObjectBox';
+import CreateInfoItem from '~/components/CreateInfoItem';
+import TextInput from '~/components/TextInput';
+import { getCategoryEmoji } from '~/utils/category';
 import ROOM from '~/constants/room';
-import { useUserProfile } from '~/hooks/useUser';
-import { Light } from '~/types/Obejct';
 import { BasicColor, getWallColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
+import { CreateRoomData, RoomLight, RoomWallColor } from '~/types/Room';
+import { upload } from '~/remotes/common';
+import { useCategories } from '~/hooks/useCategories';
+import { RoomCategory } from '~/types/RoomCategory';
+import EMOJI from '~/constants/emoji';
 
-import LightIcon from '../../public/assets/icons/icon-light.svg';
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
+import RoomIcon from '../../public/assets/icons/icon-room.svg';
+import AddImageIcon from '../../public/assets/icons/icon-add-img.svg';
+import TagIcon from '../../public/assets/icons/icon-tag.svg';
+import CloseIcon from '../../public/assets/icons/icon-close.svg';
+import CheckIcon from '../../public/assets/icons/icon-check.svg';
+
+type CreateRoomForm = Omit<CreateRoomData, 'categoryId'> & {
+  categoryId?: number;
+};
 
 const Create = () => {
-  const { data: user } = useUserProfile();
+  const { data: categories } = useCategories();
 
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(true);
-  const [category, setCategory] = useState('study');
-  const [room, setRoom] = useState({
-    id: '',
+  const [contentType, setContentType] = useState<'info' | 'music'>('info');
+  const [category, setCategory] = useState<RoomCategory>();
+  const [room, setRoom] = useState<CreateRoomForm>({
     title: '',
-    creator: user,
-    roomImage: '',
-    screen: [],
+    categoryId: category?.id,
     light: 'ONE',
-    music: [],
-    tags: [],
-    playCount: 0,
-    recommendCount: 0,
-    usedUsers: [],
     wallColor: 'YELLOW',
+    assets: [],
+    tags: [],
+    roomImage: '',
+    musicIds: [],
   });
+
+  const [visibleControl, setVisibleControl] = useState(false);
+
+  useEffect(() => {
+    setCategory(categories?.[0]);
+  }, [categories]);
+
+  const handleChangeInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length <= 20) {
+        setRoom((prev) => {
+          return { ...prev, title: e.target.value };
+        });
+      }
+    },
+    [setRoom],
+  );
+
+  const handleUpdateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (room.assets.length > 2) {
+      return;
+    }
+
+    const files = e.target.files;
+    if (files == null || files.length === 0) {
+      return;
+    }
+
+    const file = files[0];
+    try {
+      const { url } = await upload(file);
+      setRoom((prev) => {
+        return {
+          ...prev,
+          assets: [
+            ...prev.assets,
+            {
+              type:
+                file.type === 'video/mp4' || file.type === 'video/webm'
+                  ? 'video'
+                  : 'image',
+              url,
+            },
+          ],
+        };
+      });
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  const handleFileDeleteButton = (value: string) => {
+    setRoom((prev) => {
+      return {
+        ...prev,
+        assets: prev.assets.filter((x) => x.url !== value),
+      };
+    });
+  };
 
   const handleCreateButtonClick = () => {
     Router.push('/');
@@ -41,62 +111,209 @@ const Create = () => {
   return (
     <>
       <CreateStyled>
-        <ContentView></ContentView>
-        <ObjectView
-          backgroundImage={
-            ROOM?.[room?.wallColor as keyof typeof ROOM]?.[room?.light as Light]
-              ?.WALL
-          }
-        >
+        <ContentView>
+          <ContentMenu>
+            <ContentMenuItem
+              onClick={() => setContentType('info')}
+              active={contentType === 'info'}
+            >
+              <Typography
+                font={FontType.BOLD_BODY}
+                color={
+                  contentType === 'info' ? BasicColor.WHITE : BasicColor.DARK100
+                }
+              >
+                방 정보
+              </Typography>
+            </ContentMenuItem>
+            <ContentMenuItem
+              onClick={() => setContentType('music')}
+              active={contentType === 'music'}
+            >
+              <Typography
+                font={FontType.BOLD_BODY}
+                color={
+                  contentType === 'music'
+                    ? BasicColor.WHITE
+                    : BasicColor.DARK100
+                }
+              >
+                음악
+              </Typography>
+            </ContentMenuItem>
+          </ContentMenu>
+          {contentType === 'info' && (
+            <ContentBox>
+              <CreateInfoItem
+                title="방 이름"
+                titleIcon={<RoomIcon />}
+                content={
+                  <TextInput
+                    maxLength={20}
+                    value={room.title}
+                    onChangeInput={handleChangeInput}
+                  />
+                }
+                required
+              />
+              <CreateInfoItem
+                title="배경화면"
+                titleIcon={
+                  <AddImageIcon
+                    width={24}
+                    height={24}
+                    fill={BasicColor.BLUE100}
+                    stroke={BasicColor.BLUE100}
+                  />
+                }
+                content={
+                  <CreateInfoImageStyled>
+                    <FileUploadImageStyled>
+                      {room.assets.length ? (
+                        room.assets.map((value, index) => (
+                          <FileUploadImageItem key={index}>
+                            <FileUploadData>
+                              <FileUploadImage backgroundImage={value.url} />
+                              <Typography
+                                font={FontType.SEMI_BOLD_BODY}
+                                marginLeft={10}
+                              >
+                                {value.url.split('/')[3]}
+                              </Typography>
+                            </FileUploadData>
+                            <FileDeleteButton
+                              onClick={() => handleFileDeleteButton(value.url)}
+                            >
+                              <CloseIcon stroke={BasicColor.DARK40} />
+                            </FileDeleteButton>
+                          </FileUploadImageItem>
+                        ))
+                      ) : (
+                        <>
+                          <EmojiExclamationMarkStyled>
+                            {EMOJI.EXCLAMATION_MARK}
+                          </EmojiExclamationMarkStyled>
+                          <Typography
+                            font={FontType.REGULAR_BODY}
+                            marginBottom={2}
+                          >
+                            앗! 아직 등록된{' '}
+                            <Typography
+                              tag="span"
+                              font={FontType.SEMI_BOLD_BODY}
+                            >
+                              배경화면
+                            </Typography>
+                            이 없어요.
+                          </Typography>
+                          <Typography
+                            font={FontType.REGULAR_CAPTION}
+                            color={BasicColor.DARK40}
+                          >
+                            <Typography
+                              tag="span"
+                              font={FontType.REGULAR_CAPTION}
+                              color={BasicColor.DARK70}
+                            >
+                              .JPG, .PNG, .mp4
+                            </Typography>{' '}
+                            파일 /{' '}
+                            <Typography
+                              tag="span"
+                              font={FontType.REGULAR_CAPTION}
+                              color={BasicColor.DARK70}
+                            >
+                              10MB
+                            </Typography>{' '}
+                            이하
+                          </Typography>
+                        </>
+                      )}
+                    </FileUploadImageStyled>
+                    <FileUploadButtonLabel active={room.assets.length < 3}>
+                      <AddImageIcon
+                        width={18}
+                        height={18}
+                        fill={BasicColor.WHITE}
+                        stroke={BasicColor.WHITE}
+                      />
+                      <Typography
+                        font={FontType.SEMI_BOLD_CAPTION}
+                        color={BasicColor.WHITE}
+                        marginLeft={5}
+                      >
+                        배경화면 등록하기
+                      </Typography>
+                      {room.assets.length < 3 && (
+                        <FileUploadButton
+                          type="file"
+                          accept="image/png,image/jpg,image/jpeg,video/mp4,video/webm"
+                          onChange={handleUpdateImage}
+                        />
+                      )}
+                    </FileUploadButtonLabel>
+                  </CreateInfoImageStyled>
+                }
+                isDrop
+                required
+              />
+              <CreateInfoItem
+                title="방 태그"
+                titleIcon={<TagIcon />}
+                content={<CreateInfoTagStyled></CreateInfoTagStyled>}
+                isDrop
+                required
+              />
+            </ContentBox>
+          )}
+          {contentType === 'music' && <ContentBox>music</ContentBox>}
+        </ContentView>
+        <ObjectView backgroundImage={ROOM[room.wallColor][room.light].WALL}>
           <LayerBox>
-            {/*TODO*/}
-            {/*<ObjectBox room={room} />*/}
+            <ObjectBox room={room} />
           </LayerBox>
           {!visibleCategoryModal && (
             <>
               <RoomControlStyled>
-                <RoomControlItem>
-                  <RoomControlItemBox>
+                {visibleControl && (
+                  <RoomControlItem>
                     {['RED', 'YELLOW', 'GREEN', 'BLUE', 'PURPLE'].map(
-                      (value, index) => (
-                        <RoomControlItemColor
-                          key={index}
-                          onClick={() =>
-                            setRoom((prev) => {
-                              return { ...prev, wallColor: value };
-                            })
-                          }
-                          color={getWallColor(value)}
-                        />
+                      (color, index) => (
+                        <RoomControlItemBox key={index}>
+                          {[
+                            { wallColor: color, light: 'ONE' },
+                            { wallColor: color, light: 'TWO' },
+                            { wallColor: color, light: 'THREE' },
+                          ].map((value, index) => (
+                            <RoomControlItemColor
+                              key={index}
+                              onClick={() =>
+                                setRoom((prev) => {
+                                  return {
+                                    ...prev,
+                                    wallColor: value.wallColor as RoomWallColor,
+                                    light: value.light as RoomLight,
+                                  };
+                                })
+                              }
+                              color={getWallColor(value.wallColor, value.light)}
+                            >
+                              {room.wallColor === value.wallColor &&
+                                room.light === value.light && (
+                                  <CheckIcon stroke={BasicColor.WHITE} />
+                                )}
+                            </RoomControlItemColor>
+                          ))}
+                        </RoomControlItemBox>
                       ),
                     )}
-                  </RoomControlItemBox>
-                  <RoomControlItemButton
-                    backgroundColor={getWallColor(room.wallColor)}
-                  >
-                    <WallIcon />
-                  </RoomControlItemButton>
-                </RoomControlItem>
-                <RoomControlItem>
-                  <RoomControlItemBox>
-                    {['ONE', 'TWO', 'THREE'].map((value, index) => (
-                      <RoomControlItemColor
-                        key={index}
-                        onClick={() =>
-                          setRoom((prev) => {
-                            return { ...prev, light: value };
-                          })
-                        }
-                        color={getWallColor(room.wallColor, value)}
-                      />
-                    ))}
-                  </RoomControlItemBox>
-                  <RoomControlItemButton
-                    backgroundColor={getWallColor(room.wallColor, room.light)}
-                  >
-                    <LightIcon />
-                  </RoomControlItemButton>
-                </RoomControlItem>
+                  </RoomControlItem>
+                )}
+                <RoomControlButton
+                  onClick={() => setVisibleControl((prev) => !prev)}
+                >
+                  <WallIcon />
+                </RoomControlButton>
               </RoomControlStyled>
               <CreateButton onClick={handleCreateButtonClick}>
                 <Typography font={FontType.BOLD_BODY} color={BasicColor.WHITE}>
@@ -110,58 +327,28 @@ const Create = () => {
       {visibleCategoryModal && (
         <Modal
           title="카테고리 선택"
-          subTitle={<>방에서 어떤 일을 하고싶으세요?</>}
+          subTitle={<>방에서 어떤 일을 하고 싶으세요?</>}
           content="자유롭게 선택해주세요!"
           action={
             <CategoryStyled>
-              <CategoryItem onClick={() => setCategory('study')}>
-                <CategoryItemIcon active={category === 'study'}>
-                  {EMOJI.STUDY}
-                </CategoryItemIcon>
-                <Typography
-                  font={FontType.SEMI_BOLD_BODY}
-                  color={
-                    category === 'study'
-                      ? BasicColor.BLUE100
-                      : BasicColor.DARK100
-                  }
-                  align={Align.CENTER}
-                >
-                  학습
-                </Typography>
-              </CategoryItem>
-              <CategoryItem onClick={() => setCategory('work')}>
-                <CategoryItemIcon active={category === 'work'}>
-                  {EMOJI.WORK}
-                </CategoryItemIcon>
-                <Typography
-                  font={FontType.SEMI_BOLD_BODY}
-                  color={
-                    category === 'work'
-                      ? BasicColor.BLUE100
-                      : BasicColor.DARK100
-                  }
-                  align={Align.CENTER}
-                >
-                  업무
-                </Typography>
-              </CategoryItem>
-              <CategoryItem onClick={() => setCategory('rest')}>
-                <CategoryItemIcon active={category === 'rest'}>
-                  {EMOJI.REST}
-                </CategoryItemIcon>
-                <Typography
-                  font={FontType.SEMI_BOLD_BODY}
-                  color={
-                    category === 'rest'
-                      ? BasicColor.BLUE100
-                      : BasicColor.DARK100
-                  }
-                  align={Align.CENTER}
-                >
-                  휴식
-                </Typography>
-              </CategoryItem>
+              {categories?.map((value: RoomCategory, index: number) => (
+                <CategoryItem key={index} onClick={() => setCategory(value)}>
+                  <CategoryItemIcon active={category === value}>
+                    {getCategoryEmoji(value.name)}
+                  </CategoryItemIcon>
+                  <Typography
+                    font={FontType.SEMI_BOLD_BODY}
+                    color={
+                      category === value
+                        ? BasicColor.BLUE100
+                        : BasicColor.DARK100
+                    }
+                    align={Align.CENTER}
+                  >
+                    {value.name}
+                  </Typography>
+                </CategoryItem>
+              ))}
             </CategoryStyled>
           }
           buttonActive
@@ -188,7 +375,43 @@ const ContentView = styled.div`
   top: 0;
   left: 0;
   background-color: ${BasicColor.WHITE};
+  padding: 0 40px;
+  padding-top: 100px;
   z-index: 1;
+`;
+
+const ContentMenu = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid ${BasicColor.DARK40};
+  background-color: ${BasicColor.GRAY20};
+  border-radius: 30px;
+`;
+
+const ContentMenuItem = styled.button<{ active: boolean }>`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ active }) =>
+    active ? BasicColor.BLUE100 : 'transparent'};
+  border-radius: 30px;
+  padding: 12px 0;
+`;
+
+const ContentBox = styled.div`
+  width: 100%;
+  height: calc(100% - 100px);
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ObjectView = styled.div<{ backgroundImage: string }>`
@@ -205,6 +428,98 @@ const ObjectView = styled.div<{ backgroundImage: string }>`
   z-index: 0;
 `;
 
+const CreateInfoImageStyled = styled.div``;
+
+const FileUploadButtonLabel = styled.label<{ active: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  background-color: ${({ active }) =>
+    active ? BasicColor.BLUE100 : BasicColor.DARK40};
+  border-radius: 12px;
+  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
+  transition: 0.1s;
+`;
+
+const FileUploadButton = styled.input`
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+`;
+
+const FileUploadImageStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border: 1px solid ${BasicColor.GRAY60};
+  border-radius: 8px;
+  padding: 18px;
+  margin: 15px 0;
+`;
+
+const FileUploadImageItem = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+`;
+
+const FileUploadData = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  p {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
+const FileUploadImage = styled.div<{ backgroundImage: string }>`
+  width: 36px;
+  height: 36px;
+  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 8px;
+`;
+
+const FileDeleteButton = styled.button`
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const EmojiExclamationMarkStyled = styled.div`
+  width: 32px;
+  height: 32px;
+  margin-bottom: 5px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: ${BasicColor.BLUE80};
+  }
+`;
+
+const CreateInfoTagStyled = styled.div`
+  width: 100%;
+  height: 100px;
+`;
+
 const LayerBox = styled.div`
   width: 60vw;
   height: 80vh;
@@ -217,48 +532,53 @@ const LayerBox = styled.div`
 
 const RoomControlStyled = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   position: absolute;
-  top: 140px;
+  top: 120px;
   right: 50px;
   z-index: 3;
 `;
 
 const RoomControlItem = styled.div`
-  display: inline-flex;
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  border-radius: 35px;
   background-color: ${BasicColor.WHITE};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 5px;
-  margin-bottom: 15px;
+  border: 2px solid ${BasicColor.BLUE40};
+  border-radius: 18px 0px 18px 18px;
+  padding: 20px;
+  margin-right: 10px;
 `;
 
-const RoomControlItemButton = styled.button<{ backgroundColor: BasicColor }>`
-  width: 50px;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
+const RoomControlButton = styled.button`
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  border: 2px solid ${BasicColor.BLUE40};
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const RoomControlItemBox = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0 4px;
 `;
 
 const RoomControlItemColor = styled.button<{ color: BasicColor }>`
   width: 30px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  margin: 0 4px;
+  margin: 5px;
 `;
 
 const CreateButton = styled.button`
