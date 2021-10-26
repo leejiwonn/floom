@@ -125,11 +125,7 @@ const MusicControls = styled.div`
   margin-bottom: 24px;
 `;
 
-const MusicControlButton = styled.button`
-  svg {
-    pointer-events: none;
-  }
-`;
+const MusicControlButton = styled.button``;
 
 const PlayPauseButton = styled.button`
   width: 45px;
@@ -140,10 +136,6 @@ const PlayPauseButton = styled.button`
   background-color: ${BasicColor.BLUE20};
   border: 1px solid ${BasicColor.BLUE10};
   border-radius: 50%;
-
-  svg {
-    pointer-events: none;
-  }
 `;
 
 export default PlaylistControls;
