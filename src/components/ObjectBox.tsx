@@ -1,22 +1,44 @@
 import styled from '@emotion/styled';
 
 import RoomAssets from '~/constants/room';
-import { Room } from '~/types/Room';
+import { Room, RoomObject } from '~/types/Room';
 
 interface Props {
   room: Pick<Room, 'wallColor' | 'light'>;
+  objects: RoomObject;
 }
 
-const ObjectBox = ({ room: { wallColor, light } }: Props) => {
+const ObjectBox = ({ room: { wallColor, light }, objects }: Props) => {
   return (
     <ObjectBoxStyled>
-      <ObjectVase src={RoomAssets[wallColor][light].VASE} alt="화분" />
-      <ObjectClock src={RoomAssets[wallColor][light].CLOCK} alt="시계" />
-      <ObjectBoard src={RoomAssets[wallColor][light].BOARD} alt="보드" />
-      <ObjectPoster src={RoomAssets[wallColor][light].POSTER} alt="포스터" />
-      <ObjectSpeaker src={RoomAssets[wallColor][light].SPEAKER} alt="스피커" />
-      <ObjectTable src={RoomAssets[wallColor][light].TABLE} alt="책상" />
-      <ObjectLight src={RoomAssets[wallColor][light].LIGHT} alt="조명" />
+      <ObjectVase
+        src={RoomAssets[wallColor][light].VASE[objects.vase]}
+        alt="화분"
+      />
+      <ObjectClock
+        src={RoomAssets[wallColor][light].CLOCK[objects.clock]}
+        alt="시계"
+      />
+      <ObjectBoard
+        src={RoomAssets[wallColor][light].BOARD[objects.board]}
+        alt="보드"
+      />
+      <ObjectPoster
+        src={RoomAssets[wallColor][light].POSTER[objects.poster]}
+        alt="포스터"
+      />
+      <ObjectSpeaker
+        src={RoomAssets[wallColor][light].SPEAKER[objects.speaker]}
+        alt="스피커"
+      />
+      <ObjectTable
+        src={RoomAssets[wallColor][light].TABLE[objects.table]}
+        alt="책상"
+      />
+      <ObjectLight
+        src={RoomAssets[wallColor][light].LIGHT[objects.light]}
+        alt="조명"
+      />
     </ObjectBoxStyled>
   );
 };

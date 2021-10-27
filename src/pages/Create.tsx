@@ -23,6 +23,7 @@ import Playlist from '~/components/Playlist';
 import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
+import BACKGROUND from '~/constants/background';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -49,6 +50,17 @@ const Create = () => {
     categoryId: roomCategory?.id,
     light: 'ONE',
     wallColor: 'RED',
+    objectIds: {
+      board: 1,
+      clock: 1,
+      light: 1,
+      poster: 1,
+      speaker: 1,
+      table: 1,
+      vase: 1,
+      wall: 1,
+    },
+    background: 'SUNNY',
     assets: [],
     tags: [],
     roomImage: '',
@@ -98,6 +110,7 @@ const Create = () => {
                   ? 'video'
                   : 'image',
               url,
+              filename: file.name,
             },
           ],
         };
@@ -229,7 +242,7 @@ const Create = () => {
                                 font={FontType.SEMI_BOLD_BODY}
                                 marginLeft={10}
                               >
-                                {value.url.split('/')[3]}
+                                {value.filename ?? value.url.split('/')[3]}
                               </Typography>
                             </FileUploadData>
                             <FileDeleteButton
@@ -439,9 +452,12 @@ const Create = () => {
           )}
         </ContentView>
         <ObjectView>
-          <ObjectBackground src={ROOM[room.wallColor][room.light].WALL} />
+          <ObjectBackground
+            src={ROOM[room.wallColor][room.light].WALL[room.objectIds.wall]}
+          />
+          <ObjectBackgroundView src={BACKGROUND[room.background]} alt="풍경" />
           <LayerBox>
-            <ObjectBox room={room} />
+            <ObjectBox room={room} objects={room.objectIds} />
           </LayerBox>
           {!visibleCategoryModal && (
             <>
@@ -603,6 +619,19 @@ const ObjectBackground = styled.img`
   object-fit: cover;
   transition: 0.4s ease-in-out;
   z-index: -1;
+`;
+
+const ObjectBackgroundView = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s ease-in-out;
+  z-index: -2;
 `;
 
 const CreateInfoImageStyled = styled.div``;
