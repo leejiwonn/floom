@@ -126,6 +126,7 @@ export async function getRoomById(roomId: number) {
     .leftJoinAndSelect('room.creator', 'creator')
     .leftJoinAndSelect('room.category', 'category')
     .leftJoinAndSelect('room.musics', 'musics')
+    .leftJoinAndSelect('musics.category', 'musicCategory')
     .leftJoinAndSelect('room.reviews', 'reviews')
     .leftJoinAndSelect('reviews.author', 'reviewAuthor')
     .addOrderBy('reviews.createdAt', 'DESC')
