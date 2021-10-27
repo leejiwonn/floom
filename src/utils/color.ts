@@ -51,6 +51,7 @@ const BasicColor = {
 const GradientColor = {
   BLUE: 'linear-gradient(to bottom right, #6A8AFF 0%, #4F73F3 100%)',
   GREEN: 'linear-gradient(to bottom right, #5CE8A4 0%, #3BD88D 100%)',
+  GRAY: 'linear-gradient(180deg, #C4C0B6 0%, #ADA89C 100%)',
 } as const;
 
 const WallColor = {

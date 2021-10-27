@@ -14,9 +14,15 @@ import { BasicColor, getWallColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { CreateRoomData, RoomLight, RoomWallColor } from '~/types/Room';
 import { upload } from '~/remotes/common';
-import { useCategories } from '~/hooks/useCategories';
+import { useRoomCategories, useMusicCategories } from '~/hooks/useCategories';
 import { RoomCategory } from '~/types/RoomCategory';
 import EMOJI from '~/constants/emoji';
+import { MusicCategory } from '~/types/MusicCategory';
+import { useMusics } from '~/hooks/useMusic';
+import Playlist from '~/components/Playlist';
+import { Music } from '~/types/Music';
+import CategoryMenu from '~/components/CategoryMenu';
+import BottomPopup from '~/components/BottomPopup';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -30,14 +36,17 @@ type CreateRoomForm = Omit<CreateRoomData, 'categoryId'> & {
 };
 
 const Create = () => {
-  const { data: categories } = useCategories();
+  const { data: roomCategories } = useRoomCategories();
+  const { data: musicCategories } = useMusicCategories();
 
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(true);
   const [contentType, setContentType] = useState<'info' | 'music'>('info');
-  const [category, setCategory] = useState<RoomCategory>();
+  const [roomCategory, setRoomCategory] = useState<RoomCategory>();
+  const [musicCategory, setMusicCategory] = useState<MusicCategory>();
+
   const [room, setRoom] = useState<CreateRoomForm>({
     title: '',
-    categoryId: category?.id,
+    categoryId: roomCategory?.id,
     light: 'ONE',
     wallColor: 'YELLOW',
     assets: [],
@@ -45,12 +54,14 @@ const Create = () => {
     roomImage: '',
     musicIds: [],
   });
+  const { data: musics } = useMusics(musicCategory?.id);
 
   const [visibleControl, setVisibleControl] = useState(false);
+  const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
 
   useEffect(() => {
-    setCategory(categories?.[0]);
-  }, [categories]);
+    setRoomCategory(roomCategories?.[0]);
+  }, [roomCategories]);
 
   const handleChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,7 +126,6 @@ const Create = () => {
   };
 
   const handleToggleTagClick = (tag: string) => {
-    console.log(room.tags);
     if (
       room.tags.length < 5 &&
       room.tags.findIndex((item) => item === tag) === -1
@@ -129,6 +139,20 @@ const Create = () => {
     } else {
       handleDeleteTag(tag);
     }
+  };
+
+  useEffect(() => {
+    setMusicCategory(musicCategories?.[0]);
+  }, [musicCategories]);
+
+  const handleAddMusicButtonClick = (music: Music) => {
+    if (selectedMusics.findIndex((item) => item === music) === -1) {
+      setSelectedMusics((prev) => [music, ...prev]);
+    }
+  };
+
+  const handleDeleteMusicButtonClick = (music: Music) => {
+    setSelectedMusics((prev) => prev.filter((item) => item !== music));
   };
 
   const handleCreateButtonClick = () => {
@@ -390,7 +414,29 @@ const Create = () => {
               />
             </ContentBox>
           )}
-          {contentType === 'music' && <ContentBox>music</ContentBox>}
+          {contentType === 'music' && (
+            <ContentBox>
+              <CategoryMenu
+                categories={musicCategories as MusicCategory[]}
+                category={musicCategory as MusicCategory}
+                setCategory={(value) => setMusicCategory(value)}
+              />
+              <MusicListStyled>
+                <Playlist
+                  playlist={musics as Music[]}
+                  controls={false}
+                  viewHeight={56}
+                  selectedMusics={selectedMusics}
+                  onAddButtonClick={handleAddMusicButtonClick}
+                />
+              </MusicListStyled>
+              <BottomPopup
+                title="플레이리스트"
+                selectedList={selectedMusics}
+                onDeleteButtonClick={handleDeleteMusicButtonClick}
+              />
+            </ContentBox>
+          )}
         </ContentView>
         <ObjectView backgroundImage={ROOM[room.wallColor][room.light].WALL}>
           <LayerBox>
@@ -455,15 +501,18 @@ const Create = () => {
           content="자유롭게 선택해주세요!"
           action={
             <CategoryStyled>
-              {categories?.map((value: RoomCategory, index: number) => (
-                <CategoryItem key={index} onClick={() => setCategory(value)}>
-                  <CategoryItemIcon active={category === value}>
+              {roomCategories?.map((value: RoomCategory, index: number) => (
+                <CategoryItem
+                  key={index}
+                  onClick={() => setRoomCategory(value)}
+                >
+                  <CategoryItemIcon active={roomCategory === value}>
                     {getCategoryEmoji(value.name)}
                   </CategoryItemIcon>
                   <Typography
                     font={FontType.SEMI_BOLD_BODY}
                     color={
-                      category === value
+                      roomCategory === value
                         ? BasicColor.BLUE100
                         : BasicColor.DARK100
                     }
@@ -690,6 +739,11 @@ const NoneTagItem = styled.div`
     fill: ${BasicColor.BLUE80};
     margin-bottom: 5px;
   }
+`;
+
+const MusicListStyled = styled.div`
+  display: flex;
+  margin-top: 10px;
 `;
 
 const LayerBox = styled.div`

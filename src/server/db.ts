@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { nanoid } from 'nanoid';
 import { createConnection, getConnection, In } from 'typeorm';
+
+// !!!순서 주의!!!
 import { MusicEntity } from '~/server/entities/MusicEntity';
+import { MusicCategoryEntity } from '~/server/entities/MusicCategoryEntity';
 import { ReviewEntity } from '~/server/entities/ReviewEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import { RoomEntity } from '~/server/entities/RoomEntity';
 import { UserEntity } from '~/server/entities/UserEntity';
+// !!!순서 주의!!!
+
 import { CreateReviewData } from '~/types/Review';
 import { CreateRoomData } from '~/types/Room';
 import { User } from '~/types/User';
@@ -32,13 +37,13 @@ function prepareConnection() {
         password: process.env.RDB_PASSWORD,
         database: process.env.RDB_DATABASE,
         entities: [
+          MusicCategoryEntity,
           MusicEntity,
           ReviewEntity,
           RoomCategoryEntity,
           RoomEntity,
           UserEntity,
         ],
-        logging: process.env.NODE_ENV === 'production' ? ['error'] : 'all',
         useUTC: false,
       });
     })();
@@ -116,7 +121,6 @@ export async function findAllRooms(options?: {
 
 export async function getRoomById(roomId: number) {
   const RoomRepository = await getRoomRepository();
-
   const room = await RoomRepository.createQueryBuilder('room')
     .andWhere('room.id = :roomId', { roomId })
     .leftJoinAndSelect('room.creator', 'creator')
@@ -195,10 +199,21 @@ export async function findAllMusics() {
   const MusicRepository = await getMusicRepository();
 
   return MusicRepository.find({
+    relations: ['category'],
     order: {
       id: 'ASC',
     },
   });
+}
+
+export async function findAllMusicsByCategoryId(categoryId: number) {
+  const MusicRepository = await getMusicRepository();
+
+  return MusicRepository.createQueryBuilder('music')
+    .leftJoinAndSelect('music.category', 'category')
+    .andWhere('category.id = :categoryId', { categoryId })
+    .addOrderBy('music.createdAt', 'DESC')
+    .getMany();
 }
 
 export async function findAllMusicsByIds(ids: number[]) {
@@ -207,6 +222,25 @@ export async function findAllMusicsByIds(ids: number[]) {
   return MusicRepository.find({
     where: {
       id: In(ids),
+    },
+  });
+}
+
+// Music Category
+
+export async function getMusicCategoryRepository() {
+  const database = await getDatabase();
+  const MusicCategoryRepository = database.getRepository(MusicCategoryEntity);
+
+  return MusicCategoryRepository;
+}
+
+export async function findAllMusicCategories() {
+  const MusicCategoryRepository = await getMusicCategoryRepository();
+
+  return MusicCategoryRepository.find({
+    order: {
+      id: 'ASC',
     },
   });
 }

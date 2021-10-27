@@ -50,7 +50,7 @@ const CreateInfoItem = ({
         </CreateInfoItemTitleLeft>
         {isDrop && (
           <OpenIconStyled show={visibleInfo}>
-            <OpenIcon />
+            <OpenIcon stroke={BasicColor.DARK100} />
           </OpenIconStyled>
         )}
       </CreateInfoItemTitle>
