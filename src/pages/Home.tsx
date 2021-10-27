@@ -9,7 +9,7 @@ import { useUserProfile } from '~/hooks/useUser';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import { useCategories } from '~/hooks/useCategories';
+import { useRoomCategories } from '~/hooks/useCategories';
 import { getCategoryEmoji } from '~/utils/category';
 import { RoomCategory } from '~/types/RoomCategory';
 
@@ -18,7 +18,7 @@ import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 
 const Home = () => {
   const { data: user } = useUserProfile();
-  const { data: categories } = useCategories();
+  const { data: categories } = useRoomCategories();
   const [category, setCategory] = useState<RoomCategory>();
 
   const { data: rooms } = useRooms(category?.name);
