@@ -10,27 +10,13 @@ interface Props {
 const ObjectBox = ({ room: { wallColor, light } }: Props) => {
   return (
     <ObjectBoxStyled>
-      <ObjectVase>
-        <img src={RoomAssets[wallColor][light].VASE} alt="화분" />
-      </ObjectVase>
-      <ObjectClock>
-        <img src={RoomAssets[wallColor][light].CLOCK} alt="시계" />
-      </ObjectClock>
-      <ObjectBoard>
-        <img src={RoomAssets[wallColor][light].BOARD} alt="보드" />
-      </ObjectBoard>
-      <ObjectPoster>
-        <img src={RoomAssets[wallColor][light].POSTER} alt="포스터" />
-      </ObjectPoster>
-      <ObjectSpeaker>
-        <img src={RoomAssets[wallColor][light].SPEAKER} alt="스피커" />
-      </ObjectSpeaker>
-      <ObjectTable>
-        <img src={RoomAssets[wallColor][light].TABLE} alt="책상" />
-      </ObjectTable>
-      <ObjectLight>
-        <img src={RoomAssets[wallColor][light].LIGHT} alt="조명" />
-      </ObjectLight>
+      <ObjectVase src={RoomAssets[wallColor][light].VASE} alt="화분" />
+      <ObjectClock src={RoomAssets[wallColor][light].CLOCK} alt="시계" />
+      <ObjectBoard src={RoomAssets[wallColor][light].BOARD} alt="보드" />
+      <ObjectPoster src={RoomAssets[wallColor][light].POSTER} alt="포스터" />
+      <ObjectSpeaker src={RoomAssets[wallColor][light].SPEAKER} alt="스피커" />
+      <ObjectTable src={RoomAssets[wallColor][light].TABLE} alt="책상" />
+      <ObjectLight src={RoomAssets[wallColor][light].LIGHT} alt="조명" />
     </ObjectBoxStyled>
   );
 };
@@ -47,7 +33,7 @@ const ObjectBoxStyled = styled.div`
   }
 `;
 
-const ObjectVase = styled.div`
+const ObjectVase = styled.img`
   width: 13%;
   height: auto;
   position: absolute;
@@ -56,7 +42,7 @@ const ObjectVase = styled.div`
   z-index: 0;
 `;
 
-const ObjectClock = styled.div`
+const ObjectClock = styled.img`
   width: 9%;
   height: auto;
   position: absolute;
@@ -65,7 +51,7 @@ const ObjectClock = styled.div`
   z-index: 0;
 `;
 
-const ObjectBoard = styled.div`
+const ObjectBoard = styled.img`
   width: 15%;
   height: auto;
   position: absolute;
@@ -74,7 +60,7 @@ const ObjectBoard = styled.div`
   z-index: 1;
 `;
 
-const ObjectPoster = styled.div`
+const ObjectPoster = styled.img`
   width: 16%;
   height: auto;
   position: absolute;
@@ -83,7 +69,7 @@ const ObjectPoster = styled.div`
   z-index: 0;
 `;
 
-const ObjectSpeaker = styled.div`
+const ObjectSpeaker = styled.img`
   width: 12%;
   height: auto;
   position: absolute;
@@ -92,7 +78,7 @@ const ObjectSpeaker = styled.div`
   z-index: 1;
 `;
 
-const ObjectTable = styled.div`
+const ObjectTable = styled.img`
   width: 30%;
   height: auto;
   position: absolute;
@@ -101,7 +87,7 @@ const ObjectTable = styled.div`
   z-index: 0;
 `;
 
-const ObjectLight = styled.div`
+const ObjectLight = styled.img`
   width: 13%;
   height: auto;
   position: absolute;
