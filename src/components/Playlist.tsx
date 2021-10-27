@@ -6,11 +6,14 @@ import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
 import { FontType } from '~/utils/font';
 import { formatDuration } from '~/utils/format';
+import PlaylistControls from './PlaylistControls';
+import Typography from './Typography';
 
 import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 import PlayIcon from '../../public/assets/icons/icon-play.svg';
-import PlaylistControls from './PlaylistControls';
-import Typography from './Typography';
+import AddPlaylistIcon from '../../public/assets/icons/icon-add-playlist.svg';
+import CheckIcon from '../../public/assets/icons/icon-check.svg';
+import TrashIcon from '../../public/assets/icons/icon-trash.svg';
 
 interface Props {
   playlist: Music[];
@@ -18,6 +21,10 @@ interface Props {
   controls?: boolean;
   autoplay?: boolean;
   size?: 'big' | 'small';
+  selectedMusics?: Music[];
+  onAddButtonClick?: (value: Music) => void;
+  onDeleteButtonClick?: (value: Music) => void;
+  simpleMode?: boolean;
 }
 
 // 저전력 모드 등에서는 play 재생 시에 오류 발생함
@@ -39,6 +46,10 @@ const Playlist = ({
   autoplay,
   viewHeight,
   size = 'big',
+  selectedMusics,
+  onAddButtonClick,
+  onDeleteButtonClick,
+  simpleMode = false,
 }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
@@ -117,7 +128,7 @@ const Playlist = ({
 
   return (
     <PlaylistStyled size={size}>
-      <audio ref={playerRef} src={playlist[0].url} css={visuallyHidden} />
+      <audio ref={playerRef} src={playlist?.[0].url} css={visuallyHidden} />
       {controls && (
         <PlaylistControls
           music={playlist[currentIndex]}
@@ -131,54 +142,89 @@ const Playlist = ({
         />
       )}
       <PlaylistView controls={controls} viewHeight={viewHeight}>
-        {playlist.map((music, index) => (
-          <PlaylistItem
+        {playlist?.map((music, index) => (
+          <PlaylistItemStyled
             key={index}
-            onClick={() => {
-              setCurrentIndex(index);
-              updatePlayer(index);
-              setIsPlaying((prev) => !prev);
-            }}
-            last={playlist.length !== index + 1}
+            last={playlist?.length !== index + 1}
+            simpleMode={simpleMode}
           >
-            <PlaylistLeftView>
-              <PlayPauseButton>
-                {isPlaying && currentIndex === index ? (
-                  <PauseIcon fill={BasicColor.BLUE100} />
-                ) : (
-                  <PlayIcon fill={BasicColor.BLUE100} />
-                )}
-              </PlayPauseButton>
-              <PlaylistItemInfo>
-                <Typography
-                  font={
-                    size === 'big' ? FontType.BOLD_TITLE_02 : FontType.BOLD_BODY
-                  }
-                  marginBottom={5}
-                >
-                  {music.name}
-                </Typography>
-                <Typography
-                  font={
-                    size === 'big'
-                      ? FontType.REGULAR_BODY
-                      : FontType.REGULAR_CAPTION
-                  }
-                  color={BasicColor.DARK70}
-                >
-                  {music.author}
-                </Typography>
-              </PlaylistItemInfo>
-            </PlaylistLeftView>
-            <Typography
-              font={FontType.REGULAR_CAPTION}
-              color={BasicColor.DARK40}
+            <PlaylistItem
+              onClick={() => {
+                setCurrentIndex(index);
+                updatePlayer(index);
+                setIsPlaying((prev) => !prev);
+              }}
             >
-              {currentIndex === index
-                ? currentTime
-                : formatDuration(music.duration)}
-            </Typography>
-          </PlaylistItem>
+              <PlaylistLeftView>
+                <PlayPauseButton simpleMode={simpleMode}>
+                  {isPlaying && currentIndex === index ? (
+                    <PauseIcon fill={BasicColor.BLUE100} />
+                  ) : (
+                    <PlayIcon fill={BasicColor.BLUE100} />
+                  )}
+                </PlayPauseButton>
+                <PlaylistItemInfo>
+                  <Typography
+                    font={
+                      size === 'big'
+                        ? FontType.BOLD_TITLE_02
+                        : FontType.BOLD_BODY
+                    }
+                    marginBottom={simpleMode ? 0 : 5}
+                  >
+                    {music.name}
+                  </Typography>
+                  <Typography
+                    font={
+                      size === 'big'
+                        ? FontType.REGULAR_BODY
+                        : FontType.REGULAR_CAPTION
+                    }
+                    color={BasicColor.DARK70}
+                  >
+                    {music.author}
+                  </Typography>
+                </PlaylistItemInfo>
+              </PlaylistLeftView>
+              {!simpleMode && (
+                <Typography
+                  font={FontType.REGULAR_CAPTION}
+                  color={BasicColor.DARK40}
+                >
+                  {currentIndex === index
+                    ? currentTime
+                    : formatDuration(music.duration)}
+                </Typography>
+              )}
+            </PlaylistItem>
+            {onAddButtonClick && (
+              <PlaylistIconStyled
+                onClick={() => {
+                  if (selectedMusics?.includes(music)) {
+                    return;
+                  }
+                  onAddButtonClick?.(music);
+                }}
+                disable={!!selectedMusics?.includes(music)}
+              >
+                {selectedMusics?.includes(music) ? (
+                  <SubmitPlaylistIconStyled>
+                    <CheckIcon stroke={BasicColor.WHITE} />
+                  </SubmitPlaylistIconStyled>
+                ) : (
+                  <AddPlaylistIcon />
+                )}
+              </PlaylistIconStyled>
+            )}
+            {onDeleteButtonClick && (
+              <PlaylistIconStyled
+                onClick={() => onDeleteButtonClick(music)}
+                disable={false}
+              >
+                <TrashIcon />
+              </PlaylistIconStyled>
+            )}
+          </PlaylistItemStyled>
         ))}
       </PlaylistView>
     </PlaylistStyled>
@@ -203,15 +249,24 @@ const PlaylistView = styled.div<{ controls?: boolean; viewHeight: number }>`
   padding: ${({ controls }) => (controls ? '15px' : 0)};
 `;
 
-const PlaylistItem = styled.button<{ last: boolean }>`
+const PlaylistItemStyled = styled.div<{ last: boolean; simpleMode: boolean }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: ${({ simpleMode }) => (simpleMode ? '10px' : '14px 0')};
+  border-bottom: ${({ last, simpleMode }) =>
+    !simpleMode && last ? `1px solid ${BasicColor.GRAY70}` : 'none'};
+  background-color: ${({ simpleMode }) => simpleMode && BasicColor.WHITE};
+  border-radius: ${({ simpleMode }) => simpleMode && '10px'};
+  margin-bottom: ${({ simpleMode }) => simpleMode && '10px'};
+`;
+
+const PlaylistItem = styled.button`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: ${({ last }) =>
-    last ? `1px solid ${BasicColor.GRAY70}` : 'none'};
 `;
 
 const PlaylistLeftView = styled.div`
@@ -220,20 +275,38 @@ const PlaylistLeftView = styled.div`
   align-items: center;
 `;
 
-const PlayPauseButton = styled.div`
+const PlayPauseButton = styled.div<{ simpleMode: boolean }>`
   width: 40px;
   height: 40px;
   justify-content: center;
   align-items: center;
-  background-color: ${BasicColor.BLUE10};
+  background-color: ${({ simpleMode }) => !simpleMode && BasicColor.BLUE10};
   border-radius: 50%;
-  margin-right: 20px;
+  margin-right: ${({ simpleMode }) => (simpleMode ? '10px' : '20px')};
   pointer-events: none;
 `;
 
 const PlaylistItemInfo = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const SubmitPlaylistIconStyled = styled.div`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: ${BasicColor.BLUE100};
+  margin-left: 6px;
+`;
+
+const PlaylistIconStyled = styled.button<{ disable: boolean }>`
+  margin-left: 15px;
+  padding-left: 5px;
+  border-left: 1px solid ${BasicColor.GRAY70};
+  pointer-events: ${({ disable }) => disable && 'none'};
 `;
 
 export default Playlist;
