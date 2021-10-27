@@ -13,7 +13,8 @@ import Screen from '~/components/Screen';
 import TextInput from '~/components/TextInput';
 import Timer from '~/components/Timer';
 import Typography from '~/components/Typography';
-import RoomAssets from '~/constants/room';
+import BACKGROUND from '~/constants/background';
+import ROOM from '~/constants/room';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
 import { postReview } from '~/remotes/review';
 import { Todo } from '~/types/Obejct';
@@ -219,12 +220,13 @@ const Play = ({ room }: Props) => {
           )}
         </PlayView>
       )}
-      <ObjectView
-        backgroundImage={RoomAssets[room.wallColor][room.light].WALL}
-        page={currentPage}
-      >
+      <ObjectView page={currentPage}>
+        <ObjectBackground
+          src={ROOM[room.wallColor][room.light].WALL[room.objectIds.wall]}
+        />
+        <ObjectBackgroundView src={BACKGROUND[room.background]} alt="풍경" />
         <LayerBox page={currentPage}>
-          <ObjectBox room={room} />
+          <ObjectBox room={room} objects={room.objectIds} />
           {currentPage >= 3 && (
             <PopupBox>
               <PopupPictureStyled>
@@ -498,18 +500,30 @@ const StatusBarBackground = styled.div`
   background-color: ${BasicColor.GREEN10};
 `;
 
-const ObjectView = styled.div<{ page: number; backgroundImage: string }>`
+const ObjectView = styled.div<{ page: number }>`
   width: ${({ page }) => (page === 1 || page === 2 ? '190%' : '100%')};
   height: ${({ page }) => (page === 1 || page === 2 ? '190%' : '100%')};
   position: absolute;
-  top: ${({ page }) => (page === 1 ? '-6vh' : page === 2 ? '-68vh' : '0')};
-  right: ${({ page }) => (page === 1 ? '0vw' : page === 2 ? '-28vw' : '0')};
-  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position-y: 50%;
+  top: ${({ page }) => (page === 1 ? '0vh' : page === 2 ? '-88vh' : '0')};
+  right: ${({ page }) => (page === 1 ? '0vw' : page === 2 ? '-26vw' : '0')};
   transition: 0.4s ease-in-out;
   z-index: 0;
+`;
+
+const ObjectBackground = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+`;
+
+const ObjectBackgroundView = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: -2;
 `;
 
 const LayerBox = styled.div<{ page: number }>`
@@ -517,7 +531,7 @@ const LayerBox = styled.div<{ page: number }>`
   height: ${({ page }) => (page === 1 || page === 2 ? '150vh' : '80vh')};
   position: absolute;
   right: ${({ page }) => (page === 1 ? '2vw' : page === 2 ? '2vw' : '0')};
-  bottom: ${({ page }) => (page === 1 ? '8vh' : page === 2 ? '8vh' : '0')};
+  bottom: ${({ page }) => (page === 1 ? '8vh' : page === 2 ? '4vh' : '0')};
   transition: 0.4s ease-in-out;
   z-index: 1;
 `;
@@ -531,15 +545,15 @@ const PopupBox = styled.div`
 
 const PopupPictureStyled = styled.div`
   position: absolute;
-  top: 11%;
-  left: 70%;
+  top: -4%;
+  left: 68%;
 `;
 
 const PopupClockStyled = styled.div`
   width: 80px;
   position: absolute;
-  top: 3%;
-  left: 82%;
+  top: -8%;
+  left: 80%;
   padding: 5px;
 `;
 
@@ -574,8 +588,8 @@ const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
 const PopupSpeakerStyled = styled.div`
   width: 240px;
   position: absolute;
-  left: 78%;
-  bottom: 55%;
+  left: 16%;
+  bottom: 32%;
   z-index: 1;
 `;
 
@@ -583,8 +597,8 @@ const PopupSpeaker = styled.div<{ visible: boolean }>`
   width: 100%;
   overflow: hidden;
   position: absolute;
-  top: -200px;
-  left: -250px;
+  top: -250px;
+  left: 40px;
   background-color: ${BasicColor.WHITE};
   border-radius: 30px;
   opacity: ${({ visible }) => (visible ? 100 : 0)};
@@ -595,14 +609,14 @@ const PopupMemoStyled = styled.div`
   width: 300px;
   position: absolute;
   left: 53%;
-  bottom: 36%;
+  bottom: 20%;
 `;
 
 const PopupMemo = styled.div`
   width: 100%;
   position: absolute;
-  top: -20px;
-  left: -310px;
+  top: -85px;
+  left: -130px;
   padding: 15px;
   background-color: ${BasicColor.WHITE};
   border-radius: 10px;
