@@ -10,7 +10,7 @@ GET http://localhost:3000/api/rooms
 GET http://localhost:3000/api/rooms?categoryName=학습
 
 ### 방 자세히 불러오기
-GET http://localhost:3000/api/rooms/1
+GET http://localhost:3000/api/rooms/3
 
 ### 방 등록하기
 POST http://localhost:3000/api/rooms
