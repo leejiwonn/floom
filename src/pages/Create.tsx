@@ -48,7 +48,7 @@ const Create = () => {
     title: '',
     categoryId: roomCategory?.id,
     light: 'ONE',
-    wallColor: 'YELLOW',
+    wallColor: 'RED',
     assets: [],
     tags: [],
     roomImage: '',
@@ -438,7 +438,8 @@ const Create = () => {
             </ContentBox>
           )}
         </ContentView>
-        <ObjectView backgroundImage={ROOM[room.wallColor][room.light].WALL}>
+        <ObjectView>
+          <ObjectBackground src={ROOM[room.wallColor][room.light].WALL} />
           <LayerBox>
             <ObjectBox room={room} />
           </LayerBox>
@@ -587,18 +588,21 @@ const ContentBox = styled.div`
   }
 `;
 
-const ObjectView = styled.div<{ backgroundImage: string }>`
+const ObjectView = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   right: 0;
-  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position-y: 50%;
-  transition: 0.4s ease-in-out;
   z-index: 0;
+`;
+
+const ObjectBackground = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.4s ease-in-out;
+  z-index: -1;
 `;
 
 const CreateInfoImageStyled = styled.div``;
