@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-
 import { MusicCategory } from '~/types/MusicCategory';
 import { RoomCategory } from '~/types/RoomCategory';
 import { BasicColor } from '~/utils/color';
@@ -70,14 +69,14 @@ const CategoryMenu = ({ categories, category, setCategory }: Props) => {
             </Typography>
           </CategoryItem>
         ))}
-        {categories.length > 2 && (
+        {categories?.length > 2 && (
           <>
             {currentIndex !== 0 && (
               <CategoryLeftSidebar onClick={handlePrevButtonClick}>
                 <SidebarIcon />
               </CategoryLeftSidebar>
             )}
-            {currentIndex !== categories.length - 1 && (
+            {currentIndex !== categories?.length - 1 && (
               <CategoryRightSidebar onClick={handleNextButtonClick}>
                 <SidebarIcon />
               </CategoryRightSidebar>
