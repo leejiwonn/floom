@@ -20,6 +20,8 @@ export function toRoomSimple(x: RoomEntity): RoomSimple {
     category: toRoomCategory(x.category),
     light: x.light,
     wallColor: x.wallColor,
+    objectIds: JSON.parse(x.objectIds),
+    background: x.background,
     assets: JSON.parse(x.assets),
     tags: x.tags,
     roomImage: x.roomImage,

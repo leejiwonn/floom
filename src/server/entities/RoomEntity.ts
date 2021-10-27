@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Background } from '~/constants/background';
 import { MusicEntity } from '~/server/entities/MusicEntity';
 import { ReviewEntity } from '~/server/entities/ReviewEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
@@ -45,6 +46,16 @@ export class RoomEntity {
     type: 'varchar',
   })
   light: RoomLight;
+
+  @Column({
+    type: 'text',
+  })
+  objectIds: string;
+
+  @Column({
+    type: 'varchar',
+  })
+  background: Background;
 
   @Column({
     type: 'varchar',

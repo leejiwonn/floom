@@ -75,6 +75,7 @@ sup {
 
 img {
   border-style: none;
+  user-select: none;
 }
 
 button,
