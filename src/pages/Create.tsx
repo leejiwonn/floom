@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Router from 'next/router';
 import { useState, useCallback, useEffect } from 'react';
+import html2canvas from 'html2canvas';
 
 import Modal from '~/components/Modal';
 import Typography from '~/components/Typography';
@@ -18,7 +19,7 @@ import {
   RoomObject,
   RoomWallColor,
 } from '~/types/Room';
-import { upload } from '~/remotes/common';
+import { upload, uploadRoomImage } from '~/remotes/common';
 import { useRoomCategories, useMusicCategories } from '~/hooks/useCategories';
 import { RoomCategory } from '~/types/RoomCategory';
 import EMOJI from '~/constants/emoji';
@@ -206,6 +207,35 @@ const Create = () => {
             : backgroundList[index + 1],
       };
     });
+  };
+
+  const handleUploadRoomImage = async () => {
+    const onCapture = async () => {
+      return await html2canvas(
+        document.getElementById('capture-view') as HTMLElement,
+      ).then((canvas) => {
+        const contentDataURL = canvas.toDataURL('image/png');
+        const blobBin = window.atob(contentDataURL.split(',')[1]);
+        const array = [];
+        for (let i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], { type: 'image/png' });
+      });
+    };
+
+    const file: Blob = await onCapture();
+    try {
+      const { url } = await uploadRoomImage(file);
+      setRoom((prev) => {
+        return {
+          ...prev,
+          roomImage: url,
+        };
+      });
+    } catch (e) {
+      console.warn(e);
+    }
   };
 
   const handleCreateButtonClick = () => {
@@ -491,21 +521,26 @@ const Create = () => {
             </ContentBox>
           )}
         </ContentView>
-        <ObjectView>
-          <ObjectBackground
-            src={ROOM[room.wallColor][room.light].WALL[room.objectIds.wall]}
-          />
-          <ObjectBackgroundView src={BACKGROUND[room.background]} alt="풍경" />
-          <LayerBox>
-            <ObjectBox
-              room={room}
-              objects={room.objectIds}
-              onObjectClick={handleObjectClick}
+        <ObjectViewStyled>
+          <ObjectView id="capture-view">
+            <ObjectBackground
+              src={ROOM[room.wallColor][room.light].WALL[room.objectIds.wall]}
             />
-            <RotateIconStyled onClick={handleBackgroundClick}>
-              <RotateIcon />
-            </RotateIconStyled>
-          </LayerBox>
+            <ObjectBackgroundView
+              src={BACKGROUND[room.background]}
+              alt="풍경"
+            />
+            <LayerBox>
+              <ObjectBox
+                room={room}
+                objects={room.objectIds}
+                onObjectClick={handleObjectClick}
+              />
+            </LayerBox>
+          </ObjectView>
+          <RotateIconStyled onClick={handleBackgroundClick}>
+            <RotateIcon />
+          </RotateIconStyled>
           {!visibleCategoryModal && (
             <>
               <RoomControlStyled>
@@ -556,7 +591,7 @@ const Create = () => {
               </CreateButton>
             </>
           )}
-        </ObjectView>
+        </ObjectViewStyled>
       </CreateStyled>
       {visibleCategoryModal && (
         <Modal
@@ -651,13 +686,19 @@ const ContentBox = styled.div`
   }
 `;
 
-const ObjectView = styled.div`
+const ObjectViewStyled = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   right: 0;
   z-index: 0;
+`;
+
+const ObjectView = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
 `;
 
 const ObjectBackground = styled.img`
@@ -840,8 +881,8 @@ const RotateIconStyled = styled.button`
   width: 46px;
   height: 46px;
   position: absolute;
-  top: -15%;
-  left: 39%;
+  top: 10%;
+  right: 34vw;
   display: flex;
   justify-content: center;
   align-items: center;
