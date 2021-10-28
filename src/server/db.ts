@@ -150,11 +150,13 @@ export async function createRoom(payload: CreateRoomParams) {
   ]);
 
   room.title = payload.title;
-  room.assets = JSON.stringify(payload.assets);
   room.light = payload.light;
   room.wallColor = payload.wallColor;
-  room.roomImage = payload.roomImage;
+  room.objectIds = JSON.stringify(payload.objectIds);
+  room.background = payload.background;
+  room.assets = JSON.stringify(payload.assets);
   room.tags = payload.tags;
+  room.roomImage = payload.roomImage;
   room.category = category;
   room.reviews = [];
   room.musics = musics;
@@ -221,6 +223,7 @@ export async function findAllMusicsByIds(ids: number[]) {
   const MusicRepository = await getMusicRepository();
 
   return MusicRepository.find({
+    relations: ['category'],
     where: {
       id: In(ids),
     },
