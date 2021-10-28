@@ -12,7 +12,12 @@ import { getCategoryEmoji } from '~/utils/category';
 import ROOM from '~/constants/room';
 import { BasicColor, getWallColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import { CreateRoomData, RoomLight, RoomWallColor } from '~/types/Room';
+import {
+  CreateRoomData,
+  RoomLight,
+  RoomObject,
+  RoomWallColor,
+} from '~/types/Room';
 import { upload } from '~/remotes/common';
 import { useRoomCategories, useMusicCategories } from '~/hooks/useCategories';
 import { RoomCategory } from '~/types/RoomCategory';
@@ -166,6 +171,19 @@ const Create = () => {
 
   const handleDeleteMusicButtonClick = (music: Music) => {
     setSelectedMusics((prev) => prev.filter((item) => item !== music));
+  };
+
+  const handleObjectClick = (object: RoomObject) => {
+    setRoom((prev) => {
+      return {
+        ...prev,
+        objectIds: {
+          ...prev.objectIds,
+          [object]:
+            prev.objectIds[object] === 3 ? 1 : prev.objectIds[object] + 1,
+        },
+      };
+    });
   };
 
   const handleCreateButtonClick = () => {
@@ -457,7 +475,11 @@ const Create = () => {
           />
           <ObjectBackgroundView src={BACKGROUND[room.background]} alt="풍경" />
           <LayerBox>
-            <ObjectBox room={room} objects={room.objectIds} />
+            <ObjectBox
+              room={room}
+              objects={room.objectIds}
+              onObjectClick={handleObjectClick}
+            />
           </LayerBox>
           {!visibleCategoryModal && (
             <>
