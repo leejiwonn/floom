@@ -28,7 +28,7 @@ import Playlist from '~/components/Playlist';
 import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
-import BACKGROUND from '~/constants/background';
+import BACKGROUND, { Background } from '~/constants/background';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -36,6 +36,7 @@ import AddImageIcon from '../../public/assets/icons/icon-add-img.svg';
 import TagIcon from '../../public/assets/icons/icon-tag.svg';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
+import RotateIcon from '../../public/assets/icons/icon-rotate.svg';
 
 type CreateRoomForm = Omit<CreateRoomData, 'categoryId'> & {
   categoryId?: number;
@@ -182,6 +183,27 @@ const Create = () => {
           [object]:
             prev.objectIds[object] === 3 ? 1 : prev.objectIds[object] + 1,
         },
+      };
+    });
+  };
+
+  const handleBackgroundClick = () => {
+    const backgroundList: Background[] = [
+      'RAIN',
+      'SNOW',
+      'SUNNY',
+      'BLUR',
+      'NIGHT',
+    ];
+
+    setRoom((prev) => {
+      const index = backgroundList.indexOf(prev.background);
+      return {
+        ...prev,
+        background:
+          index === backgroundList.length - 1
+            ? backgroundList[0]
+            : backgroundList[index + 1],
       };
     });
   };
@@ -480,6 +502,9 @@ const Create = () => {
               objects={room.objectIds}
               onObjectClick={handleObjectClick}
             />
+            <RotateIconStyled onClick={handleBackgroundClick}>
+              <RotateIcon />
+            </RotateIconStyled>
           </LayerBox>
           {!visibleCategoryModal && (
             <>
@@ -809,6 +834,22 @@ const LayerBox = styled.div`
   bottom: 0;
   transition: 0.4s ease-in-out;
   z-index: 1;
+`;
+
+const RotateIconStyled = styled.button`
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  top: -15%;
+  left: 39%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 2px solid ${BasicColor.BLUE40};
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px);
 `;
 
 const RoomControlStyled = styled.div`
