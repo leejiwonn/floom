@@ -128,7 +128,7 @@ const Playlist = ({
 
   return (
     <PlaylistStyled size={size}>
-      <audio ref={playerRef} src={playlist?.[0].url} css={visuallyHidden} />
+      <audio ref={playerRef} src={playlist?.[0]?.url} css={visuallyHidden} />
       {controls && (
         <PlaylistControls
           music={playlist[currentIndex]}

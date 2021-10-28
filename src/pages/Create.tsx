@@ -38,6 +38,7 @@ import TagIcon from '../../public/assets/icons/icon-tag.svg';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import RotateIcon from '../../public/assets/icons/icon-rotate.svg';
+import api from '~/utils/api';
 
 type CreateRoomForm = Omit<CreateRoomData, 'categoryId'> & {
   categoryId?: number;
@@ -48,6 +49,7 @@ const Create = () => {
   const { data: musicCategories } = useMusicCategories();
 
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(true);
+  const [visibleSubmitModal, setVisibleSubmitModal] = useState(false);
   const [contentType, setContentType] = useState<'info' | 'music'>('info');
   const [roomCategory, setRoomCategory] = useState<RoomCategory>();
   const [musicCategory, setMusicCategory] = useState<MusicCategory>();
@@ -209,7 +211,7 @@ const Create = () => {
     });
   };
 
-  const handleUploadRoomImage = async () => {
+  const getUploadRoomImage = async () => {
     const onCapture = async () => {
       return await html2canvas(
         document.getElementById('capture-view') as HTMLElement,
@@ -238,8 +240,44 @@ const Create = () => {
     }
   };
 
-  const handleCreateButtonClick = () => {
-    Router.push('/');
+  const getMusicIds = () => {
+    const ids = selectedMusics.map((music) => music.id);
+    setRoom((prev) => {
+      return {
+        ...prev,
+        musicIds: ids,
+      };
+    });
+  };
+
+  const handleCreateButtonClick = async () => {
+    if (room.title === '' || !room.assets.length || !selectedMusics.length) {
+      alert('빈 값이 있습니다.');
+      return;
+    }
+    getMusicIds();
+    await getUploadRoomImage();
+    setVisibleSubmitModal(true);
+  };
+
+  const postCreateRoom = async () => {
+    try {
+      await api.post('/api/rooms', {
+        title: room.title,
+        categoryId: room.categoryId,
+        light: room.light,
+        wallColor: room.wallColor,
+        objectIds: room.objectIds,
+        background: room.background,
+        assets: room.assets,
+        tags: room.tags,
+        roomImage: room.roomImage,
+        musicIds: room.musicIds,
+      });
+      Router.push('/');
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -626,6 +664,15 @@ const Create = () => {
           buttonActive
           buttonText="완료"
           onButtonClick={() => setVisibleCategoryModal(false)}
+        />
+      )}
+      {visibleSubmitModal && (
+        <Modal
+          title="방 만들기 완료!"
+          subTitle={<>아래 버튼을 누르면 방이 등록됩니다.</>}
+          content="방을 등록하시겠어요?"
+          buttonText="등록하기"
+          onButtonClick={postCreateRoom}
         />
       )}
     </>

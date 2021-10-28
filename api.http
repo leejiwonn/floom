@@ -19,15 +19,26 @@ Authorization: Bearer {{$dotenv authToken }}
 
 {
   "title": "테스트2",
+  "categoryId": 3,
   "light": "TWO",
   "wallColor": "GREEN",
+  "objectIds": {
+    "board": 1,
+    "clock": 1,
+    "light": 1,
+    "poster": 1,
+    "speaker": 1,
+    "table": 1,
+    "vase": 1,
+    "wall": 1
+  },
+  "background": "SUNNY",
   "assets": [{
     "type": "image",
     "url": "https://floom-upload.s3.ap-northeast-2.amazonaws.com/5X6Dt7ri3__2a0hiak8KJ.png"
   }],
   "tags": ["test1", "test2"],
   "roomImage": "https://floom-upload.s3.ap-northeast-2.amazonaws.com/-ruDAbdraL_7P6z7ZXRHs.png",
-  "categoryId": 3,
   "musicIds": [4, 5, 6]
 }
 
