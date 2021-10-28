@@ -40,10 +40,6 @@ import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import RotateIcon from '../../public/assets/icons/icon-rotate.svg';
 import api from '~/utils/api';
 
-type CreateRoomForm = Omit<CreateRoomData, 'categoryId'> & {
-  categoryId?: number;
-};
-
 const Create = () => {
   const { data: roomCategories } = useRoomCategories();
   const { data: musicCategories } = useMusicCategories();
@@ -54,9 +50,9 @@ const Create = () => {
   const [roomCategory, setRoomCategory] = useState<RoomCategory>();
   const [musicCategory, setMusicCategory] = useState<MusicCategory>();
 
-  const [room, setRoom] = useState<CreateRoomForm>({
+  const [room, setRoom] = useState<CreateRoomData>({
     title: '',
-    categoryId: roomCategory?.id,
+    categoryId: 1,
     light: 'ONE',
     wallColor: 'RED',
     objectIds: {
@@ -240,12 +236,13 @@ const Create = () => {
     }
   };
 
-  const getMusicIds = () => {
+  const updateIds = () => {
     const ids = selectedMusics.map((music) => music.id);
     setRoom((prev) => {
       return {
         ...prev,
         musicIds: ids,
+        categoryId: roomCategory?.id as number,
       };
     });
   };
@@ -255,7 +252,7 @@ const Create = () => {
       alert('빈 값이 있습니다.');
       return;
     }
-    getMusicIds();
+    updateIds();
     await getUploadRoomImage();
     setVisibleSubmitModal(true);
   };
