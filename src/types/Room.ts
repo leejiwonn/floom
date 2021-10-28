@@ -6,7 +6,16 @@ import type { UserSimple } from '~/types/User';
 
 export type RoomLight = 'ONE' | 'TWO' | 'THREE';
 export type RoomWallColor = 'YELLOW' | 'BLUE' | 'GREEN' | 'RED' | 'PURPLE';
-export type RoomObject = {
+export type RoomObject =
+  | 'board'
+  | 'clock'
+  | 'light'
+  | 'poster'
+  | 'speaker'
+  | 'table'
+  | 'vase'
+  | 'wall';
+export type RoomObjectId = {
   board: 1 | 2 | 3;
   clock: 1 | 2 | 3;
   light: 1 | 2 | 3;
@@ -29,7 +38,7 @@ export type RoomSimple = {
   category: RoomCategory;
   light: RoomLight;
   wallColor: RoomWallColor;
-  objectIds: RoomObject;
+  objectIds: RoomObjectId;
   background: Background;
   assets: RoomAsset[];
   tags: string[];
