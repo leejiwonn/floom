@@ -12,6 +12,8 @@ interface Props {
   titleIcon: React.ReactElement;
   content: React.ReactNode;
   isDrop?: boolean;
+  isToggle?: boolean;
+  setIsToggle?: () => void;
   required?: boolean;
 }
 
@@ -20,19 +22,26 @@ const CreateInfoItem = ({
   titleIcon,
   content,
   isDrop = false,
+  isToggle = false,
+  setIsToggle,
   required = false,
 }: Props) => {
   const [visibleInfo, setVisibleInfo] = useState<boolean>(
-    isDrop ? false : true,
+    isDrop || isToggle ? false : true,
   );
 
-  const handleItemTitleClick = () => {
-    isDrop && setVisibleInfo((prev) => !prev);
+  const handleItemClick = () => {
+    (isDrop || isToggle) && setVisibleInfo((prev) => !prev);
+    isToggle && setIsToggle?.();
   };
 
   return (
     <CreateInfoItemStyled>
-      <CreateInfoItemTitle onClick={handleItemTitleClick} isDrop={isDrop}>
+      <CreateInfoItemTitle
+        onClick={handleItemClick}
+        isDrop={isDrop}
+        isToggle={isToggle}
+      >
         <CreateInfoItemTitleLeft>
           <CreateInfoItemIcon>{titleIcon}</CreateInfoItemIcon>
           <Typography font={FontType.SEMI_BOLD_TITLE_02} marginLeft={8}>
@@ -53,6 +62,11 @@ const CreateInfoItem = ({
             <OpenIcon stroke={BasicColor.DARK100} />
           </OpenIconStyled>
         )}
+        {isToggle && (
+          <ToggleStyled active={visibleInfo}>
+            <ToggleCircle active={visibleInfo} />
+          </ToggleStyled>
+        )}
       </CreateInfoItemTitle>
       {visibleInfo && <CreateInfoItemContent>{content}</CreateInfoItemContent>}
     </CreateInfoItemStyled>
@@ -66,12 +80,16 @@ const CreateInfoItemStyled = styled.div`
   border-bottom: 1px solid ${BasicColor.GRAY70};
 `;
 
-const CreateInfoItemTitle = styled.button<{ isDrop: boolean }>`
+const CreateInfoItemTitle = styled.button<{
+  isDrop: boolean;
+  isToggle: boolean;
+}>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  pointer-events: ${({ isDrop }) => (isDrop ? 'pointer' : 'none')};
+  pointer-events: ${({ isDrop, isToggle }) =>
+    isDrop || isToggle ? 'pointer' : 'none'};
 `;
 
 const CreateInfoItemTitleLeft = styled.div`
@@ -97,6 +115,28 @@ const OpenIconStyled = styled.span<{ show: boolean }>`
 
 const CreateInfoItemContent = styled.div`
   margin-top: 10px;
+`;
+
+const ToggleStyled = styled.div<{ active: boolean }>`
+  width: 60px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: ${({ active }) =>
+    active ? BasicColor.BLUE100 : BasicColor.DARK40};
+  border-radius: 38px;
+  transition: 0.3s;
+`;
+
+const ToggleCircle = styled.div<{ active: boolean }>`
+  width: 20px;
+  height: 20px;
+  position: relative;
+  left: ${({ active }) => (active ? 34 : 5) + 'px'};
+  background-color: ${BasicColor.WHITE};
+  border-radius: 50%;
+  transition: 0.3s;
 `;
 
 export default CreateInfoItem;

@@ -2,14 +2,13 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useState } from 'react';
 import Screen from '~/components/Screen';
-
 import Typography from '~/components/Typography';
 import { useRooms } from '~/hooks/useRoom';
 import { useUserProfile } from '~/hooks/useUser';
 import { RoomCategory } from '~/types/RoomCategory';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
-import { getCategoryEmoji } from '~/utils/category';
 import { BasicColor, GradientColor } from '~/utils/color';
+import { getCategoryEmoji } from '~/utils/emoji';
 import { Align, FontType } from '~/utils/font';
 
 import CreateIcon from '../../public/assets/icons/icon-create.svg';
