@@ -2,7 +2,7 @@ import { Paginated, PaginationOptions } from '~/types/pagination';
 import type { CreateRoomData, Room } from '~/types/Room';
 import { RoomSimple } from '~/types/Room';
 import type { RoomCategory } from '~/types/RoomCategory';
-import { RoomGuestBook } from '~/types/RoomGuestBook';
+import { CreateRoomGuestBookData, RoomGuestBook } from '~/types/RoomGuestBook';
 import api from '~/utils/api';
 import { createQueryString } from '~/utils/queryString';
 
@@ -44,6 +44,20 @@ export async function fetchRoomGuestBooks({
 }: FetchRoomGuestBooksParams) {
   const url = `/api/rooms/${roomId}/guest-books${createQueryString(options)}`;
   const { data } = await api.get<Paginated<RoomGuestBook>>(url);
+
+  return data;
+}
+
+export async function postRoomGuestBook({
+  roomId,
+  ...payload
+}: CreateRoomGuestBookData & {
+  roomId: number;
+}) {
+  const { data } = await api.post<RoomGuestBook>(
+    `/api/rooms/${roomId}/guest-books`,
+    payload,
+  );
 
   return data;
 }
