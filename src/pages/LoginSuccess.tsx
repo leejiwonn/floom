@@ -1,27 +1,25 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { useSWRConfig } from 'swr';
 
+import type { User } from '~/types/User';
 import { saveAuthTokenInLocalStorage } from '~/utils/auth';
 
-function LoginSuccess() {
+type Props = {
+  user: User;
+  redirect: string;
+  authToken: string;
+};
+
+function LoginSuccess({ user, redirect, authToken }: Props) {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   useEffect(() => {
-    if (!router.isReady) {
-      return;
-    }
-
-    const authToken = router.query.authToken as string | undefined;
-    const redirect = (router.query.redirect as string) ?? '/';
-
-    if (authToken != null) {
-      saveAuthTokenInLocalStorage(authToken);
-      router.replace(redirect);
-    } else {
-      window.alert('잘못된 접근입니다.');
-      router.replace('/');
-    }
-  }, [router]);
+    saveAuthTokenInLocalStorage(authToken);
+    mutate('getUserProfile', user);
+    router.replace(redirect);
+  }, [user, authToken, redirect]);
 
   return <></>;
 }
