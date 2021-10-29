@@ -11,7 +11,6 @@ import {
 } from 'typeorm';
 import { Background } from '~/constants/background';
 import { MusicEntity } from '~/server/entities/MusicEntity';
-import { ReviewEntity } from '~/server/entities/ReviewEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import { UserEntity } from '~/server/entities/UserEntity';
 import { RoomLight, RoomWallColor } from '~/types/Room';
@@ -20,6 +19,9 @@ import { RoomLight, RoomWallColor } from '~/types/Room';
 export class RoomEntity {
   @ManyToOne(() => RoomCategoryEntity, (category) => category.rooms)
   category: RoomCategoryEntity;
+
+  @OneToMany(() => RoomGuestBookEntity, (roomGuestBook) => roomGuestBook.room)
+  guestBooks: RoomGuestBookEntity[];
 
   @OneToMany(() => ReviewEntity, (review) => review.room)
   reviews: ReviewEntity[];
@@ -62,6 +64,18 @@ export class RoomEntity {
   })
   wallColor: RoomWallColor;
 
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  guestBooksEnabled: boolean;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  guestBooksWelcomeMessage?: string;
+
   @Column()
   roomImage: string;
 
@@ -70,6 +84,82 @@ export class RoomEntity {
     array: true,
   })
   tags: string[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+
+@Entity('review')
+export class ReviewEntity {
+  @ManyToOne(() => RoomEntity, (room) => room.reviews)
+  room: RoomEntity;
+
+  @ManyToOne(() => UserEntity, (user) => user.reviews, {
+    nullable: true,
+  })
+  author?: UserEntity;
+
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({
+    nullable: true,
+  })
+  guestName?: string;
+
+  @Column({
+    type: 'text',
+  })
+  objective: string;
+
+  @Column({
+    type: 'text',
+  })
+  comment: string;
+
+  @Column({
+    type: 'boolean',
+  })
+  recommend: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+
+@Entity('room_guest_book')
+export class RoomGuestBookEntity {
+  @ManyToOne(() => RoomEntity, (room) => room.guestBooks)
+  room: RoomEntity;
+
+  @ManyToOne(() => UserEntity, (user) => user.roomGuestBooks, {
+    nullable: true,
+  })
+  author?: UserEntity;
+
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({
+    nullable: true,
+  })
+  guestName?: string;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  emoji?: string;
+
+  @Column({
+    type: 'text',
+  })
+  body: string;
 
   @CreateDateColumn()
   createdAt: Date;

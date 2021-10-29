@@ -1,18 +1,9 @@
 import useSWR from 'swr';
-import { MusicCategory } from '~/types/MusicCategory';
-import { RoomCategory } from '~/types/RoomCategory';
-import api from '~/utils/api';
+import { fetchMusicCategories } from '~/remotes/music';
+import { fetchRoomCategories } from '~/remotes/room';
 
 export const useRoomCategories = () =>
-  useSWR('getRoomCategories', async () => {
-    const { data } = await api.get<RoomCategory[]>('/api/rooms/categories');
-
-    return data;
-  });
+  useSWR('fetchRoomCategories', fetchRoomCategories);
 
 export const useMusicCategories = () =>
-  useSWR('getMusicCategories', async () => {
-    const { data } = await api.get<MusicCategory[]>('/api/musics/categories');
-
-    return data;
-  });
+  useSWR('fetchMusicCategories', fetchMusicCategories);

@@ -1,31 +1,29 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Screen from '~/components/Screen';
 
 import Typography from '~/components/Typography';
 import { useRooms } from '~/hooks/useRoom';
 import { useUserProfile } from '~/hooks/useUser';
+import { RoomCategory } from '~/types/RoomCategory';
 import { removeAuthTokenInLocalStorage } from '~/utils/auth';
+import { getCategoryEmoji } from '~/utils/category';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
-import { useRoomCategories } from '~/hooks/useCategories';
-import { getCategoryEmoji } from '~/utils/category';
-import { RoomCategory } from '~/types/RoomCategory';
 
 import CreateIcon from '../../public/assets/icons/icon-create.svg';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 
-const Home = () => {
+type Props = {
+  categories: RoomCategory[];
+};
+
+const Home = ({ categories }: Props) => {
   const { data: user } = useUserProfile();
-  const { data: categories } = useRoomCategories();
-  const [category, setCategory] = useState<RoomCategory>();
+  const [category, setCategory] = useState(categories[0]);
 
-  const { data: rooms } = useRooms(category?.name);
-
-  useEffect(() => {
-    setCategory(categories?.[0]);
-  }, [categories]);
+  const { data: rooms } = useRooms(category.name);
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();

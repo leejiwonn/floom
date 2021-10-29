@@ -1,5 +1,5 @@
 import { toUserSimple } from '~/server/dto/user';
-import type { ReviewEntity } from '~/server/entities/ReviewEntity';
+import { ReviewEntity } from '~/server/entities/RoomEntity';
 import type { Review } from '~/types/Review';
 
 export function toReview(x: ReviewEntity): Review {
