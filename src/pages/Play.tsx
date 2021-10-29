@@ -24,7 +24,7 @@ import { Todo } from '~/types/Obejct';
 import { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 
 import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
@@ -415,7 +415,10 @@ const Play = ({ room }: Props) => {
                             )),
                           )
                         ) : (
-                          <Typography color={BasicColor.DARK70}>
+                          <Typography
+                            color={BasicColor.DARK70}
+                            marginLeft={130}
+                          >
                             첫 방명록을 작성해보세요!
                           </Typography>
                         )}
@@ -810,7 +813,7 @@ const PopupBoardGuestBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: scroll;
 `;
 
