@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion,@typescript-eslint/no-var-requires */
 import { nanoid } from 'nanoid';
-import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
+import { paginate } from 'nestjs-typeorm-paginate';
 import { createConnection, getConnection, In } from 'typeorm';
 
 // !!!순서 주의!!!
