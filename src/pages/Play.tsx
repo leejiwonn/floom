@@ -24,7 +24,7 @@ import { Todo } from '~/types/Obejct';
 import { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
-import { Align, FontType } from '~/utils/font';
+import { FontType } from '~/utils/font';
 
 import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
@@ -370,77 +370,83 @@ const Play = ({ room }: Props) => {
                   </PopupMemo>
                 )}
               </PopupMemoStyled>
-              <PopupBoardStyled ref={boardRef}>
-                <OpenButton
-                  visible={visibleBoardPopup}
-                  onOpenButtonClick={() =>
-                    setVisibleBoardPopup((prev) => !prev)
-                  }
-                />
-                {visibleBoardPopup && (
-                  <PopupBoard>
-                    <Typography font={FontType.BOLD_TITLE_02} marginBottom={10}>
-                      방명록
-                    </Typography>
-                    <PopupBoardHostView>
+              {room.guestBooksEnabled && (
+                <PopupBoardStyled ref={boardRef}>
+                  <OpenButton
+                    visible={visibleBoardPopup}
+                    onOpenButtonClick={() =>
+                      setVisibleBoardPopup((prev) => !prev)
+                    }
+                  />
+                  {visibleBoardPopup && (
+                    <PopupBoard>
                       <Typography
-                        font={FontType.SEMI_BOLD_BODY}
-                        color={BasicColor.WHITE}
+                        font={FontType.BOLD_TITLE_02}
+                        marginBottom={10}
                       >
-                        인사말 : {room.guestBooksWelcomeMessage}
+                        방명록
                       </Typography>
-                    </PopupBoardHostView>
-                    <PopupBoardGuestView>
-                      <PopupBoardGuestBox>
-                        {guestBooks?.[0].items.length ? (
-                          guestBooks?.map((x) =>
-                            x.items.flatMap((value, index) => (
-                              <PopupBoardGuestItem key={index} last={false}>
-                                <PopupBoardGuestEmoji>
-                                  {EMOJI[value.emoji as keyof typeof EMOJI]}
-                                </PopupBoardGuestEmoji>
-                                <Typography
-                                  font={FontType.SEMI_BOLD_BODY}
-                                  color={BasicColor.WHITE}
-                                >
-                                  {value.body}
-                                </Typography>
-                                <Typography
-                                  font={FontType.LIGHT_CAPTION}
-                                  color={BasicColor.WHITE}
-                                >
-                                  {value.author?.displayName ?? value.guestName}
-                                </Typography>
-                              </PopupBoardGuestItem>
-                            )),
-                          )
-                        ) : (
-                          <Typography
-                            color={BasicColor.DARK70}
-                            marginLeft={130}
-                          >
-                            첫 방명록을 작성해보세요!
-                          </Typography>
-                        )}
-                      </PopupBoardGuestBox>
-                    </PopupBoardGuestView>
-                    <PopupBoardGuestInputView>
-                      <GuestInputEmoji
-                        onClick={handleGuestInputEmojiButtonClick}
-                      >
-                        {EMOJI[guestInput.emoji as keyof typeof EMOJI]}
-                      </GuestInputEmoji>
-                      <TextInput
-                        value={guestInput.input}
-                        maxLength={50}
-                        onChangeInput={handleChangeGuestInput}
-                        submitButton
-                        onSubmitButtonClick={handleGuestSubmitButtonClick}
-                      />
-                    </PopupBoardGuestInputView>
-                  </PopupBoard>
-                )}
-              </PopupBoardStyled>
+                      <PopupBoardHostView>
+                        <Typography
+                          font={FontType.SEMI_BOLD_BODY}
+                          color={BasicColor.WHITE}
+                        >
+                          인사말 : {room.guestBooksWelcomeMessage}
+                        </Typography>
+                      </PopupBoardHostView>
+                      <PopupBoardGuestView>
+                        <PopupBoardGuestBox>
+                          {guestBooks?.[0].items.length ? (
+                            guestBooks?.map((x) =>
+                              x.items.flatMap((value, index) => (
+                                <PopupBoardGuestItem key={index} last={false}>
+                                  <PopupBoardGuestEmoji>
+                                    {EMOJI[value.emoji as keyof typeof EMOJI]}
+                                  </PopupBoardGuestEmoji>
+                                  <Typography
+                                    font={FontType.SEMI_BOLD_BODY}
+                                    color={BasicColor.WHITE}
+                                  >
+                                    {value.body}
+                                  </Typography>
+                                  <Typography
+                                    font={FontType.LIGHT_CAPTION}
+                                    color={BasicColor.WHITE}
+                                  >
+                                    {value.author?.displayName ??
+                                      value.guestName}
+                                  </Typography>
+                                </PopupBoardGuestItem>
+                              )),
+                            )
+                          ) : (
+                            <Typography
+                              color={BasicColor.DARK70}
+                              marginLeft={130}
+                            >
+                              첫 방명록을 작성해보세요!
+                            </Typography>
+                          )}
+                        </PopupBoardGuestBox>
+                      </PopupBoardGuestView>
+                      <PopupBoardGuestInputView>
+                        <GuestInputEmoji
+                          onClick={handleGuestInputEmojiButtonClick}
+                        >
+                          {EMOJI[guestInput.emoji as keyof typeof EMOJI]}
+                        </GuestInputEmoji>
+                        <TextInput
+                          value={guestInput.input}
+                          maxLength={50}
+                          onChangeInput={handleChangeGuestInput}
+                          submitButton
+                          onSubmitButtonClick={handleGuestSubmitButtonClick}
+                        />
+                      </PopupBoardGuestInputView>
+                    </PopupBoard>
+                  )}
+                </PopupBoardStyled>
+              )}
             </PopupBox>
           )}
         </LayerBox>
