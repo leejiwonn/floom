@@ -56,7 +56,7 @@ const TextInput = ({
       />
       {!submitButton && (
         <TextLength>
-          <Typography font={FontType.LIGHT_CAPTION}>{value.length}</Typography>
+          <Typography font={FontType.LIGHT_CAPTION}>{value?.length}</Typography>
           <Typography
             font={FontType.LIGHT_CAPTION}
             marginLeft={4}
@@ -116,6 +116,7 @@ const TextInputBox = styled.input<{
   border-radius: ${({ submitButton }) =>
     submitButton ? '10px 0 0 10px' : '10px'};
   padding: 3%;
+  padding-right: 24%;
 
   :focus {
     outline: none;
