@@ -266,6 +266,30 @@ export async function getReviewRepository() {
   return ReviewRepository;
 }
 
+export async function findAllReviews(options?: {
+  filters?: {
+    roomId?: number;
+  };
+}) {
+  const { filters } = options ?? {};
+  const ReviewRepository = await getReviewRepository();
+
+  const query = ReviewRepository.createQueryBuilder('review').leftJoinAndSelect(
+    'review.author',
+    'author',
+  );
+
+  if (filters?.roomId != null) {
+    query.andWhere('review.roomId = :roomId', {
+      roomId: filters.roomId,
+    });
+  }
+
+  query.addOrderBy('review.createdAt', 'DESC');
+
+  return query.getMany();
+}
+
 type CreateReviewParams = CreateReviewData & {
   user?: User;
 };
