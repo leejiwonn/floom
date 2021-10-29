@@ -1,15 +1,28 @@
 import { toMusic } from '~/server/dto/music';
-import { toReview } from '~/server/dto/review';
 import { toUserSimple } from '~/server/dto/user';
 import type { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import type { RoomEntity } from '~/server/entities/RoomEntity';
+import { RoomGuestBookEntity } from '~/server/entities/RoomEntity';
 import type { Room, RoomSimple } from '~/types/Room';
 import type { RoomCategory } from '~/types/RoomCategory';
+import { RoomGuestBook } from '~/types/RoomGuestBook';
 
 export function toRoomCategory(x: RoomCategoryEntity): RoomCategory {
   return {
     id: x.id,
     name: x.name,
+  };
+}
+
+export function toRoomGuestBook(x: RoomGuestBookEntity): RoomGuestBook {
+  return {
+    id: x.id,
+    author: x.author != null ? toUserSimple(x.author) : undefined,
+    guestName: x.guestName,
+    emoji: x.emoji,
+    body: x.body,
+    createdAt: x.createdAt.toISOString(),
+    updatedAt: x.updatedAt.toISOString(),
   };
 }
 
@@ -26,15 +39,23 @@ export function toRoomSimple(x: RoomEntity): RoomSimple {
     tags: x.tags,
     roomImage: x.roomImage,
     creator: toUserSimple(x.creator),
+    guestBooksEnabled: x.guestBooksEnabled,
+    guestBooksWelcomeMessage: x.guestBooksWelcomeMessage,
     createdAt: x.createdAt.toISOString(),
     updatedAt: x.updatedAt.toISOString(),
   };
 }
 
 export function toRoom(x: RoomEntity): Room {
+  const reviewsCount = x.reviews.length;
+  const recommendReviewsCount = x.reviews.filter(
+    (review) => review.recommend,
+  ).length;
+
   return {
     ...toRoomSimple(x),
     musics: x.musics.map(toMusic),
-    reviews: x.reviews.map(toReview),
+    reviewsCount,
+    recommendReviewsCount,
   };
 }

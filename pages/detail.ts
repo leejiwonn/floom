@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next';
 import { ComponentProps } from 'react';
 import Detail from '~/pages/Detail';
-import api from '~/utils/api';
+import { fetchRoom } from '~/remotes/room';
 
 export default Detail;
 
@@ -19,11 +19,9 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  const { data: room } = await api.get(`/api/rooms/${roomId}`);
-
   return {
     props: {
-      room,
+      room: await fetchRoom(Number(roomId)),
     },
   };
 };

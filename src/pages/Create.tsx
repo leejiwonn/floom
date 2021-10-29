@@ -9,6 +9,7 @@ import ObjectBox from '~/components/ObjectBox';
 import CreateInfoItem from '~/components/CreateInfoItem';
 import TextInput from '~/components/TextInput';
 import TagList from '~/components/TagList';
+import { createRoom } from '~/remotes/room';
 import { getCategoryEmoji } from '~/utils/emoji';
 import ROOM from '~/constants/room';
 import { BasicColor, getWallColor } from '~/utils/color';
@@ -30,7 +31,6 @@ import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
 import BACKGROUND, { Background } from '~/constants/background';
-import api from '~/utils/api';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -71,6 +71,8 @@ const Create = () => {
     tags: [],
     roomImage: '',
     musicIds: [],
+    // TODO
+    guestBooksEnabled: false,
   });
   const { data: musics } = useMusics(musicCategory?.id);
 
@@ -271,18 +273,7 @@ const Create = () => {
 
   const postCreateRoom = async () => {
     try {
-      await api.post('/api/rooms', {
-        title: room.title,
-        categoryId: room.categoryId,
-        light: room.light,
-        wallColor: room.wallColor,
-        objectIds: room.objectIds,
-        background: room.background,
-        assets: room.assets,
-        tags: room.tags,
-        roomImage: room.roomImage,
-        musicIds: room.musicIds,
-      });
+      await createRoom(room);
       Router.push('/');
     } catch (e) {
       console.error(e);

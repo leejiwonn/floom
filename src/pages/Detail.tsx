@@ -4,7 +4,8 @@ import Playlist from '~/components/Playlist';
 
 import Typography from '~/components/Typography';
 import EMOJI from '~/constants/emoji';
-import { Room } from '~/types/Room';
+import { useReviews } from '~/hooks/useReviews';
+import type { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
@@ -13,8 +14,7 @@ interface Props {
 }
 
 const Detail = ({ room }: Props) => {
-  const playCount = room.reviews.length;
-  const recommendCount = room.reviews.filter((x) => x.recommend).length;
+  const { data: reviews } = useReviews(room.id);
 
   return (
     <DetailStyled>
@@ -61,7 +61,7 @@ const Detail = ({ room }: Props) => {
                 방문
               </Typography>
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
-                {playCount}
+                {room.reviewsCount}
               </Typography>
             </CaptionItem>
             <CaptionLine />
@@ -73,7 +73,7 @@ const Detail = ({ room }: Props) => {
                 추천
               </Typography>
               <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
-                {recommendCount}
+                {room.recommendReviewsCount}
               </Typography>
             </CaptionItem>
           </CaptionStyled>
@@ -83,48 +83,50 @@ const Detail = ({ room }: Props) => {
             <Typography font={FontType.BOLD_TITLE_01} marginBottom={30}>
               다른 사람들은 이런 일에 몰입했어요!
             </Typography>
-            {room.reviews.length > 0 ? (
-              <CommentStyled>
-                {room.reviews.map((review, index) => (
-                  <CommentItem key={index}>
-                    <CommentTitle>
-                      <CommentTitleLeft>
+            {reviews != null ? (
+              reviews.length > 0 ? (
+                <CommentStyled>
+                  {reviews.map((review) => (
+                    <CommentItem key={review.id}>
+                      <CommentTitle>
+                        <CommentTitleLeft>
+                          <Typography
+                            font={FontType.BOLD_BODY}
+                            color={BasicColor.BLUE100}
+                            marginRight={3}
+                          >
+                            {review.objective}
+                          </Typography>
+                          {review.recommend ? EMOJI.RECOMMEND : null}
+                        </CommentTitleLeft>
                         <Typography
-                          font={FontType.BOLD_BODY}
-                          color={BasicColor.BLUE100}
-                          marginRight={3}
+                          font={FontType.LIGHT_BODY}
+                          color={BasicColor.DARK70}
                         >
-                          {review.objective}
+                          {review.author?.displayName ?? review.guestName}
                         </Typography>
-                        {review.recommend ? EMOJI.RECOMMEND : null}
-                      </CommentTitleLeft>
-                      <Typography
-                        font={FontType.LIGHT_BODY}
-                        color={BasicColor.DARK70}
-                      >
-                        {review.author?.displayName ?? review.guestName}
-                      </Typography>
-                    </CommentTitle>
-                    <Typography marginTop={10}>{review.comment}</Typography>
-                  </CommentItem>
-                ))}
-              </CommentStyled>
-            ) : (
-              <Typography
-                font={FontType.LIGHT_CAPTION}
-                color={BasicColor.DARK70}
-              >
+                      </CommentTitle>
+                      <Typography marginTop={10}>{review.comment}</Typography>
+                    </CommentItem>
+                  ))}
+                </CommentStyled>
+              ) : (
                 <Typography
-                  tag="span"
-                  font={FontType.BOLD_BODY}
+                  font={FontType.LIGHT_CAPTION}
                   color={BasicColor.DARK70}
                 >
-                  이 방에서 아직 몰입한 사람이 없네요.
+                  <Typography
+                    tag="span"
+                    font={FontType.BOLD_BODY}
+                    color={BasicColor.DARK70}
+                  >
+                    이 방에서 아직 몰입한 사람이 없네요.
+                  </Typography>
+                  <br />
+                  체험하기 버튼을 눌러 첫 번째 몰입을 경험해보세요 :)
                 </Typography>
-                <br />
-                체험하기 버튼을 눌러 첫 번째 몰입을 경험해보세요 :)
-              </Typography>
-            )}
+              )
+            ) : null}
           </UserListStyled>
           <PlaylistStyled>
             <Typography font={FontType.BOLD_TITLE_01} marginBottom={16}>

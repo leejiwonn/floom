@@ -1,6 +1,5 @@
 import type { Background } from '~/constants/background';
 import type { Music } from '~/types/Music';
-import type { Review } from '~/types/Review';
 import type { RoomCategory } from '~/types/RoomCategory';
 import type { UserSimple } from '~/types/User';
 
@@ -44,6 +43,8 @@ export type RoomSimple = {
   tags: string[];
   roomImage: string;
   creator: UserSimple;
+  guestBooksEnabled: boolean;
+  guestBooksWelcomeMessage?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -58,12 +59,15 @@ export type CreateRoomData = Pick<
   | 'assets'
   | 'tags'
   | 'roomImage'
+  | 'guestBooksEnabled'
+  | 'guestBooksWelcomeMessage'
 > & {
   categoryId: RoomCategory['id'];
   musicIds: Array<Music['id']>;
 };
 
 export type Room = RoomSimple & {
+  reviewsCount: number;
+  recommendReviewsCount: number;
   musics: Music[];
-  reviews: Review[];
 };
