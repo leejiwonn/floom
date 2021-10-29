@@ -18,7 +18,7 @@ Content-Type: application/json
 Authorization: Bearer {{$dotenv authToken }}
 
 {
-  "title": "테스트2",
+  "title": "테스트",
   "categoryId": 3,
   "light": "TWO",
   "wallColor": "GREEN",
