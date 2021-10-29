@@ -10,7 +10,7 @@ import { removeAuthTokenInLocalStorage } from '~/utils/auth';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import { useRoomCategories } from '~/hooks/useCategories';
-import { getCategoryEmoji } from '~/utils/category';
+import { getCategoryEmoji } from '~/utils/emoji';
 import { RoomCategory } from '~/types/RoomCategory';
 
 import CreateIcon from '../../public/assets/icons/icon-create.svg';

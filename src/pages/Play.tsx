@@ -14,6 +14,7 @@ import TextInput from '~/components/TextInput';
 import Timer from '~/components/Timer';
 import Typography from '~/components/Typography';
 import BACKGROUND from '~/constants/background';
+import EMOJI from '~/constants/emoji';
 import ROOM from '~/constants/room';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
 import { postReview } from '~/remotes/review';
@@ -50,6 +51,8 @@ const Play = ({ room }: Props) => {
   const [visibleClockPopup, setVisibleClockPopup] = useState(false);
   const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
   const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
+  const [visibleBoardPopup, setVisibleBoardPopup] = useState(false);
+  const [guestInput, setGuestInput] = useState('');
   const [isFull, setIsPull] = useState(false);
   const [isTimerAlarm, setIsTimerAlarm] = useState(true);
 
@@ -61,6 +64,12 @@ const Play = ({ room }: Props) => {
   });
   const { modalRef: memoRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setVisibleMemoPopup(false),
+  });
+  const { modalRef: boardRef } = useOutsideEvent<HTMLDivElement>({
+    onOutsideClick: () => {
+      setVisibleBoardPopup(false);
+      setGuestInput('');
+    },
   });
 
   const handlePrevPage = () => {
@@ -121,6 +130,27 @@ const Play = ({ room }: Props) => {
     setTodos((prev) => [...prev, todo]);
   };
 
+  const handleChangeGuestInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length <= 50) {
+        setGuestInput(e.target.value);
+      }
+    },
+    [setGuestInput],
+  );
+
+  const handleGuestSubmitButtonClick = () => {
+    if (guestInput !== '') {
+      try {
+        //
+      } catch (error) {
+        console.warn(error);
+        alert('오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.');
+      }
+      setGuestInput('');
+    }
+  };
+
   useEffect(() => {
     setTimer(time);
   }, [time]);
@@ -155,7 +185,7 @@ const Play = ({ room }: Props) => {
     }
   };
 
-  const handleChangeInput = useCallback(
+  const handleChangeReviewInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.value.length <= 20) {
         setReviewInput(e.target.value);
@@ -293,6 +323,66 @@ const Play = ({ room }: Props) => {
                   </PopupMemo>
                 )}
               </PopupMemoStyled>
+              <PopupBoardStyled ref={boardRef}>
+                <OpenButton
+                  visible={visibleBoardPopup}
+                  onOpenButtonClick={() =>
+                    setVisibleBoardPopup((prev) => !prev)
+                  }
+                />
+                {visibleBoardPopup && (
+                  <PopupBoard>
+                    <Typography font={FontType.BOLD_TITLE_02} marginBottom={10}>
+                      방명록
+                    </Typography>
+                    <PopupBoardHostView>
+                      <Typography
+                        font={FontType.SEMI_BOLD_BODY}
+                        color={BasicColor.WHITE}
+                      >
+                        인사말 :{' '}
+                      </Typography>
+                    </PopupBoardHostView>
+                    <PopupBoardGuestView>
+                      <PopupBoardGuestBox>
+                        {[
+                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
+                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
+                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
+                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
+                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
+                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
+                        ].map((value, index) => (
+                          <PopupBoardGuestItem key={index} last={false}>
+                            <PopupBoardGuestEmoji>
+                              {EMOJI[value.emoji as keyof typeof EMOJI]}
+                            </PopupBoardGuestEmoji>
+                            <Typography
+                              font={FontType.SEMI_BOLD_BODY}
+                              color={BasicColor.WHITE}
+                            >
+                              {value.body}
+                            </Typography>
+                            <Typography
+                              font={FontType.LIGHT_CAPTION}
+                              color={BasicColor.WHITE}
+                            >
+                              {value.guestName}
+                            </Typography>
+                          </PopupBoardGuestItem>
+                        ))}
+                      </PopupBoardGuestBox>
+                    </PopupBoardGuestView>
+                    <TextInput
+                      value={guestInput}
+                      maxLength={50}
+                      onChangeInput={handleChangeGuestInput}
+                      submitButton
+                      onSubmitButtonClick={handleGuestSubmitButtonClick}
+                    />
+                  </PopupBoard>
+                )}
+              </PopupBoardStyled>
             </PopupBox>
           )}
         </LayerBox>
@@ -406,7 +496,7 @@ const Play = ({ room }: Props) => {
               <TextInput
                 maxLength={20}
                 value={reviewInput}
-                onChangeInput={handleChangeInput}
+                onChangeInput={handleChangeReviewInput}
                 placeholder="한 줄 평을 작성해주세요."
               />
             </ActionStyled>
@@ -627,6 +717,65 @@ const PopupMemoTitle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
+`;
+
+const PopupBoardStyled = styled.div`
+  width: 460px;
+  position: absolute;
+  right: -38%;
+  top: 20%;
+`;
+
+const PopupBoard = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 40px;
+  right: 400px;
+  padding: 15px;
+  background-color: ${BasicColor.WHITE};
+  border-radius: 10px;
+`;
+
+const PopupBoardHostView = styled.div`
+  padding: 12px;
+  background-color: ${BasicColor.BLUE100};
+  border-radius: 10px;
+`;
+
+const PopupBoardGuestView = styled.div`
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0;
+`;
+
+const PopupBoardGuestBox = styled.div`
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+`;
+
+const PopupBoardGuestItem = styled.div<{ last: boolean }>`
+  width: 140px;
+  height: 120px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: ${BasicColor.GRAY100};
+  padding: 12px;
+  border-radius: 10px;
+  margin-right: ${({ last }) => !last && '12px'};
+`;
+
+const PopupBoardGuestEmoji = styled.div`
+  width: 30px;
+
+  svg {
+    width: 100%;
+  }
 `;
 
 const ContentTitleView = styled.div`

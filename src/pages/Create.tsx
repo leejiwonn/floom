@@ -9,7 +9,7 @@ import ObjectBox from '~/components/ObjectBox';
 import CreateInfoItem from '~/components/CreateInfoItem';
 import TextInput from '~/components/TextInput';
 import TagList from '~/components/TagList';
-import { getCategoryEmoji } from '~/utils/category';
+import { getCategoryEmoji } from '~/utils/emoji';
 import ROOM from '~/constants/room';
 import { BasicColor, getWallColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
@@ -30,6 +30,7 @@ import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
 import BACKGROUND, { Background } from '~/constants/background';
+import api from '~/utils/api';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -38,7 +39,7 @@ import TagIcon from '../../public/assets/icons/icon-tag.svg';
 import CloseIcon from '../../public/assets/icons/icon-close.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import RotateIcon from '../../public/assets/icons/icon-rotate.svg';
-import api from '~/utils/api';
+import BookIcon from '../../public/assets/icons/icon-book.svg';
 
 const Create = () => {
   const { data: roomCategories } = useRoomCategories();
@@ -75,12 +76,14 @@ const Create = () => {
 
   const [visibleControl, setVisibleControl] = useState(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
+  const [isGuestBook, setIsGuestBook] = useState(false);
+  const [guestBookInput, setGuestBookInput] = useState('');
 
   useEffect(() => {
     setRoomCategory(roomCategories?.[0]);
   }, [roomCategories]);
 
-  const handleChangeInput = useCallback(
+  const handleChangeRoomTitleInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.value.length <= 20) {
         setRoom((prev) => {
@@ -236,6 +239,15 @@ const Create = () => {
     }
   };
 
+  const handleChangeGuestBookInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isGuestBook && e.target.value.length <= 30) {
+        setGuestBookInput(e.target.value);
+      }
+    },
+    [setGuestBookInput],
+  );
+
   const updateIds = () => {
     const ids = selectedMusics.map((music) => music.id);
     setRoom((prev) => {
@@ -320,7 +332,8 @@ const Create = () => {
                   <TextInput
                     maxLength={20}
                     value={room.title}
-                    onChangeInput={handleChangeInput}
+                    onChangeInput={handleChangeRoomTitleInput}
+                    placeholder="방을 설명하는 이름을 작성해주세요."
                   />
                 }
                 required
@@ -425,6 +438,25 @@ const Create = () => {
                 }
                 isDrop
                 required
+              />
+              <CreateInfoItem
+                title="방명록"
+                titleIcon={<BookIcon />}
+                content={
+                  <>
+                    <TextInput
+                      value={guestBookInput}
+                      maxLength={30}
+                      onChangeInput={handleChangeGuestBookInput}
+                      placeholder="간단한 인사말을 적어주세요."
+                    />
+                  </>
+                }
+                isToggle
+                setIsToggle={() => {
+                  setIsGuestBook((prev) => !prev);
+                  setGuestBookInput('');
+                }}
               />
               <CreateInfoItem
                 title="방 태그"
