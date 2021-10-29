@@ -89,7 +89,7 @@ async function preUpload(req: Request, res: Response) {
 
   const response: PreUploadResponseData = {
     key,
-    url: `https://floom-upload.s3.ap-northeast-2.amazonaws.com/${key}`,
+    url: `https://d2wa8r8zsrxntp.cloudfront.net/${key}`,
     requestUrl: result.url,
     requestFields: result.fields,
   };
