@@ -2,6 +2,7 @@ import type { Background } from '~/constants/background';
 import type { Music } from '~/types/Music';
 import type { Review } from '~/types/Review';
 import type { RoomCategory } from '~/types/RoomCategory';
+import { RoomGuestBook } from '~/types/RoomGuestBook';
 import type { UserSimple } from '~/types/User';
 
 export type RoomLight = 'ONE' | 'TWO' | 'THREE';
@@ -66,4 +67,5 @@ export type CreateRoomData = Pick<
 export type Room = RoomSimple & {
   musics: Music[];
   reviews: Review[];
+  guestBooks: RoomGuestBook[];
 };

@@ -15,7 +15,7 @@ async function postReview(req: Request, res: Response) {
     user,
   });
 
-  res.status(200).send(toReview(review));
+  res.status(201).send(toReview(review));
 }
 
 const handler = nc<Request, Response>({

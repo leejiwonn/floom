@@ -6,14 +6,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ReviewEntity } from '~/server/entities/ReviewEntity';
-import { RoomEntity } from '~/server/entities/RoomEntity';
+import {
+  ReviewEntity,
+  RoomEntity,
+  RoomGuestBookEntity,
+} from '~/server/entities/RoomEntity';
 import type { UserProvider } from '~/types/User';
 
 @Entity('user')
 export class UserEntity {
   @OneToMany(() => RoomEntity, (room) => room.creator)
   createdRooms: RoomEntity[];
+
+  @OneToMany(() => RoomGuestBookEntity, (roomGuestBook) => roomGuestBook.author)
+  roomGuestBooks: RoomGuestBookEntity[];
 
   @OneToMany(() => ReviewEntity, (review) => review.author)
   reviews: ReviewEntity[];
