@@ -170,6 +170,8 @@ export async function createRoom(payload: CreateRoomParams) {
   room.guestBooks = [];
   room.musics = musics;
   room.creator = creator;
+  room.guestBooksEnabled = payload.guestBooksEnabled;
+  room.guestBooksWelcomeMessage = payload.guestBooksWelcomeMessage;
 
   return RoomRepository.save(room);
 }

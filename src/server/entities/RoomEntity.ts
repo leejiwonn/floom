@@ -64,6 +64,18 @@ export class RoomEntity {
   })
   wallColor: RoomWallColor;
 
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  guestBooksEnabled: boolean;
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  guestBooksWelcomeMessage?: string;
+
   @Column()
   roomImage: string;
 

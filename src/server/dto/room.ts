@@ -40,6 +40,8 @@ export function toRoomSimple(x: RoomEntity): RoomSimple {
     tags: x.tags,
     roomImage: x.roomImage,
     creator: toUserSimple(x.creator),
+    guestBooksEnabled: x.guestBooksEnabled,
+    guestBooksWelcomeMessage: x.guestBooksWelcomeMessage,
     createdAt: x.createdAt.toISOString(),
     updatedAt: x.updatedAt.toISOString(),
   };

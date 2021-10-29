@@ -70,6 +70,8 @@ const Create = () => {
     tags: [],
     roomImage: '',
     musicIds: [],
+    // TODO
+    guestBooksEnabled: false,
   });
   const { data: musics } = useMusics(musicCategory?.id);
 

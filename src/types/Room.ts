@@ -45,6 +45,8 @@ export type RoomSimple = {
   tags: string[];
   roomImage: string;
   creator: UserSimple;
+  guestBooksEnabled: boolean;
+  guestBooksWelcomeMessage?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -59,6 +61,8 @@ export type CreateRoomData = Pick<
   | 'assets'
   | 'tags'
   | 'roomImage'
+  | 'guestBooksEnabled'
+  | 'guestBooksWelcomeMessage'
 > & {
   categoryId: RoomCategory['id'];
   musicIds: Array<Music['id']>;
