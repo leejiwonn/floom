@@ -10,8 +10,6 @@ async function postRoomGuestBook(req: Request, res: Response) {
   const roomId = req.query.roomId as string | undefined;
   const payload = req.body as CreateRoomGuestBookData;
 
-  console.log('???', roomId, payload);
-
   const guestBook = await createRoomGuestBook({
     ...payload,
     roomId: Number(roomId),
