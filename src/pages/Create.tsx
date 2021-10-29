@@ -71,15 +71,13 @@ const Create = () => {
     tags: [],
     roomImage: '',
     musicIds: [],
-    // TODO
     guestBooksEnabled: false,
+    guestBooksWelcomeMessage: '',
   });
   const { data: musics } = useMusics(musicCategory?.id);
 
   const [visibleControl, setVisibleControl] = useState(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
-  const [isGuestBook, setIsGuestBook] = useState(false);
-  const [guestBookInput, setGuestBookInput] = useState('');
 
   useEffect(() => {
     setRoomCategory(roomCategories?.[0]);
@@ -243,11 +241,16 @@ const Create = () => {
 
   const handleChangeGuestBookInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (isGuestBook && e.target.value.length <= 30) {
-        setGuestBookInput(e.target.value);
+      if (room.guestBooksEnabled && e.target.value.length <= 30) {
+        setRoom((prev) => {
+          return {
+            ...prev,
+            guestBooksWelcomeMessage: e.target.value,
+          };
+        });
       }
     },
-    [setGuestBookInput],
+    [setRoom],
   );
 
   const updateIds = () => {
@@ -436,7 +439,7 @@ const Create = () => {
                 content={
                   <>
                     <TextInput
-                      value={guestBookInput}
+                      value={room.guestBooksWelcomeMessage as string}
                       maxLength={30}
                       onChangeInput={handleChangeGuestBookInput}
                       placeholder="간단한 인사말을 적어주세요."
@@ -444,10 +447,15 @@ const Create = () => {
                   </>
                 }
                 isToggle
-                setIsToggle={() => {
-                  setIsGuestBook((prev) => !prev);
-                  setGuestBookInput('');
-                }}
+                setIsToggle={() =>
+                  setRoom((prev) => {
+                    return {
+                      ...prev,
+                      guestBooksEnabled: !prev.guestBooksEnabled,
+                      guestBooksWelcomeMessage: '',
+                    };
+                  })
+                }
               />
               <CreateInfoItem
                 title="방 태그"

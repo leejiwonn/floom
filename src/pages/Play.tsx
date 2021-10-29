@@ -17,7 +17,9 @@ import BACKGROUND from '~/constants/background';
 import EMOJI from '~/constants/emoji';
 import ROOM from '~/constants/room';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
+import { useRoomGuestBooks } from '~/hooks/useRoomGuestBooks';
 import { postReview } from '~/remotes/review';
+import { postRoomGuestBook } from '~/remotes/room';
 import { Todo } from '~/types/Obejct';
 import { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
@@ -34,6 +36,11 @@ interface Props {
 }
 
 const Play = ({ room }: Props) => {
+  const { data: guestBooks, mutate: guestBooksMutate } = useRoomGuestBooks(
+    room.id,
+    { limit: 100 },
+  );
+
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
   const [visibleModal, setVisibleModal] = useState<
@@ -52,7 +59,7 @@ const Play = ({ room }: Props) => {
   const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
   const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [visibleBoardPopup, setVisibleBoardPopup] = useState(false);
-  const [guestInput, setGuestInput] = useState('');
+  const [guestInput, setGuestInput] = useState({ input: '', emoji: 'HEART' });
   const [isFull, setIsPull] = useState(false);
   const [isTimerAlarm, setIsTimerAlarm] = useState(true);
 
@@ -68,7 +75,13 @@ const Play = ({ room }: Props) => {
   const { modalRef: boardRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => {
       setVisibleBoardPopup(false);
-      setGuestInput('');
+      setGuestInput((prev) => {
+        return {
+          ...prev,
+          input: '',
+          emoji: 'HEART',
+        };
+      });
     },
   });
 
@@ -133,22 +146,57 @@ const Play = ({ room }: Props) => {
   const handleChangeGuestInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.value.length <= 50) {
-        setGuestInput(e.target.value);
+        setGuestInput((prev) => {
+          return { ...prev, input: e.target.value };
+        });
       }
     },
     [setGuestInput],
   );
 
-  const handleGuestSubmitButtonClick = () => {
-    if (guestInput !== '') {
-      try {
-        //
-      } catch (error) {
-        console.warn(error);
-        alert('오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.');
-      }
-      setGuestInput('');
+  const handleGuestInputEmojiButtonClick = () => {
+    const emojiList = [
+      'HEART',
+      'EXCLAMATION_MARK',
+      'QUESTION_MARK',
+      'OBJECTIVE',
+      'EYES',
+      'CHECK2',
+    ];
+
+    setGuestInput((prev) => {
+      const index = emojiList.indexOf(prev.emoji);
+      return {
+        ...prev,
+        emoji:
+          index === emojiList.length - 1 ? emojiList[0] : emojiList[index + 1],
+      };
+    });
+  };
+
+  const handleGuestSubmitButtonClick = async () => {
+    if (guestInput.input === '') {
+      alert('값을 입력해주세요.');
+      return;
     }
+
+    try {
+      await postRoomGuestBook({
+        roomId: room.id,
+        body: guestInput.input,
+        emoji: guestInput.emoji,
+      });
+      await guestBooksMutate();
+    } catch (error) {
+      console.warn(error);
+    }
+    setGuestInput((prev) => {
+      return {
+        ...prev,
+        input: '',
+        emoji: 'HEART',
+      };
+    });
   };
 
   useEffect(() => {
@@ -176,7 +224,6 @@ const Play = ({ room }: Props) => {
         });
       } catch (error) {
         console.warn(error);
-        alert('오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.');
       }
       setReviewInput('');
       setIsRecommend(false);
@@ -340,46 +387,54 @@ const Play = ({ room }: Props) => {
                         font={FontType.SEMI_BOLD_BODY}
                         color={BasicColor.WHITE}
                       >
-                        인사말 :{' '}
+                        인사말 : {room.guestBooksWelcomeMessage}
                       </Typography>
                     </PopupBoardHostView>
                     <PopupBoardGuestView>
                       <PopupBoardGuestBox>
-                        {[
-                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
-                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
-                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
-                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
-                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
-                          { guestName: '지원', body: 'hello', emoji: 'HEART' },
-                        ].map((value, index) => (
-                          <PopupBoardGuestItem key={index} last={false}>
-                            <PopupBoardGuestEmoji>
-                              {EMOJI[value.emoji as keyof typeof EMOJI]}
-                            </PopupBoardGuestEmoji>
-                            <Typography
-                              font={FontType.SEMI_BOLD_BODY}
-                              color={BasicColor.WHITE}
-                            >
-                              {value.body}
-                            </Typography>
-                            <Typography
-                              font={FontType.LIGHT_CAPTION}
-                              color={BasicColor.WHITE}
-                            >
-                              {value.guestName}
-                            </Typography>
-                          </PopupBoardGuestItem>
-                        ))}
+                        {guestBooks?.[0].items.length ? (
+                          guestBooks?.map((x) =>
+                            x.items.flatMap((value, index) => (
+                              <PopupBoardGuestItem key={index} last={false}>
+                                <PopupBoardGuestEmoji>
+                                  {EMOJI[value.emoji as keyof typeof EMOJI]}
+                                </PopupBoardGuestEmoji>
+                                <Typography
+                                  font={FontType.SEMI_BOLD_BODY}
+                                  color={BasicColor.WHITE}
+                                >
+                                  {value.body}
+                                </Typography>
+                                <Typography
+                                  font={FontType.LIGHT_CAPTION}
+                                  color={BasicColor.WHITE}
+                                >
+                                  {value.author?.displayName ?? value.guestName}
+                                </Typography>
+                              </PopupBoardGuestItem>
+                            )),
+                          )
+                        ) : (
+                          <Typography color={BasicColor.DARK70}>
+                            첫 방명록을 작성해보세요!
+                          </Typography>
+                        )}
                       </PopupBoardGuestBox>
                     </PopupBoardGuestView>
-                    <TextInput
-                      value={guestInput}
-                      maxLength={50}
-                      onChangeInput={handleChangeGuestInput}
-                      submitButton
-                      onSubmitButtonClick={handleGuestSubmitButtonClick}
-                    />
+                    <PopupBoardGuestInputView>
+                      <GuestInputEmoji
+                        onClick={handleGuestInputEmojiButtonClick}
+                      >
+                        {EMOJI[guestInput.emoji as keyof typeof EMOJI]}
+                      </GuestInputEmoji>
+                      <TextInput
+                        value={guestInput.input}
+                        maxLength={50}
+                        onChangeInput={handleChangeGuestInput}
+                        submitButton
+                        onSubmitButtonClick={handleGuestSubmitButtonClick}
+                      />
+                    </PopupBoardGuestInputView>
                   </PopupBoard>
                 )}
               </PopupBoardStyled>
@@ -724,6 +779,7 @@ const PopupBoardStyled = styled.div`
   position: absolute;
   right: -38%;
   top: 20%;
+  z-index: 1;
 `;
 
 const PopupBoard = styled.div`
@@ -753,6 +809,8 @@ const PopupBoardGuestBox = styled.div`
   height: 120px;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   overflow-x: scroll;
 `;
 
@@ -772,10 +830,27 @@ const PopupBoardGuestItem = styled.div<{ last: boolean }>`
 
 const PopupBoardGuestEmoji = styled.div`
   width: 30px;
+  margin-bottom: 5px;
 
   svg {
     width: 100%;
   }
+`;
+
+const PopupBoardGuestInputView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const GuestInputEmoji = styled.button`
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin-right: 5px;
+  background-color: ${BasicColor.GRAY20};
+  border-radius: 10px;
 `;
 
 const ContentTitleView = styled.div`

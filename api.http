@@ -39,7 +39,9 @@ Authorization: Bearer {{$dotenv authToken }}
   }],
   "tags": ["test1", "test2"],
   "roomImage": "https://floom-upload.s3.ap-northeast-2.amazonaws.com/-ruDAbdraL_7P6z7ZXRHs.png",
-  "musicIds": [4, 5, 6]
+  "musicIds": [4, 5, 6],
+  "guestBooksEnabled": false,
+  "guestBooksWelcomeMessage": null,
 }
 
 ### RoomGuestbook
