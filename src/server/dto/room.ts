@@ -52,6 +52,5 @@ export function toRoom(x: RoomEntity): Room {
     ...toRoomSimple(x),
     musics: x.musics.map(toMusic),
     reviews: x.reviews.map(toReview),
-    guestBooks: x.guestBooks.map(toRoomGuestBook),
   };
 }
