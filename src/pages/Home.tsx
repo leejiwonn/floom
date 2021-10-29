@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+
 import Screen from '~/components/Screen';
 import Typography from '~/components/Typography';
 import { useRooms } from '~/hooks/useRoom';
@@ -19,14 +21,16 @@ type Props = {
 };
 
 const Home = ({ categories }: Props) => {
-  const { data: user } = useUserProfile();
-  const [category, setCategory] = useState(categories[0]);
+  const router = useRouter();
+  const { data: user, mutate: userMutate } = useUserProfile();
 
+  const [category, setCategory] = useState(categories[0]);
   const { data: rooms } = useRooms(category.name);
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();
-    location.href = '/';
+    userMutate();
+    router.reload();
   };
 
   return (
