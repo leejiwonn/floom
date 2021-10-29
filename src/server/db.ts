@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion,@typescript-eslint/no-var-requires */
 import { nanoid } from 'nanoid';
+import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 import { createConnection, getConnection, In } from 'typeorm';
 
 // !!!순서 주의!!!
@@ -12,6 +13,7 @@ import {
 } from '~/server/entities/RoomEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import { UserEntity } from '~/server/entities/UserEntity';
+import { PaginationOptions } from '~/types/pagination';
 // !!!순서 주의!!!
 
 import { CreateReviewData } from '~/types/Review';
@@ -134,10 +136,7 @@ export async function getRoomById(roomId: number) {
     .leftJoinAndSelect('musics.category', 'musicCategory')
     .leftJoinAndSelect('room.reviews', 'reviews')
     .leftJoinAndSelect('reviews.author', 'reviewAuthor')
-    .leftJoinAndSelect('room.guestBooks', 'guestBooks')
-    .leftJoinAndSelect('guestBooks.author', 'guestBookAuthor')
     .addOrderBy('reviews.createdAt', 'DESC')
-    .addOrderBy('guestBooks.createdAt', 'DESC')
     .getOneOrFail();
 
   return room;
@@ -296,6 +295,24 @@ export async function getRoomGuestBookRepository() {
   const RoomGuestBookRepository = database.getRepository(RoomGuestBookEntity);
 
   return RoomGuestBookRepository;
+}
+
+type FindAllRoomGuestBooksByPaginationParams = PaginationOptions & {
+  roomId: number;
+};
+
+export async function findAllRoomGuestBooksByPagination({
+  roomId,
+  limit,
+  page,
+}: FindAllRoomGuestBooksByPaginationParams) {
+  const RoomGuestBookRepository = await getRoomGuestBookRepository();
+  const query = RoomGuestBookRepository.createQueryBuilder('roomGuestBook')
+    .andWhere('roomGuestBook.roomId = :roomId', { roomId })
+    .leftJoinAndSelect('roomGuestBook.author', 'author')
+    .addOrderBy('roomGuestBook.createdAt', 'DESC');
+
+  return paginate(query, { limit, page });
 }
 
 type CreateRoomGuestBookParams = CreateRoomGuestBookData & {

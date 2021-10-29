@@ -51,6 +51,9 @@ Content-Type: application/json
   "body": "hello"
 }
 
+### 방명록 불러오기
+GET http://localhost:3000/api/rooms/19/guest-books
+
 ### MusicCategory
 ### 전체 음악 카테고리 목록 불러오기
 GET http://localhost:3000/api/musics/categories
