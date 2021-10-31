@@ -62,6 +62,9 @@ const Playlist = ({
 
   useEffect(() => {
     autoplay && setIsPlaying(true);
+    if (playerRef.current != null) {
+      playerRef.current.volume = 0.5;
+    }
   }, []);
 
   useEffect(() => {
