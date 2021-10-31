@@ -43,7 +43,9 @@ const CreateInfoItem = ({
         isToggle={isToggle}
       >
         <CreateInfoItemTitleLeft>
-          <CreateInfoItemIcon>{titleIcon}</CreateInfoItemIcon>
+          <CreateInfoItemIcon visible={visibleInfo}>
+            {titleIcon}
+          </CreateInfoItemIcon>
           <Typography font={FontType.SEMI_BOLD_TITLE_02} marginLeft={0.8}>
             {title}
           </Typography>
@@ -80,7 +82,7 @@ const CreateInfoItem = ({
 const CreateInfoItemStyled = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 3em 0;
+  padding: 2em 0;
   border-bottom: 0.1em solid ${BasicColor.GRAY70};
 `;
 
@@ -103,14 +105,15 @@ const CreateInfoItemTitleLeft = styled.div`
   align-items: center;
 `;
 
-const CreateInfoItemIcon = styled.div`
+const CreateInfoItemIcon = styled.div<{ visible: boolean }>`
   width: 3.5em;
   height: 3.5em;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${BasicColor.BLUE10};
+  background-color: ${({ visible }) => (visible ? BasicColor.BLUE10 : 'none')};
   border-radius: 50%;
+  transition: 0.1s;
 `;
 
 const OpenIconStyled = styled.span<{ show: boolean }>`
