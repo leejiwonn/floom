@@ -177,7 +177,7 @@ const RoomImage = styled.img<{ url: string }>`
   background-position: 50%;
 `;
 
-const ThumImage = styled.img<{ url: string }>`
+const ThumImage = styled.div<{ url: string }>`
   width: 20em;
   height: 17em;
   position: absolute;
