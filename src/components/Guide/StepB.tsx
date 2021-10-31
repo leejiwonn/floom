@@ -42,20 +42,15 @@ const StepB = ({
     <StepTemplate
       title={
         <>
-          <EmojiStyled>
-            <Typography
-              tag="span"
-              font={FontType.EXTRA_BOLD_HEAD_03}
-              color={BasicColor.BLUE100}
-            >
-              {objective}
-            </Typography>
-            <Emoji>{EMOJI.EYES}</Emoji>에
-          </EmojiStyled>
-          <br />
-          <EmojiStyled>
-            몇 분<Emoji>{EMOJI.CLOCK}</Emoji>동안 몰입할까요?
-          </EmojiStyled>
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            color={BasicColor.BLUE100}
+          >
+            {objective}
+          </Typography>
+          <Emoji>{EMOJI.EYES}</Emoji>에
+          <br />몇 분<Emoji>{EMOJI.CLOCK}</Emoji>동안 몰입할까요?
         </>
       }
       content={
@@ -65,8 +60,8 @@ const StepB = ({
               tag="span"
               font={FontType.EXTRA_BOLD_HEAD_03}
               color={BasicColor.BLUE100}
-              marginTop={8}
-              marginRight={10}
+              marginTop={0.8}
+              marginRight={1}
             >
               딱
             </Typography>
@@ -75,13 +70,13 @@ const StepB = ({
               tag="span"
               font={FontType.EXTRA_BOLD_HEAD_03}
               color={BasicColor.BLUE100}
-              marginTop={8}
-              marginLeft={10}
+              marginTop={0.8}
+              marginLeft={1}
             >
               동안
             </Typography>
           </DropdownLineStyled>
-          <Typography font={FontType.REGULAR_TITLE_01} marginTop={15}>
+          <Typography font={FontType.REGULAR_TITLE_01} marginTop={1.5}>
             몰입할래요!
           </Typography>
         </ResultStyled>
@@ -97,7 +92,7 @@ const StepB = ({
 const ResultStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
+  margin-top: 6em;
 `;
 
 const DropdownLineStyled = styled.div`
@@ -105,17 +100,13 @@ const DropdownLineStyled = styled.div`
   justify-content: flex-start;
 `;
 
-const EmojiStyled = styled.span`
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
 const Emoji = styled.span`
   display: inline-flex;
-  width: 36px;
-  height: 36px;
-  padding: 0 3px;
+  justify-content: center;
+  align-items: center;
+  width: 3.6em;
+  height: 3.6em;
+  padding: 0 0.4em;
 `;
 
 export default StepB;

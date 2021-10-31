@@ -323,9 +323,9 @@ const Play = ({ room }: Props) => {
                   <PopupClock onClick={() => setIsTimerAlarm((prev) => !prev)}>
                     <ClockToggleButton isTimerAlarm={isTimerAlarm}>
                       {isTimerAlarm ? (
-                        <ClockOnIcon width={56} height={56} />
+                        <ClockOnIcon width="5.6em" height="5.6em" />
                       ) : (
-                        <ClockOffIcon width={56} height={56} />
+                        <ClockOffIcon width="5.6em" height="5.6em" />
                       )}
                     </ClockToggleButton>
                   </PopupClock>
@@ -382,7 +382,7 @@ const Play = ({ room }: Props) => {
                     <PopupBoard>
                       <Typography
                         font={FontType.BOLD_TITLE_02}
-                        marginBottom={10}
+                        marginBottom={1}
                       >
                         방명록
                       </Typography>
@@ -422,7 +422,7 @@ const Play = ({ room }: Props) => {
                           ) : (
                             <Typography
                               color={BasicColor.DARK70}
-                              marginLeft={130}
+                              marginLeft={13}
                             >
                               첫 방명록을 작성해보세요!
                             </Typography>
@@ -461,9 +461,9 @@ const Play = ({ room }: Props) => {
             <ContentTitleView>
               <Typography
                 font={FontType.EXTRA_BOLD_TITLE_01}
-                marginLeft={20}
-                marginRight={20}
-                marginBottom={15}
+                marginLeft={2}
+                marginRight={2}
+                marginBottom={1.5}
               >
                 {objective}
               </Typography>
@@ -553,6 +553,8 @@ const Play = ({ room }: Props) => {
                 isRecommend={isRecommend}
               >
                 <RecommendIcon
+                  width="4.3em"
+                  height="4.4em"
                   fill={isRecommend ? BasicColor.WHITE : BasicColor.BLUE100}
                   stroke={isRecommend ? BasicColor.WHITE : BasicColor.BLUE100}
                 />
@@ -587,16 +589,16 @@ const PlayStyled = styled.div`
 `;
 
 const PlayView = styled.div`
-  width: 480px;
+  width: 48em;
   height: 100%;
   position: absolute;
-  left: 50px;
+  left: 5em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  padding: 50px 0;
-  padding-top: 100px;
+  padding: 5em 0;
+  padding-top: 10em;
   z-index: 2;
 `;
 
@@ -607,12 +609,12 @@ const StepStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 2px solid ${BasicColor.GRAY60};
+  border: 0.2em solid ${BasicColor.GRAY60};
   box-sizing: border-box;
-  box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
-  border-radius: 0px 30px 30px 30px;
+  box-shadow: 0 2em 2.4em rgba(0, 0, 0, 0.08);
+  border-radius: 0 3em 3em 3em;
   background-color: ${BasicColor.WHITE};
-  padding: 40px;
+  padding: 4em;
 `;
 
 const StepTitleStyled = styled.div`
@@ -620,24 +622,24 @@ const StepTitleStyled = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 1.5em;
 `;
 
 const StatusBarStyled = styled.div<{ statusHeight: number }>`
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 53px;
-  padding-bottom: ${({ statusHeight }) => statusHeight + 'px'};
+  border-radius: 5.3em;
+  padding-bottom: ${({ statusHeight }) => statusHeight / 10 + 'em'};
 `;
 
 const StatusBarActive = styled.div<{ status: number }>`
-  width: ${({ status }) => status + 'px'};
+  width: ${({ status }) => status / 10 + 'em'};
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 53px;
+  border-radius: 5.3em;
   background-color: ${BasicColor.GREEN100};
   transition: 0.1s;
   z-index: 1;
@@ -704,31 +706,31 @@ const PopupPictureStyled = styled.div`
 `;
 
 const PopupClockStyled = styled.div`
-  width: 80px;
+  width: 8em;
   position: absolute;
   top: -8%;
   left: 80%;
-  padding: 5px;
+  padding: 0.5em;
 `;
 
 const PopupClock = styled.button`
   width: 100%;
   position: absolute;
-  top: 45px;
-  right: 4px;
-  padding: 6px;
+  top: 4.5em;
+  right: 0.4em;
+  padding: 0.6em;
   background-color: ${BasicColor.BLUE100};
-  border: 2px solid ${BasicColor.BLUE90};
+  border: 0.2em solid ${BasicColor.BLUE90};
   box-sizing: border-box;
-  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
-  border-radius: 35px;
+  box-shadow: 0 0.4em 2.4em rgba(0, 0, 0, 0.08);
+  border-radius: 3.5em;
 `;
 
 const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
-  width: 30px;
-  height: 30px;
+  width: 3em;
+  height: 3em;
   position: relative;
-  left: ${({ isTimerAlarm }) => (isTimerAlarm ? 34 + 'px' : 0)};
+  left: ${({ isTimerAlarm }) => (isTimerAlarm ? 3.4 + 'em' : 0)};
   background-color: ${BasicColor.WHITE};
   border-radius: 50%;
   transition: 0.3s;
@@ -740,10 +742,10 @@ const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
 `;
 
 const PopupSpeakerStyled = styled.div`
-  width: 240px;
+  width: 24em;
   position: absolute;
   left: 16%;
-  bottom: 32%;
+  bottom: 31%;
   z-index: 1;
 `;
 
@@ -751,40 +753,40 @@ const PopupSpeaker = styled.div<{ visible: boolean }>`
   width: 100%;
   overflow: hidden;
   position: absolute;
-  top: -250px;
-  left: 40px;
+  top: -25em;
+  left: 4em;
   background-color: ${BasicColor.WHITE};
-  border-radius: 30px;
+  border-radius: 3em;
   opacity: ${({ visible }) => (visible ? 100 : 0)};
   pointer-events: ${({ visible }) => (visible ? 'visible' : 'none')};
 `;
 
 const PopupMemoStyled = styled.div`
-  width: 300px;
+  width: 30em;
   position: absolute;
-  left: 53%;
-  bottom: 20%;
+  left: 54%;
+  bottom: 23%;
 `;
 
 const PopupMemo = styled.div`
   width: 100%;
   position: absolute;
-  top: -85px;
-  left: -130px;
-  padding: 15px;
+  top: -8.5em;
+  left: -13em;
+  padding: 1.5em;
   background-color: ${BasicColor.WHITE};
-  border-radius: 10px;
+  border-radius: 1em;
 `;
 
 const PopupMemoTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 `;
 
 const PopupBoardStyled = styled.div`
-  width: 460px;
+  width: 46em;
   position: absolute;
   right: -38%;
   top: 20%;
@@ -794,28 +796,28 @@ const PopupBoardStyled = styled.div`
 const PopupBoard = styled.div`
   width: 100%;
   position: absolute;
-  top: 40px;
-  right: 400px;
-  padding: 15px;
+  top: 4em;
+  right: 40em;
+  padding: 1.5em;
   background-color: ${BasicColor.WHITE};
-  border-radius: 10px;
+  border-radius: 1em;
 `;
 
 const PopupBoardHostView = styled.div`
-  padding: 12px;
+  padding: 1.2em;
   background-color: ${BasicColor.BLUE100};
-  border-radius: 10px;
+  border-radius: 1em;
 `;
 
 const PopupBoardGuestView = styled.div`
   width: 100%;
   overflow: hidden;
-  padding: 10px 0;
+  padding: 1em 0;
 `;
 
 const PopupBoardGuestBox = styled.div`
   width: 100%;
-  height: 120px;
+  height: 12em;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -824,22 +826,22 @@ const PopupBoardGuestBox = styled.div`
 `;
 
 const PopupBoardGuestItem = styled.div<{ last: boolean }>`
-  width: 140px;
-  height: 120px;
+  width: 14em;
+  height: 12em;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   background-color: ${BasicColor.GRAY100};
-  padding: 12px;
-  border-radius: 10px;
-  margin-right: ${({ last }) => !last && '12px'};
+  padding: 1.2em;
+  border-radius: 1em;
+  margin-right: ${({ last }) => !last && '1.2em'};
 `;
 
 const PopupBoardGuestEmoji = styled.div`
-  width: 30px;
-  margin-bottom: 5px;
+  width: 3em;
+  margin-bottom: 0.5em;
 
   svg {
     width: 100%;
@@ -854,39 +856,39 @@ const PopupBoardGuestInputView = styled.div`
 `;
 
 const GuestInputEmoji = styled.button`
-  width: 45px;
-  height: 45px;
-  padding: 8px;
-  margin-right: 5px;
+  width: 4.5em;
+  height: 4.5em;
+  padding: 0.8em;
+  margin-right: 0.5em;
   background-color: ${BasicColor.GRAY20};
-  border-radius: 10px;
+  border-radius: 1em;
 `;
 
 const ContentTitleView = styled.div`
-  width: 400px;
+  width: 40em;
   height: auto;
   position: relative;
-  top: 100px;
-  left: 50px;
+  top: 10em;
+  left: 5em;
   background-color: ${BasicColor.WHITE};
-  border: 2px solid ${BasicColor.BLUE40};
+  border: 0.2em solid ${BasicColor.BLUE40};
   box-sizing: border-box;
-  box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
-  border-radius: 0px 30px 30px 30px;
-  padding-top: 15px;
+  box-shadow: 0 2em 2.4em rgba(0, 0, 0, 0.08);
+  border-radius: 0 3em 3em 3em;
+  padding-top: 1.5em;
 `;
 
 const EndButton = styled.button`
   position: absolute;
-  right: 60px;
-  bottom: 40px;
-  padding: 15px 60px;
-  border: 2px solid ${BasicColor.BLUE40};
+  right: 6em;
+  bottom: 4em;
+  padding: 1.5em 6em;
+  border: 0.2em solid ${BasicColor.BLUE40};
   box-sizing: border-box;
-  border-radius: 18px;
+  border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(14px);
+  box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1.4em);
   z-index: 98;
 `;
 
@@ -895,17 +897,17 @@ const ActionStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 30px;
-  margin-top: -10px;
+  padding-bottom: 3em;
+  margin-top: -1em;
 `;
 
 const RecommendButton = styled.button<{ isRecommend: boolean }>`
-  width: 94px;
-  height: 94px;
+  width: 9.4em;
+  height: 9.4em;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 2em;
   border-radius: 50%;
   background-color: ${({ isRecommend }) =>
     isRecommend ? BasicColor.BLUE100 : BasicColor.BLUE10};
@@ -914,10 +916,10 @@ const RecommendButton = styled.button<{ isRecommend: boolean }>`
 
 const Emoji = styled.span`
   display: inline-flex;
-  width: 60px;
-  height: 60px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  width: 6em;
+  height: 6em;
+  margin-top: 1em;
+  margin-bottom: 2em;
 
   svg {
     width: 100%;

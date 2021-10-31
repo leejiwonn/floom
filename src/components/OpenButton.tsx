@@ -13,9 +13,9 @@ const OpenButton = ({ visible, onOpenButtonClick }: Props) => {
   return (
     <OpenButtonStyled onClick={onOpenButtonClick} visible={visible}>
       {visible ? (
-        <CloseIcon stroke={BasicColor.WHITE} />
+        <CloseIcon width="2.2em" height="2.2em" stroke={BasicColor.WHITE} />
       ) : (
-        <PlusIcon width={22} height={22} stroke={BasicColor.WHITE} />
+        <PlusIcon width="2.2em" height="2.2em" stroke={BasicColor.WHITE} />
       )}
     </OpenButtonStyled>
   );
@@ -24,14 +24,14 @@ const OpenButton = ({ visible, onOpenButtonClick }: Props) => {
 const OpenButtonStyled = styled.button<{
   visible: boolean;
 }>`
-  width: 22px;
-  height: 22px;
+  width: 2.2em;
+  height: 2.2em;
   display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
-  padding: 4px;
-  border: 1px solid ${BasicColor.BLUE10};
+  padding: 0.4em;
+  border: 0.1em solid ${BasicColor.BLUE10};
   box-sizing: content-box;
   background: ${({ visible }) =>
     visible ? GradientColor.BLUE : 'rgba(236, 241, 250, 0.6)'};

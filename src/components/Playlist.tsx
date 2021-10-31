@@ -158,9 +158,17 @@ const Playlist = ({
               <PlaylistLeftView>
                 <PlayPauseButton simpleMode={simpleMode}>
                   {isPlaying && currentIndex === index ? (
-                    <PauseIcon fill={BasicColor.BLUE100} />
+                    <PauseIcon
+                      width="4em"
+                      height="4em"
+                      fill={BasicColor.BLUE100}
+                    />
                   ) : (
-                    <PlayIcon fill={BasicColor.BLUE100} />
+                    <PlayIcon
+                      width="4em"
+                      height="4em"
+                      fill={BasicColor.BLUE100}
+                    />
                   )}
                 </PlayPauseButton>
                 <PlaylistItemInfo>
@@ -170,7 +178,7 @@ const Playlist = ({
                         ? FontType.BOLD_TITLE_02
                         : FontType.BOLD_BODY
                     }
-                    marginBottom={simpleMode ? 0 : 5}
+                    marginBottom={simpleMode ? 0 : 0.5}
                   >
                     {music.name}
                   </Typography>
@@ -209,10 +217,14 @@ const Playlist = ({
               >
                 {selectedMusics?.includes(music) ? (
                   <SubmitPlaylistIconStyled>
-                    <CheckIcon stroke={BasicColor.WHITE} />
+                    <CheckIcon
+                      width="1.5em"
+                      height="1.3em"
+                      stroke={BasicColor.WHITE}
+                    />
                   </SubmitPlaylistIconStyled>
                 ) : (
-                  <AddPlaylistIcon />
+                  <AddPlaylistIcon width="3.6em" height="3.6em" />
                 )}
               </PlaylistIconStyled>
             )}
@@ -221,7 +233,7 @@ const Playlist = ({
                 onClick={() => onDeleteButtonClick(music)}
                 disable={false}
               >
-                <TrashIcon />
+                <TrashIcon width="4.1em" height="3.6em" />
               </PlaylistIconStyled>
             )}
           </PlaylistItemStyled>
@@ -232,7 +244,7 @@ const Playlist = ({
 };
 
 const PlaylistStyled = styled.div<{ size: 'big' | 'small' }>`
-  width: ${({ size }) => (size === 'big' ? '340px' : '240px')};
+  width: ${({ size }) => (size === 'big' ? '34em' : '24em')};
   height: auto;
   display: flex;
   flex-direction: column;
@@ -245,20 +257,20 @@ const PlaylistView = styled.div<{ controls?: boolean; viewHeight: number }>`
   overflow: auto;
   background-color: ${({ controls }) => controls && BasicColor.DARK10};
   border: ${({ controls }) =>
-    controls ? `1px solid ${BasicColor.GRAY70}` : 'none'};
-  padding: ${({ controls }) => (controls ? '15px' : 0)};
+    controls ? `0.1em solid ${BasicColor.GRAY70}` : 'none'};
+  padding: ${({ controls }) => (controls ? '1.5em' : 0)};
 `;
 
 const PlaylistItemStyled = styled.div<{ last: boolean; simpleMode: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: ${({ simpleMode }) => (simpleMode ? '10px' : '14px 0')};
+  padding: ${({ simpleMode }) => (simpleMode ? '1em' : '1.4em 0')};
   border-bottom: ${({ last, simpleMode }) =>
-    !simpleMode && last ? `1px solid ${BasicColor.GRAY70}` : 'none'};
+    !simpleMode && last ? `0.1em solid ${BasicColor.GRAY70}` : 'none'};
   background-color: ${({ simpleMode }) => simpleMode && BasicColor.WHITE};
-  border-radius: ${({ simpleMode }) => simpleMode && '10px'};
-  margin-bottom: ${({ simpleMode }) => simpleMode && '10px'};
+  border-radius: ${({ simpleMode }) => simpleMode && '1em'};
+  margin-bottom: ${({ simpleMode }) => simpleMode && '1em'};
 `;
 
 const PlaylistItem = styled.button`
@@ -276,13 +288,13 @@ const PlaylistLeftView = styled.div`
 `;
 
 const PlayPauseButton = styled.div<{ simpleMode: boolean }>`
-  width: 40px;
-  height: 40px;
+  width: 4em;
+  height: 4em;
   justify-content: center;
   align-items: center;
   background-color: ${({ simpleMode }) => !simpleMode && BasicColor.BLUE10};
   border-radius: 50%;
-  margin-right: ${({ simpleMode }) => (simpleMode ? '10px' : '20px')};
+  margin-right: ${({ simpleMode }) => (simpleMode ? '1em' : '2em')};
   pointer-events: none;
 `;
 
@@ -292,20 +304,20 @@ const PlaylistItemInfo = styled.div`
 `;
 
 const SubmitPlaylistIconStyled = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 3em;
+  height: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   background-color: ${BasicColor.BLUE100};
-  margin-left: 6px;
+  margin-left: 0.6em;
 `;
 
 const PlaylistIconStyled = styled.button<{ disable: boolean }>`
-  margin-left: 15px;
-  padding-left: 5px;
-  border-left: 1px solid ${BasicColor.GRAY70};
+  margin-left: 1.5em;
+  padding-left: 0.5em;
+  border-left: 0.1em solid ${BasicColor.GRAY70};
   pointer-events: ${({ disable }) => disable && 'none'};
 `;
 

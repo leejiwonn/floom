@@ -26,12 +26,12 @@ const BottomPopup = ({ title, selectedList, onDeleteButtonClick }: Props) => {
     <BottomPopupStyled ref={modalRef} active={visiblePopup}>
       <TouchArea onClick={() => setVisiblePopup((prev) => !prev)}>
         <OpenIconStyled active={visiblePopup}>
-          <OpenIcon stroke={BasicColor.WHITE} />
+          <OpenIcon width="3.6em" height="3.6em" stroke={BasicColor.WHITE} />
         </OpenIconStyled>
         <Typography
           font={FontType.BOLD_TITLE_02}
           color={BasicColor.WHITE}
-          marginTop={-8}
+          marginTop={-0.8}
         >
           {title}
         </Typography>
@@ -59,21 +59,21 @@ const BottomPopupStyled = styled.div<{ active: boolean }>`
   height: auto;
   position: absolute;
   left: 0;
-  bottom: ${({ active }) => (active ? '0px' : '-320px')};
+  bottom: ${({ active }) => (active ? '0' : '-32em')};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   justify-content: center;
   background: ${GradientColor.GRAY};
-  border-radius: 30px 30px 0px 0px;
+  border-radius: 3em 3em 0 0;
   transition: 0.3s;
   z-index: 99;
 `;
 
 const TouchArea = styled.button`
   width: 100%;
-  padding-top: 5px;
-  padding-bottom: 15px;
+  padding-top: 0.5em;
+  padding-bottom: 1.5em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,14 +90,14 @@ const OpenIconStyled = styled.div<{ active: boolean }>`
 
 const BottomPopupInfo = styled.div`
   width: 100%;
-  height: 320px;
+  height: 32em;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 30px;
-  padding-top: 15px;
-  padding-bottom: 30px;
+  padding: 0 3em;
+  padding-top: 1.5em;
+  padding-bottom: 3em;
 `;
 
 const NoneInfoStyled = styled.div`
@@ -107,7 +107,7 @@ const NoneInfoStyled = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.WHITE};
-  border-radius: 10px;
+  border-radius: 1em;
 `;
 
 export default BottomPopup;

@@ -18,15 +18,15 @@ import Check1Emoji from '../../public/assets/emojis/emoji-check1.svg';
 import Check2Emoji from '../../public/assets/emojis/emoji-check2.svg';
 
 const EMOJI = {
-  WORK: <WorkEmoji />,
-  VISIT: <VisitEmoji />,
-  STUDY: <StudyEmoji />,
+  WORK: <WorkEmoji width="3.7em" height="2.9em" />,
+  VISIT: <VisitEmoji width="3em" height="3em" />,
+  STUDY: <StudyEmoji width="2.9em" height="2.8em" />,
   STOP: <StopEmoji />,
   SPEECH: <SpeechEmoji />,
-  REST: <RestEmoji />,
+  REST: <RestEmoji width="3em" height="3.2em" />,
   EXCLAMATION_MARK: <ExclamationMarkEmoji />,
   QUESTION_MARK: <QuestionMarkEmoji />,
-  RECOMMEND: <RecommendEmoji />,
+  RECOMMEND: <RecommendEmoji width="1.8em" height="1.8em" />,
   PLAY: <PlayEmoji />,
   OBJECTIVE: <ObjectiveEmoji />,
   NEXT: <NextEmoji />,

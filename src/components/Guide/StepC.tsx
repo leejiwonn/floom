@@ -60,21 +60,16 @@ const StepC = ({
     <StepTemplate
       title={
         <>
-          <EmojiStyled>
-            <Typography
-              tag="span"
-              font={FontType.EXTRA_BOLD_HEAD_03}
-              color={BasicColor.BLUE100}
-            >
-              {objective}
-            </Typography>
-            <Emoji>{EMOJI.EYES}</Emoji>에
-          </EmojiStyled>
+          <Typography
+            tag="span"
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            color={BasicColor.BLUE100}
+          >
+            {objective}
+          </Typography>
+          <Emoji>{EMOJI.EYES}</Emoji>에 몰입하며
           <br />
-          몰입하며 이룰{' '}
-          <EmojiStyled>
-            작은 목표<Emoji>{EMOJI.OBJECTIVE}</Emoji>들을 적어주세요.
-          </EmojiStyled>
+          이룰 작은 목표<Emoji>{EMOJI.OBJECTIVE}</Emoji>들을 적어주세요.
         </>
       }
       content={
@@ -85,14 +80,14 @@ const StepC = ({
               value={textInput}
               onChangeInput={handleChangeInput}
               placeholder={todos.length < 5 ? placeholderInfo : '입력 끝!'}
-              marginLeft={-5}
+              marginLeft={-0.5}
               font={FontType.BOLD_TITLE_01}
             />
             <PlusButton
               onClick={handlePlusButtonClick}
               active={todos.length < 5}
             >
-              <PlusIcon width={30} height={30} stroke={BasicColor.WHITE} />
+              <PlusIcon width="3em" height="3em" stroke={BasicColor.WHITE} />
             </PlusButton>
           </PlusTagStyled>
           <TagListStyled>
@@ -102,7 +97,7 @@ const StepC = ({
                   font={FontType.BOLD_BODY}
                   color={BasicColor.DARK70}
                   align={Align.CENTER}
-                  marginBottom={5}
+                  marginBottom={0.5}
                 >
                   아직 작성된 작은 목표가 없어요.
                 </Typography>
@@ -126,7 +121,11 @@ const StepC = ({
                     {todo.text}
                   </Typography>
                   <TagDeleteButton onClick={() => onDeleteTodo(todo)}>
-                    <CloseIcon stroke={BasicColor.BLUE80} />
+                    <CloseIcon
+                      width="2.2em"
+                      height="2.2em"
+                      stroke={BasicColor.BLUE80}
+                    />
                   </TagDeleteButton>
                 </TagItem>
               ))
@@ -148,7 +147,7 @@ const StepC = ({
 const TodolistStyled = styled.div`
   width: 100%;
   height: 100%;
-  margin-top: 50px;
+  margin-top: 5em;
 `;
 
 const PlusTagStyled = styled.div`
@@ -161,9 +160,9 @@ const PlusTagStyled = styled.div`
 const PlusButton = styled.button<{ active: boolean }>`
   background: ${({ active }) =>
     active ? GradientColor.BLUE : BasicColor.GRAY70};
-  border-radius: 8px;
-  padding: 8px;
-  margin-left: 15px;
+  border-radius: 0.8em;
+  padding: 0.8em;
+  margin-left: 1.5em;
 `;
 
 const TagListStyled = styled.div`
@@ -172,7 +171,7 @@ const TagListStyled = styled.div`
   overflow: scroll;
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 4em;
 `;
 
 const NoneChecklist = styled.div`
@@ -180,7 +179,7 @@ const NoneChecklist = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 10px;
+  padding-top: 1em;
 `;
 
 const TagItem = styled.div`
@@ -188,10 +187,10 @@ const TagItem = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  margin-bottom: 14px;
+  padding: 1em;
+  margin-bottom: 1.4em;
   background-color: ${BasicColor.BLUE20};
-  border-radius: 8px;
+  border-radius: 0.8em;
 `;
 
 const TagDeleteButton = styled.button`
@@ -200,17 +199,13 @@ const TagDeleteButton = styled.button`
   align-items: center;
 `;
 
-const EmojiStyled = styled.span`
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
 const Emoji = styled.span`
   display: inline-flex;
-  width: 36px;
-  height: 36px;
-  padding: 0 3px;
+  justify-content: center;
+  align-items: center;
+  width: 3.6em;
+  height: 3.6em;
+  padding: 0 0.4em;
 `;
 
 export default StepC;
