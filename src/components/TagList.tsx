@@ -39,8 +39,8 @@ const TagListStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 18px;
-  border-top: 1px solid ${BasicColor.DARK10};
+  padding-top: 1.8em;
+  border-top: 0.1em solid ${BasicColor.DARK10};
 `;
 
 const TagsStyled = styled.div`
@@ -50,21 +50,21 @@ const TagsStyled = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 15px;
-  margin-bottom: 7px;
+  margin-top: 1.5em;
+  margin-bottom: 0.7em;
 `;
 
 const TagItem = styled.button<{ active: boolean }>`
   display: inline-flex;
   flex-shrink: 0;
-  padding: 4px 10px;
+  padding: 0.4em 1em;
   background-color: ${({ active }) =>
     active ? BasicColor.GREEN10 : BasicColor.WHITE};
-  border: 1px solid
+  border: 0.1em solid
     ${({ active }) => (active ? BasicColor.GREEN20 : BasicColor.GRAY60)};
-  border-radius: 24px;
-  margin-right: 8px;
-  margin-bottom: 8px;
+  border-radius: 2.4em;
+  margin-right: 0.8em;
+  margin-bottom: 0.8em;
 `;
 
 export default TagList;

@@ -44,14 +44,14 @@ const CreateInfoItem = ({
       >
         <CreateInfoItemTitleLeft>
           <CreateInfoItemIcon>{titleIcon}</CreateInfoItemIcon>
-          <Typography font={FontType.SEMI_BOLD_TITLE_02} marginLeft={8}>
+          <Typography font={FontType.SEMI_BOLD_TITLE_02} marginLeft={0.8}>
             {title}
           </Typography>
           {required && (
             <Typography
               font={FontType.SEMI_BOLD_TITLE_02}
               color={BasicColor.GREEN100}
-              marginLeft={4}
+              marginLeft={0.4}
             >
               *
             </Typography>
@@ -59,7 +59,11 @@ const CreateInfoItem = ({
         </CreateInfoItemTitleLeft>
         {isDrop && (
           <OpenIconStyled show={visibleInfo}>
-            <OpenIcon stroke={BasicColor.DARK100} />
+            <OpenIcon
+              width="3.6em"
+              height="3.6em"
+              stroke={BasicColor.DARK100}
+            />
           </OpenIconStyled>
         )}
         {isToggle && (
@@ -76,8 +80,8 @@ const CreateInfoItem = ({
 const CreateInfoItemStyled = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 30px 0;
-  border-bottom: 1px solid ${BasicColor.GRAY70};
+  padding: 3em 0;
+  border-bottom: 0.1em solid ${BasicColor.GRAY70};
 `;
 
 const CreateInfoItemTitle = styled.button<{
@@ -100,8 +104,8 @@ const CreateInfoItemTitleLeft = styled.div`
 `;
 
 const CreateInfoItemIcon = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 3.5em;
+  height: 3.5em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,26 +118,26 @@ const OpenIconStyled = styled.span<{ show: boolean }>`
 `;
 
 const CreateInfoItemContent = styled.div`
-  margin-top: 10px;
+  margin-top: 1em;
 `;
 
 const ToggleStyled = styled.div<{ active: boolean }>`
-  width: 60px;
-  height: 30px;
+  width: 6em;
+  height: 3em;
   display: flex;
   align-items: center;
   position: relative;
   background-color: ${({ active }) =>
     active ? BasicColor.BLUE100 : BasicColor.DARK40};
-  border-radius: 38px;
+  border-radius: 3.8em;
   transition: 0.3s;
 `;
 
 const ToggleCircle = styled.div<{ active: boolean }>`
-  width: 20px;
-  height: 20px;
+  width: 2em;
+  height: 2em;
   position: relative;
-  left: ${({ active }) => (active ? 34 : 5) + 'px'};
+  left: ${({ active }) => (active ? 3.4 : 0.5) + 'em'};
   background-color: ${BasicColor.WHITE};
   border-radius: 50%;
   transition: 0.3s;

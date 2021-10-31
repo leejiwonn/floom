@@ -59,8 +59,8 @@ const TextInput = ({
           <Typography font={FontType.LIGHT_CAPTION}>{value?.length}</Typography>
           <Typography
             font={FontType.LIGHT_CAPTION}
-            marginLeft={4}
-            marginRight={4}
+            marginLeft={0.4}
+            marginRight={0.4}
           >
             {' '}
             /{' '}
@@ -94,10 +94,10 @@ const TextInputStyled = styled.div<{
   flex-direction: row;
   align-items: center;
   position: relative;
-  margin-top: ${({ marginTop }) => marginTop + 'px'};
-  margin-bottom: ${({ marginBottom }) => marginBottom + 'px'};
-  margin-left: ${({ marginLeft }) => marginLeft + 'px'};
-  margin-right: ${({ marginRight }) => marginRight + 'px'};
+  margin-top: ${({ marginTop }) => marginTop + 'em'};
+  margin-bottom: ${({ marginBottom }) => marginBottom + 'em'};
+  margin-left: ${({ marginLeft }) => marginLeft + 'em'};
+  margin-right: ${({ marginRight }) => marginRight + 'em'};
 `;
 
 const TextInputBox = styled.input<{
@@ -108,13 +108,13 @@ const TextInputBox = styled.input<{
   submitButton?: boolean;
 }>`
   width: ${({ submitButton }) => (submitButton ? '85%' : '100%')};
-  font-size: ${({ size }) => size + 'px'};
+  font-size: ${({ size }) => size + 'em'};
   font-weight: ${({ weight }) => weight};
   color: ${({ color }) => color};
   text-align: ${({ align }) => align};
   background-color: ${BasicColor.GRAY20};
   border-radius: ${({ submitButton }) =>
-    submitButton ? '10px 0 0 10px' : '10px'};
+    submitButton ? '0.8em 0 0 0.8em' : '0.8em'};
   padding: 3%;
   padding-right: 24%;
 
@@ -125,14 +125,14 @@ const TextInputBox = styled.input<{
 
 const TextLength = styled.div`
   position: absolute;
-  right: 10px;
+  right: 1em;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.GRAY20};
-  border-radius: 0 10px 10px 0;
-  padding: 10px;
+  border-radius: 0 0.8em 0.8em 0;
+  padding: 1em;
 `;
 
 const SubmitButton = styled.button`
@@ -141,7 +141,7 @@ const SubmitButton = styled.button`
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.GRAY20};
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0.8em 0.8em 0;
   padding: 3%;
 `;
 

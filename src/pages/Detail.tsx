@@ -36,7 +36,7 @@ const Detail = ({ room }: Props) => {
           <Typography
             font={FontType.REGULAR_BODY}
             color={BasicColor.DARK70}
-            marginBottom={24}
+            marginBottom={2.4}
           >
             {room.creator.displayName} 님의 방
           </Typography>
@@ -60,7 +60,7 @@ const Detail = ({ room }: Props) => {
               >
                 방문
               </Typography>
-              <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
+              <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={0.8}>
                 {room.reviewsCount}
               </Typography>
             </CaptionItem>
@@ -72,7 +72,7 @@ const Detail = ({ room }: Props) => {
               >
                 추천
               </Typography>
-              <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={8}>
+              <Typography font={FontType.SEMI_BOLD_BODY} marginLeft={0.8}>
                 {room.recommendReviewsCount}
               </Typography>
             </CaptionItem>
@@ -80,7 +80,7 @@ const Detail = ({ room }: Props) => {
         </RoomTitleStyled>
         <RoomContentStyled>
           <UserListStyled>
-            <Typography font={FontType.BOLD_TITLE_01} marginBottom={30}>
+            <Typography font={FontType.BOLD_TITLE_01} marginBottom={3}>
               다른 사람들은 이런 일에 몰입했어요!
             </Typography>
             {reviews != null ? (
@@ -93,7 +93,7 @@ const Detail = ({ room }: Props) => {
                           <Typography
                             font={FontType.BOLD_BODY}
                             color={BasicColor.BLUE100}
-                            marginRight={3}
+                            marginRight={0.3}
                           >
                             {review.objective}
                           </Typography>
@@ -106,7 +106,7 @@ const Detail = ({ room }: Props) => {
                           {review.author?.displayName ?? review.guestName}
                         </Typography>
                       </CommentTitle>
-                      <Typography marginTop={10}>{review.comment}</Typography>
+                      <Typography marginTop={1}>{review.comment}</Typography>
                     </CommentItem>
                   ))}
                 </CommentStyled>
@@ -129,7 +129,7 @@ const Detail = ({ room }: Props) => {
             ) : null}
           </UserListStyled>
           <PlaylistStyled>
-            <Typography font={FontType.BOLD_TITLE_01} marginBottom={16}>
+            <Typography font={FontType.BOLD_TITLE_01} marginBottom={1.6}>
               플레이리스트
             </Typography>
             <Playlist playlist={room.musics} controls={false} viewHeight={34} />
@@ -178,27 +178,27 @@ const RoomImage = styled.img<{ url: string }>`
 `;
 
 const ThumImage = styled.img<{ url: string }>`
-  width: 200px;
-  height: 170px;
+  width: 20em;
+  height: 17em;
   position: absolute;
-  left: 50px;
-  bottom: -40px;
+  left: 5em;
+  bottom: -4em;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
-  border-radius: 30px 30px 30px 0;
+  border-radius: 3em 3em 3em 0;
 `;
 
 const TagStyled = styled.div``;
 
 const TagItem = styled.div`
   display: inline-flex;
-  padding: 4px 12px;
+  padding: 0.4em 1.2em;
   background-color: ${BasicColor.GREEN10};
-  border: 1px solid ${BasicColor.GREEN20};
+  border: 0.1em solid ${BasicColor.GREEN20};
   box-sizing: border-box;
-  border-radius: 24px;
-  margin-right: 6px;
+  border-radius: 2.4em;
+  margin-right: 0.6em;
 `;
 
 const RoomInfoStyled = styled.div`
@@ -212,29 +212,29 @@ const RoomInfoStyled = styled.div`
 const RoomTitleStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
-  padding-left: 50px;
+  margin-top: 6em;
+  padding-left: 5em;
 `;
 
 const RoomTitleInfo = styled.div`
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 `;
 
 const RoomTitleInfoLine = styled.div`
-  width: 2px;
+  width: 0.2em;
   height: 60%;
   background-color: ${BasicColor.DARK40};
-  margin: 0 12px;
+  margin: 0 1.2em;
 `;
 
 const CaptionStyled = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 36px;
+  margin-top: 3.6em;
 `;
 
 const CaptionItem = styled.div`
@@ -244,21 +244,21 @@ const CaptionItem = styled.div`
 `;
 
 const CaptionLine = styled.div`
-  width: 1px;
+  width: 0.1em;
   height: 60%;
   background-color: ${BasicColor.GRAY60};
-  margin: 0 15px;
+  margin: 0 1.5em;
 `;
 
 const RoomContentStyled = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 40px;
+  padding-top: 4em;
 `;
 
 const UserListStyled = styled.div`
   border-left: 1px solid ${BasicColor.GRAY60};
-  padding: 0 30px;
+  padding: 0 3em;
 `;
 
 const CommentStyled = styled.div`
@@ -268,11 +268,11 @@ const CommentStyled = styled.div`
 `;
 
 const CommentItem = styled.div`
-  width: 340px;
+  width: 34em;
   background-color: ${BasicColor.GRAY10};
-  border-radius: 0px 20px 20px 20px;
-  padding: 15px 20px;
-  margin-bottom: 20px;
+  border-radius: 0 2em 2em 2em;
+  padding: 1.5em 2em;
+  margin-bottom: 2em;
 `;
 
 const CommentTitle = styled.div`
@@ -288,17 +288,17 @@ const CommentTitleLeft = styled.div`
 `;
 
 const PlaylistStyled = styled.div`
-  margin-right: 60px;
-  border-left: 1px solid ${BasicColor.GRAY60};
-  padding-left: 30px;
+  margin-right: 6em;
+  border-left: 0.1em solid ${BasicColor.GRAY60};
+  padding-left: 3em;
 `;
 
 const PlayButton = styled.a`
   position: absolute;
-  left: 50px;
+  left: 5em;
   bottom: 5vh;
-  padding: 20px 120px;
-  border-radius: 20px;
+  padding: 2em 12em;
+  border-radius: 2em;
   background-color: ${BasicColor.BLUE100};
 `;
 

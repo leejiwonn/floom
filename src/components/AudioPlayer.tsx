@@ -59,7 +59,7 @@ const AudioPlayer = ({ title, url }: Props) => {
         src={url}
         css={visuallyHidden}
       />
-      <Typography font={FontType.BOLD_BODY} marginRight={30}>
+      <Typography font={FontType.BOLD_BODY} marginRight={2}>
         {title}
       </Typography>
       <AudioControls
@@ -77,7 +77,7 @@ const AudioPlayerStyled = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 0.8em 0;
 `;
 
 export default memo(AudioPlayer);

@@ -73,12 +73,12 @@ const CategoryMenu = ({ categories, category, setCategory }: Props) => {
           <>
             {currentIndex !== 0 && (
               <CategoryLeftSidebar onClick={handlePrevButtonClick}>
-                <SidebarIcon />
+                <SidebarIcon width="1.2em" height="1.8em" />
               </CategoryLeftSidebar>
             )}
             {currentIndex !== categories?.length - 1 && (
               <CategoryRightSidebar onClick={handleNextButtonClick}>
-                <SidebarIcon />
+                <SidebarIcon width="1.2em" height="1.8em" />
               </CategoryRightSidebar>
             )}
           </>
@@ -91,39 +91,39 @@ const CategoryMenu = ({ categories, category, setCategory }: Props) => {
 const CategoryStyled = styled.div`
   width: 100%;
   overflow: hidden;
-  margin-top: 30px;
+  margin-top: 3em;
 `;
 
 const CategorySlider = styled.div<{ width: number }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: ${({ width }) => width + 'px'};
+  margin-left: ${({ width }) => width * 0.1 + 'em'};
   transition: 0.2s;
 `;
 
 const CategoryItem = styled.button<{ active: boolean }>`
-  width: 100px;
+  width: 10em;
   display: inline-flex;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: 52px;
+  border-radius: 5.2em;
   background-color: ${({ active }) =>
     active ? BasicColor.GREEN100 : BasicColor.GREEN10};
-  padding: 6px 0;
-  margin: 0 4px;
+  padding: 0.6em 0;
+  margin: 0 0.4em;
 `;
 
 const CategoryLeftSidebar = styled.button`
-  width: 30px;
-  height: 30px;
+  width: 3em;
+  height: 3em;
   position: absolute;
   left: 7%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.WHITE};
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
   border-radius: 50%;
   z-index: 3;
 
@@ -133,15 +133,15 @@ const CategoryLeftSidebar = styled.button`
 `;
 
 const CategoryRightSidebar = styled.button`
-  width: 30px;
-  height: 30px;
+  width: 3em;
+  height: 3em;
   position: absolute;
   right: 7%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.WHITE};
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.15);
   border-radius: 50%;
   z-index: 3;
 `;
