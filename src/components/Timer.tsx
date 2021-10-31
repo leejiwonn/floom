@@ -110,7 +110,6 @@ const ExtensionButton = styled.button<{ disable?: boolean }>`
   border-radius: 12px;
   margin-right: 6px;
   transition: 0.1s;
-  cursor: ${({ disable }) => disable && 'default'};
 `;
 
 const StopButton = styled.button<{ stop: boolean }>`

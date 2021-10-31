@@ -126,7 +126,6 @@ const HeaderStyled = styled.div`
 
 const Logo = styled.a`
   width: 70px;
-  cursor: pointer;
 `;
 
 const RightStyled = styled.div`

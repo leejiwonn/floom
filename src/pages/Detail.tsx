@@ -300,7 +300,6 @@ const PlayButton = styled.a`
   padding: 20px 120px;
   border-radius: 20px;
   background-color: ${BasicColor.BLUE100};
-  cursor: pointer;
 `;
 
 export default Detail;

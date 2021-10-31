@@ -13,6 +13,7 @@ html {
 
 body {
   margin: 0;
+  cursor: none;
 }
 
 main {
@@ -23,6 +24,7 @@ hr {
   box-sizing: content-box;
   height: 0;
   overflow: visible;
+  cursor: none;
 }
 
 pre {
@@ -32,6 +34,7 @@ pre {
 
 a {
   background-color: transparent;
+  cursor: none;
 }
 
 abbr[title] {
@@ -76,6 +79,7 @@ sup {
 img {
   border-style: none;
   user-select: none;
+  cursor: none;
 }
 
 button,
@@ -87,6 +91,7 @@ textarea {
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
+  cursor: none;
 }
 
 button,
@@ -234,11 +239,6 @@ img {
 
 textarea {
   resize: vertical;
-}
-
-button,
-[role='button'] {
-  cursor: pointer;
 }
 
 button::-moz-focus-inner {

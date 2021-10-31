@@ -180,7 +180,6 @@ const ChecklistAddButton = styled.button<{ active: boolean }>`
     active ? BasicColor.BLUE100 : BasicColor.GRAY70};
   border-radius: 12px;
   padding: 10px 15px;
-  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
   transition: 0.1s;
 `;
 

@@ -207,7 +207,6 @@ const RoomItem = styled.a`
   flex-direction: column;
   margin-right: 20px;
   margin-bottom: 30px;
-  cursor: pointer;
 `;
 
 const ScreenStyled = styled.div`
@@ -227,12 +226,11 @@ const CreateButton = styled.a`
   position: absolute;
   right: 40px;
   bottom: 40px;
-  z-index: 999;
+  z-index: 998;
   background-color: ${BasicColor.GREEN100};
   border: 2px solid ${BasicColor.GREEN150};
   border-radius: 50%;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 `;
 
 export default Home;
