@@ -59,7 +59,7 @@ const BottomPopupStyled = styled.div<{ active: boolean }>`
   height: auto;
   position: absolute;
   left: 0;
-  bottom: ${({ active }) => (active ? '0' : '-32em')};
+  bottom: ${({ active }) => (active ? '0' : '-42vh')};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
