@@ -2,7 +2,9 @@ import React, { createContext, useState } from 'react';
 
 export const MouseContext = createContext({
   cursorType: '',
-  cursorChangeHandler: (cursorType: string) => {},
+  cursorChangeHandler: (cursorType: string) => {
+    console.log(cursorType);
+  },
 });
 
 interface Props {
