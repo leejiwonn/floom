@@ -29,7 +29,7 @@ import { FontType } from '~/utils/font';
 import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
-import RecommendIcon from '../../public/assets/icons/icon-recommend.svg';
+import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
 
 interface Props {
   room: Room;
@@ -553,10 +553,10 @@ const Play = ({ room }: Props) => {
                 isRecommend={isRecommend}
               >
                 <RecommendIcon
-                  width="4.3em"
-                  height="4.4em"
-                  fill={isRecommend ? BasicColor.WHITE : BasicColor.BLUE100}
-                  stroke={isRecommend ? BasicColor.WHITE : BasicColor.BLUE100}
+                  width={isRecommend ? '4.6em' : '4.3em'}
+                  height={isRecommend ? '4.7em' : '4.4em'}
+                  fill={BasicColor.BLUE100}
+                  stroke={BasicColor.BLUE100}
                 />
               </RecommendButton>
               <TextInput

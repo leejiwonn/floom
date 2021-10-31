@@ -97,7 +97,9 @@ const Detail = ({ room }: Props) => {
                           >
                             {review.objective}
                           </Typography>
-                          {review.recommend ? EMOJI.RECOMMEND : null}
+                          {review.recommend ? (
+                            <EmojiStyled>{EMOJI.RECOMMEND}</EmojiStyled>
+                          ) : null}
                         </CommentTitleLeft>
                         <Typography
                           font={FontType.LIGHT_BODY}
@@ -285,6 +287,12 @@ const CommentTitleLeft = styled.div`
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
+`;
+
+const EmojiStyled = styled.div`
+  width: 1.8em;
+  height: 1.8em;
+  margin-left: 0.2em;
 `;
 
 const PlaylistStyled = styled.div`
