@@ -121,7 +121,7 @@ const OpenIconStyled = styled.span<{ show: boolean }>`
 `;
 
 const CreateInfoItemContent = styled.div`
-  margin-top: 1em;
+  margin-top: 1.2em;
 `;
 
 const ToggleStyled = styled.div<{ active: boolean }>`
