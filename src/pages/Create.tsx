@@ -321,7 +321,7 @@ const Create = () => {
             <ContentBox>
               <CreateInfoItem
                 title="방 이름"
-                titleIcon={<RoomIcon />}
+                titleIcon={<RoomIcon width="2.4em" height="2.4em" />}
                 content={
                   <TextInput
                     maxLength={20}
@@ -336,8 +336,8 @@ const Create = () => {
                 title="배경화면"
                 titleIcon={
                   <AddImageIcon
-                    width={24}
-                    height={24}
+                    width="2.4em"
+                    height="2.4em"
                     fill={BasicColor.BLUE100}
                     stroke={BasicColor.BLUE100}
                   />
@@ -352,7 +352,7 @@ const Create = () => {
                               <FileUploadImage backgroundImage={value.url} />
                               <Typography
                                 font={FontType.SEMI_BOLD_BODY}
-                                marginLeft={10}
+                                marginLeft={1}
                               >
                                 {value.filename ?? value.url.split('/')[3]}
                               </Typography>
@@ -360,7 +360,11 @@ const Create = () => {
                             <FileDeleteButton
                               onClick={() => handleFileDeleteButton(value.url)}
                             >
-                              <CloseIcon stroke={BasicColor.DARK40} />
+                              <CloseIcon
+                                width="2.2em"
+                                height="2.2em"
+                                stroke={BasicColor.DARK40}
+                              />
                             </FileDeleteButton>
                           </FileUploadImageItem>
                         ))
@@ -371,7 +375,7 @@ const Create = () => {
                           </EmojiExclamationMarkStyled>
                           <Typography
                             font={FontType.REGULAR_BODY}
-                            marginBottom={2}
+                            marginBottom={0.2}
                           >
                             앗! 아직 등록된{' '}
                             <Typography
@@ -416,7 +420,7 @@ const Create = () => {
                       <Typography
                         font={FontType.SEMI_BOLD_CAPTION}
                         color={BasicColor.WHITE}
-                        marginLeft={5}
+                        marginLeft={0.5}
                       >
                         배경화면 등록하기
                       </Typography>
@@ -435,7 +439,7 @@ const Create = () => {
               />
               <CreateInfoItem
                 title="방명록"
-                titleIcon={<BookIcon />}
+                titleIcon={<BookIcon width="2.4em" height="2.4em" />}
                 content={
                   <>
                     <TextInput
@@ -459,7 +463,7 @@ const Create = () => {
               />
               <CreateInfoItem
                 title="방 태그"
-                titleIcon={<TagIcon />}
+                titleIcon={<TagIcon width="2.4em" height="2.4em" />}
                 content={
                   <CreateInfoTagStyled>
                     <SelectedTagListStyled>
@@ -476,7 +480,11 @@ const Create = () => {
                               <TagDeleteButton
                                 onClick={() => handleDeleteTag(tag)}
                               >
-                                <CloseIcon stroke={BasicColor.GREEN150} />
+                                <CloseIcon
+                                  width="2.2em"
+                                  height="2.2em"
+                                  stroke={BasicColor.GREEN150}
+                                />
                               </TagDeleteButton>
                             </SelectedTagItem>
                           ))
@@ -487,8 +495,8 @@ const Create = () => {
                             </EmojiExclamationMarkStyled>
                             <Typography
                               tag="span"
-                              marginTop={5}
-                              marginBottom={5}
+                              marginTop={0.5}
+                              marginBottom={0.5}
                             >
                               어울리는{' '}
                               <Typography
@@ -606,7 +614,7 @@ const Create = () => {
             </LayerBox>
           </ObjectView>
           <RotateIconStyled onClick={handleBackgroundClick}>
-            <RotateIcon />
+            <RotateIcon width="2.8em" height="2.4em" />
           </RotateIconStyled>
           {!visibleCategoryModal && (
             <>
@@ -636,7 +644,11 @@ const Create = () => {
                             >
                               {room.wallColor === value.wallColor &&
                                 room.light === value.light && (
-                                  <CheckIcon stroke={BasicColor.WHITE} />
+                                  <CheckIcon
+                                    width="1.5em"
+                                    height="1.3em"
+                                    stroke={BasicColor.WHITE}
+                                  />
                                 )}
                             </RoomControlItemColor>
                           ))}
@@ -648,7 +660,7 @@ const Create = () => {
                 <RoomControlButton
                   onClick={() => setVisibleControl((prev) => !prev)}
                 >
-                  <WallIcon />
+                  <WallIcon width="3.5em" height="3.5em" />
                 </RoomControlButton>
               </RoomControlStyled>
               <CreateButton onClick={handleCreateButtonClick}>
@@ -717,14 +729,14 @@ const CreateStyled = styled.div`
 `;
 
 const ContentView = styled.div`
-  width: 400px;
+  width: 40em;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   background-color: ${BasicColor.WHITE};
-  padding: 0 40px;
-  padding-top: 100px;
+  padding: 0 4em;
+  padding-top: 10em;
   z-index: 1;
 `;
 
@@ -734,9 +746,9 @@ const ContentMenu = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid ${BasicColor.DARK40};
+  border: 0.1em solid ${BasicColor.DARK40};
   background-color: ${BasicColor.GRAY20};
-  border-radius: 30px;
+  border-radius: 3em;
 `;
 
 const ContentMenuItem = styled.button<{ active: boolean }>`
@@ -746,13 +758,13 @@ const ContentMenuItem = styled.button<{ active: boolean }>`
   align-items: center;
   background-color: ${({ active }) =>
     active ? BasicColor.BLUE100 : 'transparent'};
-  border-radius: 30px;
-  padding: 12px 0;
+  border-radius: 3em;
+  padding: 1.2em 0;
 `;
 
 const ContentBox = styled.div`
   width: 100%;
-  height: calc(100% - 100px);
+  height: calc(100% - 10em);
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -804,21 +816,21 @@ const FileUploadButtonLabel = styled.label<{ active: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 0;
+  padding: 1.5em 0;
   background-color: ${({ active }) =>
     active ? BasicColor.BLUE100 : BasicColor.DARK40};
-  border-radius: 12px;
+  border-radius: 1.2em;
   transition: 0.1s;
 `;
 
 const FileUploadButton = styled.input`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
-  height: 1px;
+  height: 0.1em;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  width: 1px;
+  width: 0.1em;
 `;
 
 const FileUploadImageStyled = styled.div`
@@ -826,11 +838,11 @@ const FileUploadImageStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-  border: 1px solid ${BasicColor.GRAY60};
-  border-radius: 8px;
-  padding: 18px;
-  margin: 15px 0;
+  box-shadow: 0 0.2em 0.4em rgba(0, 0, 0, 0.15);
+  border: 0.1em solid ${BasicColor.GRAY60};
+  border-radius: 0.8em;
+  padding: 1.8em;
+  margin: 1.5em 0;
 `;
 
 const FileUploadImageItem = styled.div`
@@ -838,7 +850,7 @@ const FileUploadImageItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 1em 0;
 `;
 
 const FileUploadData = styled.div`
@@ -847,7 +859,7 @@ const FileUploadData = styled.div`
   align-items: center;
 
   p {
-    width: 150px;
+    width: 12em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -855,27 +867,27 @@ const FileUploadData = styled.div`
 `;
 
 const FileUploadImage = styled.div<{ backgroundImage: string }>`
-  width: 36px;
-  height: 36px;
+  width: 3.6em;
+  height: 3.6em;
   background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
-  border-radius: 8px;
+  border-radius: 0.8em;
 `;
 
 const FileDeleteButton = styled.button`
-  width: 20px;
-  height: 20px;
+  width: 2em;
+  height: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const EmojiExclamationMarkStyled = styled.div`
-  width: 32px;
-  height: 32px;
-  margin-bottom: 5px;
+  width: 3.2em;
+  height: 3.2em;
+  margin-bottom: 0.5em;
 
   svg {
     width: 100%;
@@ -892,7 +904,7 @@ const CreateInfoTagStyled = styled.div`
 const SelectedTagListStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 `;
 
 const SelectedTagList = styled.div`
@@ -900,18 +912,18 @@ const SelectedTagList = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin: 10px 0;
+  margin: 1em 0;
 `;
 
 const SelectedTagItem = styled.div`
   display: inline-flex;
   flex-shrink: 0;
-  padding: 4px 10px;
+  padding: 0.4em 1em;
   background-color: ${BasicColor.GREEN10};
-  border: 1px solid ${BasicColor.GREEN20};
-  border-radius: 24px;
-  margin-right: 8px;
-  margin-bottom: 8px;
+  border: 0.1em solid ${BasicColor.GREEN20};
+  border-radius: 2.4em;
+  margin-right: 0.8em;
+  margin-bottom: 0.8em;
 `;
 
 const TagDeleteButton = styled.button`
@@ -919,7 +931,7 @@ const TagDeleteButton = styled.button`
   justify-content: space-between;
   align-items: center;
   opacity: 0.5;
-  margin-left: 5px;
+  margin-left: 0.5em;
 `;
 
 const NoneTagItem = styled.div`
@@ -930,16 +942,16 @@ const NoneTagItem = styled.div`
   align-items: center;
 
   svg {
-    width: 32px;
-    height: 32px;
+    width: 3.2em;
+    height: 3.2em;
     fill: ${BasicColor.BLUE80};
-    margin-bottom: 5px;
+    margin-bottom: 0.5em;
   }
 `;
 
 const MusicListStyled = styled.div`
   display: flex;
-  margin-top: 10px;
+  margin-top: 1em;
 `;
 
 const LayerBox = styled.div`
@@ -953,27 +965,28 @@ const LayerBox = styled.div`
 `;
 
 const RotateIconStyled = styled.button`
-  width: 46px;
-  height: 46px;
+  width: 4.6em;
+  height: 4.6em;
   position: absolute;
   top: 10%;
   right: 34vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: 2px solid ${BasicColor.BLUE40};
-  border-radius: 18px;
+  box-shadow: 0px 0.4em 0.4em rgba(0, 0, 0, 0.25);
+  border: 0.2em solid ${BasicColor.BLUE40};
+  border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(1.4em);
+  padding: 0.8em;
 `;
 
 const RoomControlStyled = styled.div`
   display: flex;
   flex-direction: row;
   position: absolute;
-  top: 120px;
-  right: 50px;
+  top: 12em;
+  right: 5em;
   z-index: 3;
 `;
 
@@ -983,24 +996,24 @@ const RoomControlItem = styled.div`
   justify-content: flex-end;
   align-items: center;
   background-color: ${BasicColor.WHITE};
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: 2px solid ${BasicColor.BLUE40};
-  border-radius: 18px 0px 18px 18px;
-  padding: 20px;
-  margin-right: 10px;
+  box-shadow: 0px 0.4em 0.4em rgba(0, 0, 0, 0.25);
+  border: 0.2em solid ${BasicColor.BLUE40};
+  border-radius: 1.8em 0 1.8em 1.8em;
+  padding: 2em;
+  margin-right: 1em;
 `;
 
 const RoomControlButton = styled.button`
-  width: 60px;
-  height: 60px;
+  width: 6em;
+  height: 6em;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid ${BasicColor.BLUE40};
-  border-radius: 18px;
+  border: 0.2em solid ${BasicColor.BLUE40};
+  border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(14px);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1.4em);
+  box-shadow: 0 0.4em 0.4em rgba(0, 0, 0, 0.25);
 `;
 
 const RoomControlItemBox = styled.div`
@@ -1009,34 +1022,34 @@ const RoomControlItemBox = styled.div`
 `;
 
 const RoomControlItemColor = styled.button<{ color: BasicColor }>`
-  width: 30px;
-  height: 30px;
+  width: 3em;
+  height: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  margin: 5px;
+  margin: 0.5em;
 `;
 
 const CreateButton = styled.button`
   position: absolute;
-  right: 50px;
-  bottom: 40px;
-  padding: 15px 60px;
-  border: 2px solid ${BasicColor.BLUE40};
+  right: 5em;
+  bottom: 4em;
+  padding: 1.5em 6em;
+  border: 0.2em solid ${BasicColor.BLUE40};
   box-sizing: border-box;
-  border-radius: 18px;
+  border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(14px);
+  box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1.4em);
   z-index: 98;
 `;
 
 const CategoryStyled = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
+  margin-bottom: 4em;
 `;
 
 const CategoryItem = styled.button`
@@ -1044,12 +1057,12 @@ const CategoryItem = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 15px;
+  margin: 0 1.5em;
 `;
 
 const CategoryItemIcon = styled.div<{ active: boolean }>`
-  width: 50px;
-  height: 50px;
+  width: 5em;
+  height: 5em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1058,8 +1071,8 @@ const CategoryItemIcon = styled.div<{ active: boolean }>`
   box-sizing: border-box;
   box-shadow: ${({ active }) => !active && '0px 4px 4px rgba(0, 0, 0, 0.08)'};
   border: 1px solid ${BasicColor.BLUE100};
-  border-radius: 18px;
-  margin-bottom: 10px;
+  border-radius: 1.8em;
+  margin-bottom: 1em;
   transition: 0.1s;
 `;
 

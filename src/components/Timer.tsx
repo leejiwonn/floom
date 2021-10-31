@@ -47,7 +47,7 @@ const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
 
   return (
     <TimerStyled>
-      <EmojiStyled>
+      <TimeStyled>
         <Emoji>
           <ClockIcon />
         </Emoji>
@@ -57,15 +57,15 @@ const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
         >
           {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
         </Typography>
-      </EmojiStyled>
+      </TimeStyled>
       <TimerButtonStyled>
         <ExtensionButton
           onClick={() => minutes > 10 && handleTimeUpdate('-')}
           disable={!(minutes > 10 && !(minutes === 10 && seconds === 0))}
         >
           <MinusIcon
-            width={24}
-            height={24}
+            width="2.4em"
+            height="2.4em"
             stroke={
               minutes > 10 && !(minutes === 10 && seconds === 0)
                 ? BasicColor.BLUE100
@@ -74,7 +74,7 @@ const Timer = ({ time, timeUpdate, onTimeout }: Props) => {
           />
         </ExtensionButton>
         <ExtensionButton onClick={() => handleTimeUpdate('+')}>
-          <PlusIcon width={24} height={24} stroke={BasicColor.BLUE100} />
+          <PlusIcon width="2.4em" height="2.4em" stroke={BasicColor.BLUE100} />
         </ExtensionButton>
         <StopButton onClick={() => setStop((prev) => !prev)} stop={stop}>
           <Typography font={FontType.SEMI_BOLD_BODY}>
@@ -91,8 +91,14 @@ const TimerStyled = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-top: 2px solid ${BasicColor.BLUE40};
-  padding: 15px 20px;
+  border-top: 0.2em solid ${BasicColor.BLUE40};
+  padding: 1.5em 2em;
+`;
+
+const TimeStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const TimerButtonStyled = styled.div`
@@ -100,39 +106,35 @@ const TimerButtonStyled = styled.div`
 `;
 
 const ExtensionButton = styled.button<{ disable?: boolean }>`
-  width: 40px;
-  height: 40px;
+  width: 4em;
+  height: 4em;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid
+  border: 0.2em solid
     ${({ disable }) => (disable ? BasicColor.DARK10 : BasicColor.BLUE40)};
-  border-radius: 12px;
-  margin-right: 6px;
+  border-radius: 1.2em;
+  margin-right: 0.6em;
   transition: 0.1s;
 `;
 
 const StopButton = styled.button<{ stop: boolean }>`
-  padding: 4px 8px;
-  border: 2px solid
+  padding: 0.4em 0.8em;
+  border: 0.2em solid
     ${({ stop }) => (stop ? BasicColor.BLUE80 : BasicColor.BLUE40)};
-  border-radius: 12px;
+  border-radius: 1.2em;
   background-color: ${({ stop }) => (stop ? BasicColor.BLUE40 : 'none')};
   transition: 0.1s;
-  margin-left: 4px;
-`;
-
-const EmojiStyled = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  margin-left: 0.4em;
 `;
 
 const Emoji = styled.span`
   display: inline-flex;
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 2.5em;
+  height: 2.5em;
+  margin-right: 1em;
 `;
 
 export default Timer;

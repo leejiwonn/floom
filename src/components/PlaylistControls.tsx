@@ -38,26 +38,26 @@ const PlaylistControls = ({
       <Typography
         font={FontType.BOLD_TITLE_02}
         align={Align.CENTER}
-        marginBottom={5}
+        marginBottom={0.5}
       >
         {music.name}
       </Typography>
       <Typography color={BasicColor.DARK70}>{music.author}</Typography>
       <MusicControls>
         <MusicControlButton onClick={onPrevButtonClick}>
-          <PrevIcon />
+          <PrevIcon width="1.5em" height="1.5em" />
         </MusicControlButton>
         {isPlaying ? (
           <PlayPauseButton onClick={onPlayPauseClick}>
-            <PauseIcon fill={BasicColor.BLUE100} />
+            <PauseIcon width="4em" height="4em" fill={BasicColor.BLUE100} />
           </PlayPauseButton>
         ) : (
           <PlayPauseButton onClick={onPlayPauseClick}>
-            <PlayIcon fill={BasicColor.BLUE100} />
+            <PlayIcon width="4em" height="4em" fill={BasicColor.BLUE100} />
           </PlayPauseButton>
         )}
         <MusicControlButton onClick={onNextButtonClick}>
-          <NextIcon />
+          <NextIcon width="1.5em" height="1.5em" />
         </MusicControlButton>
       </MusicControls>
       <PlayControls>
@@ -84,7 +84,7 @@ const PlaylistControlsStyled = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.WHITE};
-  padding: 20px;
+  padding: 2em;
 `;
 
 const PlayControls = styled.div`
@@ -96,14 +96,14 @@ const CurrentTime = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 2px;
+  margin-top: 0.2em;
 `;
 
 const Timeline = styled.div`
   width: 100%;
-  height: 5px;
+  height: 0.5em;
   position: relative;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background-color: ${BasicColor.DARK10};
 `;
 
@@ -112,8 +112,8 @@ const Playhead = styled.div`
   z-index: 1;
   top: 0;
   width: 0;
-  height: 5px;
-  border-radius: 5px;
+  height: 0.5em;
+  border-radius: 0.5em;
   background-color: ${BasicColor.BLUE100};
 `;
 
@@ -121,20 +121,20 @@ const MusicControls = styled.div`
   width: 60%;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 24px;
+  margin-top: 1em;
+  margin-bottom: 2.4em;
 `;
 
 const MusicControlButton = styled.button``;
 
 const PlayPauseButton = styled.button`
-  width: 45px;
-  height: 45px;
+  width: 4.5em;
+  height: 4.5em;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.BLUE20};
-  border: 1px solid ${BasicColor.BLUE10};
+  border: 0.1em solid ${BasicColor.BLUE10};
   border-radius: 50%;
 `;
 

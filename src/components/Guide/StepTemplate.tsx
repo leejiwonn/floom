@@ -26,7 +26,7 @@ const StepTemplate = ({
   return (
     <StepStyled>
       <StepInfo>
-        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginTop={30}>
+        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginTop={3}>
           {title}
         </Typography>
         {content}
@@ -83,18 +83,18 @@ const ButtonStyled = styled.div`
 
 const PrevStepButton = styled.button`
   width: 34%;
-  border: 1px solid ${BasicColor.BLUE40};
-  border-radius: 48px;
-  padding: 15px;
+  border: 0.1em solid ${BasicColor.BLUE40};
+  border-radius: 4.8em;
+  padding: 1.5em;
 `;
 
 const NextStepButton = styled.button<{ checkLast: boolean; status: boolean }>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
-  border-radius: 48px;
-  padding: 15px;
+  border-radius: 4.8em;
+  padding: 1.5em;
   background-color: ${({ status }) =>
     status ? BasicColor.BLUE100 : BasicColor.WHITE};
-  border: 1px solid ${BasicColor.BLUE100};
+  border: 0.1em solid ${BasicColor.BLUE100};
   transition: 0.1s;
 `;
 

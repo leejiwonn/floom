@@ -39,7 +39,7 @@ const Home = ({ categories }: Props) => {
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_02}
           color={BasicColor.WHITE}
-          marginBottom={30}
+          marginBottom={3}
         >
           몰입의 즐거움을
           <br />
@@ -48,7 +48,7 @@ const Home = ({ categories }: Props) => {
         <Typography
           font={FontType.BOLD_TITLE_02}
           color={BasicColor.WHITE}
-          marginBottom={55}
+          marginBottom={5.5}
         >
           어떤 일에 몰입하고 싶은가요?
         </Typography>
@@ -70,12 +70,12 @@ const Home = ({ categories }: Props) => {
         </CategoryList>
         {user != null ? (
           <LogoutButton onClick={handleLogoutButtonClick}>
-            <LogoutIcon />
+            <LogoutIcon width="2.7em" height="2.7em" />
           </LogoutButton>
         ) : null}
       </CategoryStyled>
       <RoomsStyled>
-        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={40}>
+        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={4}>
           {category?.name}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
@@ -85,7 +85,7 @@ const Home = ({ categories }: Props) => {
                 <ScreenStyled>
                   <Screen type={room.assets[0].type} url={room.assets[0].url} />
                 </ScreenStyled>
-                <Typography font={FontType.BOLD_TITLE_02} marginTop={10}>
+                <Typography font={FontType.BOLD_TITLE_02} marginTop={1}>
                   {room.title}
                 </Typography>
                 <Typography font={FontType.LIGHT_CAPTION}>
@@ -98,7 +98,7 @@ const Home = ({ categories }: Props) => {
       </RoomsStyled>
       <Link passHref={true} href={user != null ? '/create' : '/api/auth/kakao'}>
         <CreateButton aria-label="방 생성하기">
-          <CreateIcon />
+          <CreateIcon width="3.2em" height="3.2em" />
         </CreateButton>
       </Link>
     </HomeStyled>
@@ -120,8 +120,8 @@ const CategoryStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 50px;
-  padding-top: 100px;
+  padding: 5em;
+  padding-top: 10em;
   padding-right: 8%;
   background: ${GradientColor.BLUE};
   z-index: 1;
@@ -136,41 +136,46 @@ const CategoryItem = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 15px 0;
+  margin: 1.5em 0;
 
   :hover {
     div {
       background-color: ${BasicColor.BLUE20};
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 0.4em 0.4em rgba(0, 0, 0, 0.08);
     }
   }
 `;
 
 const CategoryItemIcon = styled.div<{ active: boolean }>`
-  width: 50px;
-  height: 50px;
+  width: 5em;
+  height: 5em;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${({ active }) =>
     active ? BasicColor.WHITE : BasicColor.BLUE80};
   box-sizing: border-box;
-  box-shadow: ${({ active }) => active && '0px 4px 4px rgba(0, 0, 0, 0.08)'};
-  border-radius: 18px;
-  margin-right: 15px;
+  box-shadow: ${({ active }) => active && '0 0.4em 0.4em rgba(0, 0, 0, 0.08)'};
+  border-radius: 1.8em;
+  margin-right: 1.5em;
   transition: 0.1s;
+
+  svg {
+    width: 70%;
+    height: 70%;
+  }
 `;
 
 const LogoutButton = styled.button`
-  width: 55px;
-  height: 55px;
+  width: 5.5em;
+  height: 5.5em;
   position: absolute;
-  bottom: 40px;
+  bottom: 4em;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 55px;
-  border: 1px solid ${BasicColor.BLUE80};
+  border-radius: 5.5em;
+  border: 0.1em solid ${BasicColor.BLUE80};
   background-color: ${BasicColor.BLUE90};
   transition: 0.1s;
 
@@ -188,8 +193,8 @@ const RoomsStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 60px;
-  padding-top: 110px;
+  padding: 0 6em;
+  padding-top: 11em;
   background-color: ${BasicColor.WHITE};
   z-index: 2;
 `;
@@ -201,36 +206,36 @@ const RoomStyled = styled.div`
 `;
 
 const RoomItem = styled.a`
-  width: 300px;
+  width: 30em;
   height: auto;
   display: inline-flex;
   flex-direction: column;
-  margin-right: 20px;
-  margin-bottom: 30px;
+  margin-right: 2em;
+  margin-bottom: 3em;
 `;
 
 const ScreenStyled = styled.div`
   width: 100%;
-  height: 250px;
+  height: 25em;
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 2em;
 `;
 
 const CreateButton = styled.a`
-  width: 70px;
-  height: 70px;
+  width: 7em;
+  height: 7em;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  right: 40px;
-  bottom: 40px;
-  z-index: 998;
+  right: 4em;
+  bottom: 4em;
+  z-index: 996;
   background-color: ${BasicColor.GREEN100};
-  border: 2px solid ${BasicColor.GREEN150};
+  border: 0.2em solid ${BasicColor.GREEN150};
   border-radius: 50%;
-  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1em 1em rgba(0, 0, 0, 0.1);
 `;
 
 export default Home;

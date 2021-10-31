@@ -38,7 +38,8 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
       title={
         <>
           방을 체험할 동안
-          <EmojiStyled>
+          <br />
+          <Typography tag="span" font={FontType.EXTRA_BOLD_HEAD_03}>
             <Typography
               tag="span"
               font={FontType.EXTRA_BOLD_HEAD_03}
@@ -47,7 +48,7 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
               어떤 일
             </Typography>
             에 몰입<Emoji>{EMOJI.EYES}</Emoji>하고 싶으신가요?
-          </EmojiStyled>
+          </Typography>
         </>
       }
       content={
@@ -57,11 +58,11 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
             value={textInput}
             onChangeInput={handleChangeInput}
             placeholder={placeholderInfo}
-            marginLeft={-5}
+            marginLeft={-0.5}
             font={FontType.BOLD_TITLE_01}
-            marginTop={50}
+            marginTop={5}
           />
-          <Typography font={FontType.REGULAR_TITLE_01} marginTop={-20}>
+          <Typography font={FontType.REGULAR_TITLE_01} marginTop={-2}>
             <br />에 몰입하고 싶어요.
           </Typography>
         </>
@@ -73,17 +74,13 @@ const StepA = ({ placeholderInfo, onChangeGoalText, onNextPage }: Props) => {
   );
 };
 
-const EmojiStyled = styled.span`
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
 const Emoji = styled.span`
   display: inline-flex;
-  width: 36px;
-  height: 36px;
-  padding: 0 3px;
+  justify-content: center;
+  align-items: center;
+  width: 3.6em;
+  height: 3.6em;
+  padding: 0 0.4em;
 `;
 
 export default StepA;

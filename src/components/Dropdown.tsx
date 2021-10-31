@@ -34,17 +34,17 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
           font={FontType.EXTRA_BOLD_HEAD_03}
           color={BasicColor.BLUE100}
         >
-          {time === 0 ? <LoopIcon /> : time + '분'}
+          {time === 0 ? <LoopIcon width="2.1em" height="1.4em" /> : time + '분'}
         </Typography>
         <DropdownIconStyled active={show}>
-          <DropdownIcon />
+          <DropdownIcon width="1.3em" height="0.9em" />
         </DropdownIconStyled>
       </DropdownButton>
       <DropdownBox active={show}>
         {values.map((value, index) => (
           <DropdownItem key={index} onClick={() => handleTimeValueClick(value)}>
             {value === 0 ? (
-              <LoopIcon />
+              <LoopIcon width="4.2em" height="2.8em" />
             ) : (
               <Typography
                 font={FontType.BOLD_TITLE_01}
@@ -61,10 +61,10 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
 };
 
 const DropdownStyled = styled.div`
-  width: 120px;
-  height: 50px;
+  width: 12em;
+  height: 5em;
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 1em;
   background-color: ${BasicColor.GRAY20};
 `;
 
@@ -75,7 +75,7 @@ const DropdownButton = styled.button`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 1em;
 `;
 
 const DropdownIconStyled = styled.span<{ active: boolean }>`
@@ -84,16 +84,16 @@ const DropdownIconStyled = styled.span<{ active: boolean }>`
 
 const DropdownBox = styled.div<{ active: boolean }>`
   width: 100%;
-  height: 15vh;
+  height: 20vh;
   display: ${({ active }) => (active ? 'flex' : 'none')};
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: ${BasicColor.WHITE};
-  border: 2px solid ${BasicColor.GRAY20};
-  border-radius: 10px;
-  padding: 0 10px;
-  margin-top: 5px;
+  border: 0.2em solid ${BasicColor.GRAY20};
+  border-radius: 1em;
+  padding: 0 1em;
+  margin-top: 0.5em;
 
   ::-webkit-scrollbar {
     display: none;
@@ -103,7 +103,7 @@ const DropdownBox = styled.div<{ active: boolean }>`
 const DropdownItem = styled.button`
   display: flex;
   align-items: center;
-  padding: 6px 0;
+  padding: 0.6em 0;
 `;
 
 export default Dropdown;

@@ -16,7 +16,7 @@ const Screen = ({ isFull = true, onFullButtonClick, type, url }: Props) => {
       {type === 'image' && <ImageScreen url={url} />}
       {onFullButtonClick && (
         <ScreenButton onClick={onFullButtonClick}>
-          <CloseIcon stroke={BasicColor.WHITE} />
+          <CloseIcon width="2.2em" height="2.2em" stroke={BasicColor.WHITE} />
         </ScreenButton>
       )}
     </ScreenStyled>
@@ -44,16 +44,16 @@ const ImageScreen = styled.img<{ url: string }>`
 `;
 
 const ScreenButton = styled.button`
-  width: 45px;
-  height: 45px;
+  width: 4.5em;
+  height: 4.5em;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
   top: 50%;
-  right: 50px;
+  right: 5em;
   background-color: rgba(236, 241, 250, 0.6);
-  border: 2px solid ${BasicColor.BLUE10};
+  border: 0.2em solid ${BasicColor.BLUE10};
   border-radius: 50%;
   z-index: 999;
 `;

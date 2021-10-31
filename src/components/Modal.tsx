@@ -41,17 +41,17 @@ const Modal = ({
   return (
     <ModalStyled>
       <ModalBox ref={modalRef}>
-        <Typography font={FontType.BOLD_TITLE_01} marginBottom={20}>
+        <Typography font={FontType.BOLD_TITLE_01} marginBottom={2}>
           {title}
         </Typography>
         {emoji}
-        <Typography font={FontType.SEMI_BOLD_BODY} marginBottom={3}>
+        <Typography font={FontType.SEMI_BOLD_BODY} marginBottom={0.3}>
           {subTitle}
         </Typography>
         <Typography
           font={FontType.LIGHT_CAPTION}
           color={BasicColor.DARK70}
-          marginBottom={30}
+          marginBottom={3}
         >
           {content}
         </Typography>
@@ -89,20 +89,20 @@ const ModalBox = styled.div`
   align-items: center;
   background-color: ${BasicColor.WHITE};
   box-shadow: rgba(0, 0, 0, 0.08);
-  border-radius: 24px;
-  padding: 30px;
+  border-radius: 2.4em;
+  padding: 3em;
 `;
 
 const ModalButton = styled.button<{ active: boolean }>`
   width: 28vw;
   display: flex;
   justify-content: center;
-  padding: 6px 0;
+  padding: 0.6em 0;
   background-color: ${({ active }) => (active ? BasicColor.BLUE100 : 'none')};
-  border: 2px solid
+  border: 0.2em solid
     ${({ active }) => (active ? BasicColor.BLUE110 : BasicColor.BLUE40)};
   box-sizing: border-box;
-  border-radius: 48px;
+  border-radius: 4.8em;
   transition: 0.1s;
 `;
 

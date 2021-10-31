@@ -41,9 +41,9 @@ const Header = () => {
       <Link href="/">
         <Logo aria-label="메인 페이지로 이동하기">
           {router.pathname === '/detail' || router.pathname === '/play' ? (
-            <WhiteLogoIcon />
+            <WhiteLogoIcon width="8.3em" height="1.9em" />
           ) : (
-            <BlueLogoIcon />
+            <BlueLogoIcon width="8.3em" height="1.9em" />
           )}
         </Logo>
       </Link>
@@ -54,10 +54,7 @@ const Header = () => {
           user != null ? (
             <UserInfo>
               <Typography font={FontType.REGULAR_BODY}>
-                안녕하세요,{' '}
-                <Typography tag="span" font={FontType.BOLD_BODY}>
-                  {user.displayName}
-                </Typography>{' '}
+                안녕하세요, <strong>{user.displayName}</strong>
                 님!
               </Typography>
             </UserInfo>
@@ -75,15 +72,21 @@ const Header = () => {
             <Typography
               font={FontType.SEMI_BOLD_BODY}
               color={BasicColor.DARK100}
-              marginLeft={14}
-              marginRight={9}
+              marginLeft={1.4}
+              marginRight={0.9}
             >
               NOISE
             </Typography>
-            <NoiseIcon>{show ? <CloseNoiseIcon /> : <MusicIcon />}</NoiseIcon>
+            <NoiseIcon>
+              {show ? (
+                <CloseNoiseIcon width="1.6em" height="1.7em" />
+              ) : (
+                <MusicIcon width="2.4em" height="1.8em" />
+              )}
+            </NoiseIcon>
           </NoiseButton>
           <NoiseController show={show}>
-            <Typography font={FontType.EXTRA_BOLD_TITLE_01} marginBottom={24}>
+            <Typography font={FontType.EXTRA_BOLD_TITLE_01} marginBottom={2.4}>
               적절한{' '}
               <Typography
                 tag="span"
@@ -98,7 +101,7 @@ const Header = () => {
             <Typography
               font={FontType.REGULAR_CAPTION}
               color={BasicColor.DARK70}
-              marginBottom={80}
+              marginBottom={8}
             >
               볼륨을 조절하며 원하는 소리를 찾아보세요!
             </Typography>
@@ -118,14 +121,14 @@ const HeaderStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 40px;
-  left: 50px;
-  right: 50px;
-  z-index: 5;
+  top: 4em;
+  left: 5em;
+  right: 5em;
+  z-index: 998;
 `;
 
 const Logo = styled.a`
-  width: 70px;
+  width: 7em;
 `;
 
 const RightStyled = styled.div`
@@ -134,9 +137,9 @@ const RightStyled = styled.div`
 `;
 
 const UserInfo = styled.div`
-  padding: 8px 18px;
-  border: 2px solid ${BasicColor.GRAY10};
-  border-radius: 34px;
+  padding: 0.8em 1.8em;
+  border: 0.2em solid ${BasicColor.GRAY10};
+  border-radius: 3.4em;
   background-color: ${BasicColor.GRAY20};
 `;
 
@@ -146,19 +149,19 @@ const KakaoLoginButton = styled.a`
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.YELLOW100};
-  padding: 10px 15px;
-  border-radius: 34px;
+  padding: 1em 1.5em;
+  border-radius: 3.4em;
 `;
 
 const KakaoLoginIcon = styled.img`
-  width: 17px;
-  height: 16px;
-  margin-right: 8px;
+  width: 1.7em;
+  height: 1.6em;
+  margin-right: 0.8em;
 `;
 
 const NoiseStyled = styled.div`
-  margin-left: 18px;
-  z-index: 5;
+  margin-left: 1.8em;
+  z-index: 999;
 `;
 
 const NoiseButton = styled.button`
@@ -166,26 +169,26 @@ const NoiseButton = styled.button`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
-  border: 2px solid ${BasicColor.GRAY10};
-  border-radius: 34px;
+  padding: 0.6em 0;
+  border: 0.2em solid ${BasicColor.GRAY10};
+  border-radius: 3.4em;
   background-color: ${BasicColor.GRAY20};
 `;
 
 const NoiseIcon = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 3em;
+  height: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 30px;
-  margin-right: 6px;
+  border-radius: 3em;
+  margin-right: 0.6em;
   background: ${GradientColor.GREEN};
-  border: 2px solid ${BasicColor.GREEN100};
+  border: 0.2em solid ${BasicColor.GREEN100};
 `;
 
 const NoiseController = styled.div<{ show: boolean }>`
-  width: 360px;
+  width: 36em;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -193,14 +196,14 @@ const NoiseController = styled.div<{ show: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: ${({ show }) => (show ? '0px' : '-360px')};
+  margin-right: ${({ show }) => (show ? '0' : '-36em')};
   transition: 0.5s;
-  padding: 40px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  padding: 4em;
+  border-top-left-radius: 5em;
+  border-bottom-left-radius: 5em;
   background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(14px);
-  box-shadow: 0px 20px 24px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(1.4em);
+  box-shadow: 0 2em 2.4em rgba(0, 0, 0, 0.08);
   z-index: -1;
 `;
 
