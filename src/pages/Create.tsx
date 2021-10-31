@@ -806,7 +806,7 @@ const ObjectBackgroundView = styled.img`
   left: 30%;
   right: 0;
   bottom: 0;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   z-index: -2;
 `;
 
