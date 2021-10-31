@@ -62,7 +62,6 @@ const AudioSoundControl = styled.input<{ volume: number }>`
   overflow: hidden;
   border-radius: 5px;
   background-color: transparent;
-  cursor: pointer;
   z-index: 1;
 
   :focus {
@@ -77,7 +76,6 @@ const AudioSoundControl = styled.input<{ volume: number }>`
     width: ${({ volume }) => volume + '%'};
     height: 1px;
     background-color: ${BasicColor.BLACK};
-    cursor: pointer;
   }
 
   ::-webkit-slider-thumb {
@@ -93,19 +91,16 @@ const AudioSoundControl = styled.input<{ volume: number }>`
   ::-webkit-slider-runnable-track {
     width: 100%;
     height: 1px;
-    cursor: pointer;
     background: ${BasicColor.GRAY60};
   }
   ::-moz-range-track {
     width: 100%;
     height: 1px;
-    cursor: pointer;
     background: ${BasicColor.GRAY60};
   }
   ::-ms-fill-upper {
     width: 100%;
     height: 1px;
-    cursor: pointer;
     background: ${BasicColor.GRAY60};
   }
 `;

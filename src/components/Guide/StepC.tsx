@@ -164,7 +164,6 @@ const PlusButton = styled.button<{ active: boolean }>`
   border-radius: 8px;
   padding: 8px;
   margin-left: 15px;
-  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
 `;
 
 const TagListStyled = styled.div`
