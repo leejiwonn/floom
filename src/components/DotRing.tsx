@@ -14,9 +14,9 @@ const DotRing = () => {
   return (
     <DotRingStyled style={{ left: `${x}px`, top: `${y}px` }}>
       {cursorType === 'hovered' ? (
-        <MouseHoverEmoji width="50px" height="50px" />
+        <MouseHoverEmoji width="5em" height="5em" />
       ) : (
-        <MouseEmoji width="25px" height="25px" />
+        <MouseEmoji width="2em" height="2em" />
       )}
     </DotRingStyled>
   );
@@ -27,8 +27,8 @@ const DotRingStyled = styled.div`
   top: 0;
   left: 0;
   transform: translate(-50%, -50%);
-  -webkit-transition-duration: 30ms;
-  transition-duration: 30ms;
+  -webkit-transition-duration: 10ms;
+  transition-duration: 10ms;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   will-change: width, height, transform, border;
