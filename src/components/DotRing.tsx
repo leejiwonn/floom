@@ -34,7 +34,7 @@ const DotRingStyled = styled.div`
   will-change: width, height, transform, border;
   pointer-events: none;
   z-index: 999;
-
+ 
   svg {
     position: absolute;
     top: 4%;
