@@ -27,13 +27,19 @@ const DotRingStyled = styled.div`
   top: 0;
   left: 0;
   transform: translate(-50%, -50%);
-  -webkit-transition-duration: 50ms;
-  transition-duration: 50ms;
+  -webkit-transition-duration: 30ms;
+  transition-duration: 30ms;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   will-change: width, height, transform, border;
   pointer-events: none;
   z-index: 999;
+
+  svg {
+    position: absolute;
+    top: 4%;
+    left: 4%;
+  }
 `;
 
 export default DotRing;
