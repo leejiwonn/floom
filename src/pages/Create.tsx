@@ -785,12 +785,12 @@ const ObjectBackground = styled.img`
 `;
 
 const ObjectBackgroundView = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 40%;
+  height: 80%;
   object-fit: cover;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 30%;
   right: 0;
   bottom: 0;
   transition: 0.4s ease-in-out;
@@ -807,7 +807,6 @@ const FileUploadButtonLabel = styled.label<{ active: boolean }>`
   background-color: ${({ active }) =>
     active ? BasicColor.BLUE100 : BasicColor.DARK40};
   border-radius: 12px;
-  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
   transition: 0.1s;
 `;
 
