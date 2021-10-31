@@ -90,7 +90,7 @@ const OpenIconStyled = styled.div<{ active: boolean }>`
 
 const BottomPopupInfo = styled.div`
   width: 100%;
-  height: 32em;
+  height: 42vh;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
