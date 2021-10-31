@@ -6,12 +6,14 @@ import { MouseContext } from '~/context/mouseContext';
 import { Room, RoomObjectId, RoomObject } from '~/types/Room';
 
 interface Props {
+  hovered?: boolean;
   room: Pick<Room, 'wallColor' | 'light'>;
   objects: RoomObjectId;
   onObjectClick?: (object: RoomObject) => void;
 }
 
 const ObjectBox = ({
+  hovered,
   room: { wallColor, light },
   objects,
   onObjectClick,
@@ -22,14 +24,14 @@ const ObjectBox = ({
     <ObjectBoxStyled>
       <ObjectVase
         onClick={() => onObjectClick?.('vase')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img src={RoomAssets[wallColor][light].VASE[objects.vase]} alt="화분" />
       </ObjectVase>
       <ObjectClock
         onClick={() => onObjectClick?.('clock')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img
@@ -39,7 +41,7 @@ const ObjectBox = ({
       </ObjectClock>
       <ObjectBoard
         onClick={() => onObjectClick?.('board')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img
@@ -49,7 +51,7 @@ const ObjectBox = ({
       </ObjectBoard>
       <ObjectPoster
         onClick={() => onObjectClick?.('poster')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img
@@ -59,7 +61,7 @@ const ObjectBox = ({
       </ObjectPoster>
       <ObjectSpeaker
         onClick={() => onObjectClick?.('speaker')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img
@@ -69,7 +71,7 @@ const ObjectBox = ({
       </ObjectSpeaker>
       <ObjectTable
         onClick={() => onObjectClick?.('table')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img
@@ -79,7 +81,7 @@ const ObjectBox = ({
       </ObjectTable>
       <ObjectLight
         onClick={() => onObjectClick?.('light')}
-        onMouseEnter={() => cursorChangeHandler('hovered')}
+        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
         onMouseLeave={() => cursorChangeHandler('')}
       >
         <img
