@@ -250,7 +250,7 @@ const Create = () => {
         });
       }
     },
-    [setRoom],
+    [room.guestBooksEnabled, setRoom],
   );
 
   const updateIds = () => {
