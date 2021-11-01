@@ -26,7 +26,7 @@ const EMOJI = {
   REST: <RestEmoji width="3em" height="3.2em" />,
   EXCLAMATION_MARK: <ExclamationMarkEmoji />,
   QUESTION_MARK: <QuestionMarkEmoji />,
-  RECOMMEND: <RecommendEmoji />,
+  RECOMMEND: <RecommendEmoji width="1.8em" height="1.8em" />,
   PLAY: <PlayEmoji />,
   OBJECTIVE: <ObjectiveEmoji />,
   NEXT: <NextEmoji />,
