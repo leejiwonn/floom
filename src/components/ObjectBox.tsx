@@ -39,11 +39,7 @@ const ObjectBox = ({
           alt="시계"
         />
       </ObjectClock>
-      <ObjectBoard
-        onClick={() => onObjectClick?.('board')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectBoard>
         <img
           src={RoomAssets[wallColor][light].BOARD[objects.board]}
           alt="보드"

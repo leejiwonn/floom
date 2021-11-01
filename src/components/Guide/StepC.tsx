@@ -167,11 +167,16 @@ const PlusButton = styled.button<{ active: boolean }>`
 
 const TagListStyled = styled.div`
   width: 100%;
-  height: 15vh;
-  overflow: scroll;
+  height: 20vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
+  margin: 3em 0;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NoneChecklist = styled.div`

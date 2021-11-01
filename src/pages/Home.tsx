@@ -233,7 +233,7 @@ const CreateButton = styled.a`
   bottom: 4em;
   z-index: 996;
   background-color: ${BasicColor.GREEN100};
-  border: 0.2em solid ${BasicColor.GREEN150};
+  border: 0.1em solid ${BasicColor.GREEN120};
   border-radius: 50%;
   box-shadow: 0 1em 1em rgba(0, 0, 0, 0.1);
 `;

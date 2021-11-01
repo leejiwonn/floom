@@ -250,7 +250,7 @@ const Create = () => {
         });
       }
     },
-    [setRoom],
+    [room.guestBooksEnabled, setRoom],
   );
 
   const updateIds = () => {
@@ -323,12 +323,22 @@ const Create = () => {
                 title="방 이름"
                 titleIcon={<RoomIcon width="2.4em" height="2.4em" />}
                 content={
-                  <TextInput
-                    maxLength={20}
-                    value={room.title}
-                    onChangeInput={handleChangeRoomTitleInput}
-                    placeholder="방을 설명하는 이름을 작성해주세요."
-                  />
+                  <RoomTitleStyled>
+                    <RoomTitle>
+                      <Typography
+                        font={FontType.SEMI_BOLD_CAPTION}
+                        color={BasicColor.BLUE100}
+                      >
+                        {roomCategory?.name}
+                      </Typography>
+                    </RoomTitle>
+                    <TextInput
+                      maxLength={20}
+                      value={room.title}
+                      onChangeInput={handleChangeRoomTitleInput}
+                      placeholder="방 설명을 작성해주세요."
+                    />
+                  </RoomTitleStyled>
                 }
                 required
               />
@@ -774,6 +784,25 @@ const ContentBox = styled.div`
   }
 `;
 
+const RoomTitleStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const RoomTitle = styled.div`
+  width: 5em;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid ${BasicColor.GRAY70};
+  border-radius: 0.7em;
+  padding: 0.8em;
+  margin-right: 1em;
+`;
+
 const ObjectViewStyled = styled.div`
   width: 100%;
   height: 100%;
@@ -806,7 +835,7 @@ const ObjectBackgroundView = styled.img`
   left: 30%;
   right: 0;
   bottom: 0;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   z-index: -2;
 `;
 
