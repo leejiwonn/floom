@@ -38,6 +38,7 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/red-one-poster-1.png',
+        2: '/assets/images/rooms/red-one-poster-2.png',
         3: '/assets/images/rooms/red-one-poster-3.png',
       },
       SPEAKER: {
@@ -75,7 +76,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/red-two-poster-1.png',
-        2: '/assets/images/rooms/red-two-poster-3.png',
+        2: '/assets/images/rooms/red-two-poster-2.png',
+        3: '/assets/images/rooms/red-two-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/red-two-speaker-1.png',
@@ -112,7 +114,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/red-three-poster-1.png',
-        2: '/assets/images/rooms/red-three-poster-3.png',
+        2: '/assets/images/rooms/red-three-poster-2.png',
+        3: '/assets/images/rooms/red-three-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/red-three-speaker-1.png',
@@ -151,7 +154,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/yellow-one-poster-1.png',
-        2: '/assets/images/rooms/yellow-one-poster-3.png',
+        2: '/assets/images/rooms/yellow-one-poster-2.png',
+        3: '/assets/images/rooms/yellow-one-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/yellow-one-speaker-1.png',
@@ -188,7 +192,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/yellow-two-poster-1.png',
-        2: '/assets/images/rooms/yellow-two-poster-3.png',
+        2: '/assets/images/rooms/yellow-two-poster-2.png',
+        3: '/assets/images/rooms/yellow-two-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/yellow-two-speaker-1.png',
@@ -225,7 +230,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/yellow-three-poster-1.png',
-        2: '/assets/images/rooms/yellow-three-poster-3.png',
+        2: '/assets/images/rooms/yellow-three-poster-2.png',
+        3: '/assets/images/rooms/yellow-three-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/yellow-three-speaker-1.png',
@@ -264,7 +270,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/green-one-poster-1.png',
-        2: '/assets/images/rooms/green-one-poster-3.png',
+        2: '/assets/images/rooms/green-one-poster-2.png',
+        3: '/assets/images/rooms/green-one-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/green-one-speaker-1.png',
@@ -301,7 +308,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/green-two-poster-1.png',
-        2: '/assets/images/rooms/green-two-poster-3.png',
+        2: '/assets/images/rooms/green-two-poster-2.png',
+        3: '/assets/images/rooms/green-two-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/green-two-speaker-1.png',
@@ -338,7 +346,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/green-three-poster-1.png',
-        2: '/assets/images/rooms/green-three-poster-3.png',
+        2: '/assets/images/rooms/green-three-poster-2.png',
+        3: '/assets/images/rooms/green-three-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/green-three-speaker-1.png',
@@ -377,7 +386,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/blue-one-poster-1.png',
-        2: '/assets/images/rooms/blue-one-poster-3.png',
+        2: '/assets/images/rooms/blue-one-poster-2.png',
+        3: '/assets/images/rooms/blue-one-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/blue-one-speaker-1.png',
@@ -414,6 +424,7 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/blue-two-poster-1.png',
+        2: '/assets/images/rooms/blue-two-poster-2.png',
         3: '/assets/images/rooms/blue-two-poster-3.png',
       },
       SPEAKER: {
@@ -451,6 +462,7 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/blue-three-poster-1.png',
+        2: '/assets/images/rooms/blue-three-poster-2.png',
         3: '/assets/images/rooms/blue-three-poster-3.png',
       },
       SPEAKER: {
@@ -490,7 +502,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/purple-one-poster-1.png',
-        2: '/assets/images/rooms/purple-one-poster-3.png',
+        2: '/assets/images/rooms/purple-one-poster-2.png',
+        3: '/assets/images/rooms/purple-one-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/purple-one-speaker-1.png',
@@ -527,6 +540,7 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/purple-two-poster-1.png',
+        2: '/assets/images/rooms/purple-two-poster-2.png',
         3: '/assets/images/rooms/purple-two-poster-3.png',
       },
       SPEAKER: {
@@ -564,7 +578,8 @@ const ROOM: RoomAssets = {
       },
       POSTER: {
         1: '/assets/images/rooms/purple-three-poster-1.png',
-        2: '/assets/images/rooms/purple-three-poster-3.png',
+        2: '/assets/images/rooms/purple-three-poster-2.png',
+        3: '/assets/images/rooms/purple-three-poster-3.png',
       },
       SPEAKER: {
         1: '/assets/images/rooms/purple-three-speaker-1.png',
