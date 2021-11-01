@@ -21,6 +21,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/red-one-vase-1.png',
         2: '/assets/images/rooms/red-one-vase-2.png',
+        3: '/assets/images/rooms/red-one-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/red-one-clock-1.png',
@@ -57,6 +58,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/red-two-vase-1.png',
         2: '/assets/images/rooms/red-two-vase-2.png',
+        3: '/assets/images/rooms/red-two-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/red-two-clock-1.png',
@@ -93,6 +95,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/red-three-vase-1.png',
         2: '/assets/images/rooms/red-three-vase-2.png',
+        3: '/assets/images/rooms/red-three-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/red-three-clock-1.png',
@@ -131,6 +134,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/yellow-one-vase-1.png',
         2: '/assets/images/rooms/yellow-one-vase-2.png',
+        3: '/assets/images/rooms/yellow-one-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/yellow-one-clock-1.png',
@@ -167,6 +171,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/yellow-two-vase-1.png',
         2: '/assets/images/rooms/yellow-two-vase-2.png',
+        3: '/assets/images/rooms/yellow-two-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/yellow-two-clock-1.png',
@@ -203,6 +208,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/yellow-three-vase-1.png',
         2: '/assets/images/rooms/yellow-three-vase-2.png',
+        3: '/assets/images/rooms/yellow-three-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/yellow-three-clock-1.png',
@@ -241,6 +247,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/green-one-vase-1.png',
         2: '/assets/images/rooms/green-one-vase-2.png',
+        3: '/assets/images/rooms/green-one-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/green-one-clock-1.png',
@@ -277,6 +284,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/green-two-vase-1.png',
         2: '/assets/images/rooms/green-two-vase-2.png',
+        3: '/assets/images/rooms/green-two-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/green-two-clock-1.png',
@@ -313,6 +321,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/green-three-vase-1.png',
         2: '/assets/images/rooms/green-three-vase-2.png',
+        3: '/assets/images/rooms/green-three-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/green-three-clock-1.png',
@@ -351,6 +360,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/blue-one-vase-1.png',
         2: '/assets/images/rooms/blue-one-vase-2.png',
+        3: '/assets/images/rooms/blue-one-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/blue-one-clock-1.png',
@@ -387,6 +397,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/blue-two-vase-1.png',
         2: '/assets/images/rooms/blue-two-vase-2.png',
+        3: '/assets/images/rooms/blue-two-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/blue-two-clock-1.png',
@@ -423,6 +434,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/blue-three-vase-1.png',
         2: '/assets/images/rooms/blue-three-vase-2.png',
+        3: '/assets/images/rooms/blue-three-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/blue-three-clock-1.png',
@@ -461,6 +473,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/purple-one-vase-1.png',
         2: '/assets/images/rooms/purple-one-vase-2.png',
+        3: '/assets/images/rooms/purple-one-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/purple-one-clock-1.png',
@@ -497,6 +510,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/purple-two-vase-1.png',
         2: '/assets/images/rooms/purple-two-vase-2.png',
+        3: '/assets/images/rooms/purple-two-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/purple-two-clock-1.png',
@@ -533,6 +547,7 @@ const ROOM: RoomAssets = {
       VASE: {
         1: '/assets/images/rooms/purple-three-vase-1.png',
         2: '/assets/images/rooms/purple-three-vase-2.png',
+        3: '/assets/images/rooms/purple-three-vase-3.png',
       },
       CLOCK: {
         1: '/assets/images/rooms/purple-three-clock-1.png',
