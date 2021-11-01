@@ -114,7 +114,7 @@ const TextInputBox = styled.input<{
   text-align: ${({ align }) => align};
   background-color: ${BasicColor.GRAY20};
   border-radius: ${({ submitButton }) =>
-    submitButton ? '0.8em 0 0 0.8em' : '0.8em'};
+    submitButton ? '0.7em 0 0 0.7em' : '0.7em'};
   padding: 3%;
   padding-right: 24%;
 
@@ -125,13 +125,13 @@ const TextInputBox = styled.input<{
 
 const TextLength = styled.div`
   position: absolute;
-  right: 1em;
+  right: 0.5em;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.GRAY20};
-  border-radius: 0 0.8em 0.8em 0;
+  border-radius: 0 0.7em 0.7em 0;
   padding: 1em;
 `;
 
@@ -141,7 +141,7 @@ const SubmitButton = styled.button`
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.GRAY20};
-  border-radius: 0 0.8em 0.8em 0;
+  border-radius: 0 0.7em 0.7em 0;
   padding: 3%;
 `;
 

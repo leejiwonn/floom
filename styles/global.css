@@ -330,11 +330,11 @@ svg {
 }
 @media screen and (min-width : 1921px) and (max-width : 2560px) {
   html, body, div, p, span, button, a {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 @media screen and (min-width : 2561px) {
   html, body, div, p, span, button, a {
-    font-size: 28px;
+    font-size: 18px;
   }
 }
