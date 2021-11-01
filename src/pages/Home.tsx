@@ -83,7 +83,7 @@ const Home = ({ categories }: Props) => {
             <Link key={room.id} href={`/detail?roomId=${room.id}`}>
               <RoomItem>
                 <ScreenStyled>
-                  <Screen type={room.assets[0].type} url={room.assets[0].url} />
+                  <Screen type="thumbnail" assets={room.assets} />
                 </ScreenStyled>
                 <Typography font={FontType.BOLD_TITLE_02} marginTop={1}>
                   {room.title}

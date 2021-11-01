@@ -451,10 +451,10 @@ const Play = ({ room }: Props) => {
           )}
         </LayerBox>
         <Screen
+          type="full"
           isFull={isFull}
           onFullButtonClick={() => setIsPull(false)}
-          type={room.assets[0].type}
-          url={room.assets[0].url}
+          assets={room.assets}
         />
         {currentPage >= 3 && (
           <>
