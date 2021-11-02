@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import Playlist from '~/components/Playlist';
 
+import { LoaderSpinner } from '~/components/Loader';
+import Playlist from '~/components/Playlist';
 import Typography from '~/components/Typography';
 import EMOJI from '~/constants/emoji';
 import { useReviews } from '~/hooks/useReviews';
@@ -15,6 +16,10 @@ interface Props {
 
 const Detail = ({ room }: Props) => {
   const { data: reviews } = useReviews(room.id);
+
+  if (!!!room || !!!reviews) {
+    return <LoaderSpinner />;
+  }
 
   return (
     <DetailStyled>

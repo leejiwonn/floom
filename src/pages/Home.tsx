@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import { LoaderSpinner } from '~/components/Loader';
 import Screen from '~/components/Screen';
 import Typography from '~/components/Typography';
 import { useRooms } from '~/hooks/useRoom';
@@ -79,21 +80,25 @@ const Home = ({ categories }: Props) => {
           {category?.name}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
-          {rooms?.map((room) => (
-            <Link key={room.id} href={`/detail?roomId=${room.id}`}>
-              <RoomItem>
-                <ScreenStyled>
-                  <Screen type="thumbnail" assets={room.assets} />
-                </ScreenStyled>
-                <Typography font={FontType.BOLD_TITLE_02} marginTop={1}>
-                  {room.title}
-                </Typography>
-                <Typography font={FontType.LIGHT_CAPTION}>
-                  {room.creator.displayName}
-                </Typography>
-              </RoomItem>
-            </Link>
-          ))}
+          {!!!rooms ? (
+            <LoaderSpinner />
+          ) : (
+            rooms.map((room) => (
+              <Link key={room.id} href={`/detail?roomId=${room.id}`}>
+                <RoomItem>
+                  <ScreenStyled>
+                    <Screen type="thumbnail" assets={room.assets} />
+                  </ScreenStyled>
+                  <Typography font={FontType.BOLD_TITLE_02} marginTop={1}>
+                    {room.title}
+                  </Typography>
+                  <Typography font={FontType.LIGHT_CAPTION}>
+                    {room.creator.displayName}
+                  </Typography>
+                </RoomItem>
+              </Link>
+            ))
+          )}
         </RoomStyled>
       </RoomsStyled>
       <Link passHref={true} href={user != null ? '/create' : '/api/auth/kakao'}>
