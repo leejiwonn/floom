@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -13,6 +13,7 @@ interface Props {
   content: React.ReactNode;
   isDrop?: boolean;
   isToggle?: boolean;
+  activeToggle?: boolean;
   setIsToggle?: () => void;
   required?: boolean;
 }
@@ -23,12 +24,15 @@ const CreateInfoItem = ({
   content,
   isDrop = false,
   isToggle = false,
+  activeToggle = false,
   setIsToggle,
   required = false,
 }: Props) => {
-  const [visibleInfo, setVisibleInfo] = useState<boolean>(
-    isDrop || isToggle ? false : true,
-  );
+  const [visibleInfo, setVisibleInfo] = useState<boolean>(false);
+
+  useEffect(() => {
+    setVisibleInfo(isDrop || (isToggle && !activeToggle) ? false : true);
+  }, []);
 
   const handleItemClick = () => {
     (isDrop || isToggle) && setVisibleInfo((prev) => !prev);
