@@ -356,7 +356,7 @@ const Create = () => {
             </ContentMenuItem>
           </ContentMenu>
           {contentType === 'info' && (
-            <ContentBox>
+            <ContentBox type={contentType}>
               <CreateInfoItem
                 title="방 이름"
                 titleIcon={<RoomIcon width="2.4em" height="2.4em" />}
@@ -619,7 +619,7 @@ const Create = () => {
             </ContentBox>
           )}
           {contentType === 'music' && (
-            <ContentBox>
+            <ContentBox type={contentType}>
               <CategoryMenu
                 categories={musicCategories as MusicCategory[]}
                 category={musicCategory as MusicCategory}
@@ -828,10 +828,10 @@ const ContentMenuItem = styled.button<{ active: boolean }>`
   padding: 1.2em 0;
 `;
 
-const ContentBox = styled.div`
+const ContentBox = styled.div<{ type: string }>`
   width: 100%;
   height: calc(100% - 10em);
-  overflow-y: auto;
+  overflow-y: ${({ type }) => (type === 'music' ? 'hidden' : 'auto')};
   -ms-overflow-style: none;
   scrollbar-width: none;
 
