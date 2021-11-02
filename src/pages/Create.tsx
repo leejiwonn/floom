@@ -290,13 +290,23 @@ const Create = () => {
       return;
     }
 
-    if (room.title === '' || !room.assets.length || !selectedMusics.length) {
+    if (
+      room.title === '' ||
+      !room.assets.length ||
+      !selectedMusics.length ||
+      (room.guestBooksEnabled && room.guestBooksWelcomeMessage === '')
+    ) {
       if (room.title === '') {
         setVisibleToast('방 이름을 작성해주세요.');
       } else if (!room.assets.length) {
         setVisibleToast('배경화면을 등록해주세요.');
       } else if (!selectedMusics.length) {
         setVisibleToast('음악을 등록해주세요.');
+      } else if (
+        room.guestBooksEnabled &&
+        room.guestBooksWelcomeMessage === ''
+      ) {
+        setVisibleToast('방명록 인사말을 등록해주세요.');
       }
       return;
     }
