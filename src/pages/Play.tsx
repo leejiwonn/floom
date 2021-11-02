@@ -30,6 +30,7 @@ import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
+import Toast from '~/components/Toast';
 
 interface Props {
   room: Room;
@@ -42,6 +43,7 @@ const Play = ({ room }: Props) => {
   );
 
   const [isLoading, setIsLoading] = useState('');
+  const [visibleToast, setVisibleToast] = useState('');
 
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
@@ -196,7 +198,7 @@ const Play = ({ room }: Props) => {
       await guestBooksMutate();
       setIsLoading('');
     } catch (error) {
-      console.warn(error);
+      setVisibleToast('방명록 작성을 완료하지 못했습니다. 다시 시도해주세요.');
     }
     setGuestInput((prev) => {
       return {
@@ -237,7 +239,7 @@ const Play = ({ room }: Props) => {
         });
         setIsLoading('');
       } catch (error) {
-        console.warn(error);
+        setVisibleToast('방 생성을 완료하지 못했습니다. 다시 시도해주세요.');
       }
       setReviewInput('');
       setIsRecommend(false);
@@ -591,6 +593,9 @@ const Play = ({ room }: Props) => {
           onButtonClick={handleFinishedButtonClick}
           isLoading={isLoading === 'finished'}
         />
+      )}
+      {visibleToast && (
+        <Toast message={visibleToast} setVisibleToast={setVisibleToast} />
       )}
     </PlayStyled>
   );

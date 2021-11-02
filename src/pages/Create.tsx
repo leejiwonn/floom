@@ -41,6 +41,7 @@ import CloseIcon from '../../public/assets/icons/icon-close.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import RotateIcon from '../../public/assets/icons/icon-rotate.svg';
 import BookIcon from '../../public/assets/icons/icon-book.svg';
+import Toast from '~/components/Toast';
 
 const Create = () => {
   const { data: roomCategories } = useRoomCategories();
@@ -78,6 +79,7 @@ const Create = () => {
   const { data: musics } = useMusics(musicCategory?.id);
 
   const [isLoading, setIsLoading] = useState('');
+  const [visibleToast, setVisibleToast] = useState('');
 
   const [visibleControl, setVisibleControl] = useState(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
@@ -133,7 +135,7 @@ const Create = () => {
       });
       setIsLoading('');
     } catch (e) {
-      console.warn(e);
+      setVisibleToast('10MB 이하의 파일만 업로드가 가능합니다.');
     }
   };
 
@@ -244,7 +246,7 @@ const Create = () => {
         };
       });
     } catch (e) {
-      console.warn(e);
+      setVisibleToast('방 이미지를 등록하지 못했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -279,7 +281,13 @@ const Create = () => {
     }
 
     if (room.title === '' || !room.assets.length || !selectedMusics.length) {
-      alert('빈 값이 있습니다.');
+      if (room.title === '') {
+        setVisibleToast('방 이름을 작성해주세요.');
+      } else if (!room.assets.length) {
+        setVisibleToast('배경화면을 등록해주세요.');
+      } else if (!selectedMusics.length) {
+        setVisibleToast('음악을 등록해주세요.');
+      }
       return;
     }
     setIsLoading('createButtonClick');
@@ -714,6 +722,9 @@ const Create = () => {
             </>
           )}
         </ObjectViewStyled>
+        {visibleToast && (
+          <Toast message={visibleToast} setVisibleToast={setVisibleToast} />
+        )}
       </CreateStyled>
       {visibleCategoryModal && (
         <Modal
