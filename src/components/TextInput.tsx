@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { BasicColor } from '~/utils/color';
 import { Font, Align, FontType } from '~/utils/font';
+import { LoaderSpinner } from './Loader';
 import Typography from './Typography';
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
   marginRight?: number;
   submitButton?: boolean;
   onSubmitButtonClick?: () => void;
+  isLoading?: boolean;
 }
 
 const TextInput = ({
@@ -34,6 +36,7 @@ const TextInput = ({
   marginRight,
   submitButton,
   onSubmitButtonClick,
+  isLoading,
 }: Props) => {
   const style = Font.getStyle(font);
 
@@ -69,14 +72,18 @@ const TextInput = ({
         </TextLength>
       )}
       {submitButton && (
-        <SubmitButton onClick={onSubmitButtonClick}>
-          <Typography
-            tag="span"
-            font={FontType.SEMI_BOLD_BODY}
-            color={BasicColor.BLUE100}
-          >
-            등록
-          </Typography>
+        <SubmitButton onClick={() => !isLoading && onSubmitButtonClick?.()}>
+          {isLoading ? (
+            <LoaderSpinner />
+          ) : (
+            <Typography
+              tag="span"
+              font={FontType.SEMI_BOLD_BODY}
+              color={BasicColor.BLUE100}
+            >
+              등록
+            </Typography>
+          )}
         </SubmitButton>
       )}
     </TextInputStyled>

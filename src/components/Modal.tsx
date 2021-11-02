@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { ReactElement, ReactNode } from 'react';
-import useOutsideEvent from '~/hooks/useOutsideEvent';
 
+import useOutsideEvent from '~/hooks/useOutsideEvent';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import { LoaderSpinner } from './Loader';
 import Typography from './Typography';
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
   buttonActive?: boolean;
   buttonText: string;
   onButtonClick: () => void;
+  isLoading?: boolean;
 }
 
 const Modal = ({
@@ -30,6 +32,7 @@ const Modal = ({
   buttonActive = true,
   buttonText,
   onButtonClick,
+  isLoading,
 }: Props) => {
   const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => {
@@ -56,13 +59,20 @@ const Modal = ({
           {content}
         </Typography>
         {action}
-        <ModalButton onClick={onButtonClick} active={buttonActive}>
-          <Typography
-            font={FontType.EXTRA_BOLD_BODY}
-            color={buttonActive ? BasicColor.WHITE : BasicColor.DARK100}
-          >
-            {buttonText}
-          </Typography>
+        <ModalButton
+          onClick={() => !isLoading && onButtonClick()}
+          active={buttonActive}
+        >
+          {isLoading ? (
+            <LoaderSpinner mode={buttonActive ? 'dark' : 'light'} />
+          ) : (
+            <Typography
+              font={FontType.EXTRA_BOLD_BODY}
+              color={buttonActive ? BasicColor.WHITE : BasicColor.DARK100}
+            >
+              {buttonText}
+            </Typography>
+          )}
         </ModalButton>
       </ModalBox>
     </ModalStyled>
