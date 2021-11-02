@@ -41,6 +41,8 @@ const Play = ({ room }: Props) => {
     { limit: 100 },
   );
 
+  const [isLoading, setIsLoading] = useState('');
+
   const [currentPage, setCurrentPage] = useState(0);
   const [sliderShow, setSliderShow] = useState(true);
   const [visibleModal, setVisibleModal] = useState<
@@ -180,13 +182,19 @@ const Play = ({ room }: Props) => {
       return;
     }
 
+    if (isLoading === 'guestBook') {
+      return;
+    }
+
     try {
+      setIsLoading('guestBook');
       await postRoomGuestBook({
         roomId: room.id,
         body: guestInput.input,
         emoji: guestInput.emoji,
       });
       await guestBooksMutate();
+      setIsLoading('');
     } catch (error) {
       console.warn(error);
     }
@@ -214,14 +222,20 @@ const Play = ({ room }: Props) => {
   };
 
   const handleFinishedButtonClick = async () => {
+    if (isLoading === 'finished') {
+      return;
+    }
+
     if (reviewInput !== '') {
       try {
+        setIsLoading('finished');
         await postReview({
           roomId: room.id,
           objective,
           comment: reviewInput,
           recommend: isRecommend,
         });
+        setIsLoading('');
       } catch (error) {
         console.warn(error);
       }
@@ -441,6 +455,7 @@ const Play = ({ room }: Props) => {
                           onChangeInput={handleChangeGuestInput}
                           submitButton
                           onSubmitButtonClick={handleGuestSubmitButtonClick}
+                          isLoading={isLoading === 'guestBook'}
                         />
                       </PopupBoardGuestInputView>
                     </PopupBoard>
@@ -574,6 +589,7 @@ const Play = ({ room }: Props) => {
           buttonActive={reviewInput !== ''}
           buttonText={reviewInput !== '' ? '완료' : '작성중'}
           onButtonClick={handleFinishedButtonClick}
+          isLoading={isLoading === 'finished'}
         />
       )}
     </PlayStyled>

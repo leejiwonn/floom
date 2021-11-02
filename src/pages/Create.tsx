@@ -31,6 +31,7 @@ import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
 import BACKGROUND, { Background } from '~/constants/background';
+import { LoaderSpinner } from '~/components/Loader';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -76,6 +77,8 @@ const Create = () => {
   });
   const { data: musics } = useMusics(musicCategory?.id);
 
+  const [isLoading, setIsLoading] = useState('');
+
   const [visibleControl, setVisibleControl] = useState(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
 
@@ -95,6 +98,10 @@ const Create = () => {
   );
 
   const handleUpdateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isLoading === 'updateFile') {
+      return;
+    }
+
     if (room.assets.length > 2) {
       return;
     }
@@ -106,6 +113,7 @@ const Create = () => {
 
     const file = files[0];
     try {
+      setIsLoading('updateFile');
       const { url } = await upload(file);
       setRoom((prev) => {
         return {
@@ -123,6 +131,7 @@ const Create = () => {
           ],
         };
       });
+      setIsLoading('');
     } catch (e) {
       console.warn(e);
     }
@@ -265,17 +274,28 @@ const Create = () => {
   };
 
   const handleCreateButtonClick = async () => {
+    if (isLoading === 'createButtonClick') {
+      return;
+    }
+
     if (room.title === '' || !room.assets.length || !selectedMusics.length) {
       alert('빈 값이 있습니다.');
       return;
     }
+    setIsLoading('createButtonClick');
     updateIds();
     await getUploadRoomImage();
+    setIsLoading('');
     setVisibleSubmitModal(true);
   };
 
   const postCreateRoom = async () => {
+    if (isLoading === 'createRoom') {
+      return;
+    }
+
     try {
+      setIsLoading('createRoom');
       await createRoom(room);
       Router.push('/');
     } catch (e) {
@@ -421,19 +441,25 @@ const Create = () => {
                       )}
                     </FileUploadImageStyled>
                     <FileUploadButtonLabel active={room.assets.length < 3}>
-                      <AddImageIcon
-                        width={18}
-                        height={18}
-                        fill={BasicColor.WHITE}
-                        stroke={BasicColor.WHITE}
-                      />
-                      <Typography
-                        font={FontType.SEMI_BOLD_CAPTION}
-                        color={BasicColor.WHITE}
-                        marginLeft={0.5}
-                      >
-                        배경화면 등록하기
-                      </Typography>
+                      {isLoading === 'updateFile' ? (
+                        <LoaderSpinner mode="dark" />
+                      ) : (
+                        <>
+                          <AddImageIcon
+                            width={18}
+                            height={18}
+                            fill={BasicColor.WHITE}
+                            stroke={BasicColor.WHITE}
+                          />
+                          <Typography
+                            font={FontType.SEMI_BOLD_CAPTION}
+                            color={BasicColor.WHITE}
+                            marginLeft={0.5}
+                          >
+                            배경화면 등록하기
+                          </Typography>
+                        </>
+                      )}
                       {room.assets.length < 3 && (
                         <FileUploadButton
                           type="file"
@@ -674,9 +700,16 @@ const Create = () => {
                 </RoomControlButton>
               </RoomControlStyled>
               <CreateButton onClick={handleCreateButtonClick}>
-                <Typography font={FontType.BOLD_BODY} color={BasicColor.WHITE}>
-                  등록 완료
-                </Typography>
+                {isLoading === 'createButtonClick' ? (
+                  <LoaderSpinner mode="dark" />
+                ) : (
+                  <Typography
+                    font={FontType.BOLD_BODY}
+                    color={BasicColor.WHITE}
+                  >
+                    등록 완료
+                  </Typography>
+                )}
               </CreateButton>
             </>
           )}
@@ -689,27 +722,31 @@ const Create = () => {
           content="자유롭게 선택해주세요!"
           action={
             <CategoryStyled>
-              {roomCategories?.map((value: RoomCategory, index: number) => (
-                <CategoryItem
-                  key={index}
-                  onClick={() => setRoomCategory(value)}
-                >
-                  <CategoryItemIcon active={roomCategory === value}>
-                    {getCategoryEmoji(value.name)}
-                  </CategoryItemIcon>
-                  <Typography
-                    font={FontType.SEMI_BOLD_BODY}
-                    color={
-                      roomCategory === value
-                        ? BasicColor.BLUE100
-                        : BasicColor.DARK100
-                    }
-                    align={Align.CENTER}
+              {!!!roomCategories ? (
+                <LoaderSpinner />
+              ) : (
+                roomCategories?.map((value: RoomCategory, index: number) => (
+                  <CategoryItem
+                    key={index}
+                    onClick={() => setRoomCategory(value)}
                   >
-                    {value.name}
-                  </Typography>
-                </CategoryItem>
-              ))}
+                    <CategoryItemIcon active={roomCategory === value}>
+                      {getCategoryEmoji(value.name)}
+                    </CategoryItemIcon>
+                    <Typography
+                      font={FontType.SEMI_BOLD_BODY}
+                      color={
+                        roomCategory === value
+                          ? BasicColor.BLUE100
+                          : BasicColor.DARK100
+                      }
+                      align={Align.CENTER}
+                    >
+                      {value.name}
+                    </Typography>
+                  </CategoryItem>
+                ))
+              )}
             </CategoryStyled>
           }
           buttonActive
@@ -724,6 +761,7 @@ const Create = () => {
           content="방을 등록하시겠어요?"
           buttonText="등록하기"
           onButtonClick={postCreateRoom}
+          isLoading={isLoading === 'createRoom'}
         />
       )}
     </>
