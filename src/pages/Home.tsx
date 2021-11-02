@@ -211,7 +211,7 @@ const RoomStyled = styled.div`
 `;
 
 const RoomItem = styled.a`
-  width: 30em;
+  width: 30%;
   height: auto;
   display: inline-flex;
   flex-direction: column;
