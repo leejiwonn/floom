@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+
 import { MusicCategory } from '~/types/MusicCategory';
 import { RoomCategory } from '~/types/RoomCategory';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
+import { getMusicCategoryName } from '~/utils/musicCategory';
 import Typography from './Typography';
 
 import SidebarIcon from '../../public/assets/icons/icon-sidebar.svg';
@@ -25,7 +27,7 @@ const CategoryMenu = ({ categories, category, setCategory }: Props) => {
 
     setCurrentIndex(0);
     setCategory(categories[currentIndex]);
-    setCurrentWidth((categories.length - 2) * 108);
+    setCurrentWidth(108);
   }, []);
 
   const handlePrevButtonClick = () => {
@@ -65,7 +67,7 @@ const CategoryMenu = ({ categories, category, setCategory }: Props) => {
                   : BasicColor.GREEN150
               }
             >
-              {value.name}
+              {getMusicCategoryName(value.name)}
             </Typography>
           </CategoryItem>
         ))}

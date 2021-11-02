@@ -623,13 +623,17 @@ const Create = () => {
                 setCategory={(value) => setMusicCategory(value)}
               />
               <MusicListStyled>
-                <Playlist
-                  playlist={musics as Music[]}
-                  controls={false}
-                  viewHeight={56}
-                  selectedMusics={selectedMusics}
-                  onAddButtonClick={handleAddMusicButtonClick}
-                />
+                {!!!musics ? (
+                  <LoaderSpinner />
+                ) : (
+                  <Playlist
+                    playlist={musics as Music[]}
+                    controls={false}
+                    viewHeight={56}
+                    selectedMusics={selectedMusics}
+                    onAddButtonClick={handleAddMusicButtonClick}
+                  />
+                )}
               </MusicListStyled>
               <BottomPopup
                 title="플레이리스트"
@@ -1028,6 +1032,8 @@ const NoneTagItem = styled.div`
 `;
 
 const MusicListStyled = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   margin-top: 1em;
 `;
