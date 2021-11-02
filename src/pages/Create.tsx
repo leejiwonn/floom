@@ -261,8 +261,18 @@ const Create = () => {
         });
       }
     },
-    [room.guestBooksEnabled, setRoom],
+    [room, setRoom],
   );
+
+  const handleGuestBookToggle = () => {
+    setRoom((prev) => {
+      return {
+        ...prev,
+        guestBooksEnabled: !prev.guestBooksEnabled,
+        guestBooksWelcomeMessage: '',
+      };
+    });
+  };
 
   const updateIds = () => {
     const ids = selectedMusics.map((music) => music.id);
@@ -495,15 +505,8 @@ const Create = () => {
                   </>
                 }
                 isToggle
-                setIsToggle={() =>
-                  setRoom((prev) => {
-                    return {
-                      ...prev,
-                      guestBooksEnabled: !prev.guestBooksEnabled,
-                      guestBooksWelcomeMessage: '',
-                    };
-                  })
-                }
+                activeToggle={room.guestBooksEnabled}
+                setIsToggle={handleGuestBookToggle}
               />
               <CreateInfoItem
                 title="방 태그"
