@@ -85,15 +85,19 @@ const Playlist = ({
   };
 
   const handlePrevButtonClick = () => {
-    setCurrentIndex((prev) => (prev + playlist.length - 1) % playlist.length);
-    updatePlayer(currentIndex);
+    const index = (currentIndex + playlist.length - 1) % playlist.length;
+
+    setCurrentIndex(index);
+    updatePlayer(index);
     setIsPlaying(true);
     playAudioSafely(playerRef.current);
   };
 
   const handleNextButtonClick = () => {
-    setCurrentIndex((prev) => (prev + 1) % playlist.length);
-    updatePlayer(currentIndex);
+    const index = (currentIndex + 1) % playlist.length;
+
+    setCurrentIndex(index);
+    updatePlayer(index);
     setIsPlaying(true);
     playAudioSafely(playerRef.current);
   };
@@ -117,7 +121,7 @@ const Playlist = ({
       }
       setCurrentTime(formatDuration(audio.currentTime));
 
-      if (audio.currentTime === playlist[currentIndex].duration) {
+      if (Math.floor(audio.currentTime) === Math.floor(audio.duration)) {
         handleNextButtonClick();
       }
     };
@@ -155,7 +159,8 @@ const Playlist = ({
               onClick={() => {
                 setCurrentIndex(index);
                 updatePlayer(index);
-                setIsPlaying((prev) => !prev);
+                setIsPlaying((prev) => (currentIndex === index ? !prev : true));
+                playAudioSafely(playerRef.current);
               }}
             >
               <PlaylistLeftView>
