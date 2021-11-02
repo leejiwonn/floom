@@ -24,7 +24,7 @@ import { Todo } from '~/types/Obejct';
 import { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 
 import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
 import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
@@ -149,7 +149,7 @@ const Play = ({ room }: Props) => {
 
   const handleChangeGuestInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.length <= 50) {
+      if (e.target.value.length <= 30) {
         setGuestInput((prev) => {
           return { ...prev, input: e.target.value };
         });
@@ -396,12 +396,6 @@ const Play = ({ room }: Props) => {
                   />
                   {visibleBoardPopup && (
                     <PopupBoard>
-                      <Typography
-                        font={FontType.BOLD_TITLE_02}
-                        marginBottom={1}
-                      >
-                        방명록
-                      </Typography>
                       <PopupBoardHostView>
                         <Typography
                           font={FontType.SEMI_BOLD_BODY}
@@ -420,8 +414,9 @@ const Play = ({ room }: Props) => {
                                     {EMOJI[value.emoji as keyof typeof EMOJI]}
                                   </PopupBoardGuestEmoji>
                                   <Typography
-                                    font={FontType.SEMI_BOLD_BODY}
+                                    font={FontType.SEMI_BOLD_CAPTION}
                                     color={BasicColor.WHITE}
+                                    align={Align.CENTER}
                                   >
                                     {value.body}
                                   </Typography>
@@ -455,6 +450,7 @@ const Play = ({ room }: Props) => {
                           value={guestInput.input}
                           maxLength={50}
                           onChangeInput={handleChangeGuestInput}
+                          placeholder="방명록 한 마디를 남겨보세요!"
                           submitButton
                           onSubmitButtonClick={handleGuestSubmitButtonClick}
                           isLoading={isLoading === 'guestBook'}
@@ -849,25 +845,29 @@ const PopupBoardGuestBox = styled.div`
   align-items: center;
   justify-content: flex-start;
   overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const PopupBoardGuestItem = styled.div<{ last: boolean }>`
-  width: 14em;
+  width: 40%;
   height: 12em;
   display: inline-flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
   flex-shrink: 0;
   background-color: ${BasicColor.GRAY100};
-  padding: 1.2em;
+  padding: 2.5em;
   border-radius: 1em;
   margin-right: ${({ last }) => !last && '1.2em'};
 `;
 
 const PopupBoardGuestEmoji = styled.div`
-  width: 3em;
-  margin-bottom: 0.5em;
+  width: 2em;
+  position: absolute;
+  top: 1em;
+  right: 1em;
 
   svg {
     width: 100%;

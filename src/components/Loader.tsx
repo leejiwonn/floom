@@ -13,8 +13,8 @@ export const LoaderSpinner = ({ mode = 'light' }: Props) => {
       <Loader
         type="Oval"
         color={mode === 'light' ? BasicColor.BLUE100 : BasicColor.WHITE}
-        width={30}
-        height={30}
+        width={24}
+        height={24}
         timeout={10000}
       />
     </LoaderSpinnerStyled>
