@@ -69,6 +69,8 @@ export type CreateRoomData = Pick<
 export type Room = RoomSimple & {
   reviewsCount: number;
   recommendReviewsCount: number;
+  bookmarksCount: number;
+  isBookmarked?: boolean;
   musics: Music[];
 };
 
