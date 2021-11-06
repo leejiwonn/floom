@@ -71,3 +71,8 @@ export type Room = RoomSimple & {
   recommendReviewsCount: number;
   musics: Music[];
 };
+
+export type RoomBookmark = Pick<
+  RoomSimple,
+  'id' | 'title' | 'creator' | 'assets' | 'tags'
+>;

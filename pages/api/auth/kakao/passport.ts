@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import 'reflect-metadata';
 import passport from 'passport';
 import { Strategy as KakaoStrategy } from 'passport-kakao';
 import { createAuthToken } from '~/server/auth';

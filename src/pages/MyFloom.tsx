@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
 import Typography from '~/components/Typography';
-import { useMyReviews, useMyRooms } from '~/hooks/useMy';
+import { useMyReviews, useMyRooms, useMyRoomBookmarks } from '~/hooks/useMy';
 
 const MyFloom = () => {
   const { data: myReviews } = useMyReviews();
   const { data: myRooms } = useMyRooms();
+  const { data: myRoomBookmarks } = useMyRoomBookmarks();
 
   return (
     <MyFloomStyled>
@@ -18,6 +19,11 @@ const MyFloom = () => {
       </ReviewListStyled>
       <SaveRoomListStyled>
         <Typography>저장 목록</Typography>
+        <RoomList>
+          {myRoomBookmarks?.map((bookmark, index) => (
+            <RoomItem key={index}>{bookmark.room.title}</RoomItem>
+          ))}
+        </RoomList>
       </SaveRoomListStyled>
       <CreateRoomListStyled>
         <Typography>생성 목록</Typography>

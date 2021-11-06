@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import nc from 'next-connect';
 import { authorize } from '~/server/auth';
-import { findUserFromRequest } from '~/server/utils';
+import { getUserFromRequest } from '~/server/utils';
 import { findAllReviews } from '~/server/db';
 import { toReview } from '~/server/dto/review';
 
 async function myListReviews(req: Request, res: Response) {
-  const user = findUserFromRequest(req);
+  const user = getUserFromRequest(req);
 
   const reviews = await findAllReviews({
     filters: {

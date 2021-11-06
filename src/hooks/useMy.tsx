@@ -1,6 +1,13 @@
 import useSWR from 'swr';
-import { fetchMyReviews, fetchMyRooms } from '~/remotes/my';
+import {
+  fetchMyReviews,
+  fetchMyRooms,
+  fetchMyRoomBookmarks,
+} from '~/remotes/my';
 
 export const useMyReviews = () => useSWR('fetchMyReviews', fetchMyReviews);
 
 export const useMyRooms = () => useSWR('fetchMyRooms', fetchMyRooms);
+
+export const useMyRoomBookmarks = () =>
+  useSWR('fetchMyRoomBookmarks', fetchMyRoomBookmarks);

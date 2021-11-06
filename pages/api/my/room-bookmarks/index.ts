@@ -1,19 +1,21 @@
 import { Request, Response } from 'express';
 import nc from 'next-connect';
 import { authorize } from '~/server/auth';
-import { findAllRooms } from '~/server/db';
-import { toRoomSimple } from '~/server/dto/room';
 import { getUserFromRequest } from '~/server/utils';
+import { findAllBookmarks } from '~/server/db';
+import { toBookmark } from '~/server/dto/bookmark';
 
-async function myListRooms(req: Request, res: Response) {
+async function myRoomBookmarks(req: Request, res: Response) {
+  const roomId = req.query.roomId as string | undefined;
   const user = getUserFromRequest(req);
 
-  const rooms = await findAllRooms({
+  const bookmarks = await findAllBookmarks({
     filters: {
-      creatorId: user?.id != null ? Number(user.id) : undefined,
+      roomId: roomId != null ? Number(roomId) : undefined,
+      markerId: user?.id != null ? Number(user.id) : undefined,
     },
   });
-  const response = rooms.map(toRoomSimple);
+  const response = bookmarks.map(toBookmark);
 
   res.status(200).send(response);
 }
@@ -26,6 +28,6 @@ const handler = nc<Request, Response>({
       message: error.message,
     });
   },
-}).get(authorize, myListRooms);
+}).get(authorize, myRoomBookmarks);
 
 export default handler;
