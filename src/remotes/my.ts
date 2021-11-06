@@ -20,3 +20,11 @@ export async function fetchMyRoomBookmarks() {
 
   return data;
 }
+
+export async function postRoomBookmark(roomId: number) {
+  const { data } = await api.post<Review>(
+    `/api/my/room-bookmarks?roomId=${roomId}`,
+  );
+
+  return data;
+}

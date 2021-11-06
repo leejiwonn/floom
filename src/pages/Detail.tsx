@@ -6,6 +6,7 @@ import Playlist from '~/components/Playlist';
 import Typography from '~/components/Typography';
 import EMOJI from '~/constants/emoji';
 import { useReviews } from '~/hooks/useReviews';
+import { postRoomBookmark } from '~/remotes/my';
 import type { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -20,6 +21,15 @@ const Detail = ({ room }: Props) => {
   if (!!!room || !!!reviews) {
     return <LoaderSpinner />;
   }
+
+  const handleAddBookmarkButton = async () => {
+    try {
+      await postRoomBookmark(room.id);
+      console.log('저장 완료!');
+    } catch (e) {
+      console.warn(e);
+    }
+  };
 
   return (
     <DetailStyled>
@@ -37,6 +47,9 @@ const Detail = ({ room }: Props) => {
             <Typography font={FontType.EXTRA_BOLD_HEAD_03}>
               {room.title}
             </Typography>
+            <AddBookmarkButton onClick={handleAddBookmarkButton}>
+              <Typography>북마크</Typography>
+            </AddBookmarkButton>
           </RoomTitleInfo>
           <Typography
             font={FontType.REGULAR_BODY}
@@ -313,6 +326,10 @@ const PlayButton = styled.a`
   padding: 2em 12em;
   border-radius: 2em;
   background-color: ${BasicColor.BLUE100};
+`;
+
+const AddBookmarkButton = styled.button`
+  margin-left: 3em;
 `;
 
 export default Detail;

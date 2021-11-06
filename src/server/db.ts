@@ -410,3 +410,18 @@ export async function findAllBookmarks(options?: {
 
   return query.getMany();
 }
+
+type CreateBookmarkParams = {
+  roomId: number;
+  user: User;
+};
+
+export async function createBookmark(payload: CreateBookmarkParams) {
+  const RoomBookmarkRepository = await getRoomBookmarkRepository();
+  const bookmark = new RoomBookmarkEntity();
+
+  bookmark.room = await getRoomById(payload.roomId);
+  bookmark.marker = await getUserByProfileId(payload.user.profileId);
+
+  return RoomBookmarkRepository.save(bookmark);
+}
