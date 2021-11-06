@@ -13,7 +13,6 @@ html {
 
 body {
   margin: 0;
-  cursor: none;
 }
 
 main {
@@ -34,7 +33,7 @@ pre {
 
 a {
   background-color: transparent;
-  cursor: none;
+  cursor: pointer;
 }
 
 abbr[title] {
@@ -79,7 +78,6 @@ sup {
 img {
   border-style: none;
   user-select: none;
-  cursor: none;
 }
 
 button,
@@ -91,7 +89,7 @@ textarea {
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
-  cursor: none;
+  cursor: pointer;
 }
 
 button,
