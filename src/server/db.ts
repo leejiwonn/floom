@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion,@typescript-eslint/no-var-requires */
+import 'reflect-metadata';
+
 import { nanoid } from 'nanoid';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { createConnection, getConnection, In } from 'typeorm';
@@ -8,6 +10,7 @@ import { MusicEntity } from '~/server/entities/MusicEntity';
 import { MusicCategoryEntity } from '~/server/entities/MusicCategoryEntity';
 import {
   ReviewEntity,
+  RoomBookmarkEntity,
   RoomEntity,
   RoomGuestBookEntity,
 } from '~/server/entities/RoomEntity';
@@ -50,6 +53,7 @@ function prepareConnection() {
           ReviewEntity,
           RoomGuestBookEntity,
           RoomCategoryEntity,
+          RoomBookmarkEntity,
         ],
         useUTC: false,
       });
@@ -367,4 +371,42 @@ export async function createRoomGuestBook(payload: CreateRoomGuestBookParams) {
   guestBook.body = payload.body;
 
   return RoomGuestBookRepository.save(guestBook);
+}
+
+// RoomBookmark
+export async function getRoomBookmarkRepository() {
+  const database = await getDatabase();
+  const RoomBookmarkRepository = database.getRepository(RoomBookmarkEntity);
+
+  return RoomBookmarkRepository;
+}
+
+export async function findAllBookmarks(options?: {
+  filters?: {
+    roomId?: number;
+    markerId?: number;
+  };
+}) {
+  const { filters } = options ?? {};
+  const RoomBookmarkRepository = await getRoomBookmarkRepository();
+
+  const query = RoomBookmarkRepository.createQueryBuilder('roomBookmark')
+    .leftJoinAndSelect('roomBookmark.room', 'room')
+    .leftJoinAndSelect('roomBookmark.marker', 'marker');
+
+  if (filters?.roomId != null) {
+    query.andWhere('room.id = :roomId', {
+      roomId: filters.roomId,
+    });
+  }
+
+  if (filters?.markerId != null) {
+    query.andWhere('roomBookmark.markerId = :markerId', {
+      markerId: filters.markerId,
+    });
+  }
+
+  query.addOrderBy('roomBookmark.createdAt', 'DESC');
+
+  return query.getMany();
 }

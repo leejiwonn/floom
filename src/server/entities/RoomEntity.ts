@@ -26,6 +26,9 @@ export class RoomEntity {
   @OneToMany(() => ReviewEntity, (review) => review.room)
   reviews: ReviewEntity[];
 
+  @OneToMany(() => RoomBookmarkEntity, (roomBookmark) => roomBookmark.room)
+  bookmarks: RoomBookmarkEntity[];
+
   @ManyToMany(() => MusicEntity)
   @JoinTable()
   musics: MusicEntity[];
@@ -137,7 +140,7 @@ export class RoomGuestBookEntity {
   @ManyToOne(() => RoomEntity, (room) => room.guestBooks)
   room: RoomEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.roomGuestBooks, {
+  @ManyToOne(() => UserEntity, (user) => user.guestBooks, {
     nullable: true,
   })
   author?: UserEntity;
@@ -160,6 +163,26 @@ export class RoomGuestBookEntity {
     type: 'text',
   })
   body: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+
+@Entity('room_bookmark')
+export class RoomBookmarkEntity {
+  @ManyToOne(() => RoomEntity, (room) => room.bookmarks)
+  room: RoomEntity;
+
+  @ManyToOne(() => UserEntity, (user) => user.bookmarks, {
+    nullable: true,
+  })
+  marker?: UserEntity;
+
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @CreateDateColumn()
   createdAt: Date;
