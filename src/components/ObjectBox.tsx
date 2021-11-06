@@ -1,39 +1,25 @@
 import styled from '@emotion/styled';
-import { useContext } from 'react';
 
 import RoomAssets from '~/constants/room';
-import { MouseContext } from '~/context/mouseContext';
 import { Room, RoomObjectId, RoomObject } from '~/types/Room';
 
 interface Props {
-  hovered?: boolean;
   room: Pick<Room, 'wallColor' | 'light'>;
   objects: RoomObjectId;
   onObjectClick?: (object: RoomObject) => void;
 }
 
 const ObjectBox = ({
-  hovered,
   room: { wallColor, light },
   objects,
   onObjectClick,
 }: Props) => {
-  const { cursorChangeHandler } = useContext(MouseContext);
-
   return (
     <ObjectBoxStyled>
-      <ObjectVase
-        onClick={() => onObjectClick?.('vase')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectVase onClick={() => onObjectClick?.('vase')}>
         <img src={RoomAssets[wallColor][light].VASE[objects.vase]} alt="화분" />
       </ObjectVase>
-      <ObjectClock
-        onClick={() => onObjectClick?.('clock')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectClock onClick={() => onObjectClick?.('clock')}>
         <img
           src={RoomAssets[wallColor][light].CLOCK[objects.clock]}
           alt="시계"
@@ -45,41 +31,25 @@ const ObjectBox = ({
           alt="보드"
         />
       </ObjectBoard>
-      <ObjectPoster
-        onClick={() => onObjectClick?.('poster')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectPoster onClick={() => onObjectClick?.('poster')}>
         <img
           src={RoomAssets[wallColor][light].POSTER[objects.poster]}
           alt="포스터"
         />
       </ObjectPoster>
-      <ObjectSpeaker
-        onClick={() => onObjectClick?.('speaker')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectSpeaker onClick={() => onObjectClick?.('speaker')}>
         <img
           src={RoomAssets[wallColor][light].SPEAKER[objects.speaker]}
           alt="스피커"
         />
       </ObjectSpeaker>
-      <ObjectTable
-        onClick={() => onObjectClick?.('table')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectTable onClick={() => onObjectClick?.('table')}>
         <img
           src={RoomAssets[wallColor][light].TABLE[objects.table]}
           alt="책상"
         />
       </ObjectTable>
-      <ObjectLight
-        onClick={() => onObjectClick?.('light')}
-        onMouseEnter={() => hovered && cursorChangeHandler('hovered')}
-        onMouseLeave={() => cursorChangeHandler('')}
-      >
+      <ObjectLight onClick={() => onObjectClick?.('light')}>
         <img
           src={RoomAssets[wallColor][light].LIGHT[objects.light]}
           alt="조명"
