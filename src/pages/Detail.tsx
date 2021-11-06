@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { LoaderSpinner } from '~/components/Loader';
 import Playlist from '~/components/Playlist';
 import Typography from '~/components/Typography';
 import EMOJI from '~/constants/emoji';
 import { useReviews } from '~/hooks/useReviews';
-import { postRoomBookmark } from '~/remotes/my';
+import { useUserProfile } from '~/hooks/useUser';
+import { deleteRoomBookmark, postRoomBookmark } from '~/remotes/my';
 import type { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
@@ -15,19 +17,42 @@ interface Props {
   room: Room;
 }
 
-const Detail = ({ room }: Props) => {
+const Detail = ({ room: initialRoom }: Props) => {
+  const [room, setRoom] = useState(initialRoom);
+  const [loading, setLoading] = useState(false);
+
+  const { data: user } = useUserProfile();
   const { data: reviews } = useReviews(room.id);
 
-  if (!!!room || !!!reviews) {
-    return <LoaderSpinner />;
-  }
-
   const handleAddBookmarkButton = async () => {
+    if (loading || user === undefined) {
+      return;
+    }
+
+    if (user === null) {
+      // TODO: 로그인이 필요
+      return;
+    }
+
     try {
-      await postRoomBookmark(room.id);
-      console.log('저장 완료!');
+      setLoading(true);
+      if (room.isBookmarked) {
+        await deleteRoomBookmark(room.id);
+        setRoom((x) => ({
+          ...x,
+          isBookmarked: false,
+        }));
+      } else {
+        await postRoomBookmark(room.id);
+        setRoom((x) => ({
+          ...x,
+          isBookmarked: true,
+        }));
+      }
     } catch (e) {
       console.warn(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,7 +73,13 @@ const Detail = ({ room }: Props) => {
               {room.title}
             </Typography>
             <AddBookmarkButton onClick={handleAddBookmarkButton}>
-              <Typography>북마크</Typography>
+              {loading ? (
+                <LoaderSpinner />
+              ) : room.isBookmarked ? (
+                <Typography>북마크 -</Typography>
+              ) : (
+                <Typography>북마크 +</Typography>
+              )}
             </AddBookmarkButton>
           </RoomTitleInfo>
           <Typography

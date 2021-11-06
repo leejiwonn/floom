@@ -1,13 +1,17 @@
 import { Request, Response } from 'express';
 import nc from 'next-connect';
+import { optionalAuthorize } from '~/server/auth';
 import { getRoomById } from '~/server/db';
 import { toRoom } from '~/server/dto/room';
+import { findUserFromRequest } from '~/server/utils';
 
 async function getRoom(req: Request, res: Response) {
   const roomId = req.query.roomId as string | undefined;
+  const user = findUserFromRequest(req);
+
   const room = await getRoomById(Number(roomId));
 
-  res.status(200).send(toRoom(room));
+  res.status(200).send(toRoom(room, user?.id));
 }
 
 const handler = nc<Request, Response>({
@@ -18,6 +22,6 @@ const handler = nc<Request, Response>({
       message: error.message,
     });
   },
-}).get(getRoom);
+}).get(optionalAuthorize, getRoom);
 
 export default handler;

@@ -46,16 +46,22 @@ export function toRoomSimple(x: RoomEntity): RoomSimple {
   };
 }
 
-export function toRoom(x: RoomEntity): Room {
+export function toRoom(x: RoomEntity, userId?: number): Room {
   const reviewsCount = x.reviews.length;
   const recommendReviewsCount = x.reviews.filter(
     (review) => review.recommend,
   ).length;
+  const isBookmarked = x.bookmarks.some(
+    (bookmark) => bookmark.marker?.id === userId,
+  );
+  const bookmarksCount = x.bookmarks.length;
 
   return {
     ...toRoomSimple(x),
     musics: x.musics.map(toMusic),
     reviewsCount,
     recommendReviewsCount,
+    isBookmarked,
+    bookmarksCount,
   };
 }
