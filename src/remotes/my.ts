@@ -28,3 +28,7 @@ export async function postRoomBookmark(roomId: number) {
 
   return data;
 }
+
+export async function deleteRoomBookmark(roomId: number) {
+  await api.delete(`/api/my/room-bookmarks?roomId=${roomId}`);
+}

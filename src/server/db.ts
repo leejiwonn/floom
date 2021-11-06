@@ -140,6 +140,7 @@ export async function getRoomById(roomId: number) {
     .leftJoinAndSelect('musics.category', 'musicCategory')
     .leftJoinAndSelect('room.reviews', 'reviews')
     .leftJoinAndSelect('reviews.author', 'reviewAuthor')
+    .leftJoinAndSelect('room.bookmarks', 'bookmarks')
     .addOrderBy('reviews.createdAt', 'DESC')
     .getOneOrFail();
 
@@ -381,6 +382,19 @@ export async function getRoomBookmarkRepository() {
   return RoomBookmarkRepository;
 }
 
+export async function findRoomBookmark({ roomId, user }: BookmarkParams) {
+  const RoomBookmarkRepository = await getRoomBookmarkRepository();
+  const bookmark = await RoomBookmarkRepository.findOne({
+    relations: ['room', 'marker'],
+    where: {
+      room: { id: roomId },
+      marker: { id: user.id },
+    },
+  });
+
+  return bookmark;
+}
+
 export async function findAllBookmarks(options?: {
   filters?: {
     roomId?: number;
@@ -411,17 +425,37 @@ export async function findAllBookmarks(options?: {
   return query.getMany();
 }
 
-type CreateBookmarkParams = {
+type BookmarkParams = {
   roomId: number;
   user: User;
 };
 
-export async function createBookmark(payload: CreateBookmarkParams) {
+export async function createBookmark(payload: BookmarkParams) {
   const RoomBookmarkRepository = await getRoomBookmarkRepository();
-  const bookmark = new RoomBookmarkEntity();
 
-  bookmark.room = await getRoomById(payload.roomId);
-  bookmark.marker = await getUserByProfileId(payload.user.profileId);
+  if ((await findRoomBookmark(payload)) != null) {
+    throw new Error('이미 북마크되어 있습니다.');
+  }
+
+  const bookmark = new RoomBookmarkEntity();
+  const [room, marker] = await Promise.all([
+    getRoomById(payload.roomId),
+    getUserByProfileId(payload.user.profileId),
+  ]);
+
+  bookmark.room = room;
+  bookmark.marker = marker;
 
   return RoomBookmarkRepository.save(bookmark);
+}
+
+export async function deleteBookmark(payload: BookmarkParams) {
+  const RoomBookmarkRepository = await getRoomBookmarkRepository();
+  const bookmark = await findRoomBookmark(payload);
+
+  if (bookmark == null) {
+    throw new Error('북마크가 없습니다.');
+  }
+
+  await RoomBookmarkRepository.delete(bookmark.id);
 }

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import nc from 'next-connect';
 import { authorize } from '~/server/auth';
 import { getUserFromRequest } from '~/server/utils';
-import { findAllBookmarks, createBookmark } from '~/server/db';
+import { findAllBookmarks, createBookmark, deleteBookmark } from '~/server/db';
 import { toBookmark } from '~/server/dto/bookmark';
 
 async function myRoomBookmarks(req: Request, res: Response) {
@@ -21,7 +21,7 @@ async function myRoomBookmarks(req: Request, res: Response) {
 }
 
 async function postRoomBookmark(req: Request, res: Response) {
-  const roomId = req.query.roomId as string | undefined;
+  const roomId = req.query.roomId as string;
   const user = getUserFromRequest(req);
 
   const bookmark = await createBookmark({
@@ -30,6 +30,18 @@ async function postRoomBookmark(req: Request, res: Response) {
   });
 
   res.status(201).send(toBookmark(bookmark));
+}
+
+async function deleteRoomBookmark(req: Request, res: Response) {
+  const roomId = req.query.roomId as string;
+  const user = getUserFromRequest(req);
+
+  await deleteBookmark({
+    roomId: Number(roomId),
+    user,
+  });
+
+  res.status(200).send(true);
 }
 
 const handler = nc<Request, Response>({
@@ -42,6 +54,7 @@ const handler = nc<Request, Response>({
   },
 })
   .get(authorize, myRoomBookmarks)
-  .post(authorize, postRoomBookmark);
+  .post(authorize, postRoomBookmark)
+  .delete(authorize, deleteRoomBookmark);
 
 export default handler;

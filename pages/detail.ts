@@ -19,9 +19,20 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  return {
-    props: {
-      room: await fetchRoom(Number(roomId)),
-    },
-  };
+  try {
+    return {
+      props: {
+        room: await fetchRoom(Number(roomId)),
+      },
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      redirect: {
+        destination: '/error',
+        permanent: false,
+      },
+    };
+  }
 };
