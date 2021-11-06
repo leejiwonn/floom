@@ -269,6 +269,7 @@ export async function getReviewRepository() {
 export async function findAllReviews(options?: {
   filters?: {
     roomId?: number;
+    authorId?: number;
   };
 }) {
   const { filters } = options ?? {};
@@ -282,6 +283,12 @@ export async function findAllReviews(options?: {
   if (filters?.roomId != null) {
     query.andWhere('review.roomId = :roomId', {
       roomId: filters.roomId,
+    });
+  }
+
+  if (filters?.authorId != null) {
+    query.andWhere('review.authorId = :authorId', {
+      authorId: filters.authorId,
     });
   }
 
