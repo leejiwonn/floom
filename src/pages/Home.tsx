@@ -70,9 +70,16 @@ const Home = ({ categories }: Props) => {
           ))}
         </CategoryList>
         {user != null ? (
-          <LogoutButton onClick={handleLogoutButtonClick}>
-            <LogoutIcon width="2.7em" height="2.7em" />
-          </LogoutButton>
+          <>
+            <Link href={'/my-floom'}>
+              <MyFloomButton>
+                <Typography>마이플룸</Typography>
+              </MyFloomButton>
+            </Link>
+            <LogoutButton onClick={handleLogoutButtonClick}>
+              <LogoutIcon width="2.7em" height="2.7em" />
+            </LogoutButton>
+          </>
         ) : null}
       </CategoryStyled>
       <RoomsStyled>
@@ -137,7 +144,7 @@ const CategoryList = styled.div`
   flex-direction: column;
 `;
 
-const CategoryItem = styled.button`
+const CategoryItem = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -169,6 +176,10 @@ const CategoryItemIcon = styled.div<{ active: boolean }>`
     width: 70%;
     height: 70%;
   }
+`;
+
+const MyFloomButton = styled.a`
+  margin-top: 1.5em;
 `;
 
 const LogoutButton = styled.button`
