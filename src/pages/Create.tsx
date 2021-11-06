@@ -670,7 +670,6 @@ const Create = () => {
                 room={room}
                 objects={room.objectIds}
                 onObjectClick={handleObjectClick}
-                hovered
               />
             </LayerBox>
           </ObjectView>
