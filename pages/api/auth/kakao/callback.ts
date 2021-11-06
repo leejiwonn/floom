@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Request, Response } from 'express';
 import nc from 'next-connect';
 import { getUserFromRequest } from '~/server/utils';

@@ -9,6 +9,7 @@ import {
 import {
   ReviewEntity,
   RoomEntity,
+  RoomBookmarkEntity,
   RoomGuestBookEntity,
 } from '~/server/entities/RoomEntity';
 import type { UserProvider } from '~/types/User';
@@ -18,8 +19,11 @@ export class UserEntity {
   @OneToMany(() => RoomEntity, (room) => room.creator)
   createdRooms: RoomEntity[];
 
+  @OneToMany(() => RoomBookmarkEntity, (bookmark) => bookmark.marker)
+  bookmarks: RoomBookmarkEntity[];
+
   @OneToMany(() => RoomGuestBookEntity, (roomGuestBook) => roomGuestBook.author)
-  roomGuestBooks: RoomGuestBookEntity[];
+  guestBooks: RoomGuestBookEntity[];
 
   @OneToMany(() => ReviewEntity, (review) => review.author)
   reviews: ReviewEntity[];
