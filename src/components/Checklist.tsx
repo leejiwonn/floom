@@ -159,6 +159,7 @@ const ChecklistStyled = styled.div`
   box-shadow: 0 2em 2.4em rgba(0, 0, 0, 0.08);
   border-radius: 3em;
   padding: 2em;
+  z-index: 998;
 `;
 
 const NoneChecklist = styled.div`

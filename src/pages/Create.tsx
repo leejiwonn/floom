@@ -658,9 +658,9 @@ const Create = () => {
         </ContentView>
         <ObjectViewStyled>
           <ObjectView id="capture-view">
-            <ObjectBackground
-              src={ROOM[room.wallColor][room.light].WALL[room.objectIds.wall]}
-            />
+            <ObjectBlendOverlay wallColor={room.wallColor} light={room.light} />
+            <ObjectBlendColor wallColor={room.wallColor} light={room.light} />
+            <ObjectBackground src={ROOM.WALL[1]} />
             <ObjectBackgroundView
               src={BACKGROUND[room.background]}
               alt="풍경"
@@ -878,9 +878,46 @@ const ObjectViewStyled = styled.div`
 `;
 
 const ObjectView = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: -1;
+`;
+
+const ObjectBlendColor = styled.div<{
+  wallColor: RoomWallColor;
+  light: RoomLight;
+}>`
   width: 100%;
   height: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
+  mix-blend-mode: color;
+  opacity: 0.5;
+`;
+
+const ObjectBlendOverlay = styled.div<{
+  wallColor: RoomWallColor;
+  light: RoomLight;
+}>`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
+  mix-blend-mode: overlay;
+  opacity: 0.5;
 `;
 
 const ObjectBackground = styled.img`
@@ -892,16 +929,23 @@ const ObjectBackground = styled.img`
 `;
 
 const ObjectBackgroundView = styled.img`
-  width: 40%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   position: absolute;
   top: 0;
-  left: 30%;
+  left: 0;
   right: 0;
   bottom: 0;
   transition: 0.3s ease-in-out;
-  z-index: -2;
+  -webkit-mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg');
+  mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg')
+    no-repeat;
+  mask-size: 100vw 74.6vh;
+  mask-position: -4.6vw -4.6vh;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 3;
 `;
 
 const CreateInfoImageStyled = styled.div``;
