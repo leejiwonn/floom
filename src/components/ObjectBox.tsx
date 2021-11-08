@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import RoomAssets from '~/constants/room';
+import ROOM from '~/constants/room';
 import { Room, RoomObjectId, RoomObject } from '~/types/Room';
 
 interface Props {
@@ -9,51 +9,29 @@ interface Props {
   onObjectClick?: (object: RoomObject) => void;
 }
 
-const ObjectBox = ({
-  room: { wallColor, light },
-  objects,
-  onObjectClick,
-}: Props) => {
+const ObjectBox = ({ objects, onObjectClick }: Props) => {
   return (
     <ObjectBoxStyled>
       <ObjectVase onClick={() => onObjectClick?.('vase')}>
-        <img src={RoomAssets[wallColor][light].VASE[objects.vase]} alt="화분" />
+        <img src={ROOM.VASE[objects.vase]} alt="화분" />
       </ObjectVase>
       <ObjectClock onClick={() => onObjectClick?.('clock')}>
-        <img
-          src={RoomAssets[wallColor][light].CLOCK[objects.clock]}
-          alt="시계"
-        />
+        <img src={ROOM.CLOCK[objects.clock]} alt="시계" />
       </ObjectClock>
       <ObjectBoard>
-        <img
-          src={RoomAssets[wallColor][light].BOARD[objects.board]}
-          alt="보드"
-        />
+        <img src={ROOM.BOARD[objects.board]} alt="보드" />
       </ObjectBoard>
       <ObjectPoster onClick={() => onObjectClick?.('poster')}>
-        <img
-          src={RoomAssets[wallColor][light].POSTER[objects.poster]}
-          alt="포스터"
-        />
+        <img src={ROOM.POSTER[objects.poster]} alt="포스터" />
       </ObjectPoster>
       <ObjectSpeaker onClick={() => onObjectClick?.('speaker')}>
-        <img
-          src={RoomAssets[wallColor][light].SPEAKER[objects.speaker]}
-          alt="스피커"
-        />
+        <img src={ROOM.SPEAKER[objects.speaker]} alt="스피커" />
       </ObjectSpeaker>
       <ObjectTable onClick={() => onObjectClick?.('table')}>
-        <img
-          src={RoomAssets[wallColor][light].TABLE[objects.table]}
-          alt="책상"
-        />
+        <img src={ROOM.TABLE[objects.table]} alt="책상" />
       </ObjectTable>
       <ObjectLight onClick={() => onObjectClick?.('light')}>
-        <img
-          src={RoomAssets[wallColor][light].LIGHT[objects.light]}
-          alt="조명"
-        />
+        <img src={ROOM.LIGHT[objects.light]} alt="조명" />
       </ObjectLight>
     </ObjectBoxStyled>
   );
@@ -63,6 +41,7 @@ const ObjectBoxStyled = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: -1;
 
   button {
     img {
@@ -95,6 +74,7 @@ const ObjectBoard = styled.button`
   position: absolute;
   right: 0;
   top: 13%;
+  cursor: default;
   z-index: 1;
 `;
 

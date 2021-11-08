@@ -21,8 +21,8 @@ import { useRoomGuestBooks } from '~/hooks/useRoomGuestBooks';
 import { postReview } from '~/remotes/review';
 import { postRoomGuestBook } from '~/remotes/room';
 import { Todo } from '~/types/Obejct';
-import { Room } from '~/types/Room';
-import { BasicColor } from '~/utils/color';
+import { Room, RoomLight, RoomWallColor } from '~/types/Room';
+import { BasicColor, getWallColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
 import { Align, FontType } from '~/utils/font';
 
@@ -314,12 +314,14 @@ const Play = ({ room }: Props) => {
         </PlayView>
       )}
       <ObjectView page={currentPage}>
-        <ObjectBackground
-          src={ROOM[room.wallColor][room.light].WALL[room.objectIds.wall]}
-        />
+        <ObjectBlendOverlay wallColor={room.wallColor} light={room.light} />
+        <ObjectBlendColor wallColor={room.wallColor} light={room.light} />
+        <ObjectBackground src={ROOM.WALL[1]} />
         <ObjectBackgroundView src={BACKGROUND[room.background]} alt="풍경" />
         <LayerBox page={currentPage}>
           <ObjectBox room={room} objects={room.objectIds} />
+        </LayerBox>
+        <LayerBox style={{ zIndex: 10 }}>
           {currentPage >= 3 && (
             <PopupBox>
               <PopupPictureStyled>
@@ -683,28 +685,72 @@ const ObjectView = styled.div<{ page: number }>`
   z-index: 0;
 `;
 
+const ObjectBlendColor = styled.div<{
+  wallColor: RoomWallColor;
+  light: RoomLight;
+}>`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
+  mix-blend-mode: color;
+  opacity: 0.5;
+`;
+
+const ObjectBlendOverlay = styled.div<{
+  wallColor: RoomWallColor;
+  light: RoomLight;
+}>`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+`;
+
 const ObjectBackground = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   position: absolute;
+  pointer-events: none;
   z-index: -1;
 `;
 
 const ObjectBackgroundView = styled.img`
-  width: 40%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   position: absolute;
   top: 0;
-  left: 30%;
+  left: 0;
   right: 0;
   bottom: 0;
   transition: 0.3s ease-in-out;
-  z-index: -2;
+  -webkit-mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg');
+  mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg')
+    no-repeat;
+  mask-size: 100vw 74.6vh;
+  mask-position: -4.6vw -4.6vh;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 3;
 `;
 
-const LayerBox = styled.div<{ page: number }>`
+const LayerBox = styled.div<{ page?: number }>`
   width: ${({ page }) => (page === 1 || page === 2 ? '110vw' : '60vw')};
   height: ${({ page }) => (page === 1 || page === 2 ? '150vh' : '80vh')};
   position: absolute;
@@ -902,6 +948,7 @@ const ContentTitleView = styled.div`
   box-shadow: 0 2em 2.4em rgba(0, 0, 0, 0.08);
   border-radius: 0 3em 3em 3em;
   padding-top: 1.5em;
+  z-index: 998;
 `;
 
 const EndButton = styled.button`
@@ -915,7 +962,7 @@ const EndButton = styled.button`
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(1.4em);
-  z-index: 98;
+  z-index: 998;
 `;
 
 const ActionStyled = styled.div`
