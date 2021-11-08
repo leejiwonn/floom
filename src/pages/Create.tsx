@@ -1173,7 +1173,7 @@ const RoomControlItemBox = styled.div`
   flex-direction: row;
 `;
 
-const RoomControlItemColor = styled.button<{ color: BasicColor }>`
+const RoomControlItemColor = styled.button<{ color: string }>`
   width: 3em;
   height: 3em;
   display: flex;
