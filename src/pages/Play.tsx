@@ -317,7 +317,9 @@ const Play = ({ room }: Props) => {
         <ObjectBlendOverlay wallColor={room.wallColor} light={room.light} />
         <ObjectBlendColor wallColor={room.wallColor} light={room.light} />
         <ObjectBackground src={ROOM.WALL[1]} />
-        <ObjectBackgroundView src={BACKGROUND[room.background]} alt="풍경" />
+        <ObjectBackgroundView>
+          <ObjectBackgroundImage src={BACKGROUND[room.background]} alt="풍경" />
+        </ObjectBackgroundView>
         <LayerBox page={currentPage}>
           <ObjectBox room={room} objects={room.objectIds} />
         </LayerBox>
@@ -730,16 +732,14 @@ const ObjectBackground = styled.img`
   z-index: -1;
 `;
 
-const ObjectBackgroundView = styled.img`
+const ObjectBackgroundView = styled.div`
   width: 100%;
   height: 100%;
-  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  transition: 0.3s ease-in-out;
   -webkit-mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg');
   mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg')
     no-repeat;
@@ -748,6 +748,18 @@ const ObjectBackgroundView = styled.img`
   mask-repeat: no-repeat;
   pointer-events: none;
   z-index: 3;
+`;
+
+const ObjectBackgroundImage = styled.img`
+  width: 40%;
+  height: 70%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 24%;
+  right: 0;
+  bottom: 0;
+  transition: 0.3s ease-in-out;
 `;
 
 const LayerBox = styled.div<{ page?: number }>`
