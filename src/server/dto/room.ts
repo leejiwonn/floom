@@ -51,10 +51,10 @@ export function toRoom(x: RoomEntity, userId?: number): Room {
   const recommendReviewsCount = x.reviews.filter(
     (review) => review.recommend,
   ).length;
-  const isBookmarked = x.bookmarks.some(
+  const isBookmarked = x.bookmarks?.some(
     (bookmark) => bookmark.marker?.id === userId,
   );
-  const bookmarksCount = x.bookmarks.length;
+  const bookmarksCount = x.bookmarks?.length;
 
   return {
     ...toRoomSimple(x),
