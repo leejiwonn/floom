@@ -16,6 +16,7 @@ import { Align, FontType } from '~/utils/font';
 
 import CreateIcon from '../../public/assets/icons/icon-create.svg';
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
+import EyesIcon from '../../public/assets/emojis/emoji-eyes.svg';
 
 type Props = {
   categories: RoomCategory[];
@@ -26,7 +27,7 @@ const Home = ({ categories }: Props) => {
   const { data: user, mutate: userMutate } = useUserProfile();
 
   const [category, setCategory] = useState(categories[0]);
-  const { data: rooms } = useRooms(category.name);
+  const { data: rooms, isValidating } = useRooms(category.name);
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();
@@ -40,14 +41,14 @@ const Home = ({ categories }: Props) => {
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_02}
           color={BasicColor.WHITE}
-          marginBottom={3}
+          marginBottom={1.4}
         >
           몰입의 즐거움을
           <br />
           경험하다!
         </Typography>
         <Typography
-          font={FontType.BOLD_TITLE_02}
+          font={FontType.BOLD_BODY}
           color={BasicColor.WHITE}
           marginBottom={5.5}
         >
@@ -60,7 +61,7 @@ const Home = ({ categories }: Props) => {
                 {getCategoryEmoji(value.name)}
               </CategoryItemIcon>
               <Typography
-                font={FontType.BOLD_TITLE_01}
+                font={FontType.BOLD_TITLE_02}
                 color={BasicColor.WHITE}
                 align={Align.CENTER}
               >
@@ -71,26 +72,48 @@ const Home = ({ categories }: Props) => {
         </CategoryList>
         {user != null ? (
           <>
+            <Line />
             <Link href={'/my-floom'}>
-              <MyFloomButton>
-                <Typography>마이플룸</Typography>
-              </MyFloomButton>
+              <CategoryItem>
+                <CategoryItemIcon>
+                  <EyesIcon />
+                </CategoryItemIcon>
+                <Typography
+                  font={FontType.BOLD_TITLE_02}
+                  color={BasicColor.WHITE}
+                  align={Align.CENTER}
+                >
+                  마이플룸
+                </Typography>
+              </CategoryItem>
             </Link>
             <LogoutButton onClick={handleLogoutButtonClick}>
-              <LogoutIcon width="2.7em" height="2.7em" />
+              <LogoutIcon width="2em" height="2em" />
+              <Typography
+                font={FontType.REGULAR_CAPTION}
+                color={BasicColor.WHITE}
+                marginLeft={0.7}
+              >
+                로그아웃
+              </Typography>
             </LogoutButton>
           </>
-        ) : null}
+        ) : (
+          <KakaoLoginButton href="/api/auth/kakao">
+            <KakaoLoginIcon src="/assets/images/image-kakao-login.png" />
+          </KakaoLoginButton>
+        )}
       </CategoryStyled>
       <RoomsStyled>
         <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={4}>
+          {user && `${user?.displayName}님, `}
           {category?.name}하실 방을 선택해주세요!
         </Typography>
         <RoomStyled>
-          {!!!rooms ? (
+          {isValidating ? (
             <LoaderSpinner />
           ) : (
-            rooms.map((room) => (
+            rooms?.map((room) => (
               <Link key={room.id} href={`/detail?roomId=${room.id}`}>
                 <RoomItem>
                   <ScreenStyled>
@@ -124,7 +147,7 @@ const HomeStyled = styled.div`
 `;
 
 const CategoryStyled = styled.div`
-  width: 30%;
+  width: 22%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -132,9 +155,9 @@ const CategoryStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 5em;
+  padding: 5em 3.5em;
   padding-top: 10em;
-  padding-right: 8%;
+  padding-left: 4em;
   background: ${GradientColor.BLUE};
   z-index: 1;
 `;
@@ -144,11 +167,19 @@ const CategoryList = styled.div`
   flex-direction: column;
 `;
 
+const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${BasicColor.BLUE80};
+  margin-top: 2.8em;
+  margin-bottom: 1.8em;
+`;
+
 const CategoryItem = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 1.5em 0;
+  margin: 1.2em 0;
 
   :hover {
     div {
@@ -158,9 +189,9 @@ const CategoryItem = styled.a`
   }
 `;
 
-const CategoryItemIcon = styled.div<{ active: boolean }>`
-  width: 5em;
-  height: 5em;
+const CategoryItemIcon = styled.div<{ active?: boolean }>`
+  width: 4em;
+  height: 4em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -168,40 +199,36 @@ const CategoryItemIcon = styled.div<{ active: boolean }>`
     active ? BasicColor.WHITE : BasicColor.BLUE80};
   box-sizing: border-box;
   box-shadow: ${({ active }) => active && '0 0.4em 0.4em rgba(0, 0, 0, 0.08)'};
-  border-radius: 1.8em;
+  border-radius: 1.4em;
   margin-right: 1.5em;
   transition: 0.1s;
 
   svg {
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
   }
 `;
 
-const MyFloomButton = styled.a`
-  margin-top: 1.5em;
-`;
-
 const LogoutButton = styled.button`
-  width: 5.5em;
-  height: 5.5em;
   position: absolute;
   bottom: 4em;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5.5em;
-  border: 0.1em solid ${BasicColor.BLUE80};
-  background-color: ${BasicColor.BLUE90};
-  transition: 0.1s;
-
-  :hover {
-    background-color: ${BasicColor.BLUE80};
-  }
 `;
 
+const KakaoLoginButton = styled.a`
+  position: absolute;
+  bottom: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const KakaoLoginIcon = styled.img``;
+
 const RoomsStyled = styled.div`
-  width: 75%;
+  width: 78%;
   height: 100%;
   position: absolute;
   top: 0;

@@ -8,7 +8,7 @@ const Weight = {
 
 const FontSize = {
   SIZE_HEAD_01: 6.4,
-  SIZE_HEAD_02: 4.2,
+  SIZE_HEAD_02: 3.4,
   SIZE_HEAD_03: 2.4,
   SIZE_TITLE_01: 2.1,
   SIZE_TITLE_02: 1.8,
