@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import { BasicColor, GradientColor } from '~/utils/color';
 import { getCategoryEmoji } from '~/utils/emoji';
@@ -96,7 +95,7 @@ const Sidebar = ({
 };
 
 const SidebarStyled = styled.div`
-  width: 20%;
+  width: 18%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -104,9 +103,9 @@ const SidebarStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 5em 3.5em;
+  padding: 5em 3em;
   padding-top: 10em;
-  padding-left: 4em;
+  padding-left: 3em;
   background: ${GradientColor.BLUE};
   z-index: 1;
 `;

@@ -1,4 +1,6 @@
 import type { UserSimple } from '~/types/User';
+import { RoomCategory } from './RoomCategory';
+import { ScreenData } from './screen';
 
 export type Review = {
   id: number;
@@ -7,6 +9,12 @@ export type Review = {
   objective: string;
   comment: string;
   recommend: boolean;
+  room: {
+    id: number;
+    category: RoomCategory;
+    title: string;
+    assets: ScreenData[];
+  };
   createdAt: string;
   updatedAt: string;
 };

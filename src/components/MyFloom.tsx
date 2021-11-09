@@ -20,7 +20,7 @@ const MyFloom = () => {
   return (
     <MyFloomStyled>
       <RoomListStyled>
-        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={2}>
+        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={3}>
           마이 플룸
         </Typography>
         <RoomCategory>
@@ -63,9 +63,9 @@ const MyFloom = () => {
                     key={bookmark.room.id}
                     href={`/detail?roomId=${bookmark.room.id}`}
                   >
-                    <ScreenStyled>
+                    <RoomItemImage>
                       <Screen type="thumbnail" assets={bookmark.room.assets} />
-                    </ScreenStyled>
+                    </RoomItemImage>
                     <Typography
                       font={FontType.BOLD_BODY}
                       marginTop={1}
@@ -108,9 +108,9 @@ const MyFloom = () => {
               myRooms?.length > 0 ? (
                 myRooms?.map((room) => (
                   <RoomItem key={room.id} href={`/detail?roomId=${room.id}`}>
-                    <ScreenStyled>
+                    <RoomItemImage>
                       <Screen type="thumbnail" assets={room.assets} />
-                    </ScreenStyled>
+                    </RoomItemImage>
                     <Typography
                       font={FontType.BOLD_BODY}
                       marginTop={1}
@@ -167,9 +167,72 @@ const MyFloom = () => {
           나의 몰입 기록
         </Typography>
         <ReviewList>
-          {myReviews?.map((review, index) => (
-            <ReviewItem key={index}>{review.objective}</ReviewItem>
-          ))}
+          {myReviews ? (
+            myReviews.length > 0 ? (
+              myReviews?.map((review) => (
+                <ReviewItem
+                  key={review.room?.id}
+                  href={`/detail?roomId=${review.room?.id}`}
+                >
+                  <ReviewItemLeft>
+                    <ReviewItemImage>
+                      <Screen type="thumbnail" assets={review.room?.assets} />
+                    </ReviewItemImage>
+                    <ReviewItemInfo>
+                      <Typography
+                        font={FontType.BOLD_TITLE_02}
+                        color={BasicColor.BLUE100}
+                        marginBottom={0.2}
+                      >
+                        {review.objective}
+                      </Typography>
+                      <Typography font={FontType.REGULAR_CAPTION}>
+                        {review.room?.category?.name} / {review.room?.title}
+                      </Typography>
+                      <Typography
+                        font={FontType.REGULAR_CAPTION}
+                        color={BasicColor.DARK40}
+                      >
+                        {review.createdAt.substr(0, 10)}
+                      </Typography>
+                    </ReviewItemInfo>
+                  </ReviewItemLeft>
+                  {review.recommend ? (
+                    <ReviewItemEmojiStyled>
+                      {EMOJI.RECOMMEND}
+                    </ReviewItemEmojiStyled>
+                  ) : null}
+                </ReviewItem>
+              ))
+            ) : (
+              <NoneReview>
+                <NoneReviewEmojiStyled>{EMOJI.EYES}</NoneReviewEmojiStyled>
+                <NoneReviewInfo>
+                  <Typography
+                    font={FontType.BOLD_BODY}
+                    color={BasicColor.DARK70}
+                    marginBottom={0.2}
+                  >
+                    아직{' '}
+                    <Typography
+                      font={FontType.BOLD_BODY}
+                      tag="span"
+                      color={BasicColor.BLUE100}
+                    >
+                      몰입 기록
+                    </Typography>
+                    이 없네요.
+                  </Typography>
+                  <Typography
+                    font={FontType.LIGHT_CAPTION}
+                    color={BasicColor.DARK70}
+                  >
+                    아주 간단한 목표라도 괜찮으니 부담없이 체험해보세요!
+                  </Typography>
+                </NoneReviewInfo>
+              </NoneReview>
+            )
+          ) : null}
         </ReviewList>
       </ReviewListStyled>
     </MyFloomStyled>
@@ -177,7 +240,7 @@ const MyFloom = () => {
 };
 
 const MyFloomStyled = styled.div`
-  width: 80%;
+  width: 82%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -186,13 +249,13 @@ const MyFloomStyled = styled.div`
 `;
 
 const RoomListStyled = styled.div`
-  width: 70%;
+  width: 65%;
   height: 100%;
   position: absolute;
   top: 0;
-  right: 30%;
+  right: 35%;
   padding: 0 3em;
-  padding-top: 10em;
+  padding-top: 3.5em;
 `;
 
 const RoomCategory = styled.div`
@@ -216,7 +279,11 @@ const RoomItem = styled.a`
   margin-bottom: 3em;
 `;
 
-const ScreenStyled = styled.div`
+const ReviewItemLeft = styled.div`
+  display: flex;
+`;
+
+const RoomItemImage = styled.div`
   width: 100%;
   height: 15em;
   position: relative;
@@ -252,7 +319,7 @@ const EmojiExclamationMarkStyled = styled.div`
 `;
 
 const ReviewListStyled = styled.div`
-  width: 30%;
+  width: 35%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -262,8 +329,77 @@ const ReviewListStyled = styled.div`
   padding-top: 10em;
 `;
 
-const ReviewList = styled.div``;
+const ReviewList = styled.div`
+  width: 100%;
+  height: 93%;
+  overflow: auto;
+`;
 
-const ReviewItem = styled.div``;
+const ReviewItem = styled.a`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5em;
+  background-color: ${BasicColor.WHITE};
+  border-radius: 1em;
+  margin-bottom: 2em;
+`;
+
+const ReviewItemImage = styled.div`
+  width: 6.5em;
+  height: 6.5em;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.2em;
+`;
+
+const ReviewItemInfo = styled.div`
+  margin-left: 1.5em;
+  margin-top: -0.5em;
+`;
+
+const ReviewItemEmojiStyled = styled.div`
+  width: 4em;
+  height: 4em;
+  margin-left: 0.2em;
+  background-color: ${BasicColor.BLUE100};
+  border-radius: 50%;
+  padding: 0.8em;
+
+  svg {
+    margin-top: -0.2em;
+  }
+`;
+
+const NoneReview = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: rgba(196, 196, 196, 0.1);
+  border: 1px dashed ${BasicColor.GRAY70};
+  border-radius: 1em;
+  padding: 2.5em 2em;
+`;
+
+const NoneReviewInfo = styled.div`
+  margin-left: 1.2em;
+`;
+
+const NoneReviewEmojiStyled = styled.div`
+  width: 4em;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${BasicColor.WHITE};
+  border-radius: 50%;
+  padding: 0.8em;
+
+  svg {
+    width: 90%;
+    height: 90%;
+  }
+`;
 
 export default MyFloom;
