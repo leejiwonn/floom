@@ -129,7 +129,7 @@ const RoomItem = styled.a`
 
 const ScreenStyled = styled.div`
   width: 100%;
-  height: 20em;
+  height: 22em;
   position: relative;
   overflow: hidden;
   border-radius: 2em;

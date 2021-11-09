@@ -13,6 +13,9 @@ import type { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
+import BookmarkOffIcon from '../../public/assets/icons/icon-bookmark-off.svg';
+import BookmarkOnIcon from '../../public/assets/icons/icon-bookmark-on.svg';
+
 interface Props {
   room: Room;
 }
@@ -69,15 +72,6 @@ const Detail = ({ room: initialRoom }: Props) => {
             <Typography font={FontType.EXTRA_BOLD_HEAD_03}>
               {room.title}
             </Typography>
-            <AddBookmarkButton onClick={handleAddBookmarkButton}>
-              {loading ? (
-                <LoaderSpinner />
-              ) : room.isBookmarked ? (
-                <Typography>북마크 -</Typography>
-              ) : (
-                <Typography>북마크 +</Typography>
-              )}
-            </AddBookmarkButton>
           </RoomTitleInfo>
           <Typography
             font={FontType.REGULAR_BODY}
@@ -87,16 +81,27 @@ const Detail = ({ room: initialRoom }: Props) => {
             {room.creator.displayName} 님의 방
           </Typography>
           <TagStyled>
-            {room.tags.map((tag, index) => (
-              <TagItem key={tag + index}>
+            {room.tags.length > 0 ? (
+              room.tags.map((tag, index) => (
+                <TagItem key={tag + index}>
+                  <Typography
+                    font={FontType.SEMI_BOLD_BODY}
+                    color={BasicColor.GREEN150}
+                  >
+                    {tag}
+                  </Typography>
+                </TagItem>
+              ))
+            ) : (
+              <TagItem disable>
                 <Typography
                   font={FontType.SEMI_BOLD_BODY}
-                  color={BasicColor.GREEN150}
+                  color={BasicColor.DARK70}
                 >
-                  {tag}
+                  태그를 등록하지 않았어요.
                 </Typography>
               </TagItem>
-            ))}
+            )}
           </TagStyled>
           <CaptionStyled>
             <CaptionItem>
@@ -180,7 +185,7 @@ const Detail = ({ room: initialRoom }: Props) => {
             <Typography font={FontType.BOLD_TITLE_01} marginBottom={1.6}>
               플레이리스트
             </Typography>
-            <Playlist playlist={room.musics} controls={false} viewHeight={34} />
+            <Playlist playlist={room.musics} controls={false} viewHeight={44} />
           </PlaylistStyled>
         </RoomContentStyled>
       </RoomInfoStyled>
@@ -188,13 +193,32 @@ const Detail = ({ room: initialRoom }: Props) => {
         <PlayButton>
           <Typography
             tag="span"
-            font={FontType.BOLD_TITLE_01}
+            font={FontType.BOLD_TITLE_02}
             color={BasicColor.WHITE}
           >
             체험 해볼래요!
           </Typography>
         </PlayButton>
       </Link>
+      <AddBookmarkButton
+        onClick={handleAddBookmarkButton}
+        active={!!room.isBookmarked}
+      >
+        {loading ? (
+          <LoaderSpinner mode={room.isBookmarked ? 'dark' : 'light'} />
+        ) : (
+          <AddBookmarkButtonInfo>
+            {room.isBookmarked ? <BookmarkOnIcon /> : <BookmarkOffIcon />}
+            <Typography
+              font={FontType.BOLD_TITLE_02}
+              color={room.isBookmarked ? BasicColor.WHITE : BasicColor.DARK70}
+              marginLeft={1}
+            >
+              {room.isBookmarked ? '저장했어요!' : '저장할래요!'}
+            </Typography>
+          </AddBookmarkButtonInfo>
+        )}
+      </AddBookmarkButton>
     </DetailStyled>
   );
 };
@@ -222,11 +246,13 @@ const RoomImage = styled.img<{ url: string }>`
 
 const TagStyled = styled.div``;
 
-const TagItem = styled.div`
+const TagItem = styled.div<{ disable?: boolean }>`
   display: inline-flex;
   padding: 0.4em 1.2em;
-  background-color: ${BasicColor.GREEN10};
-  border: 0.1em solid ${BasicColor.GREEN20};
+  background-color: ${({ disable }) =>
+    disable ? BasicColor.DARK10 : BasicColor.GREEN10};
+  border: 0.1em solid
+    ${({ disable }) => (disable ? BasicColor.GRAY60 : BasicColor.GREEN20)};
   box-sizing: border-box;
   border-radius: 2.4em;
   margin-right: 0.6em;
@@ -294,7 +320,7 @@ const UserListStyled = styled.div`
 
 const CommentStyled = styled.div`
   width: auto;
-  height: 39vh;
+  height: 49vh;
   overflow: auto;
 `;
 
@@ -331,16 +357,41 @@ const PlaylistStyled = styled.div`
 `;
 
 const PlayButton = styled.a`
+  width: 23em;
+  height: 6.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   left: 5em;
   bottom: 5vh;
-  padding: 2em 12em;
   border-radius: 2em;
   background-color: ${BasicColor.BLUE100};
 `;
 
-const AddBookmarkButton = styled.button`
-  margin-left: 3em;
+const AddBookmarkButton = styled.button<{ active: boolean }>`
+  width: 16em;
+  height: 6.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 30em;
+  bottom: 5vh;
+  border-radius: 2em;
+  background-color: ${({ active }) =>
+    active ? BasicColor.GREEN100 : BasicColor.WHITE};
+  border: ${({ active }) =>
+    ` 2px solid ${!active ? BasicColor.DARK10 : BasicColor.GREEN100}`};
+  box-sizing: border-box;
+  transition: 0.2s;
+`;
+
+const AddBookmarkButtonInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default Detail;
