@@ -100,14 +100,14 @@ const HeaderStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 4em;
-  left: 5em;
+  top: 3em;
+  left: 4em;
   right: 5em;
   z-index: 998;
 `;
 
 const Logo = styled.a`
-  width: 7em;
+  width: 9em;
 `;
 
 const RightStyled = styled.div`
