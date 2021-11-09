@@ -77,11 +77,16 @@ const Home = ({ categories }: Props) => {
       ) : (
         <MyFloom />
       )}
-      <Link passHref={true} href={user != null ? '/create' : '/api/auth/kakao'}>
-        <CreateButton aria-label="방 생성하기">
-          <CreateIcon width="3.2em" height="3.2em" />
-        </CreateButton>
-      </Link>
+      {category.name !== 'myFloom' && (
+        <Link
+          passHref={true}
+          href={user != null ? '/create' : '/api/auth/kakao'}
+        >
+          <CreateButton aria-label="방 생성하기">
+            <CreateIcon width="3.2em" height="3.2em" />
+          </CreateButton>
+        </Link>
+      )}
     </HomeStyled>
   );
 };
@@ -93,7 +98,7 @@ const HomeStyled = styled.div`
 `;
 
 const RoomsStyled = styled.div`
-  width: 80%;
+  width: 82%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -102,7 +107,7 @@ const RoomsStyled = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0 6em;
-  padding-top: 10em;
+  padding-top: 3.5em;
   background-color: ${BasicColor.WHITE};
   z-index: 2;
 `;
@@ -114,17 +119,17 @@ const RoomStyled = styled.div`
 `;
 
 const RoomItem = styled.a`
-  width: 30%;
+  width: 23%;
   height: auto;
   display: inline-flex;
   flex-direction: column;
-  margin-right: 2em;
+  margin: 0 1em;
   margin-bottom: 3em;
 `;
 
 const ScreenStyled = styled.div`
   width: 100%;
-  height: 25em;
+  height: 20em;
   position: relative;
   overflow: hidden;
   border-radius: 2em;

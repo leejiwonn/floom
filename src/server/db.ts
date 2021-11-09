@@ -280,10 +280,9 @@ export async function findAllReviews(options?: {
   const { filters } = options ?? {};
   const ReviewRepository = await getReviewRepository();
 
-  const query = ReviewRepository.createQueryBuilder('review').leftJoinAndSelect(
-    'review.author',
-    'author',
-  );
+  const query = ReviewRepository.createQueryBuilder('review')
+    .leftJoinAndSelect('review.room', 'room')
+    .leftJoinAndSelect('review.author', 'author');
 
   if (filters?.roomId != null) {
     query.andWhere('review.roomId = :roomId', {
