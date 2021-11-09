@@ -63,20 +63,18 @@ const Sidebar = ({
       {user != null ? (
         <>
           <Line />
-          <Link href={'/my-floom'}>
-            <CategoryItem>
-              <CategoryItemIcon>
-                <EyesIcon />
-              </CategoryItemIcon>
-              <Typography
-                font={FontType.BOLD_TITLE_02}
-                color={BasicColor.WHITE}
-                align={Align.CENTER}
-              >
-                마이플룸
-              </Typography>
-            </CategoryItem>
-          </Link>
+          <CategoryItem onClick={() => setCategory({ id: 0, name: 'myFloom' })}>
+            <CategoryItemIcon active={category.name === 'myFloom'}>
+              <EyesIcon />
+            </CategoryItemIcon>
+            <Typography
+              font={FontType.BOLD_TITLE_02}
+              color={BasicColor.WHITE}
+              align={Align.CENTER}
+            >
+              마이플룸
+            </Typography>
+          </CategoryItem>
           <LogoutButton onClick={onLogoutButtonClick}>
             <LogoutIcon width="2em" height="2em" />
             <Typography
