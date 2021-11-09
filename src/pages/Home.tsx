@@ -93,7 +93,7 @@ const HomeStyled = styled.div`
 `;
 
 const RoomsStyled = styled.div`
-  width: 78%;
+  width: 80%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -102,7 +102,7 @@ const RoomsStyled = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0 6em;
-  padding-top: 11em;
+  padding-top: 10em;
   background-color: ${BasicColor.WHITE};
   z-index: 2;
 `;

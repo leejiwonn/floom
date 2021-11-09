@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
+import { LoaderSpinner } from '~/components/Loader';
 import { useMyReviews, useMyRooms, useMyRoomBookmarks } from '~/hooks/useMy';
 import { BasicColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
+import EMOJI from '~/constants/emoji';
 
 const MyFloom = () => {
   const { data: myReviews } = useMyReviews();
@@ -52,38 +55,111 @@ const MyFloom = () => {
           </RoomCategoryItem>
         </RoomCategory>
         <RoomList>
-          {category === 'save'
-            ? myRoomBookmarks?.map((bookmark) => (
-                <RoomItem
-                  key={bookmark.room.id}
-                  href={`/detail?roomId=${bookmark.room.id}`}
-                >
-                  <ScreenStyled>
-                    <Screen type="thumbnail" assets={bookmark.room.assets} />
-                  </ScreenStyled>
-                  <Typography
-                    font={FontType.BOLD_BODY}
-                    marginTop={1}
-                    textOverflow
+          {category === 'save' &&
+            (myRoomBookmarks ? (
+              myRoomBookmarks?.length > 0 ? (
+                myRoomBookmarks?.map((bookmark) => (
+                  <RoomItem
+                    key={bookmark.room.id}
+                    href={`/detail?roomId=${bookmark.room.id}`}
                   >
-                    {bookmark.room.title}
+                    <ScreenStyled>
+                      <Screen type="thumbnail" assets={bookmark.room.assets} />
+                    </ScreenStyled>
+                    <Typography
+                      font={FontType.BOLD_BODY}
+                      marginTop={1}
+                      textOverflow
+                    >
+                      {bookmark.room.title}
+                    </Typography>
+                  </RoomItem>
+                ))
+              ) : (
+                <NoneRoomList>
+                  <EmojiExclamationMarkStyled>
+                    {EMOJI.EXCLAMATION_MARK}
+                  </EmojiExclamationMarkStyled>
+                  <Typography font={FontType.BOLD_BODY} marginTop={1}>
+                    아직{' '}
+                    <Typography
+                      tag="span"
+                      font={FontType.BOLD_BODY}
+                      color={BasicColor.BLUE100}
+                    >
+                      저장한 방
+                    </Typography>
+                    이 없어요.
                   </Typography>
-                </RoomItem>
-              ))
-            : myRooms?.map((room) => (
-                <RoomItem key={room.id} href={`/detail?roomId=${room.id}`}>
-                  <ScreenStyled>
-                    <Screen type="thumbnail" assets={room.assets} />
-                  </ScreenStyled>
                   <Typography
-                    font={FontType.BOLD_BODY}
-                    marginTop={1}
-                    textOverflow
+                    font={FontType.LIGHT_CAPTION}
+                    align={Align.CENTER}
+                    marginTop={0.6}
                   >
-                    {room.title}
+                    방을 탐방해보고 마음에 드는 방이 있다면 저장해보세요!
                   </Typography>
-                </RoomItem>
-              ))}
+                </NoneRoomList>
+              )
+            ) : (
+              <LoaderSpinner />
+            ))}
+          {category === 'create' &&
+            (myRooms ? (
+              myRooms?.length > 0 ? (
+                myRooms?.map((room) => (
+                  <RoomItem key={room.id} href={`/detail?roomId=${room.id}`}>
+                    <ScreenStyled>
+                      <Screen type="thumbnail" assets={room.assets} />
+                    </ScreenStyled>
+                    <Typography
+                      font={FontType.BOLD_BODY}
+                      marginTop={1}
+                      textOverflow
+                    >
+                      {room.title}
+                    </Typography>
+                  </RoomItem>
+                ))
+              ) : (
+                <NoneRoomList>
+                  <EmojiExclamationMarkStyled>
+                    {EMOJI.EXCLAMATION_MARK}
+                  </EmojiExclamationMarkStyled>
+                  <Typography font={FontType.BOLD_BODY} marginTop={1}>
+                    아직{' '}
+                    <Typography
+                      tag="span"
+                      font={FontType.BOLD_BODY}
+                      color={BasicColor.BLUE100}
+                      marginBottom={0.6}
+                    >
+                      생성한 방
+                    </Typography>
+                    이 없어요.
+                  </Typography>
+                  <Typography
+                    font={FontType.LIGHT_CAPTION}
+                    align={Align.CENTER}
+                    marginTop={0.6}
+                    marginBottom={2}
+                  >
+                    방을 직접 만들러 가볼까요?
+                  </Typography>
+                  <Link passHref={true} href="/create">
+                    <CreateButton>
+                      <Typography
+                        font={FontType.BOLD_BODY}
+                        color={BasicColor.WHITE}
+                      >
+                        방 생성하기
+                      </Typography>
+                    </CreateButton>
+                  </Link>
+                </NoneRoomList>
+              )
+            ) : (
+              <LoaderSpinner />
+            ))}
         </RoomList>
       </RoomListStyled>
       <ReviewListStyled>
@@ -101,7 +177,7 @@ const MyFloom = () => {
 };
 
 const MyFloomStyled = styled.div`
-  width: 78%;
+  width: 80%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -110,13 +186,13 @@ const MyFloomStyled = styled.div`
 `;
 
 const RoomListStyled = styled.div`
-  width: 75%;
+  width: 70%;
   height: 100%;
   position: absolute;
   top: 0;
-  right: 25%;
+  right: 30%;
   padding: 0 3em;
-  padding-top: 11em;
+  padding-top: 10em;
 `;
 
 const RoomCategory = styled.div`
@@ -148,8 +224,35 @@ const ScreenStyled = styled.div`
   border-radius: 2em;
 `;
 
+const NoneRoomList = styled.div`
+  width: 100%;
+  height: 84%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CreateButton = styled.button`
+  padding: 1.2em 6em;
+  background-color: ${BasicColor.GREEN100};
+  border-radius: 4em;
+`;
+
+const EmojiExclamationMarkStyled = styled.div`
+  width: 4em;
+  height: 4em;
+  margin-bottom: 0.5em;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: ${BasicColor.BLUE80};
+  }
+`;
+
 const ReviewListStyled = styled.div`
-  width: 25%;
+  width: 30%;
   height: 100%;
   position: absolute;
   top: 0;
