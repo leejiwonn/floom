@@ -29,7 +29,7 @@ const Sidebar = ({
   return (
     <SidebarStyled>
       <Typography
-        font={FontType.EXTRA_BOLD_HEAD_02}
+        font={FontType.EXTRA_BOLD_HEAD_03}
         color={BasicColor.WHITE}
         marginBottom={1.4}
       >
@@ -38,7 +38,7 @@ const Sidebar = ({
         경험하다!
       </Typography>
       <Typography
-        font={FontType.BOLD_BODY}
+        font={FontType.SEMI_BOLD_BODY}
         color={BasicColor.WHITE}
         marginBottom={5.5}
       >
@@ -96,7 +96,7 @@ const Sidebar = ({
 };
 
 const SidebarStyled = styled.div`
-  width: 22%;
+  width: 20%;
   height: 100%;
   position: absolute;
   top: 0;
