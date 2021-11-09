@@ -101,8 +101,8 @@ const HeaderStyled = styled.div`
   align-items: center;
   position: fixed;
   top: 3em;
-  left: 4em;
-  right: 5em;
+  left: 3em;
+  right: 4em;
   z-index: 998;
 `;
 

@@ -90,7 +90,7 @@ const Create = () => {
 
   const handleChangeRoomTitleInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.length <= 20) {
+      if (e.target.value.length <= 30) {
         setRoom((prev) => {
           return { ...prev, title: e.target.value };
         });
@@ -381,10 +381,10 @@ const Create = () => {
                       </Typography>
                     </RoomTitle>
                     <TextInput
-                      maxLength={20}
+                      maxLength={30}
                       value={room.title}
                       onChangeInput={handleChangeRoomTitleInput}
-                      placeholder="방 설명을 작성해주세요."
+                      placeholder="방 이름을 작성해주세요."
                     />
                   </RoomTitleStyled>
                 }

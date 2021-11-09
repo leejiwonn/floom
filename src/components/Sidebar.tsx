@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import { BasicColor, GradientColor } from '~/utils/color';
 import { getCategoryEmoji } from '~/utils/emoji';
@@ -29,7 +28,7 @@ const Sidebar = ({
   return (
     <SidebarStyled>
       <Typography
-        font={FontType.EXTRA_BOLD_HEAD_02}
+        font={FontType.EXTRA_BOLD_HEAD_03}
         color={BasicColor.WHITE}
         marginBottom={1.4}
       >
@@ -38,7 +37,7 @@ const Sidebar = ({
         경험하다!
       </Typography>
       <Typography
-        font={FontType.BOLD_BODY}
+        font={FontType.SEMI_BOLD_BODY}
         color={BasicColor.WHITE}
         marginBottom={5.5}
       >
@@ -63,20 +62,18 @@ const Sidebar = ({
       {user != null ? (
         <>
           <Line />
-          <Link href={'/my-floom'}>
-            <CategoryItem>
-              <CategoryItemIcon>
-                <EyesIcon />
-              </CategoryItemIcon>
-              <Typography
-                font={FontType.BOLD_TITLE_02}
-                color={BasicColor.WHITE}
-                align={Align.CENTER}
-              >
-                마이플룸
-              </Typography>
-            </CategoryItem>
-          </Link>
+          <CategoryItem onClick={() => setCategory({ id: 0, name: 'myFloom' })}>
+            <CategoryItemIcon active={category.name === 'myFloom'}>
+              <EyesIcon />
+            </CategoryItemIcon>
+            <Typography
+              font={FontType.BOLD_TITLE_02}
+              color={BasicColor.WHITE}
+              align={Align.CENTER}
+            >
+              마이플룸
+            </Typography>
+          </CategoryItem>
           <LogoutButton onClick={onLogoutButtonClick}>
             <LogoutIcon width="2em" height="2em" />
             <Typography
@@ -98,7 +95,7 @@ const Sidebar = ({
 };
 
 const SidebarStyled = styled.div`
-  width: 22%;
+  width: 18%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -106,9 +103,9 @@ const SidebarStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 5em 3.5em;
+  padding: 5em 3em;
   padding-top: 10em;
-  padding-left: 4em;
+  padding-left: 3em;
   background: ${GradientColor.BLUE};
   z-index: 1;
 `;

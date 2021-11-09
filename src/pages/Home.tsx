@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { LoaderSpinner } from '~/components/Loader';
 import Screen from '~/components/Screen';
 import Typography from '~/components/Typography';
+import Sidebar from '~/components/Sidebar';
+import MyFloom from '~/components/MyFloom';
 import { useRooms } from '~/hooks/useRoom';
 import { useUserProfile } from '~/hooks/useUser';
 import { RoomCategory } from '~/types/RoomCategory';
@@ -14,7 +16,6 @@ import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
 import CreateIcon from '../../public/assets/icons/icon-create.svg';
-import Sidebar from '~/components/Sidebar';
 
 type Props = {
   categories: RoomCategory[];
@@ -25,7 +26,7 @@ const Home = ({ categories }: Props) => {
   const { data: user, mutate: userMutate } = useUserProfile();
 
   const [category, setCategory] = useState(categories[0]);
-  const { data: rooms, isValidating } = useRooms(category.name);
+  const { data: rooms } = useRooms(category.name);
 
   const handleLogoutButtonClick = () => {
     removeAuthTokenInLocalStorage();
@@ -41,38 +42,51 @@ const Home = ({ categories }: Props) => {
         setCategory={(value) => setCategory(value)}
         onLogoutButtonClick={handleLogoutButtonClick}
       />
-      <RoomsStyled>
-        <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={4}>
-          {user && `${user?.displayName}님, `}
-          {category?.name}하실 방을 선택해주세요!
-        </Typography>
-        <RoomStyled>
-          {isValidating ? (
-            <LoaderSpinner />
-          ) : (
-            rooms?.map((room) => (
-              <Link key={room.id} href={`/detail?roomId=${room.id}`}>
-                <RoomItem>
-                  <ScreenStyled>
-                    <Screen type="thumbnail" assets={room.assets} />
-                  </ScreenStyled>
-                  <Typography font={FontType.BOLD_TITLE_02} marginTop={1}>
-                    {room.title}
-                  </Typography>
-                  <Typography font={FontType.LIGHT_CAPTION}>
-                    {room.creator.displayName}
-                  </Typography>
-                </RoomItem>
-              </Link>
-            ))
-          )}
-        </RoomStyled>
-      </RoomsStyled>
-      <Link passHref={true} href={user != null ? '/create' : '/api/auth/kakao'}>
-        <CreateButton aria-label="방 생성하기">
-          <CreateIcon width="3.2em" height="3.2em" />
-        </CreateButton>
-      </Link>
+      {category.name !== 'myFloom' ? (
+        <RoomsStyled>
+          <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={4}>
+            {user && `${user?.displayName}님, `}
+            {category?.name}하실 방을 선택해주세요!
+          </Typography>
+          <RoomStyled>
+            {!!!rooms ? (
+              <LoaderSpinner />
+            ) : (
+              rooms?.map((room) => (
+                <Link key={room.id} href={`/detail?roomId=${room.id}`}>
+                  <RoomItem>
+                    <ScreenStyled>
+                      <Screen type="thumbnail" assets={room.assets} />
+                    </ScreenStyled>
+                    <Typography
+                      font={FontType.BOLD_TITLE_02}
+                      marginTop={1}
+                      textOverflow
+                    >
+                      {room.title}
+                    </Typography>
+                    <Typography font={FontType.LIGHT_CAPTION}>
+                      {room.creator.displayName}
+                    </Typography>
+                  </RoomItem>
+                </Link>
+              ))
+            )}
+          </RoomStyled>
+        </RoomsStyled>
+      ) : (
+        <MyFloom />
+      )}
+      {category.name !== 'myFloom' && (
+        <Link
+          passHref={true}
+          href={user != null ? '/create' : '/api/auth/kakao'}
+        >
+          <CreateButton aria-label="방 생성하기">
+            <CreateIcon width="3.2em" height="3.2em" />
+          </CreateButton>
+        </Link>
+      )}
     </HomeStyled>
   );
 };
@@ -84,7 +98,7 @@ const HomeStyled = styled.div`
 `;
 
 const RoomsStyled = styled.div`
-  width: 78%;
+  width: 82%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -93,7 +107,7 @@ const RoomsStyled = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0 6em;
-  padding-top: 11em;
+  padding-top: 3.5em;
   background-color: ${BasicColor.WHITE};
   z-index: 2;
 `;
@@ -105,17 +119,17 @@ const RoomStyled = styled.div`
 `;
 
 const RoomItem = styled.a`
-  width: 30%;
+  width: 23%;
   height: auto;
   display: inline-flex;
   flex-direction: column;
-  margin-right: 2em;
+  margin: 0 1em;
   margin-bottom: 3em;
 `;
 
 const ScreenStyled = styled.div`
   width: 100%;
-  height: 25em;
+  height: 20em;
   position: relative;
   overflow: hidden;
   border-radius: 2em;

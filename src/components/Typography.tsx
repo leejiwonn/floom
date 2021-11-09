@@ -1,4 +1,6 @@
+import { css } from '@emotion/react';
 import { ReactNode } from 'react';
+
 import { BasicColor } from '~/utils/color';
 import { Align, Font, FontType } from '~/utils/font';
 
@@ -15,6 +17,7 @@ interface Props {
   marginLeft?: number;
   marginRight?: number;
   lineHeight?: number;
+  textOverflow?: boolean;
 }
 
 const Typography = ({
@@ -28,9 +31,19 @@ const Typography = ({
   marginLeft,
   marginRight,
   lineHeight = 1.5,
+  textOverflow,
 }: Props) => {
   const TagComponent = tag as TypographyTag;
   const style = Font.getStyle(font);
+
+  const textOverflowStyled = css`
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  `;
 
   return (
     <TagComponent
@@ -44,7 +57,9 @@ const Typography = ({
         marginLeft: marginLeft + 'rem',
         marginRight: marginRight + 'rem',
         lineHeight: lineHeight,
+        wordBreak: 'keep-all',
       }}
+      css={textOverflow && textOverflowStyled}
     >
       {children}
     </TagComponent>
