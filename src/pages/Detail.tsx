@@ -58,10 +58,7 @@ const Detail = ({ room: initialRoom }: Props) => {
 
   return (
     <DetailStyled>
-      <RoomImageStyled>
-        <RoomImage url={room.roomImage} />
-        <ThumImage url={room.assets[0]?.url} />
-      </RoomImageStyled>
+      <RoomImage url={room.roomImage} />
       <RoomInfoStyled>
         <RoomTitleStyled>
           <RoomTitleInfo>
@@ -214,30 +211,13 @@ const DetailStyled = styled.div`
   background-color: ${BasicColor.GRAY20};
 `;
 
-const RoomImageStyled = styled.div`
-  width: 100%;
-  height: auto;
-  position: relative;
-`;
-
 const RoomImage = styled.img<{ url: string }>`
   width: 100%;
   height: 42vh;
   background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
   background-position: 50%;
-`;
-
-const ThumImage = styled.div<{ url: string }>`
-  width: 20em;
-  height: 17em;
-  position: absolute;
-  left: 5em;
-  bottom: -4em;
-  background-image: ${({ url }) => `url(${url})`};
-  background-size: cover;
-  background-position: 50%;
-  border-radius: 3em 3em 3em 0;
+  background-repeat: no-repeat;
 `;
 
 const TagStyled = styled.div``;
@@ -263,7 +243,7 @@ const RoomInfoStyled = styled.div`
 const RoomTitleStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 6em;
+  margin-top: 4em;
   padding-left: 5em;
 `;
 

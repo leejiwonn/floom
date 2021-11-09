@@ -299,7 +299,7 @@ const Create = () => {
       if (room.title === '') {
         setVisibleToast('방 이름을 작성해주세요.');
       } else if (!room.assets.length) {
-        setVisibleToast('배경화면을 등록해주세요.');
+        setVisibleToast('풍경을 등록해주세요.');
       } else if (!selectedMusics.length) {
         setVisibleToast('음악을 등록해주세요.');
       } else if (
@@ -391,7 +391,7 @@ const Create = () => {
                 required
               />
               <CreateInfoItem
-                title="배경화면"
+                title="풍경"
                 titleIcon={
                   <AddImageIcon
                     width="2.4em"
@@ -440,7 +440,7 @@ const Create = () => {
                               tag="span"
                               font={FontType.SEMI_BOLD_BODY}
                             >
-                              배경화면
+                              풍경
                             </Typography>
                             이 없어요.
                           </Typography>
@@ -484,7 +484,7 @@ const Create = () => {
                             color={BasicColor.WHITE}
                             marginLeft={0.5}
                           >
-                            배경화면 등록하기
+                            풍경 등록하기
                           </Typography>
                         </>
                       )}

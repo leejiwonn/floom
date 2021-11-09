@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+
 import Typography from '~/components/Typography';
 import { useMyReviews, useMyRooms, useMyRoomBookmarks } from '~/hooks/useMy';
+import { BasicColor } from '~/utils/color';
+import { FontType } from '~/utils/font';
 
 const MyFloom = () => {
   const { data: myReviews } = useMyReviews();
@@ -10,7 +13,9 @@ const MyFloom = () => {
   return (
     <MyFloomStyled>
       <ReviewListStyled>
-        <Typography>체험 히스토리</Typography>
+        <Typography font={FontType.BOLD_TITLE_02} marginBottom={2}>
+          나의 몰입 기록
+        </Typography>
         <ReviewList>
           {myReviews?.map((review, index) => (
             <ReviewItem key={index}>{review.objective}</ReviewItem>
@@ -42,7 +47,16 @@ const MyFloomStyled = styled.div`
   padding: 0 5em;
 `;
 
-const ReviewListStyled = styled.div``;
+const ReviewListStyled = styled.div`
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: ${BasicColor.GRAY20};
+  padding: 0 3em;
+  padding-top: 10em;
+`;
 
 const ReviewList = styled.div``;
 
