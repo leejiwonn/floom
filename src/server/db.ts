@@ -282,6 +282,7 @@ export async function findAllReviews(options?: {
 
   const query = ReviewRepository.createQueryBuilder('review')
     .leftJoinAndSelect('review.room', 'room')
+    .leftJoinAndSelect('room.category', 'category')
     .leftJoinAndSelect('review.author', 'author');
 
   if (filters?.roomId != null) {
