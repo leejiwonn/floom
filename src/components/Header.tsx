@@ -7,7 +7,6 @@ import AudioPlayer from '~/components/AudioPlayer';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
-import { useUserProfile } from '~/hooks/useUser';
 import Typography from './Typography';
 
 import MusicIcon from '../../public/assets/icons/icon-music.svg';
@@ -16,7 +15,6 @@ import WhiteLogoIcon from '../../public/assets/icons/icon-logo-white.svg';
 import BlueLogoIcon from '../../public/assets/icons/icon-logo-blue.svg';
 
 const Header = () => {
-  const { data: user } = useUserProfile();
   const [show, setShow] = useState(false);
   const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setShow(false),
@@ -48,25 +46,6 @@ const Header = () => {
         </Logo>
       </Link>
       <RightStyled>
-        {user !== undefined &&
-        router.pathname !== '/play' &&
-        router.pathname !== '/create' ? (
-          user != null ? (
-            <UserInfo>
-              <Typography font={FontType.REGULAR_BODY}>
-                안녕하세요, <strong>{user.displayName}</strong>
-                님!
-              </Typography>
-            </UserInfo>
-          ) : (
-            <KakaoLoginButton href="/api/auth/kakao">
-              <KakaoLoginIcon src="/assets/icons/icon-kakao-login.png" />
-              <Typography tag="span" font={FontType.SEMI_BOLD_BODY}>
-                로그인
-              </Typography>
-            </KakaoLoginButton>
-          )
-        ) : null}
         <NoiseStyled ref={modalRef}>
           <NoiseButton onClick={() => setShow((prev) => !prev)}>
             <Typography
@@ -121,42 +100,19 @@ const HeaderStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 4em;
-  left: 5em;
+  top: 3em;
+  left: 4em;
   right: 5em;
   z-index: 998;
 `;
 
 const Logo = styled.a`
-  width: 7em;
+  width: 9em;
 `;
 
 const RightStyled = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const UserInfo = styled.div`
-  padding: 0.8em 1.8em;
-  border: 0.2em solid ${BasicColor.GRAY10};
-  border-radius: 3.4em;
-  background-color: ${BasicColor.GRAY20};
-`;
-
-const KakaoLoginButton = styled.a`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: ${BasicColor.YELLOW};
-  padding: 1em 1.5em;
-  border-radius: 3.4em;
-`;
-
-const KakaoLoginIcon = styled.img`
-  width: 1.7em;
-  height: 1.6em;
-  margin-right: 0.8em;
 `;
 
 const NoiseStyled = styled.div`

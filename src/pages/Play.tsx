@@ -9,7 +9,6 @@ import Modal from '~/components/Modal';
 import ObjectBox from '~/components/ObjectBox';
 import OpenButton from '~/components/OpenButton';
 import Playlist from '~/components/Playlist';
-import Screen from '~/components/Screen';
 import TextInput from '~/components/TextInput';
 import Timer from '~/components/Timer';
 import Typography from '~/components/Typography';
@@ -64,7 +63,6 @@ const Play = ({ room }: Props) => {
   const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [visibleBoardPopup, setVisibleBoardPopup] = useState(false);
   const [guestInput, setGuestInput] = useState({ input: '', emoji: 'HEART' });
-  const [isFull, setIsPull] = useState(false);
   const [isTimerAlarm, setIsTimerAlarm] = useState(true);
 
   const { modalRef: clockRef } = useOutsideEvent<HTMLDivElement>({
@@ -326,12 +324,6 @@ const Play = ({ room }: Props) => {
         <LayerBox style={{ zIndex: 10 }}>
           {currentPage >= 3 && (
             <PopupBox>
-              <PopupPictureStyled>
-                <OpenButton
-                  visible={false}
-                  onOpenButtonClick={() => setIsPull((prev) => !prev)}
-                />
-              </PopupPictureStyled>
               <PopupClockStyled ref={clockRef}>
                 <OpenButton
                   visible={visibleClockPopup}
@@ -467,12 +459,6 @@ const Play = ({ room }: Props) => {
             </PopupBox>
           )}
         </LayerBox>
-        <Screen
-          type="full"
-          isFull={isFull}
-          onFullButtonClick={() => setIsPull(false)}
-          assets={room.assets}
-        />
         {currentPage >= 3 && (
           <>
             <ContentTitleView>
@@ -777,12 +763,6 @@ const PopupBox = styled.div`
   height: 100%;
   position: absolute;
   z-index: 2;
-`;
-
-const PopupPictureStyled = styled.div`
-  position: absolute;
-  top: -4%;
-  left: 68%;
 `;
 
 const PopupClockStyled = styled.div`
