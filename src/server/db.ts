@@ -162,6 +162,7 @@ export async function createRoom(payload: CreateRoomParams) {
   ]);
 
   room.title = payload.title;
+  room.description = payload.description;
   room.light = payload.light;
   room.wallColor = payload.wallColor;
   room.objectIds = JSON.stringify(payload.objectIds);
@@ -175,7 +176,6 @@ export async function createRoom(payload: CreateRoomParams) {
   room.musics = musics;
   room.creator = creator;
   room.guestBooksEnabled = payload.guestBooksEnabled;
-  room.guestBooksWelcomeMessage = payload.guestBooksWelcomeMessage;
 
   return RoomRepository.save(room);
 }

@@ -47,6 +47,9 @@ export class RoomEntity {
   @Column()
   title: string;
 
+  @Column()
+  description: string;
+
   @Column({
     type: 'varchar',
   })
@@ -72,12 +75,6 @@ export class RoomEntity {
     default: false,
   })
   guestBooksEnabled: boolean;
-
-  @Column({
-    type: 'varchar',
-    nullable: true,
-  })
-  guestBooksWelcomeMessage?: string;
 
   @Column()
   roomImage: string;
