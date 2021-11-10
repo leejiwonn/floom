@@ -282,7 +282,7 @@ const Play = ({ room }: Props) => {
               {currentPage === 0 && (
                 <StepA
                   onChangeGoalText={setObjective}
-                  placeholderInfo="20자 이내의 목표를 입력해주세요"
+                  placeholderInfo="ex) 토익 공부하기"
                   onNextPage={handleNextPage}
                 />
               )}
@@ -301,7 +301,7 @@ const Play = ({ room }: Props) => {
                   onChangeTodos={handleChangeTodos}
                   onDeleteTodo={handleDeleteTodo}
                   objective={objective}
-                  placeholderInfo="작은 목표를 입력해주세요"
+                  placeholderInfo="ex) 문제집 5장 풀기, 채점하기"
                   onSliderShow={setSliderShow}
                   onPrevPage={handlePrevPage}
                   onNextPage={handleNextPage}
