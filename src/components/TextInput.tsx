@@ -128,6 +128,10 @@ const TextInputBox = styled.input<{
   :focus {
     outline: none;
   }
+  ::placeholder {
+    font-weight: 500;
+    color: ${BasicColor.DARK40};
+  }
 `;
 
 const TextLength = styled.div`
