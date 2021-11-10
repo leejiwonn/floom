@@ -252,7 +252,7 @@ const Playlist = ({
 };
 
 const PlaylistStyled = styled.div<{ size: 'big' | 'small' }>`
-  width: ${({ size }) => (size === 'big' ? '34em' : '24em')};
+  width: ${({ size }) => (size === 'big' ? '32em' : '24em')};
   height: auto;
   display: flex;
   flex-direction: column;
