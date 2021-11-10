@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { LoaderSpinner } from '~/components/Loader';
 import Playlist from '~/components/Playlist';
 import Typography from '~/components/Typography';
+import BackgroundFilter from '~/components/BackgroundFilter';
 import EMOJI from '~/constants/emoji';
 import { useReviews } from '~/hooks/useReviews';
 import { useUserProfile } from '~/hooks/useUser';
@@ -61,7 +62,10 @@ const Detail = ({ room: initialRoom }: Props) => {
 
   return (
     <DetailStyled>
-      <RoomImage url={room.roomImage} />
+      <RoomImageStyled>
+        <RoomImage url={room.roomImage} />
+        <BackgroundFilter wallColor={room.wallColor} light={room.light} />
+      </RoomImageStyled>
       <RoomInfoStyled>
         <RoomTitleStyled>
           <RoomTitleInfoStyled>
@@ -237,12 +241,20 @@ const DetailStyled = styled.div`
   background-color: ${BasicColor.GRAY20};
 `;
 
-const RoomImage = styled.img<{ url: string }>`
+const RoomImageStyled = styled.div`
   width: 100%;
   height: 36vh;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+`;
+
+const RoomImage = styled.img<{ url: string }>`
+  width: 100%;
+  height: 100%;
   background-image: ${({ url }) => `url(${url})`};
-  background-size: cover;
-  background-position: 50%;
+  background-size: 100%;
+  background-position-y: 26%;
   background-repeat: no-repeat;
 `;
 
