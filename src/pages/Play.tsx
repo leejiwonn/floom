@@ -343,23 +343,25 @@ const Play = ({ room }: Props) => {
                   </PopupClock>
                 )}
               </PopupClockStyled>
-              <PopupSpeakerStyled ref={speakerRef}>
-                <OpenButton
-                  visible={visibleSpeakerPopup}
-                  onOpenButtonClick={() =>
-                    setVisibleSpeakerPopup((prev) => !prev)
-                  }
-                />
-                <PopupSpeaker visible={visibleSpeakerPopup}>
-                  <Playlist
-                    playlist={room.musics}
-                    controls
-                    autoplay
-                    viewHeight={24}
-                    size="small"
+              {room.musics.length > 0 && (
+                <PopupSpeakerStyled ref={speakerRef}>
+                  <OpenButton
+                    visible={visibleSpeakerPopup}
+                    onOpenButtonClick={() =>
+                      setVisibleSpeakerPopup((prev) => !prev)
+                    }
                   />
-                </PopupSpeaker>
-              </PopupSpeakerStyled>
+                  <PopupSpeaker visible={visibleSpeakerPopup}>
+                    <Playlist
+                      playlist={room.musics}
+                      controls
+                      autoplay
+                      viewHeight={24}
+                      size="small"
+                    />
+                  </PopupSpeaker>
+                </PopupSpeakerStyled>
+              )}
               <PopupMemoStyled ref={memoRef}>
                 <OpenButton
                   visible={visibleMemoPopup}
