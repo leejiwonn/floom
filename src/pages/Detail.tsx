@@ -80,6 +80,7 @@ const Detail = ({ room: initialRoom }: Props) => {
                 <Typography
                   font={FontType.REGULAR_CAPTION}
                   color={BasicColor.DARK70}
+                  marginLeft={0.5}
                 >
                   방문
                 </Typography>
@@ -94,6 +95,7 @@ const Detail = ({ room: initialRoom }: Props) => {
                 <Typography
                   font={FontType.REGULAR_CAPTION}
                   color={BasicColor.DARK70}
+                  marginLeft={0.5}
                 >
                   추천
                 </Typography>

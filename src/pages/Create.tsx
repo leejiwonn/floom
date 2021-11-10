@@ -101,7 +101,7 @@ const Create = () => {
 
   const handleChangeRoomDescriptionInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.length <= 20) {
+      if (e.target.value.length <= 50) {
         setRoom((prev) => {
           return { ...prev, description: e.target.value };
         });
@@ -390,7 +390,7 @@ const Create = () => {
                       • 한 줄 소개
                     </Typography>
                     <TextInput
-                      maxLength={20}
+                      maxLength={50}
                       value={room.description}
                       onChangeInput={handleChangeRoomDescriptionInput}
                       placeholder="간단한 인사말을 작성해주세요."
