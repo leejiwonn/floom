@@ -286,13 +286,11 @@ const Create = () => {
       return;
     }
 
-    if (room.title === '' || !room.assets.length || !selectedMusics.length) {
+    if (room.title === '' || !room.assets.length) {
       if (room.title === '') {
         setVisibleToast('방 설명을 작성해주세요.');
       } else if (!room.assets.length) {
         setVisibleToast('풍경을 등록해주세요.');
-      } else if (!selectedMusics.length) {
-        setVisibleToast('음악을 등록해주세요.');
       }
       return;
     }

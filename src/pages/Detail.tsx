@@ -182,7 +182,12 @@ const Detail = ({ room: initialRoom }: Props) => {
             <Typography font={FontType.BOLD_TITLE_02} marginBottom={1.6}>
               플레이리스트
             </Typography>
-            <Playlist playlist={room.musics} controls={false} viewHeight={41} />
+            <Playlist
+              playlist={room.musics}
+              controls={false}
+              viewHeight={41}
+              noneText="음악이 없는 조용한 방이에요."
+            />
           </PlaylistStyled>
         </RoomContentStyled>
       </RoomInfoStyled>
@@ -289,8 +294,9 @@ const RoomTitleInfo = styled.div`
 `;
 
 const RoomTitleInfoLine = styled.div`
-  width: 0.2em;
-  height: 60%;
+  display: flex;
+  width: 0.15em;
+  height: 2.2em;
   background-color: ${BasicColor.DARK40};
   margin: 0 1.2em;
 `;

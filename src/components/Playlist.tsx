@@ -25,6 +25,7 @@ interface Props {
   onAddButtonClick?: (value: Music) => void;
   onDeleteButtonClick?: (value: Music) => void;
   simpleMode?: boolean;
+  noneText?: string;
 }
 
 // 저전력 모드 등에서는 play 재생 시에 오류 발생함
@@ -50,6 +51,7 @@ const Playlist = ({
   onAddButtonClick,
   onDeleteButtonClick,
   simpleMode = false,
+  noneText = '목록이 없습니다.',
 }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
@@ -149,103 +151,115 @@ const Playlist = ({
         />
       )}
       <PlaylistView controls={controls} viewHeight={viewHeight}>
-        {playlist?.map((music, index) => (
-          <PlaylistItemStyled
-            key={index}
-            last={playlist?.length !== index + 1}
-            simpleMode={simpleMode}
-          >
-            <PlaylistItem
-              onClick={() => {
-                setCurrentIndex(index);
-                updatePlayer(index);
-                setIsPlaying((prev) => (currentIndex === index ? !prev : true));
-                playAudioSafely(playerRef.current);
-              }}
+        {playlist.length > 0 ? (
+          playlist?.map((music, index) => (
+            <PlaylistItemStyled
+              key={index}
+              last={playlist?.length !== index + 1}
+              simpleMode={simpleMode}
             >
-              <PlaylistLeftView>
-                <PlayPauseButton simpleMode={simpleMode}>
-                  {isPlaying && currentIndex === index ? (
-                    <PauseIcon
-                      width="4em"
-                      height="4em"
-                      fill={BasicColor.BLUE100}
-                    />
-                  ) : (
-                    <PlayIcon
-                      width="4em"
-                      height="4em"
-                      fill={BasicColor.BLUE100}
-                    />
-                  )}
-                </PlayPauseButton>
-                <PlaylistItemInfo>
-                  <Typography
-                    font={
-                      size === 'big'
-                        ? FontType.BOLD_TITLE_02
-                        : FontType.BOLD_BODY
-                    }
-                    marginBottom={simpleMode ? 0 : 0.5}
-                  >
-                    {music.name}
-                  </Typography>
-                  <Typography
-                    font={
-                      size === 'big'
-                        ? FontType.REGULAR_BODY
-                        : FontType.REGULAR_CAPTION
-                    }
-                    color={BasicColor.DARK70}
-                  >
-                    {music.author}
-                  </Typography>
-                </PlaylistItemInfo>
-              </PlaylistLeftView>
-              {!simpleMode && (
-                <Typography
-                  font={FontType.REGULAR_CAPTION}
-                  color={BasicColor.DARK40}
-                >
-                  {currentIndex === index
-                    ? currentTime
-                    : formatDuration(music.duration)}
-                </Typography>
-              )}
-            </PlaylistItem>
-            {onAddButtonClick && (
-              <PlaylistIconStyled
+              <PlaylistItem
                 onClick={() => {
-                  if (selectedMusics?.includes(music)) {
-                    return;
-                  }
-                  onAddButtonClick?.(music);
+                  setCurrentIndex(index);
+                  updatePlayer(index);
+                  setIsPlaying((prev) =>
+                    currentIndex === index ? !prev : true,
+                  );
+                  playAudioSafely(playerRef.current);
                 }}
-                disable={!!selectedMusics?.includes(music)}
               >
-                {selectedMusics?.includes(music) ? (
-                  <SubmitPlaylistIconStyled>
-                    <CheckIcon
-                      width="1.5em"
-                      height="1.3em"
-                      stroke={BasicColor.WHITE}
-                    />
-                  </SubmitPlaylistIconStyled>
-                ) : (
-                  <AddPlaylistIcon width="3.6em" height="3.6em" />
+                <PlaylistLeftView>
+                  <PlayPauseButton simpleMode={simpleMode}>
+                    {isPlaying && currentIndex === index ? (
+                      <PauseIcon
+                        width="4em"
+                        height="4em"
+                        fill={BasicColor.BLUE100}
+                      />
+                    ) : (
+                      <PlayIcon
+                        width="4em"
+                        height="4em"
+                        fill={BasicColor.BLUE100}
+                      />
+                    )}
+                  </PlayPauseButton>
+                  <PlaylistItemInfo>
+                    <Typography
+                      font={
+                        size === 'big'
+                          ? FontType.BOLD_TITLE_02
+                          : FontType.BOLD_BODY
+                      }
+                      marginBottom={simpleMode ? 0 : 0.5}
+                    >
+                      {music.name}
+                    </Typography>
+                    <Typography
+                      font={
+                        size === 'big'
+                          ? FontType.REGULAR_BODY
+                          : FontType.REGULAR_CAPTION
+                      }
+                      color={BasicColor.DARK70}
+                    >
+                      {music.author}
+                    </Typography>
+                  </PlaylistItemInfo>
+                </PlaylistLeftView>
+                {!simpleMode && (
+                  <Typography
+                    font={FontType.REGULAR_CAPTION}
+                    color={BasicColor.DARK40}
+                  >
+                    {currentIndex === index
+                      ? currentTime
+                      : formatDuration(music.duration)}
+                  </Typography>
                 )}
-              </PlaylistIconStyled>
-            )}
-            {onDeleteButtonClick && (
-              <PlaylistIconStyled
-                onClick={() => onDeleteButtonClick(music)}
-                disable={false}
-              >
-                <TrashIcon width="4.1em" height="3.6em" />
-              </PlaylistIconStyled>
-            )}
-          </PlaylistItemStyled>
-        ))}
+              </PlaylistItem>
+              {onAddButtonClick && (
+                <PlaylistIconStyled
+                  onClick={() => {
+                    if (selectedMusics?.includes(music)) {
+                      return;
+                    }
+                    onAddButtonClick?.(music);
+                  }}
+                  disable={!!selectedMusics?.includes(music)}
+                >
+                  {selectedMusics?.includes(music) ? (
+                    <SubmitPlaylistIconStyled>
+                      <CheckIcon
+                        width="1.5em"
+                        height="1.3em"
+                        stroke={BasicColor.WHITE}
+                      />
+                    </SubmitPlaylistIconStyled>
+                  ) : (
+                    <AddPlaylistIcon width="3.6em" height="3.6em" />
+                  )}
+                </PlaylistIconStyled>
+              )}
+              {onDeleteButtonClick && (
+                <PlaylistIconStyled
+                  onClick={() => onDeleteButtonClick(music)}
+                  disable={false}
+                >
+                  <TrashIcon width="4.1em" height="3.6em" />
+                </PlaylistIconStyled>
+              )}
+            </PlaylistItemStyled>
+          ))
+        ) : (
+          <Typography
+            font={FontType.SEMI_BOLD_BODY}
+            color={BasicColor.DARK70}
+            marginTop={1.5}
+          >
+            {noneText}
+          </Typography>
+        )}
       </PlaylistView>
     </PlaylistStyled>
   );
