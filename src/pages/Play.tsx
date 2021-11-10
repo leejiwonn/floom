@@ -12,7 +12,6 @@ import Playlist from '~/components/Playlist';
 import TextInput from '~/components/TextInput';
 import Timer from '~/components/Timer';
 import Typography from '~/components/Typography';
-import BACKGROUND from '~/constants/background';
 import EMOJI from '~/constants/emoji';
 import ROOM from '~/constants/room';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
@@ -20,15 +19,18 @@ import { useRoomGuestBooks } from '~/hooks/useRoomGuestBooks';
 import { postReview } from '~/remotes/review';
 import { postRoomGuestBook } from '~/remotes/room';
 import { Todo } from '~/types/Obejct';
-import { Room, RoomLight, RoomWallColor } from '~/types/Room';
-import { BasicColor, getWallColor } from '~/utils/color';
+import { Room } from '~/types/Room';
+import { BasicColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
 import { Align, FontType } from '~/utils/font';
+import Toast from '~/components/Toast';
+import { RoomCategory } from '~/types/RoomCategory';
+import Screen from '~/components/Screen';
 
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
-import Toast from '~/components/Toast';
-import { RoomCategory } from '~/types/RoomCategory';
+import BackgroundFilter from '~/components/BackgroundFilter';
+import WEATHER from '~/constants/weather';
 
 interface Props {
   room: Room;
@@ -325,11 +327,11 @@ const Play = ({ room }: Props) => {
         </PlayView>
       )}
       <ObjectView page={currentPage}>
-        <ObjectBlendOverlay wallColor={room.wallColor} light={room.light} />
-        <ObjectBlendColor wallColor={room.wallColor} light={room.light} />
-        <ObjectBackground src={ROOM.WALL[1]} />
+        <BackgroundFilter wallColor={room.wallColor} light={room.light} />
+        <ObjectBackgroundWall src={ROOM.WALL[1]} />
         <ObjectBackgroundView>
-          <ObjectBackgroundImage src={BACKGROUND[room.background]} alt="풍경" />
+          <LottieStyled>{WEATHER[room.background]}</LottieStyled>
+          <Screen type="thumbnail" assets={room.assets} />
         </ObjectBackgroundView>
         <LayerBox page={currentPage}>
           <ObjectBox room={room} objects={room.objectIds} />
@@ -661,43 +663,7 @@ const ObjectView = styled.div<{ page: number }>`
   z-index: 0;
 `;
 
-const ObjectBlendColor = styled.div<{
-  wallColor: RoomWallColor;
-  light: RoomLight;
-}>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  pointer-events: none;
-  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
-  mix-blend-mode: color;
-  opacity: 0.5;
-`;
-
-const ObjectBlendOverlay = styled.div<{
-  wallColor: RoomWallColor;
-  light: RoomLight;
-}>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  pointer-events: none;
-  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
-  mix-blend-mode: overlay;
-  opacity: 0.5;
-`;
-
-const ObjectBackground = styled.img`
+const ObjectBackgroundWall = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -724,16 +690,15 @@ const ObjectBackgroundView = styled.div`
   z-index: 3;
 `;
 
-const ObjectBackgroundImage = styled.img`
-  width: 40%;
-  height: 70%;
-  object-fit: cover;
+const LottieStyled = styled.div`
+  width: 72vw;
+  height: 72vh;
   position: absolute;
   top: 0;
-  left: 24%;
+  left: 10vw;
   right: 0;
   bottom: 0;
-  transition: 0.3s ease-in-out;
+  z-index: 100;
 `;
 
 const LayerBox = styled.div<{ page?: number }>`

@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Background } from '~/constants/background';
+import { Weather } from '~/constants/weather';
 import { MusicEntity } from '~/server/entities/MusicEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import { UserEntity } from '~/server/entities/UserEntity';
@@ -63,7 +63,7 @@ export class RoomEntity {
   @Column({
     type: 'varchar',
   })
-  background: Background;
+  background: Weather;
 
   @Column({
     type: 'varchar',
