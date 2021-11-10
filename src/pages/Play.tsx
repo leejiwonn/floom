@@ -392,14 +392,6 @@ const Play = ({ room }: Props) => {
                   />
                   {visibleBoardPopup && (
                     <PopupBoard>
-                      <PopupBoardHostView>
-                        <Typography
-                          font={FontType.SEMI_BOLD_BODY}
-                          color={BasicColor.WHITE}
-                        >
-                          인사말 : {room.guestBooksWelcomeMessage}
-                        </Typography>
-                      </PopupBoardHostView>
                       <PopupBoardGuestView>
                         <PopupBoardGuestBox>
                           {guestBooks?.[0].items.length ? (
@@ -863,16 +855,10 @@ const PopupBoard = styled.div`
   border-radius: 1em;
 `;
 
-const PopupBoardHostView = styled.div`
-  padding: 1.2em;
-  background-color: ${BasicColor.BLUE100};
-  border-radius: 1em;
-`;
-
 const PopupBoardGuestView = styled.div`
   width: 100%;
   overflow: hidden;
-  padding: 1em 0;
+  padding-bottom: 1em;
 `;
 
 const PopupBoardGuestBox = styled.div`

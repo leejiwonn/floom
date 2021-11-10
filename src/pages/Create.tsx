@@ -55,6 +55,7 @@ const Create = () => {
 
   const [room, setRoom] = useState<CreateRoomData>({
     title: '',
+    description: '',
     categoryId: 1,
     light: 'ONE',
     wallColor: 'RED',
@@ -74,7 +75,6 @@ const Create = () => {
     roomImage: '',
     musicIds: [],
     guestBooksEnabled: false,
-    guestBooksWelcomeMessage: '',
   });
   const { data: musics } = useMusics(musicCategory?.id);
 
@@ -93,6 +93,17 @@ const Create = () => {
       if (e.target.value.length <= 30) {
         setRoom((prev) => {
           return { ...prev, title: e.target.value };
+        });
+      }
+    },
+    [setRoom],
+  );
+
+  const handleChangeRoomDescriptionInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length <= 20) {
+        setRoom((prev) => {
+          return { ...prev, description: e.target.value };
         });
       }
     },
@@ -250,26 +261,11 @@ const Create = () => {
     }
   };
 
-  const handleChangeGuestBookInput = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (room.guestBooksEnabled && e.target.value.length <= 30) {
-        setRoom((prev) => {
-          return {
-            ...prev,
-            guestBooksWelcomeMessage: e.target.value,
-          };
-        });
-      }
-    },
-    [room, setRoom],
-  );
-
   const handleGuestBookToggle = () => {
     setRoom((prev) => {
       return {
         ...prev,
         guestBooksEnabled: !prev.guestBooksEnabled,
-        guestBooksWelcomeMessage: '',
       };
     });
   };
@@ -290,23 +286,13 @@ const Create = () => {
       return;
     }
 
-    if (
-      room.title === '' ||
-      !room.assets.length ||
-      !selectedMusics.length ||
-      (room.guestBooksEnabled && room.guestBooksWelcomeMessage === '')
-    ) {
+    if (room.title === '' || !room.assets.length || !selectedMusics.length) {
       if (room.title === '') {
-        setVisibleToast('방 이름을 작성해주세요.');
+        setVisibleToast('방 설명을 작성해주세요.');
       } else if (!room.assets.length) {
         setVisibleToast('풍경을 등록해주세요.');
       } else if (!selectedMusics.length) {
         setVisibleToast('음악을 등록해주세요.');
-      } else if (
-        room.guestBooksEnabled &&
-        room.guestBooksWelcomeMessage === ''
-      ) {
-        setVisibleToast('방명록 인사말을 등록해주세요.');
       }
       return;
     }
@@ -368,25 +354,48 @@ const Create = () => {
           {contentType === 'info' && (
             <ContentBox type={contentType}>
               <CreateInfoItem
-                title="방 이름"
+                title="방 설명"
                 titleIcon={<RoomIcon width="2.4em" height="2.4em" />}
                 content={
-                  <RoomTitleStyled>
-                    <RoomTitle>
-                      <Typography
-                        font={FontType.SEMI_BOLD_CAPTION}
-                        color={BasicColor.BLUE100}
-                      >
-                        {roomCategory?.name}
-                      </Typography>
-                    </RoomTitle>
+                  <>
+                    <Typography
+                      font={FontType.REGULAR_CAPTION}
+                      color={BasicColor.DARK70}
+                      marginBottom={1}
+                    >
+                      • 방 카테고리 / 이름
+                    </Typography>
+                    <RoomTitleStyled>
+                      <RoomTitle>
+                        <Typography
+                          font={FontType.SEMI_BOLD_CAPTION}
+                          color={BasicColor.BLUE100}
+                        >
+                          {roomCategory?.name}
+                        </Typography>
+                      </RoomTitle>
+                      <TextInput
+                        maxLength={30}
+                        value={room.title}
+                        onChangeInput={handleChangeRoomTitleInput}
+                        placeholder="방 이름을 작성해주세요."
+                      />
+                    </RoomTitleStyled>
+                    <Typography
+                      font={FontType.REGULAR_CAPTION}
+                      color={BasicColor.DARK70}
+                      marginTop={2}
+                      marginBottom={1}
+                    >
+                      • 한 줄 소개
+                    </Typography>
                     <TextInput
-                      maxLength={30}
-                      value={room.title}
-                      onChangeInput={handleChangeRoomTitleInput}
-                      placeholder="방 이름을 작성해주세요."
+                      maxLength={20}
+                      value={room.description}
+                      onChangeInput={handleChangeRoomDescriptionInput}
+                      placeholder="간단한 인사말을 작성해주세요."
                     />
-                  </RoomTitleStyled>
+                  </>
                 }
                 required
               />
@@ -504,16 +513,6 @@ const Create = () => {
               <CreateInfoItem
                 title="방명록"
                 titleIcon={<BookIcon width="2.4em" height="2.4em" />}
-                content={
-                  <>
-                    <TextInput
-                      value={room.guestBooksWelcomeMessage as string}
-                      maxLength={30}
-                      onChangeInput={handleChangeGuestBookInput}
-                      placeholder="간단한 인사말을 적어주세요."
-                    />
-                  </>
-                }
                 isToggle
                 activeToggle={room.guestBooksEnabled}
                 setIsToggle={handleGuestBookToggle}

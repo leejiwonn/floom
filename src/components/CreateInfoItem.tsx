@@ -10,7 +10,7 @@ import OpenIcon from '../../public/assets/icons/icon-open.svg';
 interface Props {
   title: string;
   titleIcon: React.ReactElement;
-  content: React.ReactNode;
+  content?: React.ReactNode;
   isDrop?: boolean;
   isToggle?: boolean;
   activeToggle?: boolean;
@@ -78,7 +78,9 @@ const CreateInfoItem = ({
           </ToggleStyled>
         )}
       </CreateInfoItemTitle>
-      {visibleInfo && <CreateInfoItemContent>{content}</CreateInfoItemContent>}
+      {content && visibleInfo && (
+        <CreateInfoItemContent>{content}</CreateInfoItemContent>
+      )}
     </CreateInfoItemStyled>
   );
 };
