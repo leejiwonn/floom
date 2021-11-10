@@ -14,6 +14,7 @@ const FontSize = {
   SIZE_TITLE_02: 1.8,
   SIZE_BODY: 1.6,
   SIZE_CAPTION: 1.4,
+  SIZE_CAPTION_X: 1.1,
 } as const;
 
 const Align = {
@@ -51,6 +52,7 @@ const FontType = {
   LIGHT_TITLE_02: 'LIGHT_TITLE_02',
   LIGHT_BODY: 'LIGHT_BODY',
   LIGHT_CAPTION: 'LIGHT_CAPTION',
+  LIGHT_CAPTION_X: 'LIGHT_CAPTION_X',
 } as const;
 
 type Align = typeof Align[keyof typeof Align];
@@ -112,6 +114,10 @@ namespace Font {
       case FontType.LIGHT_CAPTION: {
         return FontSize.SIZE_CAPTION;
       }
+
+      case FontType.LIGHT_CAPTION_X: {
+        return FontSize.SIZE_CAPTION_X;
+      }
     }
 
     return FontSize.SIZE_BODY;
@@ -154,7 +160,8 @@ namespace Font {
       case FontType.LIGHT_TITLE_01:
       case FontType.LIGHT_TITLE_02:
       case FontType.LIGHT_BODY:
-      case FontType.LIGHT_CAPTION: {
+      case FontType.LIGHT_CAPTION:
+      case FontType.LIGHT_CAPTION_X: {
         return Weight.LIGHT;
       }
     }
