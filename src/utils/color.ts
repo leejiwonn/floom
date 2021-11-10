@@ -25,8 +25,8 @@ const BasicColor = {
   GREEN20: '#D1ECE0',
   GREEN10: '#E8F5EF',
 
+  RED: '#FF4768',
   YELLOW: '#FFEC44',
-
   WHITE: '#FFFFFF',
   BLACK: '#000000',
 } as const;
@@ -38,21 +38,21 @@ const GradientColor = {
 } as const;
 
 const WallColor = {
-  RED_ONE: 'rgba(242, 109, 112, 0.6)',
-  RED_TWO: 'rgba(222, 78, 76, 0.9)',
-  RED_THREE: 'rgba(191, 19, 18, 1)',
-  YELLOW_ONE: 'rgba(242, 109, 112, 0.6)',
-  YELLOW_TWO: 'rgba(222, 78, 76, 0.9)',
-  YELLOW_THREE: 'rgba(191, 19, 18, 1)',
-  GREEN_ONE: 'rgba(242, 109, 112, 0.6)',
-  GREEN_TWO: 'rgba(222, 78, 76, 0.9)',
-  GREEN_THREE: 'rgba(191, 19, 18, 1)',
-  BLUE_ONE: 'rgba(242, 109, 112, 0.6)',
-  BLUE_TWO: 'rgba(222, 78, 76, 0.9)',
-  BLUE_THREE: 'rgba(191, 19, 18, 1)',
-  PURPLE_ONE: 'rgba(242, 109, 112, 0.6)',
-  PURPLE_TWO: 'rgba(222, 78, 76, 0.9)',
-  PURPLE_THREE: 'rgba(191, 19, 18, 1)',
+  RED_ONE: '#E18382',
+  RED_TWO: '#AB4846',
+  RED_THREE: '#871F23',
+  YELLOW_ONE: '#F9AF10',
+  YELLOW_TWO: '#E89B10',
+  YELLOW_THREE: '#D16C00',
+  GREEN_ONE: '#648B5A',
+  GREEN_TWO: '#407348',
+  GREEN_THREE: '#1C4226',
+  BLUE_ONE: '#607D9D',
+  BLUE_TWO: '#23488F',
+  BLUE_THREE: '#001D5D',
+  PURPLE_ONE: '#9C6CD0',
+  PURPLE_TWO: '#E89B10',
+  PURPLE_THREE: '#44008D',
 } as const;
 
 type BasicColor = typeof BasicColor[keyof typeof BasicColor];
