@@ -30,6 +30,7 @@ export function toRoomSimple(x: RoomEntity): RoomSimple {
   return {
     id: x.id,
     title: x.title,
+    description: x.description,
     category: toRoomCategory(x.category),
     light: x.light,
     wallColor: x.wallColor,
@@ -40,7 +41,6 @@ export function toRoomSimple(x: RoomEntity): RoomSimple {
     roomImage: x.roomImage,
     creator: toUserSimple(x.creator),
     guestBooksEnabled: x.guestBooksEnabled,
-    guestBooksWelcomeMessage: x.guestBooksWelcomeMessage,
     createdAt: x.createdAt.toISOString(),
     updatedAt: x.updatedAt.toISOString(),
   };

@@ -19,6 +19,7 @@ Authorization: Bearer {{$dotenv authToken }}
 
 {
   "title": "테스트",
+  "description": "설명",
   "categoryId": 3,
   "light": "TWO",
   "wallColor": "GREEN",
@@ -41,7 +42,6 @@ Authorization: Bearer {{$dotenv authToken }}
   "roomImage": "https://floom-upload.s3.ap-northeast-2.amazonaws.com/-ruDAbdraL_7P6z7ZXRHs.png",
   "musicIds": [4, 5, 6],
   "guestBooksEnabled": false,
-  "guestBooksWelcomeMessage": null,
 }
 
 ### RoomGuestbook

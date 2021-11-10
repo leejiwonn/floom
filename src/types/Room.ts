@@ -34,6 +34,7 @@ export type RoomAsset = {
 export type RoomSimple = {
   id: number;
   title: string;
+  description: string;
   category: RoomCategory;
   light: RoomLight;
   wallColor: RoomWallColor;
@@ -44,7 +45,6 @@ export type RoomSimple = {
   roomImage: string;
   creator: UserSimple;
   guestBooksEnabled: boolean;
-  guestBooksWelcomeMessage?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -52,6 +52,7 @@ export type RoomSimple = {
 export type CreateRoomData = Pick<
   Room,
   | 'title'
+  | 'description'
   | 'light'
   | 'wallColor'
   | 'objectIds'
@@ -60,7 +61,6 @@ export type CreateRoomData = Pick<
   | 'tags'
   | 'roomImage'
   | 'guestBooksEnabled'
-  | 'guestBooksWelcomeMessage'
 > & {
   categoryId: RoomCategory['id'];
   musicIds: Array<Music['id']>;
