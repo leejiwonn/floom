@@ -30,6 +30,7 @@ import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
 import Toast from '~/components/Toast';
+import { RoomCategory } from '~/types/RoomCategory';
 
 interface Props {
   room: Room;
@@ -102,6 +103,19 @@ const Play = ({ room }: Props) => {
       return '집중하고자 하는 시간을 딱 정해보세요!';
     } else if (page === 2) {
       return '작은 목표를 차곡차곡 쌓으며 성취감을 느껴요 😊';
+    }
+  };
+
+  const getCategoryPlaceholder = (
+    category: RoomCategory,
+    type: 'big' | 'small',
+  ) => {
+    if (category.name === '학습') {
+      return type === 'big' ? '토익 공부하기' : '문제집 5장 풀기, 채점하기';
+    } else if (category.name === '업무') {
+      return type === 'big' ? '코딩하기' : 'UI 구현, api 연동';
+    } else if (category.name === '휴식') {
+      return type === 'big' ? '명상하기' : '크게 쉼호흡, 10분 스트레칭';
     }
   };
 
@@ -282,7 +296,10 @@ const Play = ({ room }: Props) => {
               {currentPage === 0 && (
                 <StepA
                   onChangeGoalText={setObjective}
-                  placeholderInfo="ex) 토익 공부하기"
+                  placeholderInfo={`ex) ${getCategoryPlaceholder(
+                    room.category,
+                    'big',
+                  )}`}
                   onNextPage={handleNextPage}
                 />
               )}
@@ -301,7 +318,10 @@ const Play = ({ room }: Props) => {
                   onChangeTodos={handleChangeTodos}
                   onDeleteTodo={handleDeleteTodo}
                   objective={objective}
-                  placeholderInfo="ex) 문제집 5장 풀기, 채점하기"
+                  placeholderInfo={`ex) ${getCategoryPlaceholder(
+                    room.category,
+                    'small',
+                  )}`}
                   onSliderShow={setSliderShow}
                   onPrevPage={handlePrevPage}
                   onNextPage={handleNextPage}
