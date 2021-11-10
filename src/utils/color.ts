@@ -51,7 +51,7 @@ const WallColor = {
   BLUE_TWO: '#23488F',
   BLUE_THREE: '#001D5D',
   PURPLE_ONE: '#9C6CD0',
-  PURPLE_TWO: '#E89B10',
+  PURPLE_TWO: '#7533BC',
   PURPLE_THREE: '#44008D',
 } as const;
 

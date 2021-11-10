@@ -1,4 +1,4 @@
-import type { Background } from '~/constants/background';
+import type { Weather } from '~/constants/weather';
 import type { Music } from '~/types/Music';
 import type { RoomCategory } from '~/types/RoomCategory';
 import type { UserSimple } from '~/types/User';
@@ -28,7 +28,7 @@ export type RoomObjectId = {
 export type RoomAsset = {
   type: 'image' | 'video';
   url: string;
-  filename?: string;
+  filename: string;
 };
 
 export type RoomSimple = {
@@ -39,7 +39,7 @@ export type RoomSimple = {
   light: RoomLight;
   wallColor: RoomWallColor;
   objectIds: RoomObjectId;
-  background: Background;
+  background: Weather;
   assets: RoomAsset[];
   tags: string[];
   roomImage: string;

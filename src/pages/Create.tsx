@@ -16,6 +16,7 @@ import { BasicColor, getWallColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import {
   CreateRoomData,
+  RoomAsset,
   RoomLight,
   RoomObject,
   RoomWallColor,
@@ -30,8 +31,12 @@ import Playlist from '~/components/Playlist';
 import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
-import BACKGROUND, { Background } from '~/constants/background';
+import BACKGROUND from '~/constants/background';
 import { LoaderSpinner } from '~/components/Loader';
+import Toast from '~/components/Toast';
+import Screen from '~/components/Screen';
+import WEATHER, { Weather } from '~/constants/weather';
+import BackgroundFilter from '~/components/BackgroundFilter';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -41,7 +46,7 @@ import CloseIcon from '../../public/assets/icons/icon-close.svg';
 import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import RotateIcon from '../../public/assets/icons/icon-rotate.svg';
 import BookIcon from '../../public/assets/icons/icon-book.svg';
-import Toast from '~/components/Toast';
+import ImageXIcon from '../../public/assets/icons/icon-image-x.svg';
 
 const Create = () => {
   const { data: roomCategories } = useRoomCategories();
@@ -70,7 +75,7 @@ const Create = () => {
       wall: 1,
     },
     background: 'SUNNY',
-    assets: [],
+    assets: [BACKGROUND.RAIN],
     tags: [],
     roomImage: '',
     musicIds: [],
@@ -83,6 +88,7 @@ const Create = () => {
 
   const [visibleControl, setVisibleControl] = useState(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
+  const [uploadImage, setUploadImage] = useState<RoomAsset[]>([]);
 
   useEffect(() => {
     setRoomCategory(roomCategories?.[0]);
@@ -110,51 +116,59 @@ const Create = () => {
     [setRoom],
   );
 
-  const handleUpdateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isLoading === 'updateFile') {
-      return;
-    }
+  const handleUpdateImage = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isLoading === 'updateFile') {
+        return;
+      }
 
-    if (room.assets.length > 2) {
-      return;
-    }
+      const files = e.target.files;
+      if (files == null || files.length === 0) {
+        return;
+      }
 
-    const files = e.target.files;
-    if (files == null || files.length === 0) {
-      return;
-    }
+      const file = files[0];
+      try {
+        setIsLoading('updateFile');
 
-    const file = files[0];
-    try {
-      setIsLoading('updateFile');
-      const { url } = await upload(file);
-      setRoom((prev) => {
-        return {
-          ...prev,
-          assets: [
-            ...prev.assets,
-            {
-              type:
-                file.type === 'video/mp4' || file.type === 'video/webm'
-                  ? 'video'
-                  : 'image',
-              url,
-              filename: file.name,
-            },
-          ],
-        };
-      });
-      setIsLoading('');
-    } catch (e) {
-      setVisibleToast('10MB 이하의 파일만 업로드가 가능합니다.');
-    }
-  };
+        const { url } = await upload(file);
+        const uploadImageData: RoomAsset[] = [
+          {
+            type: 'image',
+            url,
+            filename: file.name,
+          },
+        ];
+        setUploadImage(uploadImageData);
+        setRoom((prev) => {
+          return {
+            ...prev,
+            assets: uploadImageData,
+          };
+        });
+        setIsLoading('');
+      } catch (e) {
+        setVisibleToast('10MB 이하의 이미지만 업로드가 가능합니다.');
+      }
+    },
+    [setRoom],
+  );
 
-  const handleFileDeleteButton = (value: string) => {
+  const handleUpdateImageUrl = (value: RoomAsset) => {
     setRoom((prev) => {
       return {
         ...prev,
-        assets: prev.assets.filter((x) => x.url !== value),
+        assets: [value],
+      };
+    });
+  };
+
+  const handleFileDeleteButton = () => {
+    setUploadImage([]);
+    setRoom((prev) => {
+      return {
+        ...prev,
+        assets: [BACKGROUND.RAIN],
       };
     });
   };
@@ -212,13 +226,7 @@ const Create = () => {
   };
 
   const handleBackgroundClick = () => {
-    const backgroundList: Background[] = [
-      'RAIN',
-      'SNOW',
-      'SUNNY',
-      'BLUR',
-      'NIGHT',
-    ];
+    const backgroundList: Weather[] = Object.keys(WEATHER) as Weather[];
 
     setRoom((prev) => {
       const index = backgroundList.indexOf(prev.background);
@@ -247,8 +255,8 @@ const Create = () => {
       });
     };
 
-    const file: Blob = await onCapture();
     try {
+      const file: Blob = await onCapture();
       const { url } = await uploadRoomImage(file);
       setRoom((prev) => {
         return {
@@ -290,7 +298,7 @@ const Create = () => {
       if (room.title === '') {
         setVisibleToast('방 설명을 작성해주세요.');
       } else if (!room.assets.length) {
-        setVisibleToast('풍경을 등록해주세요.');
+        setVisibleToast('창 밖 풍경을 등록해주세요.');
       }
       return;
     }
@@ -398,7 +406,7 @@ const Create = () => {
                 required
               />
               <CreateInfoItem
-                title="풍경"
+                title="창 밖 풍경"
                 titleIcon={
                   <AddImageIcon
                     width="2.4em"
@@ -410,72 +418,54 @@ const Create = () => {
                 content={
                   <CreateInfoImageStyled>
                     <FileUploadImageStyled>
-                      {room.assets.length ? (
-                        room.assets.map((value, index) => (
-                          <FileUploadImageItem key={index}>
-                            <FileUploadData>
-                              <FileUploadImage backgroundImage={value.url} />
-                              <Typography
-                                font={FontType.SEMI_BOLD_BODY}
-                                marginLeft={1}
-                              >
-                                {value.filename ?? value.url.split('/')[3]}
-                              </Typography>
-                            </FileUploadData>
-                            <FileDeleteButton
-                              onClick={() => handleFileDeleteButton(value.url)}
+                      <FileUploadImageItem
+                        selected={uploadImage[0]?.url === room.assets[0]?.url}
+                        empty={!uploadImage.length}
+                      >
+                        {uploadImage[0] ? (
+                          <>
+                            <FileUploadImage
+                              onClick={() =>
+                                handleUpdateImageUrl(uploadImage[0])
+                              }
                             >
+                              <Screen type="thumbnail" assets={uploadImage} />
+                            </FileUploadImage>
+                            <FileDeleteButton onClick={handleFileDeleteButton}>
                               <CloseIcon
-                                width="2.2em"
-                                height="2.2em"
-                                stroke={BasicColor.DARK40}
+                                width="2.5em"
+                                height="2.5em"
+                                stroke={BasicColor.WHITE}
                               />
                             </FileDeleteButton>
-                          </FileUploadImageItem>
-                        ))
-                      ) : (
-                        <>
-                          <EmojiExclamationMarkStyled>
-                            {EMOJI.EXCLAMATION_MARK}
-                          </EmojiExclamationMarkStyled>
-                          <Typography
-                            font={FontType.REGULAR_BODY}
-                            marginBottom={0.2}
-                          >
-                            앗! 아직 등록된{' '}
+                          </>
+                        ) : (
+                          <NoneImageStyled>
+                            <ImageXIcon />
                             <Typography
-                              tag="span"
-                              font={FontType.SEMI_BOLD_BODY}
+                              font={FontType.LIGHT_CAPTION_X}
+                              color={BasicColor.DARK40}
+                              marginTop={0.3}
                             >
-                              풍경
+                              등록한 풍경
                             </Typography>
-                            이 없어요.
-                          </Typography>
-                          <Typography
-                            font={FontType.REGULAR_CAPTION}
-                            color={BasicColor.DARK40}
+                          </NoneImageStyled>
+                        )}
+                      </FileUploadImageItem>
+                      {Object.values(BACKGROUND).map((img, index) => (
+                        <FileUploadImageItem
+                          key={index}
+                          selected={img.url === room.assets[0]?.url}
+                        >
+                          <FileUploadImage
+                            onClick={() => handleUpdateImageUrl(img)}
                           >
-                            <Typography
-                              tag="span"
-                              font={FontType.REGULAR_CAPTION}
-                              color={BasicColor.DARK70}
-                            >
-                              .JPG, .PNG, .mp4
-                            </Typography>{' '}
-                            파일 /{' '}
-                            <Typography
-                              tag="span"
-                              font={FontType.REGULAR_CAPTION}
-                              color={BasicColor.DARK70}
-                            >
-                              10MB
-                            </Typography>{' '}
-                            이하
-                          </Typography>
-                        </>
-                      )}
+                            <Screen type="thumbnail" assets={[img]} />
+                          </FileUploadImage>
+                        </FileUploadImageItem>
+                      ))}
                     </FileUploadImageStyled>
-                    <FileUploadButtonLabel active={room.assets.length < 3}>
+                    <FileUploadButtonLabel active={uploadImage.length <= 0}>
                       {isLoading === 'updateFile' ? (
                         <LoaderSpinner mode="dark" />
                       ) : (
@@ -491,18 +481,41 @@ const Create = () => {
                             color={BasicColor.WHITE}
                             marginLeft={0.5}
                           >
-                            풍경 등록하기
+                            풍경 직접 등록하기
                           </Typography>
                         </>
                       )}
-                      {room.assets.length < 3 && (
+                      {uploadImage.length <= 0 && (
                         <FileUploadButton
                           type="file"
-                          accept="image/png,image/jpg,image/jpeg,video/mp4,video/webm"
+                          accept="image/png,image/jpg,image/jpeg"
                           onChange={handleUpdateImage}
                         />
                       )}
                     </FileUploadButtonLabel>
+                    <Typography
+                      font={FontType.REGULAR_CAPTION}
+                      color={BasicColor.DARK40}
+                      align={Align.RIGHT}
+                      marginTop={1}
+                    >
+                      <Typography
+                        tag="span"
+                        font={FontType.REGULAR_CAPTION}
+                        color={BasicColor.DARK70}
+                      >
+                        .JPG, .PNG, .mp4
+                      </Typography>{' '}
+                      파일 /{' '}
+                      <Typography
+                        tag="span"
+                        font={FontType.REGULAR_CAPTION}
+                        color={BasicColor.DARK70}
+                      >
+                        10MB
+                      </Typography>{' '}
+                      이하
+                    </Typography>
                   </CreateInfoImageStyled>
                 }
                 isDrop
@@ -655,14 +668,11 @@ const Create = () => {
         </ContentView>
         <ObjectViewStyled>
           <ObjectView id="capture-view">
-            <ObjectBlendOverlay wallColor={room.wallColor} light={room.light} />
-            <ObjectBlendColor wallColor={room.wallColor} light={room.light} />
-            <ObjectBackground src={ROOM.WALL[1]} />
-            <ObjectBackgroundView>
-              <ObjectBackgroundImage
-                src={BACKGROUND[room.background]}
-                alt="풍경"
-              />
+            <BackgroundFilter wallColor={room.wallColor} light={room.light} />
+            <ObjectBackgroundWall src={ROOM.WALL[1]} />
+            <ObjectBackgroundView data-html2canvas-ignore="true">
+              <LottieStyled>{WEATHER[room.background]}</LottieStyled>
+              <Screen type="thumbnail" assets={room.assets} />
             </ObjectBackgroundView>
             <LayerBox>
               <ObjectBox
@@ -883,43 +893,7 @@ const ObjectView = styled.div`
   z-index: -1;
 `;
 
-const ObjectBlendColor = styled.div<{
-  wallColor: RoomWallColor;
-  light: RoomLight;
-}>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  pointer-events: none;
-  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
-  mix-blend-mode: color;
-  opacity: 0.5;
-`;
-
-const ObjectBlendOverlay = styled.div<{
-  wallColor: RoomWallColor;
-  light: RoomLight;
-}>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  pointer-events: none;
-  background-color: ${({ wallColor, light }) => getWallColor(wallColor, light)};
-  mix-blend-mode: overlay;
-  opacity: 0.5;
-`;
-
-const ObjectBackground = styled.img`
+const ObjectBackgroundWall = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -928,8 +902,8 @@ const ObjectBackground = styled.img`
 `;
 
 const ObjectBackgroundView = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 80vw;
+  height: 80vh;
   position: absolute;
   top: 0;
   left: 0;
@@ -939,22 +913,29 @@ const ObjectBackgroundView = styled.div`
   mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg')
     no-repeat;
   mask-size: 100vw 74.6vh;
-  mask-position: -4.6vw -4.6vh;
+  mask-position: -5vw -4vh;
   mask-repeat: no-repeat;
   pointer-events: none;
   z-index: 3;
+
+  img {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8%;
+  }
 `;
 
-const ObjectBackgroundImage = styled.img`
-  width: 40%;
-  height: 70%;
-  object-fit: cover;
+const LottieStyled = styled.div`
+  width: 72vw;
+  height: 72vh;
   position: absolute;
   top: 0;
-  left: 24%;
+  left: 10vw;
   right: 0;
   bottom: 0;
-  transition: 0.3s ease-in-out;
+  z-index: 100;
 `;
 
 const CreateInfoImageStyled = styled.div``;
@@ -981,52 +962,61 @@ const FileUploadButton = styled.input`
 `;
 
 const FileUploadImageStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0.2em 0.4em rgba(0, 0, 0, 0.15);
-  border: 0.1em solid ${BasicColor.GRAY60};
-  border-radius: 0.8em;
-  padding: 1.8em;
-  margin: 1.5em 0;
-`;
-
-const FileUploadImageItem = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1em 0;
-`;
-
-const FileUploadData = styled.div`
+  height: auto;
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-
-  p {
-    width: 12em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  flex-wrap: wrap;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
 `;
 
-const FileUploadImage = styled.div<{ backgroundImage: string }>`
-  width: 3.6em;
-  height: 3.6em;
-  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
+const FileUploadImageItem = styled.div<{ selected: boolean; empty?: boolean }>`
+  width: 6.4em;
+  height: 6.4em;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin: 0.8em;
+  background-color: ${({ empty }) => empty && BasicColor.GRAY20};
+  border: ${({ empty }) => empty && `2px dashed ${BasicColor.GRAY60}`};
+  border: ${({ selected }) => selected && `2px solid ${BasicColor.BLUE100}`};
   border-radius: 0.8em;
+  z-index: 0;
+`;
+
+const FileUploadImage = styled.button`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  border-radius: 0.8em;
+  z-index: -1;
 `;
 
 const FileDeleteButton = styled.button`
-  width: 2em;
-  height: 2em;
+  width: 2.5em;
+  height: 2.5em;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: -0.5em;
+  bottom: -0.5em;
+  background-color: ${BasicColor.RED};
+  border-radius: 50%;
+  border: 1px solid ${BasicColor.WHITE};
+  padding: 0.1em;
+`;
+
+const NoneImageStyled = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
