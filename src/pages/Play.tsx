@@ -25,8 +25,6 @@ import { BasicColor, getWallColor } from '~/utils/color';
 import { visuallyHidden } from '~/utils/css';
 import { Align, FontType } from '~/utils/font';
 
-import ClockOffIcon from '../../public/assets/icons/icon-clock-off.svg';
-import ClockOnIcon from '../../public/assets/icons/icon-clock-on.svg';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
 import Toast from '~/components/Toast';
@@ -59,16 +57,11 @@ const Play = ({ room }: Props) => {
   const timerAudioRef = useRef<HTMLAudioElement>(null);
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const [visibleClockPopup, setVisibleClockPopup] = useState(false);
   const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
   const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [visibleBoardPopup, setVisibleBoardPopup] = useState(false);
   const [guestInput, setGuestInput] = useState({ input: '', emoji: 'HEART' });
-  const [isTimerAlarm, setIsTimerAlarm] = useState(true);
 
-  const { modalRef: clockRef } = useOutsideEvent<HTMLDivElement>({
-    onOutsideClick: () => setVisibleClockPopup(false),
-  });
   const { modalRef: speakerRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setVisibleSpeakerPopup(false),
   });
@@ -227,7 +220,7 @@ const Play = ({ room }: Props) => {
 
   const handleTimeout = useCallback(() => {
     setVisibleModal('timeout');
-    isTimerAlarm && timerAudioRef.current?.play();
+    timerAudioRef.current?.play();
   }, []);
 
   const handleTimeoutButtonClick = () => {
@@ -344,25 +337,6 @@ const Play = ({ room }: Props) => {
         <LayerBox style={{ zIndex: 10 }}>
           {currentPage >= 3 && (
             <PopupBox>
-              <PopupClockStyled ref={clockRef}>
-                <OpenButton
-                  visible={visibleClockPopup}
-                  onOpenButtonClick={() =>
-                    setVisibleClockPopup((prev) => !prev)
-                  }
-                />
-                {visibleClockPopup && (
-                  <PopupClock onClick={() => setIsTimerAlarm((prev) => !prev)}>
-                    <ClockToggleButton isTimerAlarm={isTimerAlarm}>
-                      {isTimerAlarm ? (
-                        <ClockOnIcon width="5.6em" height="5.6em" />
-                      ) : (
-                        <ClockOffIcon width="5.6em" height="5.6em" />
-                      )}
-                    </ClockToggleButton>
-                  </PopupClock>
-                )}
-              </PopupClockStyled>
               {room.musics.length > 0 && (
                 <PopupSpeakerStyled ref={speakerRef}>
                   <OpenButton
@@ -777,42 +751,6 @@ const PopupBox = styled.div`
   height: 100%;
   position: absolute;
   z-index: 2;
-`;
-
-const PopupClockStyled = styled.div`
-  width: 8em;
-  position: absolute;
-  top: -8%;
-  left: 80%;
-  padding: 0.5em;
-`;
-
-const PopupClock = styled.button`
-  width: 100%;
-  position: absolute;
-  top: 4.5em;
-  right: 0.4em;
-  padding: 0.6em;
-  background-color: ${BasicColor.BLUE100};
-  border: 0.2em solid ${BasicColor.BLUE90};
-  box-sizing: border-box;
-  box-shadow: 0 0.4em 2.4em rgba(0, 0, 0, 0.08);
-  border-radius: 3.5em;
-`;
-
-const ClockToggleButton = styled.div<{ isTimerAlarm: boolean }>`
-  width: 3em;
-  height: 3em;
-  position: relative;
-  left: ${({ isTimerAlarm }) => (isTimerAlarm ? 3.4 + 'em' : 0)};
-  background-color: ${BasicColor.WHITE};
-  border-radius: 50%;
-  transition: 0.3s;
-
-  svg {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 const PopupSpeakerStyled = styled.div`
