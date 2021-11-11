@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 import { MusicCategory } from '~/types/MusicCategory';
 import { RoomCategory } from '~/types/RoomCategory';
@@ -11,12 +11,18 @@ import Typography from './Typography';
 import SidebarIcon from '../../public/assets/icons/icon-sidebar.svg';
 
 interface Props {
+  scrollRef: RefObject<HTMLDivElement>;
   categories: MusicCategory[] | RoomCategory[];
   category: MusicCategory | RoomCategory;
   setCategory(value: MusicCategory | RoomCategory): void;
 }
 
-const CategoryMenu = ({ categories, category, setCategory }: Props) => {
+const CategoryMenu = ({
+  scrollRef,
+  categories,
+  category,
+  setCategory,
+}: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentWidth, setCurrentWidth] = useState(0);
 
@@ -31,12 +37,18 @@ const CategoryMenu = ({ categories, category, setCategory }: Props) => {
   }, []);
 
   const handlePrevButtonClick = () => {
+    const scroll = scrollRef?.current;
+    scroll?.scrollTo(0, 0);
+
     setCategory(categories[currentIndex - 1]);
     setCurrentWidth((prev) => prev + 108);
     setCurrentIndex((prev) => prev - 1);
   };
 
   const handleNextButtonClick = () => {
+    const scroll = scrollRef?.current;
+    scroll?.scrollTo(0, 0);
+
     setCategory(categories[currentIndex + 1]);
     setCurrentWidth((prev) => prev - 108);
     setCurrentIndex((prev) => prev + 1);

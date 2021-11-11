@@ -51,16 +51,16 @@ const ObjectBoxStyled = styled.div`
 `;
 
 const ObjectVase = styled.button`
-  width: 13%;
+  width: 15%;
   height: auto;
   position: absolute;
-  top: 4%;
-  left: 44%;
+  top: 3%;
+  left: 43%;
   z-index: 0;
 `;
 
 const ObjectClock = styled.button`
-  width: 9%;
+  width: 10%;
   height: auto;
   position: absolute;
   top: -12%;
@@ -69,48 +69,48 @@ const ObjectClock = styled.button`
 `;
 
 const ObjectBoard = styled.button`
-  width: 15%;
+  width: 16%;
   height: auto;
   position: absolute;
   right: 0;
-  top: 13%;
+  top: 12%;
   cursor: default;
   z-index: 1;
 `;
 
 const ObjectPoster = styled.button`
-  width: 16%;
+  width: 20%;
   height: auto;
   position: absolute;
-  top: -10%;
-  right: 28%;
+  top: -23%;
+  right: 26%;
   z-index: 0;
 `;
 
 const ObjectSpeaker = styled.button`
-  width: 12%;
+  width: 26%;
   height: auto;
   position: absolute;
-  left: 8%;
-  bottom: 18%;
+  left: -3%;
+  bottom: 6%;
   z-index: 1;
 `;
 
 const ObjectTable = styled.button`
-  width: 30%;
+  width: 39%;
   height: auto;
   position: absolute;
-  right: 30%;
-  bottom: 2%;
+  right: 26%;
+  bottom: 1%;
   z-index: 0;
 `;
 
 const ObjectLight = styled.button`
-  width: 13%;
+  width: 16%;
   height: auto;
   position: absolute;
-  right: 20%;
-  bottom: 40%;
+  right: 18%;
+  bottom: 32%;
   z-index: 0;
 `;
 
