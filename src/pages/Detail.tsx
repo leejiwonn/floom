@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { LoaderSpinner } from '~/components/Loader';
+import { LoaderBubbles } from '~/components/Loader';
 import Playlist from '~/components/Playlist';
 import Typography from '~/components/Typography';
 import BackgroundFilter from '~/components/BackgroundFilter';
@@ -211,7 +211,7 @@ const Detail = ({ room: initialRoom }: Props) => {
         active={!!room.isBookmarked}
       >
         {loading ? (
-          <LoaderSpinner mode={room.isBookmarked ? 'dark' : 'light'} />
+          <LoaderBubbles mode={room.isBookmarked ? 'dark' : 'light'} />
         ) : (
           <AddBookmarkButtonInfo>
             {room.isBookmarked ? <BookmarkOnIcon /> : <BookmarkOffIcon />}

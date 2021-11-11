@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { BasicColor } from '~/utils/color';
 import { Font, Align, FontType } from '~/utils/font';
-import { LoaderSpinner } from './Loader';
+import { LoaderBubbles } from './Loader';
 import Typography from './Typography';
 
 interface Props {
@@ -74,7 +74,7 @@ const TextInput = ({
       {submitButton && (
         <SubmitButton onClick={() => !isLoading && onSubmitButtonClick?.()}>
           {isLoading ? (
-            <LoaderSpinner />
+            <LoaderBubbles />
           ) : (
             <Typography
               tag="span"
@@ -105,6 +105,8 @@ const TextInputStyled = styled.div<{
   margin-bottom: ${({ marginBottom }) => marginBottom + 'em'};
   margin-left: ${({ marginLeft }) => marginLeft + 'em'};
   margin-right: ${({ marginRight }) => marginRight + 'em'};
+  background-color: ${BasicColor.GRAY20};
+  border-radius: 0.8em;
 `;
 
 const TextInputBox = styled.input<{
@@ -121,7 +123,7 @@ const TextInputBox = styled.input<{
   text-align: ${({ align }) => align};
   background-color: ${BasicColor.GRAY20};
   border-radius: ${({ submitButton }) =>
-    submitButton ? '0.7em 0 0 0.7em' : '0.7em'};
+    submitButton ? '0.8em 0 0 0.8em' : '0.8em'};
   padding: 3%;
   padding-right: 24%;
 
@@ -136,24 +138,21 @@ const TextInputBox = styled.input<{
 
 const TextLength = styled.div`
   position: absolute;
-  right: 0.5em;
+  right: 1.2em;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: ${BasicColor.GRAY20};
-  border-radius: 0 0.7em 0.7em 0;
-  padding: 1em;
+  border-radius: 0 0.8em 0.8em 0;
 `;
 
 const SubmitButton = styled.button`
-  width: 15%;
+  position: absolute;
+  right: 1.5em;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${BasicColor.GRAY20};
-  border-radius: 0 0.7em 0.7em 0;
-  padding: 3%;
 `;
 
 export default TextInput;

@@ -3,11 +3,11 @@ import Loader from 'react-loader-spinner';
 
 import { BasicColor } from '~/utils/color';
 
-interface Props {
+interface LoaderSpinnerProps {
   mode?: 'light' | 'dark';
 }
 
-export const LoaderSpinner = ({ mode = 'light' }: Props) => {
+export const LoaderSpinner = ({ mode = 'light' }: LoaderSpinnerProps) => {
   return (
     <LoaderSpinnerStyled>
       <Loader
@@ -21,14 +21,6 @@ export const LoaderSpinner = ({ mode = 'light' }: Props) => {
   );
 };
 
-export const LoaderEyes = () => {
-  return (
-    <LoaderSpinnerStyled>
-      <LoaderEyesStyled />
-    </LoaderSpinnerStyled>
-  );
-};
-
 const LoaderSpinnerStyled = styled.div`
   width: 100%;
   height: 100%;
@@ -37,6 +29,89 @@ const LoaderSpinnerStyled = styled.div`
   align-items: center;
   pointer-events: none;
 `;
+
+interface LoaderBubblesProps {
+  mode?: 'light' | 'dark';
+}
+
+export const LoaderBubbles = ({ mode = 'light' }: LoaderBubblesProps) => {
+  return (
+    <LoaderBubblesStyled>
+      <LoaderBubblesView>
+        <LoaderBubbleItem>
+          <LoaderBubble mode={mode} index={0} />
+        </LoaderBubbleItem>
+        <LoaderBubbleItem>
+          <LoaderBubble mode={mode} index={1} />
+        </LoaderBubbleItem>
+        <LoaderBubbleItem>
+          <LoaderBubble mode={mode} index={2} />
+        </LoaderBubbleItem>
+      </LoaderBubblesView>
+    </LoaderBubblesStyled>
+  );
+};
+
+const LoaderBubblesStyled = styled.div`
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  animation-play-state: paused;
+
+  :hover {
+    animation-play-state: running;
+    opacity: 1;
+  }
+`;
+
+const LoaderBubblesView = styled.div``;
+
+const LoaderBubbleItem = styled.div`
+  display: inline-flex;
+  width: 0.6em;
+  height: 0.6em;
+  margin: 0 0.5em;
+`;
+
+const LoaderBubble = styled.div<{ mode: 'light' | 'dark'; index: number }>`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: ${({ mode }) =>
+    mode === 'light' ? BasicColor.BLUE100 : BasicColor.WHITE};
+  transform-origin: 50% 50%;
+  transition: 0.1s;
+  animation: bubble 1.2s -0.6s infinite ease-out;
+  animation-delay: ${({ index }) => (index === 1 ? '-0.3s' : 0)};
+
+  @keyframes bubble {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.6);
+      opacity: 0.4;
+    }
+  }
+`;
+
+export const LoaderEyes = () => {
+  return (
+    <LoaderSpinnerStyled>
+      <LoaderEyesStyled />
+    </LoaderSpinnerStyled>
+  );
+};
 
 const LoaderEyesStyled = styled.div`
   display: inline-flex;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { LoaderSpinner } from '~/components/Loader';
+import { LoaderBubbles } from '~/components/Loader';
 import Screen from '~/components/Screen';
 import Typography from '~/components/Typography';
 import Sidebar from '~/components/Sidebar';
@@ -50,7 +50,7 @@ const Home = ({ categories }: Props) => {
           </Typography>
           <RoomStyled>
             {!!!rooms ? (
-              <LoaderSpinner />
+              <LoaderBubbles />
             ) : (
               rooms?.map((room) => (
                 <Link key={room.id} href={`/detail?roomId=${room.id}`}>
