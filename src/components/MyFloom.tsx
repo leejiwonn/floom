@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Typography from '~/components/Typography';
 import Screen from '~/components/Screen';
-import { LoaderSpinner } from '~/components/Loader';
+import { LoaderBubbles } from '~/components/Loader';
 import { useMyReviews, useMyRooms, useMyRoomBookmarks } from '~/hooks/useMy';
 import { BasicColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
@@ -101,7 +101,7 @@ const MyFloom = () => {
                 </NoneRoomList>
               )
             ) : (
-              <LoaderSpinner />
+              <LoaderBubbles />
             ))}
           {category === 'create' &&
             (myRooms ? (
@@ -158,7 +158,7 @@ const MyFloom = () => {
                 </NoneRoomList>
               )
             ) : (
-              <LoaderSpinner />
+              <LoaderBubbles />
             ))}
         </RoomList>
       </RoomListStyled>

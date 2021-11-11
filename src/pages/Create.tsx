@@ -32,7 +32,7 @@ import { Music } from '~/types/Music';
 import CategoryMenu from '~/components/CategoryMenu';
 import BottomPopup from '~/components/BottomPopup';
 import BACKGROUND from '~/constants/background';
-import { LoaderSpinner } from '~/components/Loader';
+import { LoaderBubbles } from '~/components/Loader';
 import Toast from '~/components/Toast';
 import Screen from '~/components/Screen';
 import WEATHER, { Weather } from '~/constants/weather';
@@ -469,7 +469,7 @@ const Create = () => {
                     </FileUploadImageStyled>
                     <FileUploadButtonLabel active={uploadImage.length <= 0}>
                       {isLoading === 'updateFile' ? (
-                        <LoaderSpinner mode="dark" />
+                        <LoaderBubbles mode="dark" />
                       ) : (
                         <>
                           <AddImageIcon
@@ -650,7 +650,7 @@ const Create = () => {
               />
               <MusicListStyled>
                 {!!!musics ? (
-                  <LoaderSpinner />
+                  <LoaderBubbles />
                 ) : (
                   <Playlist
                     scrollRef={playlistScrollRef}
@@ -742,7 +742,7 @@ const Create = () => {
               </RoomControlStyled>
               <CreateButton onClick={handleCreateButtonClick}>
                 {isLoading === 'createButtonClick' ? (
-                  <LoaderSpinner mode="dark" />
+                  <LoaderBubbles mode="dark" />
                 ) : (
                   <Typography
                     font={FontType.BOLD_BODY}
@@ -767,7 +767,7 @@ const Create = () => {
           action={
             <CategoryStyled>
               {!!!roomCategories ? (
-                <LoaderSpinner />
+                <LoaderBubbles />
               ) : (
                 roomCategories?.map((value: RoomCategory, index: number) => (
                   <CategoryItem
@@ -1190,10 +1190,14 @@ const RoomControlItemColor = styled.button<{ color: string }>`
 `;
 
 const CreateButton = styled.button`
+  width: 18em;
+  height: 6em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   right: 5em;
   bottom: 4em;
-  padding: 1.5em 6em;
   border: 0.2em solid ${BasicColor.BLUE40};
   box-sizing: border-box;
   border-radius: 1.8em;
@@ -1204,8 +1208,12 @@ const CreateButton = styled.button`
 `;
 
 const CategoryStyled = styled.div`
+  width: 100%;
+  height: 8em;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 4em;
 `;
 

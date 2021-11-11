@@ -143,7 +143,7 @@ const Play = ({ room }: Props) => {
 
   const handleChangeGuestInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.length <= 30) {
+      if (e.target.value.length <= 50) {
         setGuestInput((prev) => {
           return { ...prev, input: e.target.value };
         });
@@ -244,7 +244,7 @@ const Play = ({ room }: Props) => {
 
   const handleChangeReviewInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.length <= 20) {
+      if (e.target.value.length <= 30) {
         setReviewInput(e.target.value);
       }
     },
@@ -519,7 +519,7 @@ const Play = ({ room }: Props) => {
                 />
               </RecommendButton>
               <TextInput
-                maxLength={20}
+                maxLength={30}
                 value={reviewInput}
                 onChangeInput={handleChangeReviewInput}
                 placeholder="한 줄 평을 작성해주세요."

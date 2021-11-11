@@ -37,7 +37,7 @@ const StepC = ({
 
   const handleChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (todos.length < 5 && e.target.value.length <= 20) {
+      if (todos.length < 5 && e.target.value.length <= 30) {
         setTextInput(e.target.value);
       }
     },
@@ -76,7 +76,7 @@ const StepC = ({
         <TodolistStyled>
           <PlusTagStyled>
             <TextInput
-              maxLength={20}
+              maxLength={30}
               value={textInput}
               onChangeInput={handleChangeInput}
               placeholder={todos.length < 5 ? placeholderInfo : '입력 끝!'}
