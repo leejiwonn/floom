@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Router from 'next/router';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import html2canvas from 'html2canvas';
 
 import Modal from '~/components/Modal';
@@ -89,6 +89,8 @@ const Create = () => {
   const [visibleControl, setVisibleControl] = useState(false);
   const [selectedMusics, setSelectedMusics] = useState<Music[]>([]);
   const [uploadImage, setUploadImage] = useState<RoomAsset[]>([]);
+
+  const playlistScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setRoomCategory(roomCategories?.[0]);
@@ -641,6 +643,7 @@ const Create = () => {
           {contentType === 'music' && (
             <ContentBox type={contentType}>
               <CategoryMenu
+                scrollRef={playlistScrollRef}
                 categories={musicCategories as MusicCategory[]}
                 category={musicCategory as MusicCategory}
                 setCategory={(value) => setMusicCategory(value)}
@@ -650,6 +653,7 @@ const Create = () => {
                   <LoaderSpinner />
                 ) : (
                   <Playlist
+                    scrollRef={playlistScrollRef}
                     playlist={musics as Music[]}
                     controls={false}
                     viewHeight={56}
