@@ -36,6 +36,7 @@ const FontType = {
   BOLD_TITLE_02: 'BOLD_TITLE_02',
   BOLD_BODY: 'BOLD_BODY',
   BOLD_CAPTION: 'BOLD_CAPTION',
+  BOLD_CAPTION_X: 'BOLD_CAPTION_X',
 
   SEMI_BOLD_HEAD_03: 'SEMI_BOLD_HEAD_03',
   SEMI_BOLD_TITLE_01: 'SEMI_BOLD_TITLE_01',
@@ -115,6 +116,7 @@ namespace Font {
         return FontSize.SIZE_CAPTION;
       }
 
+      case FontType.BOLD_CAPTION_X:
       case FontType.LIGHT_CAPTION_X: {
         return FontSize.SIZE_CAPTION_X;
       }
@@ -138,7 +140,8 @@ namespace Font {
       case FontType.BOLD_TITLE_01:
       case FontType.BOLD_TITLE_02:
       case FontType.BOLD_BODY:
-      case FontType.BOLD_CAPTION: {
+      case FontType.BOLD_CAPTION:
+      case FontType.BOLD_CAPTION_X: {
         return Weight.BOLD;
       }
 

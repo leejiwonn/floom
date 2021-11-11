@@ -59,6 +59,15 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
     }
   };
 
+  const getTodoClearStatus = (fullNumber: number) => {
+    let clearCount = 0;
+    todos.map((todo) => todo.clear && (clearCount += 1));
+
+    return clearCount
+      ? parseInt((clearCount * Math.max(fullNumber / todos.length)).toFixed())
+      : 0;
+  };
+
   return (
     <ChecklistStyled ref={modalRef}>
       <ChecklistTitle noneShow={show === true && todos.length === 0}>
@@ -82,6 +91,21 @@ const Checklist = ({ todos, onClearTodo, onDeleteTodo, onAddTodo }: Props) => {
           </Typography>
         </ChecklistAddButton>
       </ChecklistTitle>
+      {todos.length ? (
+        <StatusBarStyled>
+          <StatusBarActive status={getTodoClearStatus(380)} />
+          <StatusBarBackground />
+          <Typography
+            tag="span"
+            font={FontType.BOLD_CAPTION_X}
+            color={BasicColor.GREEN150}
+            marginRight={1}
+            marginTop={0.1}
+          >
+            {`${getTodoClearStatus(100)}%`}
+          </Typography>
+        </StatusBarStyled>
+      ) : null}
       <ChecklistView>
         {!show && todos.length === 0 ? (
           <NoneChecklist>
@@ -191,7 +215,7 @@ const ChecklistAddButton = styled.button<{ active: boolean }>`
 `;
 
 const ChecklistView = styled.div`
-  margin-top: 0.8em;
+  margin-top: 0.6em;
 `;
 
 const ChecklistItem = styled.div<{ last: boolean }>`
@@ -226,6 +250,43 @@ const CheckIconStyled = styled.div<{ clear: boolean }>`
 
 const DeleteButtonStyled = styled.button`
   margin-right: 0.8em;
+`;
+
+const StatusBarStyled = styled.div`
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 5.3em;
+  margin-top: 1.4em;
+`;
+
+const StatusBarActive = styled.div<{ status: number }>`
+  width: ${({ status }) => status / 10 + 'em'};
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5.3em;
+  background-color: ${BasicColor.GREEN100};
+  opacity: 0.6;
+  transition: 0.1s;
+  z-index: -1;
+`;
+
+const StatusBarBackground = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${BasicColor.GREEN10};
+  z-index: -2;
 `;
 
 export default Checklist;

@@ -60,15 +60,11 @@ const Play = ({ room }: Props) => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const [visibleSpeakerPopup, setVisibleSpeakerPopup] = useState(false);
-  const [visibleMemoPopup, setVisibleMemoPopup] = useState(false);
   const [visibleBoardPopup, setVisibleBoardPopup] = useState(false);
   const [guestInput, setGuestInput] = useState({ input: '', emoji: 'HEART' });
 
   const { modalRef: speakerRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setVisibleSpeakerPopup(false),
-  });
-  const { modalRef: memoRef } = useOutsideEvent<HTMLDivElement>({
-    onOutsideClick: () => setVisibleMemoPopup(false),
   });
   const { modalRef: boardRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => {
@@ -112,15 +108,6 @@ const Play = ({ room }: Props) => {
     } else if (category.name === '휴식') {
       return type === 'big' ? '명상하기' : '크게 쉼호흡, 10분 스트레칭';
     }
-  };
-
-  const getTodoClearStatus = (fullNumber: number) => {
-    let clearCount = 0;
-    todos.map((todo) => todo.clear && (clearCount += 1));
-
-    return clearCount
-      ? parseInt((clearCount * Math.max(fullNumber / todos.length)).toFixed())
-      : 0;
   };
 
   const handleChangeTodos = (todo: Todo) => {
@@ -333,6 +320,7 @@ const Play = ({ room }: Props) => {
           <LottieStyled>{WEATHER[room.background]}</LottieStyled>
           <Screen type="thumbnail" assets={room.assets} />
         </ObjectBackgroundView>
+        <ObjectCurtain src={ROOM.CURTAIN[1]} />
         <LayerBox page={currentPage}>
           <ObjectBox room={room} objects={room.objectIds} />
         </LayerBox>
@@ -358,28 +346,6 @@ const Play = ({ room }: Props) => {
                   </PopupSpeaker>
                 </PopupSpeakerStyled>
               )}
-              <PopupMemoStyled ref={memoRef}>
-                <OpenButton
-                  visible={visibleMemoPopup}
-                  onOpenButtonClick={() => setVisibleMemoPopup((prev) => !prev)}
-                />
-                {visibleMemoPopup && (
-                  <PopupMemo>
-                    <PopupMemoTitle>
-                      <Typography font={FontType.SEMI_BOLD_BODY}>
-                        목표 달성률
-                      </Typography>
-                      <Typography font={FontType.SEMI_BOLD_BODY}>
-                        {todos.length ? `${getTodoClearStatus(100)}%` : '-'}
-                      </Typography>
-                    </PopupMemoTitle>
-                    <StatusBarStyled statusHeight={12}>
-                      <StatusBarActive status={getTodoClearStatus(280)} />
-                      <StatusBarBackground />
-                    </StatusBarStyled>
-                  </PopupMemo>
-                )}
-              </PopupMemoStyled>
               {room.guestBooksEnabled && (
                 <PopupBoardStyled ref={boardRef}>
                   <OpenButton
@@ -673,8 +639,8 @@ const ObjectBackgroundWall = styled.img`
 `;
 
 const ObjectBackgroundView = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 80vw;
+  height: 80vh;
   position: absolute;
   top: 0;
   left: 0;
@@ -683,11 +649,19 @@ const ObjectBackgroundView = styled.div`
   -webkit-mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg');
   mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg')
     no-repeat;
-  mask-size: 100vw 74.6vh;
-  mask-position: -4.6vw -4.6vh;
+  mask-size: 100vw 75.2vh;
+  mask-position: -5vw -4vh;
   mask-repeat: no-repeat;
   pointer-events: none;
   z-index: 3;
+
+  img {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8%;
+  }
 `;
 
 const LottieStyled = styled.div`
@@ -699,6 +673,16 @@ const LottieStyled = styled.div`
   right: 0;
   bottom: 0;
   z-index: 100;
+`;
+
+const ObjectCurtain = styled.img`
+  width: 40vw;
+  position: absolute;
+  top: 0;
+  left: 25vw;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 3;
 `;
 
 const LayerBox = styled.div<{ page?: number }>`
@@ -721,8 +705,8 @@ const PopupBox = styled.div`
 const PopupSpeakerStyled = styled.div`
   width: 24em;
   position: absolute;
-  left: 16%;
-  bottom: 31%;
+  left: 9%;
+  bottom: 34%;
   z-index: 1;
 `;
 
@@ -738,35 +722,11 @@ const PopupSpeaker = styled.div<{ visible: boolean }>`
   pointer-events: ${({ visible }) => (visible ? 'visible' : 'none')};
 `;
 
-const PopupMemoStyled = styled.div`
-  width: 30em;
-  position: absolute;
-  left: 54%;
-  bottom: 23%;
-`;
-
-const PopupMemo = styled.div`
-  width: 100%;
-  position: absolute;
-  top: -8.5em;
-  left: -13em;
-  padding: 1.5em;
-  background-color: ${BasicColor.WHITE};
-  border-radius: 1em;
-`;
-
-const PopupMemoTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 1em;
-`;
-
 const PopupBoardStyled = styled.div`
   width: 46em;
   position: absolute;
-  right: -38%;
-  top: 20%;
+  left: 84%;
+  top: 24%;
   z-index: 1;
 `;
 
@@ -788,7 +748,7 @@ const PopupBoardGuestView = styled.div`
 
 const PopupBoardGuestBox = styled.div`
   width: 100%;
-  height: 12em;
+  height: 16em;
   display: flex;
   flex-direction: row;
   align-items: center;
