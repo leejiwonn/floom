@@ -4,7 +4,7 @@ import { ReactElement, ReactNode } from 'react';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
-import { LoaderSpinner } from './Loader';
+import { LoaderBubbles } from './Loader';
 import Typography from './Typography';
 
 interface Props {
@@ -64,7 +64,7 @@ const Modal = ({
           active={buttonActive}
         >
           {isLoading ? (
-            <LoaderSpinner mode={buttonActive ? 'dark' : 'light'} />
+            <LoaderBubbles mode={buttonActive ? 'dark' : 'light'} />
           ) : (
             <Typography
               font={FontType.EXTRA_BOLD_BODY}
@@ -105,9 +105,10 @@ const ModalBox = styled.div`
 
 const ModalButton = styled.button<{ active: boolean }>`
   width: 28vw;
+  height: 4em;
   display: flex;
   justify-content: center;
-  padding: 0.6em 0;
+  align-items: center;
   background-color: ${({ active }) => (active ? BasicColor.BLUE100 : 'none')};
   border: 0.2em solid
     ${({ active }) => (active ? BasicColor.BLUE110 : BasicColor.BLUE40)};
