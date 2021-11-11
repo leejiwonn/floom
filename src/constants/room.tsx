@@ -6,6 +6,7 @@ type RoomAssetName =
   | 'POSTER'
   | 'SPEAKER'
   | 'TABLE'
+  | 'CURTAIN'
   | 'WALL';
 
 type RoomAssets = Record<RoomAssetName, Record<number, string>>;
@@ -41,6 +42,9 @@ const ROOM: RoomAssets = {
     1: '/assets/images/rooms/table-1.png',
     2: '/assets/images/rooms/table-2.png',
     3: '/assets/images/rooms/table-3.png',
+  },
+  CURTAIN: {
+    1: '/assets/images/rooms/curtain-1.png',
   },
   WALL: {
     1: '/assets/images/rooms/wall-1.png',
