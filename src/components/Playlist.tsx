@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { Music } from '~/types/Music';
 
 import { BasicColor } from '~/utils/color';
@@ -16,6 +16,7 @@ import CheckIcon from '../../public/assets/icons/icon-check.svg';
 import TrashIcon from '../../public/assets/icons/icon-trash.svg';
 
 interface Props {
+  scrollRef?: RefObject<HTMLDivElement>;
   playlist: Music[];
   viewHeight: number;
   controls?: boolean;
@@ -42,6 +43,7 @@ const playAudioSafely = async (audio: HTMLAudioElement | null) => {
 };
 
 const Playlist = ({
+  scrollRef,
   playlist,
   controls,
   autoplay,
@@ -58,11 +60,13 @@ const Playlist = ({
   const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef<HTMLAudioElement>(null);
-
   const timelineRef = useRef(null);
   const playheadRef = useRef(null);
 
   useEffect(() => {
+    const scroll = scrollRef?.current;
+    scroll?.scrollTo(0, 0);
+
     if (autoplay) {
       setCurrentIndex(0);
       setIsPlaying(true);
@@ -172,7 +176,7 @@ const Playlist = ({
           playheadRef={playheadRef}
         />
       )}
-      <PlaylistView controls={controls} viewHeight={viewHeight}>
+      <PlaylistView ref={scrollRef} controls={controls} viewHeight={viewHeight}>
         {playlist.length > 0 ? (
           playlist?.map((music, index) => (
             <PlaylistItemStyled
