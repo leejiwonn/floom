@@ -155,7 +155,7 @@ const Playlist = ({
     return () => {
       audio.removeEventListener('timeupdate', timeUpdate, false);
     };
-  }, []);
+  }, [handleNextButtonClick]);
 
   return (
     <PlaylistStyled size={size}>
