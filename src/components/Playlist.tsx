@@ -53,7 +53,7 @@ const Playlist = ({
   simpleMode = false,
   noneText = '목록이 없습니다.',
 }: Props) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -63,11 +63,30 @@ const Playlist = ({
   const playheadRef = useRef(null);
 
   useEffect(() => {
-    autoplay && setIsPlaying(true);
-    if (playerRef.current != null) {
-      playerRef.current.volume = 0.5;
+    if (autoplay) {
+      setCurrentIndex(0);
+      setIsPlaying(true);
+      if (playerRef.current != null) {
+        playerRef.current.volume = 0;
+      }
+    } else {
+      if (playerRef.current != null) {
+        playerRef.current.volume = 0.5;
+      }
     }
   }, []);
+
+  useEffect(() => {
+    const fadeIn = setInterval(function () {
+      if (playerRef.current != null) {
+        if (playerRef.current.volume < 0.5) {
+          playerRef.current.volume += 0.05;
+        } else {
+          clearInterval(fadeIn);
+        }
+      }
+    }, 300);
+  }, [setInterval]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -87,7 +106,9 @@ const Playlist = ({
   };
 
   const handlePrevButtonClick = () => {
-    const index = (currentIndex + playlist.length - 1) % playlist.length;
+    const index =
+      ((currentIndex === null ? 0 : currentIndex) + playlist.length - 1) %
+      playlist.length;
 
     setCurrentIndex(index);
     updatePlayer(index);
@@ -96,7 +117,8 @@ const Playlist = ({
   };
 
   const handleNextButtonClick = () => {
-    const index = (currentIndex + 1) % playlist.length;
+    const index =
+      ((currentIndex === null ? 0 : currentIndex) + 1) % playlist.length;
 
     setCurrentIndex(index);
     updatePlayer(index);
@@ -140,7 +162,7 @@ const Playlist = ({
       <audio ref={playerRef} src={playlist?.[0]?.url} css={visuallyHidden} />
       {controls && (
         <PlaylistControls
-          music={playlist[currentIndex]}
+          music={playlist[currentIndex === null ? 0 : currentIndex]}
           isPlaying={isPlaying}
           currentTime={currentTime}
           onPlayPauseClick={() => setIsPlaying((prev) => !prev)}
