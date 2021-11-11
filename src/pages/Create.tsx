@@ -678,6 +678,10 @@ const Create = () => {
               <LottieStyled>{WEATHER[room.background]}</LottieStyled>
               <Screen type="thumbnail" assets={room.assets} />
             </ObjectBackgroundView>
+            <ObjectCurtain
+              src={ROOM.CURTAIN[1]}
+              data-html2canvas-ignore="true"
+            />
             <LayerBox>
               <ObjectBox
                 room={room}
@@ -916,7 +920,7 @@ const ObjectBackgroundView = styled.div`
   -webkit-mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg');
   mask-image: url('https://floom-upload.s3.ap-northeast-2.amazonaws.com/window.svg')
     no-repeat;
-  mask-size: 100vw 74.6vh;
+  mask-size: 100vw 75.2vh;
   mask-position: -5vw -4vh;
   mask-repeat: no-repeat;
   pointer-events: none;
@@ -940,6 +944,16 @@ const LottieStyled = styled.div`
   right: 0;
   bottom: 0;
   z-index: 100;
+`;
+
+const ObjectCurtain = styled.img`
+  width: 40vw;
+  position: absolute;
+  top: 0;
+  left: 25vw;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 3;
 `;
 
 const CreateInfoImageStyled = styled.div``;
@@ -1112,7 +1126,7 @@ const RotateIconStyled = styled.button`
   height: 4.6em;
   position: absolute;
   top: 10%;
-  right: 34vw;
+  right: 36vw;
   display: flex;
   justify-content: center;
   align-items: center;
