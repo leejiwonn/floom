@@ -14,9 +14,7 @@ import type { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
-import BookmarkOffIcon from '../../public/assets/icons/icon-bookmark-off.svg';
-import BookmarkOnIcon from '../../public/assets/icons/icon-bookmark-on.svg';
-
+import BookmarkIcon from '../../public/assets/icons/icon-bookmark.svg';
 interface Props {
   room: Room;
 }
@@ -214,7 +212,11 @@ const Detail = ({ room: initialRoom }: Props) => {
           <LoaderBubbles mode={room.isBookmarked ? 'dark' : 'light'} />
         ) : (
           <AddBookmarkButtonInfo>
-            {room.isBookmarked ? <BookmarkOnIcon /> : <BookmarkOffIcon />}
+            {room.isBookmarked ? (
+              <BookmarkIcon stroke={BasicColor.WHITE} />
+            ) : (
+              <BookmarkIcon stroke={BasicColor.GREEN100} />
+            )}
             <Typography
               font={FontType.BOLD_TITLE_02}
               color={room.isBookmarked ? BasicColor.WHITE : BasicColor.DARK70}
