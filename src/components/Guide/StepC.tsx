@@ -147,7 +147,7 @@ const StepC = ({
 const TodolistStyled = styled.div`
   width: 100%;
   height: 100%;
-  margin-top: 5em;
+  margin-top: 4em;
 `;
 
 const PlusTagStyled = styled.div`
@@ -172,7 +172,7 @@ const TagListStyled = styled.div`
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  margin: 3em 0;
+  margin-top: 3em;
 
   ::-webkit-scrollbar {
     display: none;

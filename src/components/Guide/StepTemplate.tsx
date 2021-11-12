@@ -66,6 +66,7 @@ const StepTemplate = ({
 const StepStyled = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -75,10 +76,15 @@ const StepInfo = styled.div``;
 
 const ButtonStyled = styled.div`
   width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-color: ${BasicColor.WHITE};
+  padding-top: 1em;
 `;
 
 const PrevStepButton = styled.button`

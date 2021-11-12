@@ -214,18 +214,17 @@ const Playlist = ({
                     <Typography
                       font={
                         size === 'big'
-                          ? FontType.BOLD_TITLE_02
-                          : FontType.BOLD_BODY
+                          ? FontType.BOLD_BODY
+                          : FontType.BOLD_CAPTION
                       }
-                      marginBottom={simpleMode ? 0 : 0.5}
                     >
                       {music.name}
                     </Typography>
                     <Typography
                       font={
                         size === 'big'
-                          ? FontType.REGULAR_BODY
-                          : FontType.REGULAR_CAPTION
+                          ? FontType.REGULAR_CAPTION
+                          : FontType.LIGHT_CAPTION_X
                       }
                       color={BasicColor.DARK70}
                     >
