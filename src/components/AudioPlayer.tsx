@@ -77,7 +77,7 @@ const AudioPlayerStyled = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8em 0;
+  padding-top: 1.2em;
 `;
 
 export default memo(AudioPlayer);
