@@ -1131,7 +1131,7 @@ const RotateIconStyled = styled.button`
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0.4em 0.4em rgba(0, 0, 0, 0.25);
-  border: 0.2em solid ${BasicColor.BLUE40};
+  border: 0.2em solid ${BasicColor.WHITE};
   border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(1.4em);
@@ -1154,7 +1154,7 @@ const RoomControlItem = styled.div`
   align-items: center;
   background-color: ${BasicColor.WHITE};
   box-shadow: 0px 0.4em 0.4em rgba(0, 0, 0, 0.25);
-  border: 0.2em solid ${BasicColor.BLUE40};
+  border: 0.2em solid ${BasicColor.WHITE};
   border-radius: 1.8em 0 1.8em 1.8em;
   padding: 2em;
   margin-right: 1em;
@@ -1166,7 +1166,7 @@ const RoomControlButton = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 0.2em solid ${BasicColor.BLUE40};
+  border: 0.2em solid ${BasicColor.WHITE};
   border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(1.4em);

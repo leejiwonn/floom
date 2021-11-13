@@ -14,9 +14,7 @@ import type { Room } from '~/types/Room';
 import { BasicColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
-import BookmarkOffIcon from '../../public/assets/icons/icon-bookmark-off.svg';
-import BookmarkOnIcon from '../../public/assets/icons/icon-bookmark-on.svg';
-
+import BookmarkIcon from '../../public/assets/icons/icon-bookmark.svg';
 interface Props {
   room: Room;
 }
@@ -132,7 +130,7 @@ const Detail = ({ room: initialRoom }: Props) => {
         </RoomTitleStyled>
         <RoomContentStyled>
           <UserListStyled>
-            <Typography font={FontType.BOLD_TITLE_02} marginBottom={3}>
+            <Typography font={FontType.BOLD_TITLE_02} marginBottom={2}>
               다른 사람들은 이런 일에 몰입했어요!
             </Typography>
             {reviews != null ? (
@@ -183,13 +181,13 @@ const Detail = ({ room: initialRoom }: Props) => {
             ) : null}
           </UserListStyled>
           <PlaylistStyled>
-            <Typography font={FontType.BOLD_TITLE_02} marginBottom={1.6}>
+            <Typography font={FontType.BOLD_TITLE_02} marginBottom={0.5}>
               플레이리스트
             </Typography>
             <Playlist
               playlist={room.musics}
               controls={false}
-              viewHeight={41}
+              viewHeight={56}
               noneText="음악이 없는 조용한 방이에요."
             />
           </PlaylistStyled>
@@ -214,7 +212,11 @@ const Detail = ({ room: initialRoom }: Props) => {
           <LoaderBubbles mode={room.isBookmarked ? 'dark' : 'light'} />
         ) : (
           <AddBookmarkButtonInfo>
-            {room.isBookmarked ? <BookmarkOnIcon /> : <BookmarkOffIcon />}
+            {room.isBookmarked ? (
+              <BookmarkIcon stroke={BasicColor.WHITE} />
+            ) : (
+              <BookmarkIcon stroke={BasicColor.GREEN100} />
+            )}
             <Typography
               font={FontType.BOLD_TITLE_02}
               color={room.isBookmarked ? BasicColor.WHITE : BasicColor.DARK70}
@@ -286,7 +288,7 @@ const RoomTitleStyled = styled.div`
   width: 45%;
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
+  margin-top: 3.2em;
   padding-left: 5em;
   box-sizing: content-box;
 `;
@@ -334,20 +336,20 @@ const RoomContentStyled = styled.div`
   width: 55%;
   display: flex;
   flex-direction: row;
-  padding-top: 4em;
   box-sizing: content-box;
 `;
 
 const UserListStyled = styled.div`
-  width: calc(100% - 32em);
+  width: calc(100% - 35em);
   border-left: 1px solid ${BasicColor.GRAY60};
   padding: 0 2em;
+  padding-top: 3em;
   box-sizing: content-box;
 `;
 
 const CommentStyled = styled.div`
   width: 100%;
-  height: 46vh;
+  height: 61vh;
   overflow: auto;
 `;
 
@@ -378,10 +380,11 @@ const EmojiStyled = styled.div`
 `;
 
 const PlaylistStyled = styled.div`
-  width: 32em;
-  margin-right: 5em;
+  width: 35em;
+  margin-right: 4em;
   border-left: 0.1em solid ${BasicColor.GRAY60};
   padding-left: 2em;
+  padding-top: 3em;
   box-sizing: content-box;
 `;
 
