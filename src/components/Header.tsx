@@ -65,7 +65,7 @@ const Header = () => {
             </NoiseIcon>
           </NoiseButton>
           <NoiseController show={show}>
-            <Typography font={FontType.EXTRA_BOLD_TITLE_01} marginBottom={2.4}>
+            <Typography font={FontType.EXTRA_BOLD_TITLE_01} marginBottom={1.2}>
               적절한{' '}
               <Typography
                 tag="span"
@@ -80,7 +80,7 @@ const Header = () => {
             <Typography
               font={FontType.REGULAR_CAPTION}
               color={BasicColor.DARK70}
-              marginBottom={8}
+              marginBottom={4}
             >
               볼륨을 조절하며 원하는 소리를 찾아보세요!
             </Typography>
@@ -88,6 +88,9 @@ const Header = () => {
             <AudioPlayer title="쏴아쏴아 파도" url="/audio/ocean.mp3" />
             <AudioPlayer title="추적추적 빗소리" url="/audio/rain.mp3" />
             <AudioPlayer title="웅성웅성 사람들" url="/audio/people.mp3" />
+            <AudioPlayer title="시끌벅적 사무실" url="/audio/office.mp3" />
+            <AudioPlayer title="사각사각 연필소리" url="/audio/writing.mp3" />
+            <AudioPlayer title="찌르르르 풀벌레" url="/audio/cricket.mp3" />
           </NoiseController>
         </NoiseStyled>
       </RightStyled>
