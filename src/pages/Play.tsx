@@ -577,7 +577,7 @@ const StepStyled = styled.div`
   box-shadow: 0 2em 2.4em rgba(0, 0, 0, 0.08);
   border-radius: 0 3em 3em 3em;
   background-color: ${BasicColor.WHITE};
-  padding: 4em;
+  padding: 2.5em;
 `;
 
 const StepTitleStyled = styled.div`

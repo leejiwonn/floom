@@ -44,7 +44,11 @@ const Home = ({ categories }: Props) => {
       />
       {category.name !== 'myFloom' ? (
         <RoomsStyled>
-          <Typography font={FontType.EXTRA_BOLD_HEAD_03} marginBottom={4}>
+          <Typography
+            font={FontType.EXTRA_BOLD_HEAD_03}
+            marginLeft={1}
+            marginBottom={3}
+          >
             {user && `${user?.displayName}님, `}
             {category?.name}하실 방을 선택해주세요!
           </Typography>
@@ -106,7 +110,7 @@ const RoomsStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 6em;
+  padding: 0 2em;
   padding-top: 3.5em;
   background-color: ${BasicColor.WHITE};
   z-index: 2;

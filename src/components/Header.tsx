@@ -51,7 +51,7 @@ const Header = () => {
             <Typography
               font={FontType.SEMI_BOLD_BODY}
               color={BasicColor.DARK100}
-              marginLeft={1.4}
+              marginLeft={1.2}
               marginRight={0.9}
             >
               NOISE
@@ -125,7 +125,7 @@ const NoiseButton = styled.button`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6em 0;
+  padding: 0.4em 0;
   border: 0.2em solid ${BasicColor.GRAY10};
   border-radius: 3.4em;
   background-color: ${BasicColor.GRAY20};
@@ -138,7 +138,7 @@ const NoiseIcon = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 3em;
-  margin-right: 0.6em;
+  margin-right: 0.4em;
   background: ${GradientColor.GREEN};
   border: 0.2em solid ${BasicColor.GREEN100};
 `;
