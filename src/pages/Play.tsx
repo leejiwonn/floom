@@ -676,7 +676,7 @@ const LottieStyled = styled.div`
 `;
 
 const ObjectCurtain = styled.img`
-  width: 40vw;
+  width: 42vw;
   position: absolute;
   top: 0;
   left: 25vw;
