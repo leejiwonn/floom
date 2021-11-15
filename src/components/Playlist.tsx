@@ -58,10 +58,9 @@ const Playlist = ({
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(50);
 
   const playerRef = useRef<HTMLAudioElement>(null);
-  const timelineRef = useRef(null);
-  const playheadRef = useRef(null);
 
   useEffect(() => {
     const scroll = scrollRef?.current;
@@ -79,6 +78,12 @@ const Playlist = ({
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (playerRef.current != null) {
+      playerRef.current.volume = volume / 100;
+    }
+  }, [volume]);
 
   useEffect(() => {
     const fadeIn = setInterval(function () {
@@ -172,11 +177,16 @@ const Playlist = ({
           onPlayPauseClick={() => setIsPlaying((prev) => !prev)}
           onPrevButtonClick={handlePrevButtonClick}
           onNextButtonClick={handleNextButtonClick}
-          timelineRef={timelineRef}
-          playheadRef={playheadRef}
+          volume={volume}
+          onVolumeControl={(value: number) => setVolume(value)}
         />
       )}
       <PlaylistView ref={scrollRef} controls={controls} viewHeight={viewHeight}>
+        {controls && (
+          <Typography font={FontType.BOLD_CAPTION} color={BasicColor.DARK40}>
+            플레이리스트
+          </Typography>
+        )}
         {playlist.length > 0 ? (
           playlist?.map((music, index) => (
             <PlaylistItemStyled
@@ -210,13 +220,15 @@ const Playlist = ({
                       />
                     )}
                   </PlayPauseButton>
-                  <PlaylistItemInfo>
+                  <PlaylistItemInfo size={size}>
                     <Typography
                       font={
                         size === 'big'
                           ? FontType.BOLD_BODY
                           : FontType.BOLD_CAPTION
                       }
+                      textOverflow
+                      textOverflowSize={1}
                     >
                       {music.name}
                     </Typography>
@@ -227,6 +239,8 @@ const Playlist = ({
                           : FontType.LIGHT_CAPTION_X
                       }
                       color={BasicColor.DARK70}
+                      textOverflow
+                      textOverflowSize={1}
                     >
                       {music.author}
                     </Typography>
@@ -234,7 +248,11 @@ const Playlist = ({
                 </PlaylistLeftView>
                 {!simpleMode && (
                   <Typography
-                    font={FontType.REGULAR_CAPTION}
+                    font={
+                      size === 'big'
+                        ? FontType.REGULAR_CAPTION
+                        : FontType.LIGHT_CAPTION_X
+                    }
                     color={BasicColor.DARK40}
                   >
                     {currentIndex === index
@@ -291,7 +309,7 @@ const Playlist = ({
 };
 
 const PlaylistStyled = styled.div<{ size: 'big' | 'small' }>`
-  width: ${({ size }) => (size === 'big' ? '32em' : '24em')};
+  width: ${({ size }) => (size === 'big' ? '34em' : '26em')};
   height: auto;
   display: flex;
   flex-direction: column;
@@ -302,7 +320,7 @@ const PlaylistView = styled.div<{ controls?: boolean; viewHeight: number }>`
   width: 100%;
   height: ${({ viewHeight }) => viewHeight + 'vh'};
   overflow: auto;
-  background-color: ${({ controls }) => controls && BasicColor.DARK10};
+  background-color: ${({ controls }) => controls && BasicColor.GRAY20};
   border: ${({ controls }) =>
     controls ? `0.1em solid ${BasicColor.GRAY70}` : 'none'};
   padding: ${({ controls }) => (controls ? '1.5em' : 0)};
@@ -335,18 +353,21 @@ const PlaylistLeftView = styled.div`
 `;
 
 const PlayPauseButton = styled.div<{ simpleMode: boolean }>`
-  width: 4em;
-  height: 4em;
+  width: 3.5em;
+  height: 3.5em;
+  display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${({ simpleMode }) => !simpleMode && BasicColor.BLUE10};
   border-radius: 50%;
-  margin-right: ${({ simpleMode }) => (simpleMode ? '1em' : '2em')};
+  margin-right: ${({ simpleMode }) => (simpleMode ? '1em' : '1.5em')};
   pointer-events: none;
 `;
 
-const PlaylistItemInfo = styled.div`
-  display: flex;
+const PlaylistItemInfo = styled.div<{ size: 'big' | 'small' }>`
+  width: ${({ size }) => (size === 'big' ? '75%' : '65%')};
+  overflow: hidden;
+  display: inline-flex;
   flex-direction: column;
 `;
 
