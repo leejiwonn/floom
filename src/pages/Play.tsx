@@ -490,8 +490,8 @@ const Play = ({ room }: Props) => {
             </Emoji>
           }
           content="확인 후 연장하기 버튼을 누르면 목표시간이 연장됩니다."
-          buttonText="확인"
-          onButtonClick={handleTimeoutButtonClick}
+          nextButtonText="확인"
+          onNextButtonClick={handleTimeoutButtonClick}
         />
       )}
       {visibleModal === 'finished' && (
@@ -539,9 +539,9 @@ const Play = ({ room }: Props) => {
             setIsRecommend(false);
             setReviewInput('');
           }}
-          buttonActive={reviewInput !== ''}
-          buttonText={reviewInput !== '' ? '완료' : '작성중'}
-          onButtonClick={handleFinishedButtonClick}
+          nextButtonActive={reviewInput !== ''}
+          nextButtonText={reviewInput !== '' ? '완료' : '작성중'}
+          onNextButtonClick={handleFinishedButtonClick}
           isLoading={isLoading === 'finished'}
         />
       )}

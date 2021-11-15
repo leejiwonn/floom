@@ -15,9 +15,11 @@ interface Props {
   content: string;
   action?: ReactNode;
   resetAction?: () => void;
-  buttonActive?: boolean;
-  buttonText: string;
-  onButtonClick: () => void;
+  prevButtonText?: string;
+  onPrevButtonClick?: () => void;
+  nextButtonActive?: boolean;
+  nextButtonText: string;
+  onNextButtonClick: () => void;
   isLoading?: boolean;
 }
 
@@ -29,9 +31,11 @@ const Modal = ({
   content,
   action,
   resetAction,
-  buttonActive = true,
-  buttonText,
-  onButtonClick,
+  prevButtonText,
+  onPrevButtonClick,
+  nextButtonActive = true,
+  nextButtonText,
+  onNextButtonClick,
   isLoading,
 }: Props) => {
   const { modalRef } = useOutsideEvent<HTMLDivElement>({
@@ -59,21 +63,33 @@ const Modal = ({
           {content}
         </Typography>
         {action}
-        <ModalButton
-          onClick={() => !isLoading && onButtonClick()}
-          active={buttonActive}
-        >
-          {isLoading ? (
-            <LoaderBubbles mode={buttonActive ? 'dark' : 'light'} />
-          ) : (
-            <Typography
-              font={FontType.EXTRA_BOLD_BODY}
-              color={buttonActive ? BasicColor.WHITE : BasicColor.DARK100}
+        <ModalButtonStyled>
+          {prevButtonText && (
+            <ModalButton
+              onClick={onPrevButtonClick}
+              active={false}
+              multiple={!!prevButtonText}
+              style={{ marginRight: '1em' }}
             >
-              {buttonText}
-            </Typography>
+              <Typography>{prevButtonText}</Typography>
+            </ModalButton>
           )}
-        </ModalButton>
+          <ModalButton
+            onClick={() => !isLoading && onNextButtonClick()}
+            active={nextButtonActive}
+            multiple={!!prevButtonText}
+          >
+            {isLoading ? (
+              <LoaderBubbles mode={nextButtonActive ? 'dark' : 'light'} />
+            ) : (
+              <Typography
+                color={nextButtonActive ? BasicColor.WHITE : BasicColor.DARK100}
+              >
+                {nextButtonText}
+              </Typography>
+            )}
+          </ModalButton>
+        </ModalButtonStyled>
       </ModalBox>
     </ModalStyled>
   );
@@ -103,10 +119,17 @@ const ModalBox = styled.div`
   padding: 3em;
 `;
 
-const ModalButton = styled.button<{ active: boolean }>`
-  width: 28vw;
-  height: 4em;
+const ModalButtonStyled = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ModalButton = styled.button<{ active: boolean; multiple: boolean }>`
+  width: ${({ multiple }) => (multiple ? '10vw' : '28vw')};
+  height: 4em;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   background-color: ${({ active }) => (active ? BasicColor.BLUE100 : 'none')};

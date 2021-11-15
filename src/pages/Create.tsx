@@ -793,9 +793,9 @@ const Create = () => {
               )}
             </CategoryStyled>
           }
-          buttonActive
-          buttonText="완료"
-          onButtonClick={() => setVisibleCategoryModal(false)}
+          nextButtonActive
+          nextButtonText="완료"
+          onNextButtonClick={() => setVisibleCategoryModal(false)}
         />
       )}
       {visibleSubmitModal && (
@@ -803,8 +803,10 @@ const Create = () => {
           title="방 만들기 완료!"
           subTitle={<>아래 버튼을 누르면 방이 등록됩니다.</>}
           content="방을 등록하시겠어요?"
-          buttonText="등록하기"
-          onButtonClick={postCreateRoom}
+          prevButtonText="잠깐만요"
+          onPrevButtonClick={() => setVisibleSubmitModal(false)}
+          nextButtonText="등록할래요!"
+          onNextButtonClick={postCreateRoom}
           isLoading={isLoading === 'createRoom'}
         />
       )}
