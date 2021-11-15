@@ -18,6 +18,7 @@ interface Props {
   marginRight?: number;
   lineHeight?: number;
   textOverflow?: boolean;
+  textOverflowSize?: number;
 }
 
 const Typography = ({
@@ -32,6 +33,7 @@ const Typography = ({
   marginRight,
   lineHeight = 1.5,
   textOverflow,
+  textOverflowSize = 2,
 }: Props) => {
   const TagComponent = tag as TypographyTag;
   const style = Font.getStyle(font);
@@ -41,7 +43,7 @@ const Typography = ({
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: ${textOverflowSize};
     -webkit-box-orient: vertical;
   `;
 

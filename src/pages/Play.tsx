@@ -340,7 +340,7 @@ const Play = ({ room }: Props) => {
                       playlist={room.musics}
                       controls
                       autoplay
-                      viewHeight={24}
+                      viewHeight={32}
                       size="small"
                     />
                   </PopupSpeaker>
@@ -712,7 +712,7 @@ const PopupBox = styled.div`
 `;
 
 const PopupSpeakerStyled = styled.div`
-  width: 24em;
+  width: 26em;
   position: absolute;
   left: 9%;
   bottom: 34%;
@@ -723,8 +723,8 @@ const PopupSpeaker = styled.div<{ visible: boolean }>`
   width: 100%;
   overflow: hidden;
   position: absolute;
-  top: -25em;
-  left: 4em;
+  top: -39em;
+  left: -11em;
   background-color: ${BasicColor.WHITE};
   border-radius: 3em;
   opacity: ${({ visible }) => (visible ? 100 : 0)};
@@ -742,7 +742,7 @@ const PopupBoardStyled = styled.div`
 const PopupBoard = styled.div`
   width: 100%;
   position: absolute;
-  top: -11em;
+  top: -13em;
   right: 47em;
   padding: 2em;
   padding-bottom: 3em;
