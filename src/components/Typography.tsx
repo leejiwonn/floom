@@ -57,7 +57,7 @@ const Typography = ({
         marginLeft: marginLeft + 'rem',
         marginRight: marginRight + 'rem',
         lineHeight: lineHeight,
-        wordBreak: 'keep-all',
+        wordBreak: 'break-all',
       }}
       css={textOverflow && textOverflowStyled}
     >
