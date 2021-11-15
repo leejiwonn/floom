@@ -72,7 +72,14 @@ const TextInput = ({
         </TextLength>
       )}
       {submitButton && (
-        <SubmitButton onClick={() => !isLoading && onSubmitButtonClick?.()}>
+        <SubmitButton
+          onClick={(event) => {
+            if (!isLoading) {
+              event.stopPropagation();
+              onSubmitButtonClick?.();
+            }
+          }}
+        >
           {isLoading ? (
             <LoaderBubbles />
           ) : (
