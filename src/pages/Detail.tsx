@@ -72,9 +72,11 @@ const Detail = ({ room: initialRoom }: Props) => {
                 {room.category.name}
               </Typography>
               <RoomTitleInfoLine />
-              <Typography font={FontType.EXTRA_BOLD_HEAD_03}>
-                {room.title}
-              </Typography>
+              <RoomTitleHidden>
+                <Typography font={FontType.EXTRA_BOLD_HEAD_03}>
+                  {room.title}
+                </Typography>
+              </RoomTitleHidden>
             </RoomTitleInfo>
             <CaptionStyled>
               <CaptionItem>
@@ -302,9 +304,15 @@ const RoomTitleInfoStyled = styled.div`
 `;
 
 const RoomTitleInfo = styled.div`
-  display: inline-flex;
+  width: 60%;
+  display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
+`;
+
+const RoomTitleHidden = styled.div`
+  width: 80%;
 `;
 
 const RoomTitleInfoLine = styled.div`
@@ -316,6 +324,7 @@ const RoomTitleInfoLine = styled.div`
 `;
 
 const CaptionStyled = styled.div`
+  width: 40%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
