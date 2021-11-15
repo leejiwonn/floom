@@ -357,11 +357,20 @@ const Play = ({ room }: Props) => {
                   {visibleBoardPopup && (
                     <PopupBoard>
                       <PopupBoardGuestView>
+                        <Typography
+                          font={FontType.BOLD_TITLE_02}
+                          marginBottom={1}
+                        >
+                          방명록
+                        </Typography>
                         <PopupBoardGuestBox>
                           {guestBooks?.[0].items.length ? (
                             guestBooks?.map((x) =>
                               x.items.flatMap((value, index) => (
-                                <PopupBoardGuestItem key={index} last={false}>
+                                <PopupBoardGuestItem
+                                  key={index}
+                                  last={(index + 1) % 3 === 0}
+                                >
                                   <PopupBoardGuestEmoji>
                                     {EMOJI[value.emoji as keyof typeof EMOJI]}
                                   </PopupBoardGuestEmoji>
@@ -733,50 +742,50 @@ const PopupBoardStyled = styled.div`
 const PopupBoard = styled.div`
   width: 100%;
   position: absolute;
-  top: 4em;
-  right: 40em;
-  padding: 1.5em;
+  top: -11em;
+  right: 47em;
+  padding: 2em;
+  padding-bottom: 3em;
   background-color: ${BasicColor.WHITE};
-  border-radius: 1em;
+  border-radius: 2em;
 `;
 
 const PopupBoardGuestView = styled.div`
   width: 100%;
   overflow: hidden;
-  padding-bottom: 1em;
+  padding-bottom: 1.5em;
 `;
 
 const PopupBoardGuestBox = styled.div`
   width: 100%;
-  height: 16em;
+  height: 30em;
+  overflow-x: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: flex-start;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 
 const PopupBoardGuestItem = styled.div<{ last: boolean }>`
-  width: 40%;
-  height: 12em;
+  width: 31.5%;
+  height: 20em;
+  overflow: hidden;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   flex-shrink: 0;
   background-color: ${BasicColor.GRAY100};
-  padding: 2.5em;
-  border-radius: 1em;
-  margin-right: ${({ last }) => !last && '1.2em'};
+  border-radius: 1.5em;
+  padding: 1.5em;
+  margin-right: ${({ last }) => !last && '1em'};
+  margin-bottom: 1em;
 `;
 
 const PopupBoardGuestEmoji = styled.div`
-  width: 2em;
-  position: absolute;
-  top: 1em;
-  right: 1em;
+  width: 2.5em;
 
   svg {
     width: 100%;
@@ -791,12 +800,16 @@ const PopupBoardGuestInputView = styled.div`
 `;
 
 const GuestInputEmoji = styled.button`
-  width: 4.5em;
-  height: 4.5em;
+  width: 4em;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.8em;
-  margin-right: 0.5em;
-  background-color: ${BasicColor.GRAY20};
-  border-radius: 1em;
+  margin-right: 1em;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  border: 1px solid ${BasicColor.GRAY100};
+  border-radius: 50%;
 `;
 
 const ContentTitleView = styled.div`
