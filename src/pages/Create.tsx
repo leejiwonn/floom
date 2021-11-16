@@ -360,7 +360,7 @@ const Create = () => {
             </ContentMenuItem>
           </ContentMenu>
           {contentType === 'info' && (
-            <ContentBox type={contentType}>
+            <ContentBox type={contentType} className="scrollbar">
               <CreateInfoItem
                 title="방 설명"
                 titleIcon={<RoomIcon width="2.4em" height="2.4em" />}
@@ -829,19 +829,19 @@ const ContentView = styled.div`
   top: 0;
   left: 0;
   background-color: ${BasicColor.WHITE};
-  padding: 0 4em;
   padding-top: 10em;
   z-index: 1;
 `;
 
 const ContentMenu = styled.div`
-  width: 100%;
+  width: calc(100% - 8em);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border: 0.1em solid ${BasicColor.DARK40};
   background-color: ${BasicColor.GRAY20};
+  margin: 0 4em;
   border-radius: 3em;
 `;
 
@@ -859,13 +859,8 @@ const ContentMenuItem = styled.button<{ active: boolean }>`
 const ContentBox = styled.div<{ type: string }>`
   width: 100%;
   height: calc(100% - 10em);
-  overflow-y: ${({ type }) => (type === 'music' ? 'hidden' : 'auto')};
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  overflow-x: hidden;
+  overflow-y: ${({ type }) => (type === 'music' ? 'hidden' : 'scroll')};
 `;
 
 const RoomTitleStyled = styled.div`
@@ -1001,7 +996,7 @@ const FileUploadImageItem = styled.div<{ selected: boolean; empty?: boolean }>`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  margin: 0.8em;
+  margin: 0.7em;
   background-color: ${({ empty }) => empty && BasicColor.GRAY20};
   border: ${({ empty }) => empty && `2px dashed ${BasicColor.GRAY60}`};
   border: ${({ selected }) => selected && `2px solid ${BasicColor.BLUE100}`};
@@ -1110,6 +1105,7 @@ const MusicListStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  margin: 0 4em;
   margin-top: 1em;
 `;
 

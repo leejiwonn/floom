@@ -52,7 +52,7 @@ const Home = ({ categories }: Props) => {
             {user && `${user?.displayName}님, `}
             {category?.name}하실 방을 선택해주세요!
           </Typography>
-          <RoomStyled>
+          <RoomStyled className="scrollbar">
             {!!!rooms ? (
               <LoaderBubbles />
             ) : (
@@ -119,7 +119,8 @@ const RoomsStyled = styled.div`
 const RoomStyled = styled.div`
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 const RoomItem = styled.a`

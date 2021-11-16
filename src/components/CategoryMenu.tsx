@@ -103,9 +103,10 @@ const CategoryMenu = ({
 };
 
 const CategoryStyled = styled.div`
-  width: 100%;
+  width: calc(100% - 8em);
   overflow: hidden;
   margin-top: 3em;
+  margin-left: 4em;
 `;
 
 const CategorySlider = styled.div<{ width: number }>`
