@@ -15,6 +15,8 @@ const FontSize = {
   SIZE_BODY: 1.6,
   SIZE_CAPTION: 1.4,
   SIZE_CAPTION_X: 1.1,
+  SIZE_GATE_HEAD_01: 4.4,
+  SIZE_GATE_HEAD_02: 3.6,
 } as const;
 
 const Align = {
@@ -31,12 +33,14 @@ const FontType = {
   EXTRA_BOLD_TITLE_02: 'EXTRA_BOLD_TITLE_02',
   EXTRA_BOLD_BODY: 'EXTRA_BOLD_BODY',
   EXTRA_BOLD_CAPTION: 'EXTRA_BOLD_CAPTION',
+  EXTRA_BOLD_GATE_HEAD_01: 'EXTRA_BOLD_GATE_HEAD_01',
 
   BOLD_TITLE_01: 'BOLD_TITLE_01',
   BOLD_TITLE_02: 'BOLD_TITLE_02',
   BOLD_BODY: 'BOLD_BODY',
   BOLD_CAPTION: 'BOLD_CAPTION',
   BOLD_CAPTION_X: 'BOLD_CAPTION_X',
+  BOLD_GATE_HEAD_02: 'BOLD_GATE_HEAD_02',
 
   SEMI_BOLD_HEAD_03: 'SEMI_BOLD_HEAD_03',
   SEMI_BOLD_TITLE_01: 'SEMI_BOLD_TITLE_01',
@@ -71,6 +75,14 @@ namespace Font {
 
   const getSize = (font: FontType) => {
     switch (font) {
+      case FontType.EXTRA_BOLD_GATE_HEAD_01: {
+        return FontSize.SIZE_GATE_HEAD_01;
+      }
+
+      case FontType.BOLD_GATE_HEAD_02: {
+        return FontSize.SIZE_GATE_HEAD_02;
+      }
+
       case FontType.EXTRA_BOLD_HEAD_01: {
         return FontSize.SIZE_HEAD_01;
       }
@@ -127,6 +139,7 @@ namespace Font {
 
   const getWeight = (font: FontType) => {
     switch (font) {
+      case FontType.EXTRA_BOLD_GATE_HEAD_01:
       case FontType.EXTRA_BOLD_HEAD_01:
       case FontType.EXTRA_BOLD_HEAD_02:
       case FontType.EXTRA_BOLD_HEAD_03:
@@ -137,6 +150,7 @@ namespace Font {
         return Weight.EXTRA_BOLD;
       }
 
+      case FontType.BOLD_GATE_HEAD_02:
       case FontType.BOLD_TITLE_01:
       case FontType.BOLD_TITLE_02:
       case FontType.BOLD_BODY:
