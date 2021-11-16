@@ -64,25 +64,31 @@ const Header = () => {
         </Logo>
       </Link>
       <RightStyled>
-        <GuideStyled>
-          <GuideTitle>
-            {EMOJI.LIGHT}
-            <Typography
-              font={FontType.SEMI_BOLD_BODY}
-              color={BasicColor.DARK40}
-              marginLeft={0.4}
-            >
-              TIP!
-            </Typography>
-          </GuideTitle>
-          <GuideBox>
-            <GuideTextStyled>
-              <Typography font={FontType.REGULAR_CAPTION} align={Align.CENTER}>
-                {slideText[slideIndex]}
+        {router.pathname === '/' && (
+          <GuideStyled>
+            <GuideTitle>
+              {EMOJI.LIGHT}
+              <Typography
+                font={FontType.SEMI_BOLD_BODY}
+                color={BasicColor.DARK40}
+                marginLeft={0.4}
+                marginTop={0.4}
+              >
+                TIP!
               </Typography>
-            </GuideTextStyled>
-          </GuideBox>
-        </GuideStyled>
+            </GuideTitle>
+            <GuideBox>
+              <GuideTextStyled>
+                <Typography
+                  font={FontType.REGULAR_CAPTION}
+                  align={Align.CENTER}
+                >
+                  {slideText[slideIndex]}
+                </Typography>
+              </GuideTextStyled>
+            </GuideBox>
+          </GuideStyled>
+        )}
         <NoiseStyled ref={modalRef}>
           <NoiseButton onClick={() => setShow((prev) => !prev)}>
             <Typography
@@ -186,7 +192,7 @@ const GuideTextStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -0.1em;
+  margin-top: 0.1em;
 `;
 
 const NoiseStyled = styled.div`
