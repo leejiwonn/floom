@@ -30,7 +30,7 @@ import Screen from '~/components/Screen';
 import ClockIcon from '../../public/assets/icons/icon-clock.svg';
 import RecommendIcon from '../../public/assets/emojis/emoji-recommend.svg';
 import BackgroundFilter from '~/components/BackgroundFilter';
-import WEATHER from '~/constants/weather';
+import { WEATHER } from '~/constants/lottie';
 
 interface Props {
   room: Room;

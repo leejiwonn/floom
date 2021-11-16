@@ -1,4 +1,4 @@
-import type { Weather } from '~/constants/weather';
+import type { Weather } from '~/constants/lottie';
 import type { Music } from '~/types/Music';
 import type { RoomCategory } from '~/types/RoomCategory';
 import type { UserSimple } from '~/types/User';
