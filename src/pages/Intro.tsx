@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+
 import Lottie from '~/components/Lottie';
 import Typography from '~/components/Typography';
 import { GATE_EMOJI } from '~/constants/emoji';
-
 import { BasicColor, GradientColor } from '~/utils/color';
 import { FontType } from '~/utils/font';
 
@@ -38,6 +37,7 @@ const Intro = () => {
     });
   }, []);
 
+  /* scroll animation */
   const prev = useRef(0);
   const scrolling = useRef<HTMLImageElement>(null);
 
@@ -101,6 +101,7 @@ const Intro = () => {
           <Lottie
             src="/assets/lotties/gate/gate1.json"
             loop={false}
+            delay={500}
             css={{
               width: '100%',
               height: '100%',
@@ -167,17 +168,19 @@ const Intro = () => {
           </Typography>
         </IntroInfo>
         <ButtonStyled>
-          <Link href="/">
-            <LinkButton aria-label="메인 페이지로 이동하기">
-              <Typography
-                tag="span"
-                font={FontType.EXTRA_BOLD_TITLE_01}
-                color={BasicColor.WHITE}
-              >
-                플룸 체험하러 가기
-              </Typography>
-            </LinkButton>
-          </Link>
+          <LinkButton
+            href="https://floom.vercel.app/"
+            target="_self"
+            aria-label="메인 페이지로 이동하기"
+          >
+            <Typography
+              tag="span"
+              font={FontType.EXTRA_BOLD_TITLE_01}
+              color={BasicColor.WHITE}
+            >
+              플룸 체험하러 가기
+            </Typography>
+          </LinkButton>
           <DownloadButton
             onClick={() => window.open('/assets/Floom.pdf', '_blank')}
           >
@@ -247,8 +250,8 @@ const IndexEmojiStyled = styled.div`
   width: 4em;
   height: 4em;
   position: absolute;
-  top: 25%;
-  left: 11%;
+  top: 24%;
+  left: 12%;
 `;
 
 const IntroInfo = styled.div`

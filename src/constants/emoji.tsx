@@ -51,7 +51,7 @@ const EMOJI = {
   LIGHT: <LightEmoji />,
 };
 
-const EmojiStyled = styled.div`
+const EmojiStyled = styled.span`
   width: 4em;
   height: 4em;
   display: inline-block;
@@ -69,32 +69,32 @@ const EmojiStyled = styled.div`
 export const GATE_EMOJI = {
   CLOCK: (
     <EmojiStyled>
-      <ClockGateEmoji />
+      <ClockGateEmoji width="100%" height="100%" />
     </EmojiStyled>
   ),
   EYES: (
     <EmojiStyled>
-      <EyesGateEmoji />
+      <EyesGateEmoji width="100%" height="100%" />
     </EmojiStyled>
   ),
   LAPTOP: (
     <EmojiStyled>
-      <LaptopGateEmoji />
+      <LaptopGateEmoji width="100%" height="100%" />
     </EmojiStyled>
   ),
   LIGHT: (
     <EmojiStyled>
-      <LightGateEmoji />
+      <LightGateEmoji width="100%" height="100%" />
     </EmojiStyled>
   ),
   SPARKLE: (
     <EmojiStyled>
-      <SparkleGateEmoji />
+      <SparkleGateEmoji width="100%" height="100%" />
     </EmojiStyled>
   ),
-  ONE: <OneGateEmoji />,
-  TWO: <TwoGateEmoji />,
-  THREE: <ThreeGateEmoji />,
+  ONE: <OneGateEmoji width="100%" height="100%" />,
+  TWO: <TwoGateEmoji width="100%" height="100%" />,
+  THREE: <ThreeGateEmoji width="100%" height="100%" />,
 };
 
 export default EMOJI;
