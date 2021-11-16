@@ -272,7 +272,7 @@ const Play = ({ room }: Props) => {
                 </Typography>
               </StepTitleStyled>
               <StatusBarStyled statusHeight={8}>
-                <StatusBarActive status={(currentPage + 1) * (400 / 3)} />
+                <StatusBarActive status={(currentPage + 1) * (430 / 3)} />
                 <StatusBarBackground />
               </StatusBarStyled>
               {currentPage === 0 && (
