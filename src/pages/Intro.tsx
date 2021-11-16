@@ -1,20 +1,16 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import Lottie from 'react-lottie';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+import Lottie from '~/components/Lottie';
+import Typography from '~/components/Typography';
+import { GATE_EMOJI } from '~/constants/emoji';
 
 import { BasicColor, GradientColor } from '~/utils/color';
-import Typography from '~/components/Typography';
-import { getDefaultOptions } from '~/constants/lottie';
 import { FontType } from '~/utils/font';
 
 import WhiteLogoIcon from '../../public/assets/icons/icon-logo-white.svg';
-import GATE1_JSON from '../../public/assets/lotties/gate/gate1.json';
-import GATE2_JSON from '../../public/assets/lotties/gate/gate2.json';
-import GATE3_JSON from '../../public/assets/lotties/gate/gate3.json';
-import { GATE_EMOJI } from '~/constants/emoji';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,14 +38,44 @@ const Intro = () => {
     });
   }, []);
 
-  /* Lottie Play */
+  const prev = useRef(0);
+  const scrolling = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const elem = scrolling.current;
+    const listener = () => {
+      if (elem == null) {
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      const diff = (prev.current - scrollY) * 0.45;
+
+      const x = Number(elem.getAttribute('data-rotate') ?? '0');
+      const y = x - diff;
+
+      elem.style.transform = `rotate(${y}deg)`;
+      elem.setAttribute('data-rotate', y.toString());
+
+      prev.current = scrollY;
+    };
+
+    window.addEventListener('scroll', listener, true);
+
+    return () => {
+      window.removeEventListener('scroll', listener, true);
+    };
+  }, []);
 
   return (
     <IntroStyled ref={panelsContainer}>
       <LogoStyled>
         <WhiteLogoIcon width="8.3em" height="1.9em" />
       </LogoStyled>
-      <ScrollImageStyled src="/assets/images/image-gate-scroll.png" />
+      <ScrollImageStyled
+        ref={scrolling}
+        src="/assets/images/image-gate-scroll.png"
+      />
       <IntroSection ref={(e: HTMLElement) => createPanelsRefs(e, 0)}>
         <IndexEmojiStyled>{GATE_EMOJI.ONE}</IndexEmojiStyled>
         <IntroInfo>
@@ -73,12 +99,12 @@ const Intro = () => {
         </IntroInfo>
         <IntroLottieStyled>
           <Lottie
-            options={getDefaultOptions({
-              animationData: GATE1_JSON,
-              loop: false,
-            })}
-            height="100%"
-            width="100%"
+            src="/assets/lotties/gate/gate1.json"
+            loop={false}
+            css={{
+              width: '100%',
+              height: '100%',
+            }}
           />
         </IntroLottieStyled>
       </IntroSection>
@@ -106,12 +132,16 @@ const Intro = () => {
         </IntroInfo>
         <IntroLottieStyled>
           <Lottie
-            options={getDefaultOptions({
-              animationData: GATE2_JSON,
-              loop: false,
-            })}
-            height="100%"
-            width="100%"
+            src="/assets/lotties/gate/gate2.json"
+            loop={false}
+            impressionOptions={{
+              areaThreshold: 0.4,
+              timeThreshold: 233,
+            }}
+            css={{
+              width: '100%',
+              height: '100%',
+            }}
           />
         </IntroLottieStyled>
       </IntroSection>
@@ -162,12 +192,13 @@ const Intro = () => {
         </ButtonStyled>
         <IntroLottieStyled>
           <Lottie
-            options={getDefaultOptions({
-              animationData: GATE3_JSON,
-              loop: true,
-            })}
-            height="100%"
-            width="100%"
+            src="/assets/lotties/gate/gate3.json"
+            autoPlay={true}
+            loop={true}
+            css={{
+              width: '100%',
+              height: '100%',
+            }}
           />
         </IntroLottieStyled>
       </IntroSection>
