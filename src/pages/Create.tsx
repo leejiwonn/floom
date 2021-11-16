@@ -35,7 +35,7 @@ import BACKGROUND from '~/constants/background';
 import { LoaderBubbles } from '~/components/Loader';
 import Toast from '~/components/Toast';
 import Screen from '~/components/Screen';
-import WEATHER, { Weather } from '~/constants/weather';
+import { WEATHER, Weather } from '~/constants/lottie';
 import BackgroundFilter from '~/components/BackgroundFilter';
 import OnBoarding from '~/components/OnBoarding';
 

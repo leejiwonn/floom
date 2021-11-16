@@ -6,9 +6,7 @@ import SUNNY_JSON from '../../public/assets/lotties/background/sunny.json';
 import BLUR_JSON from '../../public/assets/lotties/background/blur.json';
 import NIGHT_JSON from '../../public/assets/lotties/background/night.json';
 
-export type Weather = 'RAIN' | 'SNOW' | 'SUNNY' | 'BLUR' | 'NIGHT';
-
-type WeatherAssets = Record<Weather, React.ReactNode>;
+import FINGER_JSON from '../../public/assets/lotties/finger.json';
 
 const getDefaultOptions = (animationData: any) => {
   return {
@@ -21,7 +19,10 @@ const getDefaultOptions = (animationData: any) => {
   };
 };
 
-const WEATHER: WeatherAssets = {
+export type Weather = 'RAIN' | 'SNOW' | 'SUNNY' | 'BLUR' | 'NIGHT';
+type WeatherAssets = Record<Weather, React.ReactNode>;
+
+export const WEATHER: WeatherAssets = {
   RAIN: (
     <Lottie options={getDefaultOptions(RAIN_JSON)} height="100%" width="100%" />
   ),
@@ -47,4 +48,9 @@ const WEATHER: WeatherAssets = {
   ),
 } as const;
 
-export default WEATHER;
+export type LottieList = 'FINGER';
+type LottieAssets = Record<LottieList, React.ReactNode>;
+
+export const LOTTIE: LottieAssets = {
+  FINGER: <Lottie options={getDefaultOptions(FINGER_JSON)} width="8em" />,
+} as const;
