@@ -308,7 +308,7 @@ const RoomTitleInfo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const RoomTitleHidden = styled.div`
@@ -321,6 +321,7 @@ const RoomTitleInfoLine = styled.div`
   height: 2.2em;
   background-color: ${BasicColor.DARK40};
   margin: 0 1.2em;
+  margin-top: 0.7em;
 `;
 
 const CaptionStyled = styled.div`
