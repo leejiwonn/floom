@@ -5,8 +5,9 @@ import Link from 'next/link';
 
 import AudioPlayer from '~/components/AudioPlayer';
 import { BasicColor, GradientColor } from '~/utils/color';
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
+import EMOJI from '~/constants/emoji';
 import Typography from './Typography';
 
 import MusicIcon from '../../public/assets/icons/icon-music.svg';
@@ -15,12 +16,18 @@ import WhiteLogoIcon from '../../public/assets/icons/icon-logo-white.svg';
 import BlueLogoIcon from '../../public/assets/icons/icon-logo-blue.svg';
 
 const Header = () => {
+  const router = useRouter();
+
   const [show, setShow] = useState(false);
   const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setShow(false),
   });
 
-  const router = useRouter();
+  const slideText = [
+    '오른쪽 NOISE 버튼을 눌러 백색소음을 설정해보세요!',
+    '휴대폰 방해금지 모드 변경 시, 더욱 몰입 가능해요.',
+  ];
+  const [slideIndex, setSlideIndex] = useState(0);
 
   useEffect(() => {
     const listener = () => {
@@ -34,6 +41,17 @@ const Header = () => {
     };
   }, [router]);
 
+  useEffect(() => {
+    const slide = setInterval(function () {
+      if (slideIndex + 1 === slideText.length) {
+        setSlideIndex(0);
+      } else {
+        setSlideIndex((prev) => prev + 1);
+      }
+    }, 3000);
+    return () => clearInterval(slide);
+  }, [slideIndex]);
+
   return (
     <HeaderStyled>
       <Link href="/">
@@ -46,6 +64,25 @@ const Header = () => {
         </Logo>
       </Link>
       <RightStyled>
+        <GuideStyled>
+          <GuideTitle>
+            {EMOJI.LIGHT}
+            <Typography
+              font={FontType.SEMI_BOLD_BODY}
+              color={BasicColor.DARK40}
+              marginLeft={0.4}
+            >
+              TIP!
+            </Typography>
+          </GuideTitle>
+          <GuideBox>
+            <GuideTextStyled>
+              <Typography font={FontType.REGULAR_CAPTION} align={Align.CENTER}>
+                {slideText[slideIndex]}
+              </Typography>
+            </GuideTextStyled>
+          </GuideBox>
+        </GuideStyled>
         <NoiseStyled ref={modalRef}>
           <NoiseButton onClick={() => setShow((prev) => !prev)}>
             <Typography
@@ -116,6 +153,40 @@ const Logo = styled.a`
 const RightStyled = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const GuideStyled = styled.div`
+  width: 30vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding-bottom: 0.4em;
+  border: 0.2em solid ${BasicColor.GRAY10};
+  border-radius: 3.4em;
+  background-color: ${BasicColor.GRAY20};
+`;
+
+const GuideTitle = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  padding-left: 1em;
+`;
+
+const GuideBox = styled.div`
+  width: 26vw;
+  position: absolute;
+  right: 0;
+`;
+
+const GuideTextStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -0.1em;
 `;
 
 const NoiseStyled = styled.div`
