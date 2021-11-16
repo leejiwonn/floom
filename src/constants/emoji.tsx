@@ -16,6 +16,7 @@ import EyesEmoji from '../../public/assets/emojis/emoji-eyes.svg';
 import ClockEmoji from '../../public/assets/emojis/emoji-clock.svg';
 import Check1Emoji from '../../public/assets/emojis/emoji-check1.svg';
 import Check2Emoji from '../../public/assets/emojis/emoji-check2.svg';
+import LightEmoji from '../../public/assets/emojis/emoji-light.svg';
 
 const EMOJI = {
   WORK: <WorkEmoji width="3.7em" height="2.9em" />,
@@ -36,6 +37,7 @@ const EMOJI = {
   CLOCK: <ClockEmoji />,
   CHECK1: <Check1Emoji />,
   CHECK2: <Check2Emoji />,
+  LIGHT: <LightEmoji />,
 };
 
 export default EMOJI;
