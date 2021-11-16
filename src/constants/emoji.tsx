@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 import WorkEmoji from '../../public/assets/emojis/emoji-work.svg';
 import VisitEmoji from '../../public/assets/emojis/emoji-visit.svg';
 import StudyEmoji from '../../public/assets/emojis/emoji-study.svg';
@@ -17,6 +19,15 @@ import ClockEmoji from '../../public/assets/emojis/emoji-clock.svg';
 import Check1Emoji from '../../public/assets/emojis/emoji-check1.svg';
 import Check2Emoji from '../../public/assets/emojis/emoji-check2.svg';
 import LightEmoji from '../../public/assets/emojis/emoji-light.svg';
+
+import ClockGateEmoji from '../../public/assets/emojis/gate/emoji-gate-clock.svg';
+import EyesGateEmoji from '../../public/assets/emojis/gate/emoji-gate-eyes.svg';
+import LaptopGateEmoji from '../../public/assets/emojis/gate/emoji-gate-laptop.svg';
+import LightGateEmoji from '../../public/assets/emojis/gate/emoji-gate-light.svg';
+import SparkleGateEmoji from '../../public/assets/emojis/gate/emoji-gate-sparkle.svg';
+import OneGateEmoji from '../../public/assets/emojis/gate/emoji-gate-one.svg';
+import TwoGateEmoji from '../../public/assets/emojis/gate/emoji-gate-two.svg';
+import ThreeGateEmoji from '../../public/assets/emojis/gate/emoji-gate-three.svg';
 
 const EMOJI = {
   WORK: <WorkEmoji width="3.7em" height="2.9em" />,
@@ -38,6 +49,52 @@ const EMOJI = {
   CHECK1: <Check1Emoji />,
   CHECK2: <Check2Emoji />,
   LIGHT: <LightEmoji />,
+};
+
+const EmojiStyled = styled.div`
+  width: 4em;
+  height: 4em;
+  display: inline-block;
+  position: relative;
+  margin: 0 0.4em;
+
+  svg {
+    position: absolute;
+    top: 0.8em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+export const GATE_EMOJI = {
+  CLOCK: (
+    <EmojiStyled>
+      <ClockGateEmoji />
+    </EmojiStyled>
+  ),
+  EYES: (
+    <EmojiStyled>
+      <EyesGateEmoji />
+    </EmojiStyled>
+  ),
+  LAPTOP: (
+    <EmojiStyled>
+      <LaptopGateEmoji />
+    </EmojiStyled>
+  ),
+  LIGHT: (
+    <EmojiStyled>
+      <LightGateEmoji />
+    </EmojiStyled>
+  ),
+  SPARKLE: (
+    <EmojiStyled>
+      <SparkleGateEmoji />
+    </EmojiStyled>
+  ),
+  ONE: <OneGateEmoji />,
+  TWO: <TwoGateEmoji />,
+  THREE: <ThreeGateEmoji />,
 };
 
 export default EMOJI;
