@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
+import { LOTTIE } from '~/constants/lottie';
 import ROOM from '~/constants/room';
 import { Room, RoomObjectId, RoomObject } from '~/types/Room';
 
@@ -10,27 +12,61 @@ interface Props {
 }
 
 const ObjectBox = ({ objects, onObjectClick }: Props) => {
+  const [hoverObject, setHoverObject] = useState<string | null>(null);
+
   return (
     <ObjectBoxStyled>
-      <ObjectVase onClick={() => onObjectClick?.('vase')}>
+      <ObjectVase
+        onClick={() => onObjectClick?.('vase')}
+        onMouseEnter={() => setHoverObject('vase')}
+        onMouseLeave={() => setHoverObject(null)}
+      >
+        {hoverObject === 'vase' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
         <img src={ROOM.VASE[objects.vase]} alt="화분" />
       </ObjectVase>
-      <ObjectClock onClick={() => onObjectClick?.('clock')}>
+      <ObjectClock
+        onClick={() => onObjectClick?.('clock')}
+        onMouseEnter={() => setHoverObject('clock')}
+        onMouseLeave={() => setHoverObject(null)}
+      >
+        {hoverObject === 'clock' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
         <img src={ROOM.CLOCK[objects.clock]} alt="시계" />
       </ObjectClock>
       <ObjectBoard>
         <img src={ROOM.BOARD[objects.board]} alt="보드" />
       </ObjectBoard>
-      <ObjectPoster onClick={() => onObjectClick?.('poster')}>
+      <ObjectPoster
+        onClick={() => onObjectClick?.('poster')}
+        onMouseEnter={() => setHoverObject('poster')}
+        onMouseLeave={() => setHoverObject(null)}
+      >
+        {hoverObject === 'poster' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
         <img src={ROOM.POSTER[objects.poster]} alt="포스터" />
       </ObjectPoster>
-      <ObjectSpeaker onClick={() => onObjectClick?.('speaker')}>
+      <ObjectSpeaker
+        onClick={() => onObjectClick?.('speaker')}
+        onMouseEnter={() => setHoverObject('speaker')}
+        onMouseLeave={() => setHoverObject(null)}
+      >
+        {hoverObject === 'speaker' && (
+          <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
+        )}
         <img src={ROOM.SPEAKER[objects.speaker]} alt="스피커" />
       </ObjectSpeaker>
-      <ObjectTable onClick={() => onObjectClick?.('table')}>
+      <ObjectTable
+        onClick={() => onObjectClick?.('table')}
+        onMouseEnter={() => setHoverObject('table')}
+        onMouseLeave={() => setHoverObject(null)}
+      >
+        {hoverObject === 'table' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
         <img src={ROOM.TABLE[objects.table]} alt="책상" />
       </ObjectTable>
-      <ObjectLight onClick={() => onObjectClick?.('light')}>
+      <ObjectLight
+        onClick={() => onObjectClick?.('light')}
+        onMouseEnter={() => setHoverObject('light')}
+        onMouseLeave={() => setHoverObject(null)}
+      >
+        {hoverObject === 'light' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
         <img src={ROOM.LIGHT[objects.light]} alt="조명" />
       </ObjectLight>
     </ObjectBoxStyled>
@@ -48,6 +84,14 @@ const ObjectBoxStyled = styled.div`
       width: 100%;
     }
   }
+`;
+
+const HoverLottie = styled.div`
+  position: absolute;
+  top: -5%;
+  transform: translateY(-5%);
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const ObjectVase = styled.button`

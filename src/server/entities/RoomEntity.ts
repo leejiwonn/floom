@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Weather } from '~/constants/weather';
+import { Weather } from '~/constants/lottie';
 import { MusicEntity } from '~/server/entities/MusicEntity';
 import { RoomCategoryEntity } from '~/server/entities/RoomCategoryEntity';
 import { UserEntity } from '~/server/entities/UserEntity';
