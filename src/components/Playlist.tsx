@@ -181,7 +181,12 @@ const Playlist = ({
           onVolumeControl={(value: number) => setVolume(value)}
         />
       )}
-      <PlaylistView ref={scrollRef} controls={controls} viewHeight={viewHeight}>
+      <PlaylistView
+        ref={scrollRef}
+        controls={controls}
+        viewHeight={viewHeight}
+        className="scrollbar"
+      >
         {controls && (
           <Typography font={FontType.BOLD_CAPTION} color={BasicColor.DARK40}>
             플레이리스트
@@ -319,7 +324,8 @@ const PlaylistStyled = styled.div<{ size: 'big' | 'small' }>`
 const PlaylistView = styled.div<{ controls?: boolean; viewHeight: number }>`
   width: 100%;
   height: ${({ viewHeight }) => viewHeight + 'vh'};
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background-color: ${({ controls }) => controls && BasicColor.GRAY20};
   border: ${({ controls }) =>
     controls ? `0.1em solid ${BasicColor.GRAY70}` : 'none'};

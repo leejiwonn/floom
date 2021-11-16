@@ -363,7 +363,7 @@ const Play = ({ room }: Props) => {
                         >
                           방명록
                         </Typography>
-                        <PopupBoardGuestBox>
+                        <PopupBoardGuestBox className="scrollbar">
                           {guestBooks?.[0].items.length ? (
                             guestBooks?.map((x) =>
                               x.items.flatMap((value, index) => (

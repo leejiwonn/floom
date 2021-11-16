@@ -304,6 +304,23 @@ svg {
   pointer-events: none;
 }
 
+/* scrollbar */
+.scrollbar::-webkit-scrollbar {
+  width: 1.2em;
+}
+.scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #c9c9c9;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 0.8em;
+  background-clip: padding-box;
+  border: 0.4em solid transparent;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: none;
+}
+
 /* 반응형 대응 */
 
 @media screen and (max-width : 960px) {

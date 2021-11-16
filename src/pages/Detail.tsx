@@ -137,7 +137,7 @@ const Detail = ({ room: initialRoom }: Props) => {
             </Typography>
             {reviews != null ? (
               reviews.length > 0 ? (
-                <CommentStyled>
+                <CommentStyled className="scrollbar">
                   {reviews.map((review) => (
                     <CommentItem key={review.id}>
                       <CommentTitle>
@@ -360,7 +360,8 @@ const UserListStyled = styled.div`
 const CommentStyled = styled.div`
   width: 100%;
   height: 61vh;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 const CommentItem = styled.div`

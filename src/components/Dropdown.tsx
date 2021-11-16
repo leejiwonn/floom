@@ -40,7 +40,7 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
           <DropdownIcon width="1.3em" height="0.9em" />
         </DropdownIconStyled>
       </DropdownButton>
-      <DropdownBox active={show}>
+      <DropdownBox active={show} className="scrollbar">
         {values.map((value, index) => (
           <DropdownItem key={index} onClick={() => handleTimeValueClick(value)}>
             {value === 0 ? (
@@ -94,10 +94,6 @@ const DropdownBox = styled.div<{ active: boolean }>`
   border-radius: 1em;
   padding: 0 1em;
   margin-top: 0.5em;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const DropdownItem = styled.button`

@@ -54,7 +54,7 @@ const MyFloom = () => {
             </Typography>
           </RoomCategoryItem>
         </RoomCategory>
-        <RoomList>
+        <RoomList className="scrollbar">
           {category === 'save' &&
             (myRoomBookmarks ? (
               myRoomBookmarks?.length > 0 ? (
@@ -166,7 +166,7 @@ const MyFloom = () => {
         <Typography font={FontType.BOLD_TITLE_02} marginBottom={2}>
           나의 몰입 기록
         </Typography>
-        <ReviewList>
+        <ReviewList className="scrollbar">
           {myReviews ? (
             myReviews.length > 0 ? (
               myReviews?.map((review) => (
@@ -267,7 +267,8 @@ const RoomCategoryItem = styled.button``;
 const RoomList = styled.div`
   width: 100%;
   height: 84%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 const RoomItem = styled.a`
@@ -332,7 +333,8 @@ const ReviewListStyled = styled.div`
 const ReviewList = styled.div`
   width: 100%;
   height: 93%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 const ReviewItem = styled.a`
