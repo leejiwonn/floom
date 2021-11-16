@@ -90,7 +90,7 @@ const StepC = ({
               <PlusIcon width="3em" height="3em" stroke={BasicColor.WHITE} />
             </PlusButton>
           </PlusTagStyled>
-          <TagListStyled>
+          <TagListStyled className="scrollbar">
             {todos?.length === 0 ? (
               <NoneChecklist>
                 <Typography
@@ -173,10 +173,6 @@ const TagListStyled = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 3em;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const NoneChecklist = styled.div`

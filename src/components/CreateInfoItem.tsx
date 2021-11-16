@@ -90,6 +90,8 @@ const CreateInfoItemStyled = styled.div`
   flex-direction: column;
   padding: 2em 0;
   border-bottom: 0.1em solid ${BasicColor.GRAY70};
+  margin-left: 4em;
+  margin-right: 3em;
 `;
 
 const CreateInfoItemTitle = styled.button<{
