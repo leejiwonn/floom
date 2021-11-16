@@ -37,6 +37,7 @@ import Toast from '~/components/Toast';
 import Screen from '~/components/Screen';
 import WEATHER, { Weather } from '~/constants/weather';
 import BackgroundFilter from '~/components/BackgroundFilter';
+import OnBoarding from '~/components/OnBoarding';
 
 import WallIcon from '../../public/assets/icons/icon-wall.svg';
 import RoomIcon from '../../public/assets/icons/icon-room.svg';
@@ -52,6 +53,7 @@ const Create = () => {
   const { data: roomCategories } = useRoomCategories();
   const { data: musicCategories } = useMusicCategories();
 
+  const [visibleOnBoarding, setVisibleOnBoarding] = useState(false);
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(true);
   const [visibleSubmitModal, setVisibleSubmitModal] = useState(false);
   const [contentType, setContentType] = useState<'info' | 'music'>('info');
@@ -228,6 +230,11 @@ const Create = () => {
   };
 
   const handleBackgroundClick = () => {
+    if (visibleOnBoarding) {
+      setVisibleOnBoarding(false);
+      return;
+    }
+
     const backgroundList: Weather[] = Object.keys(WEATHER) as Weather[];
 
     setRoom((prev) => {
@@ -690,75 +697,82 @@ const Create = () => {
               />
             </LayerBox>
           </ObjectView>
-          <RotateIconStyled onClick={handleBackgroundClick}>
-            <RotateIcon width="2.8em" height="2.4em" />
-          </RotateIconStyled>
-          {!visibleCategoryModal && (
-            <>
-              <RoomControlStyled>
-                {visibleControl && (
-                  <RoomControlItem>
-                    {['RED', 'YELLOW', 'GREEN', 'BLUE', 'PURPLE'].map(
-                      (color, index) => (
-                        <RoomControlItemBox key={index}>
-                          {[
-                            { wallColor: color, light: 'ONE' },
-                            { wallColor: color, light: 'TWO' },
-                            { wallColor: color, light: 'THREE' },
-                          ].map((value, index) => (
-                            <RoomControlItemColor
-                              key={index}
-                              onClick={() =>
-                                setRoom((prev) => {
-                                  return {
-                                    ...prev,
-                                    wallColor: value.wallColor as RoomWallColor,
-                                    light: value.light as RoomLight,
-                                  };
-                                })
-                              }
-                              color={getWallColor(value.wallColor, value.light)}
-                            >
-                              {room.wallColor === value.wallColor &&
-                                room.light === value.light && (
-                                  <CheckIcon
-                                    width="1.5em"
-                                    height="1.3em"
-                                    stroke={BasicColor.WHITE}
-                                  />
-                                )}
-                            </RoomControlItemColor>
-                          ))}
-                        </RoomControlItemBox>
-                      ),
-                    )}
-                  </RoomControlItem>
-                )}
-                <RoomControlButton
-                  onClick={() => setVisibleControl((prev) => !prev)}
-                >
-                  <WallIcon width="3.5em" height="3.5em" />
-                </RoomControlButton>
-              </RoomControlStyled>
-              <CreateButton onClick={handleCreateButtonClick}>
-                {isLoading === 'createButtonClick' ? (
-                  <LoaderBubbles mode="dark" />
-                ) : (
-                  <Typography
-                    font={FontType.BOLD_BODY}
-                    color={BasicColor.WHITE}
-                  >
-                    등록 완료
-                  </Typography>
-                )}
-              </CreateButton>
-            </>
-          )}
         </ObjectViewStyled>
-        {visibleToast && (
-          <Toast message={visibleToast} setVisibleToast={setVisibleToast} />
+        {!visibleCategoryModal && (
+          <>
+            <RotateIconStyled onClick={handleBackgroundClick}>
+              <RotateIcon width="2.8em" height="2.4em" />
+            </RotateIconStyled>
+            <RoomControlStyled>
+              {visibleControl && (
+                <RoomControlItem>
+                  {['RED', 'YELLOW', 'GREEN', 'BLUE', 'PURPLE'].map(
+                    (color, index) => (
+                      <RoomControlItemBox key={index}>
+                        {[
+                          { wallColor: color, light: 'ONE' },
+                          { wallColor: color, light: 'TWO' },
+                          { wallColor: color, light: 'THREE' },
+                        ].map((value, index) => (
+                          <RoomControlItemColor
+                            key={index}
+                            onClick={() =>
+                              setRoom((prev) => {
+                                return {
+                                  ...prev,
+                                  wallColor: value.wallColor as RoomWallColor,
+                                  light: value.light as RoomLight,
+                                };
+                              })
+                            }
+                            color={getWallColor(value.wallColor, value.light)}
+                          >
+                            {room.wallColor === value.wallColor &&
+                              room.light === value.light && (
+                                <CheckIcon
+                                  width="1.5em"
+                                  height="1.3em"
+                                  stroke={BasicColor.WHITE}
+                                />
+                              )}
+                          </RoomControlItemColor>
+                        ))}
+                      </RoomControlItemBox>
+                    ),
+                  )}
+                </RoomControlItem>
+              )}
+              <RoomControlButton
+                onClick={() => {
+                  if (visibleOnBoarding) {
+                    setVisibleOnBoarding(false);
+                    return;
+                  }
+
+                  setVisibleControl((prev) => !prev);
+                }}
+              >
+                <WallIcon width="3.5em" height="3.5em" />
+              </RoomControlButton>
+            </RoomControlStyled>
+            <CreateButton onClick={handleCreateButtonClick}>
+              {isLoading === 'createButtonClick' ? (
+                <LoaderBubbles mode="dark" />
+              ) : (
+                <Typography font={FontType.BOLD_BODY} color={BasicColor.WHITE}>
+                  등록 완료
+                </Typography>
+              )}
+            </CreateButton>
+          </>
+        )}
+        {visibleOnBoarding && (
+          <OnBoarding onClose={() => setVisibleOnBoarding(false)} />
         )}
       </CreateStyled>
+      {visibleToast && (
+        <Toast message={visibleToast} setVisibleToast={setVisibleToast} />
+      )}
       {visibleCategoryModal && (
         <Modal
           title="카테고리 선택"
@@ -795,7 +809,10 @@ const Create = () => {
           }
           nextButtonActive
           nextButtonText="완료"
-          onNextButtonClick={() => setVisibleCategoryModal(false)}
+          onNextButtonClick={() => {
+            setVisibleCategoryModal(false);
+            setVisibleOnBoarding(true);
+          }}
         />
       )}
       {visibleSubmitModal && (
@@ -1134,6 +1151,7 @@ const RotateIconStyled = styled.button`
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(1.4em);
   padding: 0.8em;
+  z-index: 98;
 `;
 
 const RoomControlStyled = styled.div`
@@ -1142,7 +1160,7 @@ const RoomControlStyled = styled.div`
   position: absolute;
   top: 12em;
   right: 5em;
-  z-index: 3;
+  z-index: 98;
 `;
 
 const RoomControlItem = styled.div`
@@ -1202,7 +1220,7 @@ const CreateButton = styled.button`
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(1.4em);
-  z-index: 98;
+  z-index: 96;
 `;
 
 const CategoryStyled = styled.div`
