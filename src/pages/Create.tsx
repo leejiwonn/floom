@@ -666,6 +666,7 @@ const Create = () => {
                     viewHeight={56}
                     selectedMusics={selectedMusics}
                     onAddButtonClick={handleAddMusicButtonClick}
+                    onDeleteButtonClick={handleDeleteMusicButtonClick}
                   />
                 )}
               </MusicListStyled>

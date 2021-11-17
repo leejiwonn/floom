@@ -266,15 +266,15 @@ const Playlist = ({
                   </Typography>
                 )}
               </PlaylistItem>
-              {onAddButtonClick && (
+              {onAddButtonClick && onDeleteButtonClick && (
                 <PlaylistIconStyled
                   onClick={() => {
                     if (selectedMusics?.includes(music)) {
-                      return;
+                      onDeleteButtonClick?.(music);
+                    } else {
+                      onAddButtonClick(music);
                     }
-                    onAddButtonClick?.(music);
                   }}
-                  disable={!!selectedMusics?.includes(music)}
                 >
                   {selectedMusics?.includes(music) ? (
                     <SubmitPlaylistIconStyled>
@@ -289,11 +289,8 @@ const Playlist = ({
                   )}
                 </PlaylistIconStyled>
               )}
-              {onDeleteButtonClick && (
-                <PlaylistIconStyled
-                  onClick={() => onDeleteButtonClick(music)}
-                  disable={false}
-                >
+              {!onAddButtonClick && onDeleteButtonClick && (
+                <PlaylistIconStyled onClick={() => onDeleteButtonClick(music)}>
                   <TrashIcon width="4.1em" height="3.6em" />
                 </PlaylistIconStyled>
               )}
@@ -388,11 +385,10 @@ const SubmitPlaylistIconStyled = styled.div`
   margin-left: 0.6em;
 `;
 
-const PlaylistIconStyled = styled.button<{ disable: boolean }>`
+const PlaylistIconStyled = styled.button`
   margin-left: 1.5em;
   padding-left: 0.5em;
   border-left: 0.1em solid ${BasicColor.GRAY70};
-  pointer-events: ${({ disable }) => disable && 'none'};
 `;
 
 export default Playlist;
