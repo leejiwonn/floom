@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useRef, useState, useEffect } from 'react';
 
 import { BasicColor } from '~/utils/color';
 import { Font, Align, FontType } from '~/utils/font';
@@ -40,12 +41,32 @@ const TextInput = ({
 }: Props) => {
   const style = Font.getStyle(font);
 
+  const focusRef = useRef<HTMLDivElement>(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const handleOutFocus = (e: MouseEvent) => {
+    const focus = focusRef.current;
+
+    if (focus != null && !focus.contains(e.target as HTMLElement)) {
+      setIsFocus(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleOutFocus);
+    return () => {
+      window.removeEventListener('click', handleOutFocus);
+    };
+  }, []);
+
   return (
     <TextInputStyled
+      ref={focusRef}
       marginTop={marginTop}
       marginBottom={marginBottom}
       marginLeft={marginLeft}
       marginRight={marginRight}
+      isFocus={isFocus}
     >
       <TextInputBox
         value={value}
@@ -56,6 +77,7 @@ const TextInput = ({
         color={color}
         align={align}
         submitButton={submitButton}
+        onFocus={() => setIsFocus(true)}
       />
       {!submitButton && (
         <TextLength>
@@ -102,6 +124,7 @@ const TextInputStyled = styled.div<{
   marginBottom?: number;
   marginLeft?: number;
   marginRight?: number;
+  isFocus: boolean;
 }>`
   width: 100%;
   display: flex;
@@ -114,6 +137,8 @@ const TextInputStyled = styled.div<{
   margin-right: ${({ marginRight }) => marginRight + 'em'};
   background-color: ${BasicColor.GRAY20};
   border-radius: 0.8em;
+  border: ${({ isFocus }) =>
+    isFocus ? `1px solid ${BasicColor.BLUE80}` : '1px solid transparent'};
 `;
 
 const TextInputBox = styled.input<{
@@ -152,6 +177,7 @@ const TextLength = styled.div`
   align-items: center;
   background-color: ${BasicColor.GRAY20};
   border-radius: 0 0.8em 0.8em 0;
+  pointer-events: none;
 `;
 
 const SubmitButton = styled.button`
