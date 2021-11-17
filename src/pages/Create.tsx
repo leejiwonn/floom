@@ -890,7 +890,7 @@ const RoomTitleStyled = styled.div`
 
 const RoomTitle = styled.div`
   width: 5em;
-  height: 100%;
+  height: 4.2em;
   display: flex;
   justify-content: center;
   align-items: center;
