@@ -23,7 +23,7 @@ class MyDocument extends Document {
             type="text/css"
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css"
           />
-          <meta property="og:image" content="/static/og-image.png" />
+          <meta property="og:image" content="/static/og-image.jpg" />
           <meta property="og:title" content="FLOOM" />
           <meta
             property="og:description"

@@ -198,7 +198,7 @@ const ScrollImageStyled = styled.img`
   position: fixed;
   left: 5em;
   bottom: 5em;
-  z-index: 999;
+  z-index: 998;
 `;
 
 const IntroSection = styled.section`
