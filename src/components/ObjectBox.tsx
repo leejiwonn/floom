@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { LOTTIE } from '~/constants/lottie';
 import ROOM from '~/constants/room';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const ObjectBox = ({ objects, onObjectClick }: Props) => {
+  const router = useRouter();
   const [hoverObject, setHoverObject] = useState<string | null>(null);
 
   return (
@@ -21,7 +23,9 @@ const ObjectBox = ({ objects, onObjectClick }: Props) => {
         onMouseEnter={() => setHoverObject('vase')}
         onMouseLeave={() => setHoverObject(null)}
       >
-        {hoverObject === 'vase' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
+        {hoverObject === 'vase' && router.pathname === '/create' && (
+          <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
+        )}
         <img src={ROOM.VASE[objects.vase]} alt="화분" />
       </ObjectVase>
       <ObjectClock
@@ -29,7 +33,9 @@ const ObjectBox = ({ objects, onObjectClick }: Props) => {
         onMouseEnter={() => setHoverObject('clock')}
         onMouseLeave={() => setHoverObject(null)}
       >
-        {hoverObject === 'clock' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
+        {hoverObject === 'clock' && router.pathname === '/create' && (
+          <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
+        )}
         <img src={ROOM.CLOCK[objects.clock]} alt="시계" />
       </ObjectClock>
       <ObjectBoard>
@@ -40,7 +46,9 @@ const ObjectBox = ({ objects, onObjectClick }: Props) => {
         onMouseEnter={() => setHoverObject('poster')}
         onMouseLeave={() => setHoverObject(null)}
       >
-        {hoverObject === 'poster' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
+        {hoverObject === 'poster' && router.pathname === '/create' && (
+          <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
+        )}
         <img src={ROOM.POSTER[objects.poster]} alt="포스터" />
       </ObjectPoster>
       <ObjectSpeaker
@@ -48,7 +56,7 @@ const ObjectBox = ({ objects, onObjectClick }: Props) => {
         onMouseEnter={() => setHoverObject('speaker')}
         onMouseLeave={() => setHoverObject(null)}
       >
-        {hoverObject === 'speaker' && (
+        {hoverObject === 'speaker' && router.pathname === '/create' && (
           <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
         )}
         <img src={ROOM.SPEAKER[objects.speaker]} alt="스피커" />
@@ -58,7 +66,9 @@ const ObjectBox = ({ objects, onObjectClick }: Props) => {
         onMouseEnter={() => setHoverObject('table')}
         onMouseLeave={() => setHoverObject(null)}
       >
-        {hoverObject === 'table' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
+        {hoverObject === 'table' && router.pathname === '/create' && (
+          <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
+        )}
         <img src={ROOM.TABLE[objects.table]} alt="책상" />
       </ObjectTable>
       <ObjectLight
@@ -66,7 +76,9 @@ const ObjectBox = ({ objects, onObjectClick }: Props) => {
         onMouseEnter={() => setHoverObject('light')}
         onMouseLeave={() => setHoverObject(null)}
       >
-        {hoverObject === 'light' && <HoverLottie>{LOTTIE.FINGER}</HoverLottie>}
+        {hoverObject === 'light' && router.pathname === '/create' && (
+          <HoverLottie>{LOTTIE.FINGER}</HoverLottie>
+        )}
         <img src={ROOM.LIGHT[objects.light]} alt="조명" />
       </ObjectLight>
     </ObjectBoxStyled>
