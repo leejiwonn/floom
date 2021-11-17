@@ -15,7 +15,12 @@ const OpenButton = ({ visible, onOpenButtonClick }: Props) => {
       {visible ? (
         <CloseIcon width="2.2em" height="2.2em" stroke={BasicColor.WHITE} />
       ) : (
-        <PlusIcon width="2.2em" height="2.2em" stroke={BasicColor.WHITE} />
+        <PlusIcon
+          width="2.2em"
+          height="2.2em"
+          stroke={BasicColor.WHITE}
+          className="icon-plus"
+        />
       )}
     </OpenButtonStyled>
   );
@@ -28,6 +33,8 @@ const OpenButtonStyled = styled.button<{
   height: 2.2em;
   display: flex;
   position: absolute;
+  top: 0;
+  left: 0;
   justify-content: center;
   align-items: center;
   padding: 0.4em;
@@ -38,6 +45,19 @@ const OpenButtonStyled = styled.button<{
   border-radius: 50%;
   transition: 0.1s;
 
+  :hover {
+    width: 2.7em;
+    height: 2.7em;
+    top: -0.25em;
+    left: -0.25em;
+    background-color: ${BasicColor.WHITE};
+    border: 0.1em solid ${BasicColor.BLUE40};
+    transition: 0.1s;
+
+    .icon-plus {
+      stroke: ${BasicColor.BLUE100};
+    }
+  }
   :focus {
     outline: none;
   }
