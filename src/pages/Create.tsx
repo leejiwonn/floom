@@ -53,7 +53,7 @@ const Create = () => {
   const { data: roomCategories } = useRoomCategories();
   const { data: musicCategories } = useMusicCategories();
 
-  const [visibleOnBoarding, setVisibleOnBoarding] = useState(false);
+  const [visibleOnBoarding, setVisibleOnBoarding] = useState('waiting');
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(true);
   const [visibleSubmitModal, setVisibleSubmitModal] = useState(false);
   const [contentType, setContentType] = useState<'info' | 'music'>('info');
@@ -230,8 +230,8 @@ const Create = () => {
   };
 
   const handleBackgroundClick = () => {
-    if (visibleOnBoarding) {
-      setVisibleOnBoarding(false);
+    if (visibleOnBoarding === 'visible') {
+      handleCloseOnBoarding();
       return;
     }
 
@@ -331,6 +331,17 @@ const Create = () => {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('onboarding')) {
+      setVisibleOnBoarding('confirmed');
+    }
+  }, []);
+
+  const handleCloseOnBoarding = useCallback(() => {
+    setVisibleOnBoarding('confirmed');
+    localStorage.setItem('onboarding', 'confirmed');
+  }, []);
 
   return (
     <>
@@ -745,8 +756,8 @@ const Create = () => {
               )}
               <RoomControlButton
                 onClick={() => {
-                  if (visibleOnBoarding) {
-                    setVisibleOnBoarding(false);
+                  if (visibleOnBoarding === 'visible') {
+                    handleCloseOnBoarding();
                     return;
                   }
 
@@ -767,8 +778,8 @@ const Create = () => {
             </CreateButton>
           </>
         )}
-        {visibleOnBoarding && (
-          <OnBoarding onClose={() => setVisibleOnBoarding(false)} />
+        {visibleOnBoarding === 'visible' && (
+          <OnBoarding onClose={handleCloseOnBoarding} />
         )}
       </CreateStyled>
       {visibleToast && (
@@ -812,7 +823,7 @@ const Create = () => {
           nextButtonText="완료"
           onNextButtonClick={() => {
             setVisibleCategoryModal(false);
-            setVisibleOnBoarding(true);
+            visibleOnBoarding === 'waiting' && setVisibleOnBoarding('visible');
           }}
         />
       )}
