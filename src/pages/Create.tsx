@@ -980,11 +980,11 @@ const FileUploadButtonLabel = styled.label<{ active: boolean }>`
   background-color: ${({ active }) =>
     active ? BasicColor.BLUE100 : BasicColor.DARK40};
   border-radius: 1.2em;
-  cursor: pointer;
+  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
   transition: 0.1s;
 
   :hover {
-    background-color: ${BasicColor.BLUE97};
+    background-color: ${({ active }) => active && BasicColor.BLUE97};
     transition: 0.1s;
   }
 `;
