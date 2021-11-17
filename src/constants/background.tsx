@@ -1,6 +1,6 @@
 import { RoomAsset } from '~/types/Room';
 
-export type Background = 'RAIN' | 'SNOW' | 'SUNNY' | 'BLUR' | 'NIGHT';
+export type Background = 'RAIN' | 'SNOW' | 'SUNNY' | 'NIGHT';
 
 type BackgroundAssets = Record<Background, RoomAsset>;
 
@@ -19,11 +19,6 @@ const BACKGROUND: BackgroundAssets = {
     type: 'image',
     url: 'https://floom-upload.s3.ap-northeast-2.amazonaws.com/sunny.png',
     filename: '기본 이미지-2',
-  },
-  BLUR: {
-    type: 'image',
-    url: 'https://floom-upload.s3.ap-northeast-2.amazonaws.com/blur.png',
-    filename: '기본 이미지-3',
   },
   NIGHT: {
     type: 'image',

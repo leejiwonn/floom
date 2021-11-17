@@ -5,7 +5,6 @@ import FINGER_JSON from '../../public/assets/lotties/finger.json';
 import RAIN_JSON from '../../public/assets/lotties/background/rain.json';
 import SNOW_JSON from '../../public/assets/lotties/background/snow.json';
 import SUNNY_JSON from '../../public/assets/lotties/background/sunny.json';
-import BLUR_JSON from '../../public/assets/lotties/background/blur.json';
 import NIGHT_JSON from '../../public/assets/lotties/background/night.json';
 
 interface Props {
@@ -40,7 +39,7 @@ export const LOTTIE: LottieAssets = {
 
 /* Weather */
 
-export type Weather = 'RAIN' | 'SNOW' | 'SUNNY' | 'BLUR' | 'NIGHT';
+export type Weather = 'RAIN' | 'SNOW' | 'SUNNY' | 'NIGHT';
 type WeatherAssets = Record<Weather, React.ReactNode>;
 
 export const WEATHER: WeatherAssets = {
@@ -61,13 +60,6 @@ export const WEATHER: WeatherAssets = {
   SUNNY: (
     <Lottie
       options={getDefaultOptions({ animationData: SUNNY_JSON })}
-      height="100%"
-      width="100%"
-    />
-  ),
-  BLUR: (
-    <Lottie
-      options={getDefaultOptions({ animationData: BLUR_JSON })}
       height="100%"
       width="100%"
     />
