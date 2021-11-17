@@ -48,6 +48,7 @@ const StepTemplate = ({
             onClick={onNextPage}
             checkLast={!!onPrevPage}
             status={nextButtonStatus}
+            itemLast={nextButtonText === '생략할래요!' ? true : false}
           >
             <Typography
               font={FontType.SEMI_BOLD_BODY}
@@ -94,14 +95,25 @@ const PrevStepButton = styled.button`
   padding: 1.5em;
 `;
 
-const NextStepButton = styled.button<{ checkLast: boolean; status: boolean }>`
+const NextStepButton = styled.button<{
+  checkLast: boolean;
+  status: boolean;
+  itemLast: boolean;
+}>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
   border-radius: 4.8em;
   padding: 1.5em;
   background-color: ${({ status }) =>
     status ? BasicColor.BLUE100 : BasicColor.WHITE};
   border: 0.1em solid ${BasicColor.BLUE100};
+  cursor: ${({ status, itemLast }) =>
+    status || itemLast ? 'pointer' : 'default'};
   transition: 0.1s;
+
+  :hover {
+    background-color: ${({ status }) => status && BasicColor.BLUE97};
+    transition: 0.1s;
+  }
 `;
 
 export default StepTemplate;

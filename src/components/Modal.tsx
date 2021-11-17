@@ -137,7 +137,13 @@ const ModalButton = styled.button<{ active: boolean; multiple: boolean }>`
     ${({ active }) => (active ? BasicColor.BLUE110 : BasicColor.BLUE40)};
   box-sizing: border-box;
   border-radius: 4.8em;
+  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
   transition: 0.1s;
+
+  :hover {
+    background-color: ${({ active }) => active && BasicColor.BLUE97};
+    transition: 0.1s;
+  }
 `;
 
 export default Modal;
