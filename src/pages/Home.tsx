@@ -49,7 +49,6 @@ const Home = ({ categories }: Props) => {
             marginLeft={1}
             marginBottom={3}
           >
-            {user && `${user?.displayName}님, `}
             {category?.name}하실 방을 선택해주세요!
           </Typography>
           <RoomStyled className="scrollbar">
