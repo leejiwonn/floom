@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, useCallback } from 'react';
 
-import { BasicColor, GradientColor } from '~/utils/color';
+import { BasicColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import TextInput from '~/components/TextInput';
 import Typography from '~/components/Typography';
