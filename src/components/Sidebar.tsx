@@ -4,11 +4,11 @@ import { BasicColor, GradientColor } from '~/utils/color';
 import { getCategoryEmoji } from '~/utils/emoji';
 import { Align, FontType } from '~/utils/font';
 import { useUserProfile } from '~/hooks/useUser';
+import { RoomCategory } from '~/types/RoomCategory';
 import Typography from './Typography';
 
 import LogoutIcon from '../../public/assets/icons/icon-logout.svg';
 import EyesIcon from '../../public/assets/emojis/emoji-eyes.svg';
-import { RoomCategory } from '~/types/RoomCategory';
 
 interface Props {
   categories: RoomCategory[];
@@ -77,9 +77,9 @@ const Sidebar = ({
           <LogoutButton onClick={onLogoutButtonClick}>
             <LogoutIcon width="2em" height="2em" />
             <Typography
-              font={FontType.REGULAR_CAPTION}
+              font={FontType.SEMI_BOLD_CAPTION}
               color={BasicColor.WHITE}
-              marginLeft={0.7}
+              marginLeft={0.6}
             >
               로그아웃
             </Typography>
@@ -163,9 +163,14 @@ const LogoutButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: ${BasicColor.BLUE90};
+  border: 1px solid ${BasicColor.BLUE80};
+  border-radius: 4em;
+  padding: 1em 1.3em;
 `;
 
 const KakaoLoginButton = styled.a`
+  width: 10em;
   position: absolute;
   bottom: 4em;
   display: flex;
@@ -173,6 +178,8 @@ const KakaoLoginButton = styled.a`
   align-items: center;
 `;
 
-const KakaoLoginIcon = styled.img``;
+const KakaoLoginIcon = styled.img`
+  width: 100%;
+`;
 
 export default Sidebar;
