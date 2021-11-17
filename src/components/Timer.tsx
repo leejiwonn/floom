@@ -114,8 +114,14 @@ const ExtensionButton = styled.button<{ disable?: boolean }>`
   border: 0.2em solid
     ${({ disable }) => (disable ? BasicColor.DARK10 : BasicColor.BLUE40)};
   border-radius: 1.2em;
+  background-color: ${BasicColor.WHITE};
   margin-right: 0.6em;
   transition: 0.1s;
+
+  :hover {
+    background-color: ${({ disable }) => !disable && BasicColor.BLUE05};
+    transition: 0.1s;
+  }
 `;
 
 const StopButton = styled.button<{ stop: boolean }>`
@@ -124,8 +130,13 @@ const StopButton = styled.button<{ stop: boolean }>`
     ${({ stop }) => (stop ? BasicColor.BLUE80 : BasicColor.BLUE40)};
   border-radius: 1.2em;
   background-color: ${({ stop }) => (stop ? BasicColor.BLUE40 : 'none')};
-  transition: 0.1s;
   margin-left: 0.4em;
+  transition: 0.1s;
+
+  :hover {
+    background-color: ${BasicColor.BLUE05};
+    transition: 0.1s;
+  }
 `;
 
 const Emoji = styled.span`
