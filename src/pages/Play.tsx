@@ -832,7 +832,7 @@ const EndButton = styled.button`
   right: 6em;
   bottom: 4em;
   padding: 1.5em 6em;
-  border: 0.2em solid ${BasicColor.BLUE40};
+  border: 0.2em solid ${BasicColor.WHITE};
   box-sizing: border-box;
   border-radius: 1.8em;
   background: rgba(255, 255, 255, 0.2);
