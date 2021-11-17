@@ -77,7 +77,7 @@ const Create = () => {
       wall: 1,
     },
     background: 'SUNNY',
-    assets: [BACKGROUND.RAIN],
+    assets: [BACKGROUND.ONE],
     tags: [],
     roomImage: '',
     musicIds: [],
@@ -172,7 +172,7 @@ const Create = () => {
     setRoom((prev) => {
       return {
         ...prev,
-        assets: [BACKGROUND.RAIN],
+        assets: [BACKGROUND.ONE],
       };
     });
   };
