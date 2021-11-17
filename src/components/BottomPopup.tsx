@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { FontType } from '~/utils/font';
+import { Align, FontType } from '~/utils/font';
 import { BasicColor, GradientColor } from '~/utils/color';
 import { Music } from '~/types/Music';
 import useOutsideEvent from '~/hooks/useOutsideEvent';
@@ -9,6 +9,7 @@ import Typography from './Typography';
 import Playlist from './Playlist';
 
 import OpenIcon from '../../public/assets/icons/icon-open.svg';
+import MusicNoneIcon from '../../public/assets/icons/icon-music-none.svg';
 
 interface Props {
   title: string;
@@ -46,7 +47,24 @@ const BottomPopup = ({ title, selectedList, onDeleteButtonClick }: Props) => {
           />
         ) : (
           <NoneInfoStyled>
-            <Typography>원하는 음악을 추가해보세요!</Typography>
+            <MusicNoneIcon />
+            <Typography
+              font={FontType.BOLD_BODY}
+              color={BasicColor.WHITE}
+              marginTop={1.5}
+              marginBottom={0.6}
+            >
+              아직 등록한 음악이 없어요.
+            </Typography>
+            <Typography
+              font={FontType.LIGHT_CAPTION}
+              color={BasicColor.WHITE}
+              align={Align.CENTER}
+            >
+              플레이리스트에서 원하는 음악을 선택하면
+              <br />
+              방을 체험할 때 음악을 들을 수 있어요.
+            </Typography>
           </NoneInfoStyled>
         )}
       </BottomPopupInfo>
@@ -104,10 +122,9 @@ const NoneInfoStyled = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${BasicColor.WHITE};
-  border-radius: 1em;
 `;
 
 export default BottomPopup;
