@@ -212,6 +212,11 @@ const ChecklistAddButton = styled.button<{ active: boolean }>`
   border-radius: 1.2em;
   padding: 1em 1.5em;
   transition: 0.1s;
+
+  :hover {
+    background-color: ${BasicColor.BLUE97};
+    transition: 0.1s;
+  }
 `;
 
 const ChecklistView = styled.div`

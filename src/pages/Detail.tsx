@@ -410,6 +410,12 @@ const PlayButton = styled.a`
   bottom: 5vh;
   border-radius: 2em;
   background-color: ${BasicColor.BLUE100};
+  transition: 0.1s;
+
+  :hover {
+    background-color: ${BasicColor.BLUE97};
+    transition: 0.1s;
+  }
 `;
 
 const AddBookmarkButton = styled.button<{ active: boolean }>`

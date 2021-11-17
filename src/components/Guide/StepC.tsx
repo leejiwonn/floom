@@ -159,10 +159,16 @@ const PlusTagStyled = styled.div`
 
 const PlusButton = styled.button<{ active: boolean }>`
   background: ${({ active }) =>
-    active ? GradientColor.BLUE : BasicColor.GRAY70};
+    active ? BasicColor.BLUE100 : BasicColor.GRAY70};
   border-radius: 0.8em;
   padding: 0.8em;
   margin-left: 1.5em;
+  transition: 0.1s;
+
+  :hover {
+    background-color: ${({ active }) => active && BasicColor.BLUE97};
+    transition: 0.1s;
+  }
 `;
 
 const TagListStyled = styled.div`
