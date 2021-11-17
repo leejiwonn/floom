@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 import { Music } from '~/types/Music';
 import { BasicColor } from '~/utils/color';
@@ -11,6 +12,7 @@ import PauseIcon from '../../public/assets/icons/icon-pause.svg';
 import PlayIcon from '../../public/assets/icons/icon-play.svg';
 import PrevIcon from '../../public/assets/icons/icon-prev.svg';
 import VolumeIcon from '../../public/assets/icons/icon-volume.svg';
+import MuteIcon from '../../public/assets/icons/icon-mute.svg';
 
 interface Props {
   music: Music;
@@ -33,6 +35,12 @@ const PlaylistControls = ({
   volume,
   onVolumeControl,
 }: Props) => {
+  const [prevMute, setPrevMute] = useState(0);
+
+  useEffect(() => {
+    setPrevMute(volume);
+  }, []);
+
   return (
     <PlaylistControlsStyled>
       <PlayInfoStyled>
@@ -62,7 +70,19 @@ const PlaylistControls = ({
       </PlayInfoStyled>
       <MusicControls>
         <VolumeControlInputStyled>
-          <VolumeIcon />
+          <VolumeButtonStyled
+            onClick={() => {
+              let value = prevMute;
+              if (volume !== 0) {
+                setPrevMute(volume);
+                value = 0;
+              }
+
+              onVolumeControl(value);
+            }}
+          >
+            {volume === 0 ? <MuteIcon /> : <VolumeIcon />}
+          </VolumeButtonStyled>
           <VolumeControlInput
             type="range"
             value={volume}
@@ -142,6 +162,8 @@ const VolumeControlInputStyled = styled.div`
   flex-direction: row;
   align-items: center;
 `;
+
+const VolumeButtonStyled = styled.button``;
 
 const VolumeControlInput = styled.input<{ volume: number }>`
   -webkit-appearance: none;
