@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Typography from '~/components/Typography';
 import { FontType } from '~/utils/font';
@@ -14,13 +14,31 @@ interface Props {
   onChangeTime: (value: number) => void;
 }
 
-const values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
+const values = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 0];
 
 const Dropdown = ({ time, onChangeTime }: Props) => {
   const [show, setShow] = useState(false);
   const { modalRef } = useOutsideEvent<HTMLDivElement>({
     onOutsideClick: () => setShow(false),
   });
+
+  const focusRef = useRef<HTMLButtonElement>(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const handleOutFocus = (e: MouseEvent) => {
+    const focus = focusRef.current;
+
+    if (focus != null && !focus.contains(e.target as HTMLElement)) {
+      setIsFocus(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleOutFocus);
+    return () => {
+      window.removeEventListener('click', handleOutFocus);
+    };
+  }, []);
 
   const handleTimeValueClick = (value: number) => {
     onChangeTime(value);
@@ -29,12 +47,25 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
 
   return (
     <DropdownStyled ref={modalRef}>
-      <DropdownButton onClick={() => setShow((prev) => !prev)}>
+      <DropdownButton
+        ref={focusRef}
+        onClick={() => setShow((prev) => !prev)}
+        isFocus={isFocus}
+        onFocus={() => setIsFocus(true)}
+      >
         <Typography
           font={FontType.EXTRA_BOLD_HEAD_03}
           color={BasicColor.BLUE100}
         >
-          {time === 0 ? <LoopIcon width="2.1em" height="1.4em" /> : time + '분'}
+          {time === 0 ? (
+            <LoopIcon
+              width="2.1em"
+              height="1.4em"
+              stroke={BasicColor.BLUE100}
+            />
+          ) : (
+            time + '분'
+          )}
         </Typography>
         <DropdownIconStyled active={show}>
           <DropdownIcon width="1.3em" height="0.9em" />
@@ -44,7 +75,11 @@ const Dropdown = ({ time, onChangeTime }: Props) => {
         {values.map((value, index) => (
           <DropdownItem key={index} onClick={() => handleTimeValueClick(value)}>
             {value === 0 ? (
-              <LoopIcon width="4.2em" height="2.8em" />
+              <LoopIcon
+                width="3.6em"
+                height="2.2em"
+                stroke={time === 0 ? BasicColor.BLUE100 : BasicColor.DARK100}
+              />
             ) : (
               <Typography
                 font={FontType.BOLD_TITLE_01}
@@ -68,7 +103,7 @@ const DropdownStyled = styled.div`
   background-color: ${BasicColor.GRAY20};
 `;
 
-const DropdownButton = styled.button`
+const DropdownButton = styled.button<{ isFocus: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
@@ -76,6 +111,9 @@ const DropdownButton = styled.button`
   justify-content: space-between;
   align-items: center;
   padding: 0 1em;
+  border-radius: 1em;
+  border: ${({ isFocus }) =>
+    isFocus ? `1px solid ${BasicColor.BLUE80}` : '1px solid transparent'};
 `;
 
 const DropdownIconStyled = styled.span<{ active: boolean }>`
@@ -90,7 +128,7 @@ const DropdownBox = styled.div<{ active: boolean }>`
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: ${BasicColor.WHITE};
-  border: 0.2em solid ${BasicColor.GRAY20};
+  border: 0.2em solid ${BasicColor.BLUE40};
   border-radius: 1em;
   padding: 0 1em;
   margin-top: 0.5em;

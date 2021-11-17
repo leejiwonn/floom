@@ -54,7 +54,7 @@ const Play = ({ room }: Props) => {
   const [isRecommend, setIsRecommend] = useState(false);
 
   const [objective, setObjective] = useState('');
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(10);
   const [timer, setTimer] = useState(0);
   const timerAudioRef = useRef<HTMLAudioElement>(null);
   const [todos, setTodos] = useState<Todo[]>([]);
