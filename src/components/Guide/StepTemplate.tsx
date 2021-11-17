@@ -4,6 +4,8 @@ import { Align, FontType } from '~/utils/font';
 import Typography from '~/components/Typography';
 import { BasicColor } from '~/utils/color';
 
+import NextStepIcon from '../../../public/assets/icons/icon-next-step.svg';
+
 interface Props {
   title?: React.ReactNode;
   content?: React.ReactNode;
@@ -57,6 +59,15 @@ const StepTemplate = ({
             >
               {nextButtonText}
             </Typography>
+            <NextStepButtonStyled>
+              <NextStepIcon
+                fill={
+                  nextButtonText === '생략할래요!'
+                    ? BasicColor.BLUE100
+                    : BasicColor.WHITE
+                }
+              />
+            </NextStepButtonStyled>
           </NextStepButton>
         )}
       </ButtonStyled>
@@ -101,6 +112,7 @@ const NextStepButton = styled.button<{
   itemLast: boolean;
 }>`
   width: ${({ checkLast }) => (checkLast ? '64%' : '100%')};
+  position: relative;
   border-radius: 4.8em;
   padding: 1.5em;
   background-color: ${({ status }) =>
@@ -114,6 +126,13 @@ const NextStepButton = styled.button<{
     background-color: ${({ status }) => status && BasicColor.BLUE97};
     transition: 0.1s;
   }
+`;
+
+const NextStepButtonStyled = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2em;
 `;
 
 export default StepTemplate;
