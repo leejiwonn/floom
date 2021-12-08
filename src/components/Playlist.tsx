@@ -291,7 +291,11 @@ const Playlist = ({
               )}
               {!onAddButtonClick && onDeleteButtonClick && (
                 <PlaylistIconStyled onClick={() => onDeleteButtonClick(music)}>
-                  <TrashIcon width="4.1em" height="3.6em" />
+                  <TrashIcon
+                    width="4.1em"
+                    height="3.6em"
+                    fill={BasicColor.GRAY100}
+                  />
                 </PlaylistIconStyled>
               )}
             </PlaylistItemStyled>

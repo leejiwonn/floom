@@ -10,6 +10,8 @@ import { BasicColor } from '~/utils/color';
 import { Align, FontType } from '~/utils/font';
 import EMOJI from '~/constants/emoji';
 
+import TrashIcon from '../../public/assets/icons/icon-trash.svg';
+
 const MyFloom = () => {
   const { data: myReviews } = useMyReviews();
   const { data: myRooms } = useMyRooms();
@@ -59,20 +61,19 @@ const MyFloom = () => {
             (myRoomBookmarks ? (
               myRoomBookmarks?.length > 0 ? (
                 myRoomBookmarks?.map((bookmark) => (
-                  <RoomItem
-                    key={bookmark.room.id}
-                    href={`/detail?roomId=${bookmark.room.id}`}
-                  >
-                    <RoomItemImage>
+                  <RoomItem key={bookmark.room.id}>
+                    <RoomItemImage href={`/detail?roomId=${bookmark.room.id}`}>
                       <Screen type="thumbnail" assets={bookmark.room.assets} />
                     </RoomItemImage>
-                    <Typography
-                      font={FontType.BOLD_BODY}
-                      marginTop={1}
-                      textOverflow
-                    >
-                      {bookmark.room.title}
-                    </Typography>
+                    <RoomItemTitle href={`/detail?roomId=${bookmark.room.id}`}>
+                      <Typography
+                        font={FontType.BOLD_BODY}
+                        marginTop={1}
+                        textOverflow
+                      >
+                        {bookmark.room.title}
+                      </Typography>
+                    </RoomItemTitle>
                   </RoomItem>
                 ))
               ) : (
@@ -107,17 +108,27 @@ const MyFloom = () => {
             (myRooms ? (
               myRooms?.length > 0 ? (
                 myRooms?.map((room) => (
-                  <RoomItem key={room.id} href={`/detail?roomId=${room.id}`}>
-                    <RoomItemImage>
+                  <RoomItem key={room.id}>
+                    <RoomItemImage href={`/detail?roomId=${room.id}`}>
                       <Screen type="thumbnail" assets={room.assets} />
                     </RoomItemImage>
-                    <Typography
-                      font={FontType.BOLD_BODY}
-                      marginTop={1}
-                      textOverflow
-                    >
-                      {room.title}
-                    </Typography>
+                    <RoomItemInfo>
+                      <RoomItemTitle href={`/detail?roomId=${room.id}`}>
+                        <Typography
+                          font={FontType.BOLD_BODY}
+                          marginTop={1}
+                          textOverflow
+                        >
+                          {room.title}
+                        </Typography>
+                      </RoomItemTitle>
+                      <DeleteButton
+                        className="delete-button"
+                        onClick={() => console.log('delete')}
+                      >
+                        <TrashIcon fill={BasicColor.WHITE} />
+                      </DeleteButton>
+                    </RoomItemInfo>
                   </RoomItem>
                 ))
               ) : (
@@ -271,25 +282,55 @@ const RoomList = styled.div`
   overflow-y: scroll;
 `;
 
-const RoomItem = styled.a`
+const RoomItem = styled.div`
   width: 22%;
   height: auto;
   display: inline-flex;
   flex-direction: column;
   margin-right: 2em;
   margin-bottom: 3em;
+
+  :hover {
+    .delete-button {
+      opacity: 1;
+    }
+  }
 `;
 
 const ReviewItemLeft = styled.div`
   display: flex;
 `;
 
-const RoomItemImage = styled.div`
+const RoomItemImage = styled.a`
   width: 100%;
   height: 15em;
   position: relative;
   overflow: hidden;
   border-radius: 2em;
+`;
+
+const RoomItemInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const RoomItemTitle = styled.a``;
+
+const DeleteButton = styled.button`
+  background-color: ${BasicColor.BLUE80};
+  border-radius: 50%;
+  margin-top: 0.8em;
+  padding: 0.1em;
+  opacity: 0;
+  transition: 0.1s;
+
+  svg {
+    width: 2.4em;
+    height: 2.4em;
+    fill: ${BasicColor.WHITE};
+  }
 `;
 
 const NoneRoomList = styled.div`
