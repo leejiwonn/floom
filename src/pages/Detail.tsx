@@ -206,29 +206,31 @@ const Detail = ({ room: initialRoom }: Props) => {
           </Typography>
         </PlayButton>
       </Link>
-      <AddBookmarkButton
-        onClick={handleAddBookmarkButton}
-        active={!!room.isBookmarked}
-      >
-        {loading ? (
-          <LoaderBubbles mode={room.isBookmarked ? 'dark' : 'light'} />
-        ) : (
-          <AddBookmarkButtonInfo>
-            {room.isBookmarked ? (
-              <BookmarkIcon stroke={BasicColor.WHITE} />
-            ) : (
-              <BookmarkIcon stroke={BasicColor.GREEN100} />
-            )}
-            <Typography
-              font={FontType.BOLD_TITLE_02}
-              color={room.isBookmarked ? BasicColor.WHITE : BasicColor.DARK70}
-              marginLeft={1}
-            >
-              {room.isBookmarked ? '저장했어요!' : '저장할래요!'}
-            </Typography>
-          </AddBookmarkButtonInfo>
-        )}
-      </AddBookmarkButton>
+      {user != null && (
+        <AddBookmarkButton
+          onClick={handleAddBookmarkButton}
+          active={!!room.isBookmarked}
+        >
+          {loading ? (
+            <LoaderBubbles mode={room.isBookmarked ? 'dark' : 'light'} />
+          ) : (
+            <AddBookmarkButtonInfo>
+              {room.isBookmarked ? (
+                <BookmarkIcon stroke={BasicColor.WHITE} />
+              ) : (
+                <BookmarkIcon stroke={BasicColor.GREEN100} />
+              )}
+              <Typography
+                font={FontType.BOLD_TITLE_02}
+                color={room.isBookmarked ? BasicColor.WHITE : BasicColor.DARK70}
+                marginLeft={1}
+              >
+                {room.isBookmarked ? '저장했어요!' : '저장할래요!'}
+              </Typography>
+            </AddBookmarkButtonInfo>
+          )}
+        </AddBookmarkButton>
+      )}
     </DetailStyled>
   );
 };
