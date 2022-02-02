@@ -10,12 +10,17 @@ import NIGHT_JSON from '../../public/assets/lotties/background/night.json';
 interface Props {
   animationData: any;
   loop?: boolean;
+  autoPlay?: boolean;
 }
 
-export const getDefaultOptions = ({ animationData, loop = true }: Props) => {
+export const getDefaultOptions = ({
+  animationData,
+  loop = true,
+  autoPlay = true,
+}: Props) => {
   return {
     loop: loop,
-    autoplay: true,
+    autoplay: autoPlay,
     animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
