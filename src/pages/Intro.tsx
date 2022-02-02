@@ -229,15 +229,6 @@ const IntroInfo = styled.div`
   padding-left: 15%;
 `;
 
-const IntroLottieStyled = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-`;
-
 const ButtonStyled = styled.div`
   display: flex;
   flex-direction: column;
